@@ -927,7 +927,7 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
         width: 100%;
     }
     
-    /* [FIXED & UPGRADED] Internship Section Mobile Styling for Premium Look */
+    /* [FIXED & UPGRADED] Internship Section Mobile Styling for Premium Look (Refined for alignment) */
     .internship-container {
         flex-direction: column; /* Stack vertically */
         gap: 30px; 
@@ -939,19 +939,21 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
         text-align: center;
     }
     .internship-content .features-list {
-        /* FIX: Center feature list items */
-        display: flex;
+        /* FIX: Center the list block */
+        margin: 30px auto; 
+        display: flex; /* Use flex on the list container to align items */
         flex-direction: column;
-        align-items: flex-start; /* Align checkmarks to the start */
-        margin: 30px auto; /* Center the list container itself */
         padding-left: 0;
+        list-style: none;
+        width: 90%; 
+        max-width: 380px; /* Constrain max width for better centering */
     }
     .internship-content .features-list .feature-item {
-        /* Ensure text starts clearly after icon */
-        text-align: left;
-        margin-left: auto; /* Center the block of features list items */
-        margin-right: auto;
-        padding-left: 20px; /* Add padding for visual spacing */
+        /* FIX: Ensure item's icon and text are aligned to the left of the list container */
+        width: 100%;
+        justify-content: flex-start; 
+        margin: 0;
+        padding-left: 0;
     }
 
     .internship-image {
