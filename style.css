@@ -939,11 +939,21 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
         text-align: center;
     }
     .internship-content .features-list {
-        /* Center feature list container */
+        /* FIX: Center feature list items */
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start; /* Align checkmarks to the start */
+        margin: 30px auto; /* Center the list container itself */
+        padding-left: 0;
     }
+    .internship-content .features-list .feature-item {
+        /* Ensure text starts clearly after icon */
+        text-align: left;
+        margin-left: auto; /* Center the block of features list items */
+        margin-right: auto;
+        padding-left: 20px; /* Add padding for visual spacing */
+    }
+
     .internship-image {
         display: block !important; /* Force image visibility on mobile */
         flex: none; 
