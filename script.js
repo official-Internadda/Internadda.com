@@ -291,6 +291,7 @@ async function loadProfileData(user) {
 let courseUnsubscribe;
 let internshipUnsubscribe;
 
+// --- script.js: Replace the entire auth.onAuthStateChanged function ---
 auth.onAuthStateChanged(async (user) => {
     // 1. Manage UI for auth status (Desktop & Mobile - Point 1)
     const authButtons = document.getElementById('authButtons');
@@ -354,6 +355,9 @@ auth.onAuthStateChanged(async (user) => {
         if(coursesListContainer) coursesListContainer.innerHTML = '<p class="text-center empty-state" style="padding: 20px 0;">Please log in to view your courses.</p>';
         if(internshipsListContainer) internshipsListContainer.innerHTML = '<p class="text-center empty-state" style="padding: 20px 0;">Please log in to view your internship history.</p>';
     }
+
+    // 4. Handle full page access gate logic REMOVED to enable open access to courses/internships.
+});
 
     // 4. Handle full page access gate
     const isProtectedPage = window.location.pathname.includes('/courses/course.html') || window.location.pathname.includes('/intern/internship.html');
