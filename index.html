@@ -12,6 +12,33 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-app-compat.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-auth-compat.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-firestore-compat.min.js"></script>
+    <style>
+        /* Aesthetic Overrides and Upgrades */
+        .hero-heading {
+            /* Text shadow for a slight lift effect on the heading */
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .hero-image-slider {
+            /* Subtle 3D tilt on image hover */
+            transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s;
+        }
+        .hero-image-slider:hover {
+            transform: perspective(1000px) rotateY(3deg) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        .value-card {
+            /* Enhanced 3D pop on hover */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+        }
+        .value-card:hover {
+            transform: translateY(-12px) scale(1.01);
+            box-shadow: 0 20px 40px rgba(43, 108, 176, 0.3);
+        }
+        .course-card:hover {
+            /* Enhanced card border on hover */
+            border: 1px solid var(--primary);
+        }
+    </style>
 </head>
 
 
@@ -41,7 +68,7 @@
                 <a href="/jobs.html" class="nav-link">Jobs</a>
                 <a href="/about.html" class="nav-link">About</a>
                 
-                <div class="nav-item dropdown">
+                <div class="nav-item dropdown" id="desktopMoreDropdown">
                     <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
                         <a href="/contact.html" class="dropdown-link">Contact</a>
@@ -647,21 +674,23 @@
             </div>
         </div>
     </div>
-    <script src="../script.js"></script>
-
+    <script src="script.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', function() {
             // 1. Get Elements
             const loginBtnHeader = document.getElementById('loginBtnHeader');
             const signupBtnHeader = document.getElementById('signupBtnHeader');
             const loginBtnMobile = document.getElementById('loginBtnHeaderMobile');
             const signupBtnMobile = document.getElementById('signupBtnHeaderMobile');
             const authModal = document.getElementById('authModal');
-            const closeModalBtn = document.getElementById('closeModal'); // Cross button
+            const closeModalBtn = document.getElementById('closeModal'); 
             const loginSection = document.getElementById('loginSection');
             const signupSection = document.getElementById('signupSection');
             const navMenu = document.querySelector('.nav-menu');
             const hamburgerMenu = document.getElementById('hamburgerMenu');
+            const desktopMoreDropdown = document.getElementById('desktopMoreDropdown');
+            const desktopDropdownContent = desktopMoreDropdown ? desktopMoreDropdown.querySelector('.dropdown-content') : null;
+            const desktopDropdownArrow = desktopMoreDropdown ? desktopMoreDropdown.querySelector('.dropdown-arrow') : null;
             
             // Special elements for navigation inside modal
             const showSignupInModal = document.getElementById('showSignup');
@@ -685,8 +714,8 @@
                     hamburgerMenu.classList.remove('active');
                 }
             };
-            
-            // 2. Event Listeners for Login (Desktop and Mobile)
+
+            // 2. Event Listeners for Login/Signup (Desktop and Mobile)
             const handleLoginClick = (e) => {
                 e.preventDefault();
                 if (authModal && loginSection) {
@@ -697,10 +726,6 @@
                 }
             };
             
-            if (loginBtnHeader) loginBtnHeader.addEventListener('click', handleLoginClick);
-            if (loginBtnMobile) loginBtnMobile.addEventListener('click', handleLoginClick);
-
-            // 3. Event Listeners for Signup (Desktop and Mobile)
             const handleSignupClick = (e) => {
                 e.preventDefault();
                 if (authModal && signupSection) {
@@ -711,10 +736,12 @@
                 }
             };
             
+            if (loginBtnHeader) loginBtnHeader.addEventListener('click', handleLoginClick);
+            if (loginBtnMobile) loginBtnMobile.addEventListener('click', handleLoginClick);
             if (signupBtnHeader) signupBtnHeader.addEventListener('click', handleSignupClick);
             if (signupBtnMobile) signupBtnMobile.addEventListener('click', handleSignupClick);
-            
-            // 4. Fix for Modal Close Button (Cross Button) and Backdrop
+
+            // 3. Fix for Modal Close Button (Cross Button) and Backdrop
             if (closeModalBtn) {
                 closeModalBtn.addEventListener('click', closeAuthModal);
             }
@@ -727,17 +754,63 @@
                  });
             }
             
-            // 5. Fix for internal modal navigation
+            // 4. Fix for internal modal navigation
             if (showSignupInModal) showSignupInModal.addEventListener('click', (e) => { e.preventDefault(); showSection(signupSection); });
             if (showLoginInModal) showLoginInModal.addEventListener('click', (e) => { e.preventDefault(); showSection(loginSection); });
 
-            // 6. Fix for Hamburger Menu Toggle
+            // 5. Fix for Hamburger Menu Toggle
             if (hamburgerMenu && navMenu) {
                 hamburgerMenu.addEventListener('click', () => {
                     hamburgerMenu.classList.toggle('active');
                     navMenu.classList.toggle('active');
                 });
             }
+
+            // 6. Fix for Desktop "More" Dropdown
+            if (desktopMoreDropdown) {
+                desktopMoreDropdown.addEventListener('click', function(event) {
+                    // Only run for desktop view (prevent mobile interference)
+                    if (window.innerWidth > 1024) { 
+                        const isVisible = desktopDropdownContent.style.display === 'block';
+                        desktopDropdownContent.style.display = isVisible ? 'none' : 'block';
+                        if (desktopDropdownArrow) {
+                            desktopDropdownArrow.style.transform = isVisible ? 'rotate(0deg)' : 'rotate(180deg)';
+                        }
+                        event.stopPropagation();
+                    }
+                });
+            }
+            
+            // Close dropdown when clicking anywhere else on desktop
+            document.addEventListener('click', function(event) {
+                 if (desktopDropdownContent && window.innerWidth > 1024 && desktopDropdownContent.style.display === 'block' && !desktopMoreDropdown.contains(event.target)) {
+                     desktopDropdownContent.style.display = 'none';
+                     if (desktopDropdownArrow) desktopDropdownArrow.style.transform = 'rotate(0deg)';
+                 }
+            });
+            
+            // SLIDER LOGIC
+            const sliderWrapper = document.querySelector('.slider-wrapper');
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.dot');
+            const totalSlides = slides.length;
+            let currentIndex = 0;
+
+            const updateSlider = () => {
+                sliderWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentIndex);
+                });
+            };
+
+            // Manual navigation via dots (auto-scroll removed)
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateSlider();
+                });
+            });
+            
         });
     </script>
 </body>
