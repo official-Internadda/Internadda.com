@@ -637,6 +637,13 @@
                     }
                 });
             }
+             // FIX: Re-adding the core hamburger toggle logic for this page
+            if (hamburgerMenu && navMenu) {
+                hamburgerMenu.addEventListener('click', () => {
+                    hamburgerMenu.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                });
+            }
         });
     </script>
 </body>
