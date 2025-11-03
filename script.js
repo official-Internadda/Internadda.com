@@ -512,7 +512,8 @@ function updateProfileUI(profileData) {
     const userAvatarHeaderMobile = document.getElementById('userAvatarHeaderMobile');
     const userNameHeaderMobile = document.getElementById('userNameHeaderMobile');
     if (userAvatarHeaderMobile) userAvatarHeaderMobile.src = avatarUrl;
-    if (userNameHeaderMobile) userNameHeaderMobile.style.display = 'none'; // Hide text
+    // Show 'My Profile' only when the user is logged in
+    if (userNameHeaderMobile) userNameHeaderMobile.textContent = userName; 
 
     // Dashboard
     if (userAvatarDashboard) userAvatarDashboard.src = avatarUrl;
@@ -536,7 +537,7 @@ function updateProfileUI(profileData) {
 }
 
 
-// --- 🔑 AUTH & PROFILE LOGIC 🔑 ---
+// --- Auth & Profile Logic ---
 
 // Global function to show modal (used by course pages)
 window.showLoginModal = function() {
@@ -694,29 +695,52 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', (e) => { if (userProfile && userDropdown && !userProfile.contains(e.target) && userDropdown.classList.contains('active')) userDropdown.classList.remove('active'); });
     if (profileBtnHeader) profileBtnHeader.addEventListener('click', () => { if(authModal) authModal.classList.add('active'); if(dashboardSection) showSection(dashboardSection); if(userDropdown) userDropdown.classList.remove('active'); document.body.style.overflow = 'hidden'; const profileTabBtn = document.querySelector('.tab-btn[data-tab="profile"]'); if (profileTabBtn) profileTabBtn.click(); });
     
-    // --- Desktop "More" Dropdown Click Handler ---
-    const moreDropdown = document.querySelector('.nav-item.dropdown');
-    if (moreDropdown) {
-        moreDropdown.addEventListener('click', function(event) {
-            const dropdownContent = this.querySelector('.dropdown-content');
-            if (window.innerWidth > 1024) { 
-                const isVisible = dropdownContent.style.display === 'block';
-                dropdownContent.style.display = isVisible ? 'none' : 'block';
-                
-                const arrow = this.querySelector('.dropdown-arrow');
-                if (arrow) {
-                    arrow.style.transform = isVisible ? 'rotate(0deg)' : 'rotate(180deg)';
+    // --- FIX: Universal Dropdown Click Handler (Problem 2 Fix) ---
+    const allDropdownContainers = document.querySelectorAll('.nav-item.dropdown');
+    
+    allDropdownContainers.forEach(dropdownContainer => {
+        const toggle = dropdownContainer.querySelector('.dropdown-toggle');
+        const content = dropdownContainer.querySelector('.dropdown-content');
+        const arrow = dropdownContainer.querySelector('.dropdown-arrow');
+        
+        if (toggle && content) {
+            toggle.addEventListener('click', function(event) {
+                // Only act on desktop view, as mobile is handled by CSS/mobile menu toggle
+                if (window.innerWidth > 1024) { 
+                    event.preventDefault(); 
+                    const isVisible = content.style.display === 'block';
+
+                    // Close all other open dropdowns first
+                    document.querySelectorAll('.nav-item.dropdown .dropdown-content').forEach(otherContent => {
+                        if (otherContent !== content) {
+                            otherContent.style.display = 'none';
+                            const otherArrow = otherContent.closest('.nav-item.dropdown').querySelector('.dropdown-arrow');
+                            if (otherArrow) otherArrow.style.transform = 'rotate(0deg)';
+                        }
+                    });
+
+                    // Toggle the clicked dropdown
+                    content.style.display = isVisible ? 'none' : 'block';
+                    if (arrow) {
+                        arrow.style.transform = isVisible ? 'rotate(0deg)' : 'rotate(180deg)';
+                    }
+                    event.stopPropagation();
                 }
-                event.stopPropagation();
-            }
-        });
-    }
-    document.addEventListener('click', function() {
-         const dropdownContent = document.querySelector('.nav-item.dropdown .dropdown-content');
-         if (dropdownContent && window.innerWidth > 1024) {
-             dropdownContent.style.display = 'none';
-             const arrow = document.querySelector('.nav-item.dropdown .dropdown-arrow');
-             if (arrow) arrow.style.transform = 'rotate(0deg)';
+            });
+        }
+    });
+    
+    // Close dropdowns when clicking anywhere else on desktop
+    document.addEventListener('click', function(event) {
+         if (window.innerWidth > 1024) {
+             document.querySelectorAll('.nav-item.dropdown .dropdown-content').forEach(content => {
+                 const parentDropdown = content.closest('.nav-item.dropdown');
+                 if (parentDropdown && !parentDropdown.contains(event.target)) {
+                     content.style.display = 'none';
+                     const arrow = parentDropdown.querySelector('.dropdown-arrow');
+                     if (arrow) arrow.style.transform = 'rotate(0deg)';
+                 }
+             });
          }
     });
 
@@ -740,7 +764,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         alert("Profile Link Copied to clipboard! (Note: This is a placeholder URL)");
                     })
                     .catch(err => {
-                        console.error('Could not copy text: ', err);
+                        console.error('Could could not copy text: ', err);
                         alert(`Could not automatically copy. Your (placeholder) profile link is: ${profileUrl}`);
                     });
             } else {
