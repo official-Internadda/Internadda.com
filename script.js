@@ -5,6 +5,7 @@
 // Global variables injected by the environment (Canvas system requirement)
 const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
 const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+    // ATTENTION: This API key is a placeholder and MUST be replaced with a valid Firebase API Key for authentication to work.
     apiKey: "AIzaSyCEas4FDRozXwhnzKeCz09LQnyCjY1twh4",
     authDomain: "internadda-c7217.firebaseapp.com",
     projectId: "internadda-c7217",
@@ -49,7 +50,6 @@ function getUserPath(collection) {
 }
 
 // --- MOCK INITIALIZATION DATA (Replaces old mock data arrays) ---
-// This ensures that when a new user logs in, they see some placeholder data initially
 const INITIAL_MOCK_COURSES = [
     { title: 'Essential Data Science Intern Course', progress: 0, completed: false, url: "/courses/courses/Essential Data Science Intern Course.html" },
     { title: 'Generative AI & Prompt Engineering Masterclass', progress: 0, completed: false, url: "/courses/courses/Generative-AI-Prompt-Engineering-Masterclass.html" },
@@ -68,7 +68,7 @@ async function initializeUserData(user) {
     const profileDoc = await profileRef.get();
 
     if (!profileDoc.exists) {
-        // Initialize user profile (Point 3: Enhanced Profile)
+        // Initialize user profile
         await profileRef.set({
             email: user.email,
             name: user.displayName || user.email.split('@')[0],
@@ -120,7 +120,15 @@ function renderCourseProgress(coursesData) {
         let buttonHtml;
         let statusColor;
         
-        // Find the correct URL for the course using a title match fallback if 'url' field is missing from Firestore data
+        // Hardcoded list for URL fallback
+        const allCourses = [
+            { title: 'Essential Data Science Intern Course', instructor: 'Lucky Kumar', image: '/images/Essential Data Science Intern Course.png', url: "/courses/courses/Essential Data Science Intern Course.html" },
+            { title: 'Generative AI & Prompt Engineering Masterclass', instructor: 'Lucky Kumar', image: '/images/Generative-AI-Prompt-Engineering-Masterclass.png', url: "/courses/courses/Generative-AI-Prompt-Engineering-Masterclass.html" },
+            { title: 'Ethical Hacking Mastery', instructor: 'Lucky Kumar', image: '/images/Ethical-Hacking-Mastery.png', url: "/courses/courses/Ethical-Hacking-Mastery.html" },
+            { title: 'Python Essentials for All', instructor: 'Lucky Kumar', image: '/images/Python-Essentials-for-All.png', url: "/courses/courses/Python-Essentials-for-All.html" },
+            { title: 'Cloud & DevOps Essentials', instructor: 'Lucky Kumar', image: '/images/Cloud-DevOps-Essentials.png', url: "/courses/courses/Cloud-DevOps-Essentials.html" }
+        ];
+        
         const courseDetails = allCourses.find(c => course.title.includes(c.title.split(' - ')[0]) || c.title.includes(course.title.split(' ').slice(0, 3).join(' '))) || { url: '/courses/course.html' };
         const courseUrl = course.url || courseDetails.url; // Prefer Firestore URL, fallback to local lookup
 
@@ -130,7 +138,6 @@ function renderCourseProgress(coursesData) {
             const courseNameEncoded = encodeURIComponent(course.title);
             const certificateUrl = `/courses/courses/certificate.html?name=${nameEncoded}&course=${courseNameEncoded}`;
             
-            // POINT 6: Download Certificate Link in My Profile
             buttonHtml = `<a href="${certificateUrl}" target="_blank" class="btn btn-primary animate-pulse" style="padding: 8px 15px; font-size: 14px; background-color: var(--success);"><i class="fas fa-download" style="margin-right: 5px;"></i> Certificate</a>`;
         } else {
             statusColor = course.progress > 0 ? 'var(--warning)' : 'var(--primary)';
@@ -183,7 +190,9 @@ function renderInternshipHistory(internshipsData) {
             case 'Passed':
                 statusColor = 'var(--success)';
                 statusText = `Qualified (${internship.score}%)`;
-                actionLink = `<a href="${finalExamUrl}" class="btn btn-primary" style="padding: 8px 15px; font-size: 14px; background-color: var(--success);">View Results</a>`;
+                // Assumes finalExamUrl points to payment, but we redirect to the actual exam results page
+                const finalExamPage = finalExamUrl.replace('payment_page_', '').replace('.html', '_final_exam.html');
+                actionLink = `<a href="${finalExamPage}" class="btn btn-primary" style="padding: 8px 15px; font-size: 14px; background-color: var(--success);">View Results</a>`;
                 break;
             case 'Failed':
                 statusColor = '#c53030'; // Red
@@ -242,8 +251,8 @@ async function saveProfileData(user) {
         // Refresh UI
         await loadProfileData(user); // Wait for profile data to reload
         
-        // Show success message (using error element temporarily if available)
-        const successElement = document.getElementById('profileDisplaySection').closest('.auth-section').querySelector('.error');
+        // Show success message
+        const successElement = document.getElementById('profileEditSection').closest('.auth-section').querySelector('.error');
         if (successElement) {
              successElement.style.backgroundColor = '#d1f7e0'; 
              successElement.style.borderColor = 'var(--success)';
@@ -291,9 +300,9 @@ async function loadProfileData(user) {
 let courseUnsubscribe;
 let internshipUnsubscribe;
 
-// --- script.js: Replace the entire auth.onAuthStateChanged function ---
+// --- onAuthStateChanged: Main entry point for UI updates ---
 auth.onAuthStateChanged(async (user) => {
-    // 1. Manage UI for auth status (Desktop & Mobile - Point 1)
+    // 1. Manage UI for auth status (Desktop & Mobile)
     const authButtons = document.getElementById('authButtons');
     const userProfile = document.getElementById('userProfile');
     const authButtonsMobile = document.getElementById('authButtonsMobile');
@@ -313,8 +322,8 @@ auth.onAuthStateChanged(async (user) => {
         await loadProfileData(user);
 
         // 2. Setup real-time listeners for dashboard data
-        if (courseUnsubscribe) courseUnsubscribe(); // Clear old listener
-        if (internshipUnsubscribe) internshipUnsubscribe(); // Clear old listener
+        if (courseUnsubscribe) courseUnsubscribe(); 
+        if (internshipUnsubscribe) internshipUnsubscribe(); 
 
         courseUnsubscribe = db.collection(getUserPath('enrollments'))
             .onSnapshot(snapshot => {
@@ -355,9 +364,6 @@ auth.onAuthStateChanged(async (user) => {
         if(coursesListContainer) coursesListContainer.innerHTML = '<p class="text-center empty-state" style="padding: 20px 0;">Please log in to view your courses.</p>';
         if(internshipsListContainer) internshipsListContainer.innerHTML = '<p class="text-center empty-state" style="padding: 20px 0;">Please log in to view your internship history.</p>';
     }
-
-    // 4. Handle full page access gate logic REMOVED to enable open access to courses/internships.
-});
 
     // 4. Handle full page access gate
     const isProtectedPage = window.location.pathname.includes('/courses/course.html') || window.location.pathname.includes('/intern/internship.html');
@@ -502,12 +508,11 @@ function updateProfileUI(profileData) {
     if (userAvatarHeader) userAvatarHeader.src = avatarUrl;
     if (userNameHeader) userNameHeader.textContent = userName.split(' ')[0];
 
-    // Mobile Header (Request 4: Hide "My Profile" text for logged-in user)
+    // Mobile Header (Hide text in the active menu view)
     const userAvatarHeaderMobile = document.getElementById('userAvatarHeaderMobile');
     const userNameHeaderMobile = document.getElementById('userNameHeaderMobile');
     if (userAvatarHeaderMobile) userAvatarHeaderMobile.src = avatarUrl;
-    // Request 4: Ensure the span is hidden for logged-in view to show only icon/signout
-    if (userNameHeaderMobile) userNameHeaderMobile.style.display = 'none'; 
+    if (userNameHeaderMobile) userNameHeaderMobile.style.display = 'none'; // Hide text
 
     // Dashboard
     if (userAvatarDashboard) userAvatarDashboard.src = avatarUrl;
@@ -540,6 +545,30 @@ window.showLoginModal = function() {
     document.body.style.overflow = 'hidden';
 }
 
+// Google Login/Signup function (Consolidated logic)
+async function handleGoogleAuth(errorElement) {
+    try { 
+        await auth.signInWithPopup(googleProvider); 
+        if(authModal) authModal.classList.remove('active'); 
+        document.body.style.overflow = ''; 
+    } catch (error) { 
+        // Display user-friendly error messages
+        let errorMessage = error.message;
+        if (error.code === 'auth/popup-closed-by-user') {
+            errorMessage = 'Google sign-in was cancelled. Please try again.';
+        } else if (error.code === 'auth/cancelled-popup-request') {
+             errorMessage = 'Only one authentication window can be open at a time.';
+        } else if (error.code === 'auth/operation-not-allowed') {
+             errorMessage = 'Google login is not enabled for this project. Check Firebase console.';
+        } else if (error.code === 'auth/network-request-failed') {
+             errorMessage = 'Network error. Check your connection.';
+        }
+        if(errorElement) showError(errorElement, errorMessage); 
+        console.error("Google Auth Error:", error.message);
+    } 
+}
+
+
 // Login function using Email and Password
 async function handleEmailLogin(e) {
     e.preventDefault(); 
@@ -562,6 +591,8 @@ async function handleEmailLogin(e) {
              errorMessage = 'गलत पासवर्ड। कृपया पुनः प्रयास करें।';
         } else if (error.code === 'auth/user-not-found') {
              errorMessage = 'यह ईमेल पंजीकृत नहीं है।';
+        } else if (error.code === 'auth/invalid-email') {
+             errorMessage = 'कृपया एक मान्य ईमेल दर्ज करें।';
         }
         if(loginError) showError(loginError, errorMessage);
         console.error("Login Error:", error.message);
@@ -601,6 +632,8 @@ async function handleEmailSignup(e) {
              errorMessage = 'यह ईमेल पहले से पंजीकृत है। कृपया लॉगिन करें।';
         } else if (error.code === 'auth/weak-password') {
              errorMessage = 'पासवर्ड कमज़ोर है। कृपया 6 या अधिक वर्णों का उपयोग करें।';
+        } else if (error.code === 'auth/invalid-email') {
+             errorMessage = 'कृपया एक मान्य ईमेल दर्ज करें।';
         }
         if(signupError) showError(signupError, errorMessage);
         console.error("Signup Error:", error.message);
@@ -619,7 +652,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (showSignupLink) showSignupLink.addEventListener('click', (e) => { e.preventDefault(); if(signupSection) showSection(signupSection); });
     if (showLoginLink) showLoginLink.addEventListener('click', (e) => { e.preventDefault(); if(loginSection) showSection(loginSection); });
     
-    // --- Mobile Auth Button Logic (POINT 1) ---
+    // --- Mobile Auth Button Logic
     const loginBtnMobile = document.getElementById('loginBtnHeaderMobile');
     const signupBtnMobile = document.getElementById('signupBtnHeaderMobile');
     const profileBtnHeaderMobile = document.getElementById('profileBtnHeaderMobile');
@@ -643,14 +676,16 @@ document.addEventListener('DOMContentLoaded', function() {
         } 
     };
     
-    // Desktop Logout Button
+    // Desktop and Mobile Logout Buttons
     if (document.getElementById('logoutBtnHeader')) document.getElementById('logoutBtnHeader').addEventListener('click', handleLogout);
-    // Mobile Logout Button
     if (logoutBtnHeaderMobile) logoutBtnHeaderMobile.addEventListener('click', handleLogout);
     
-    // --- Auth Actions ---
-    if (googleLoginBtn) googleLoginBtn.addEventListener('click', async () => { try { await auth.signInWithPopup(googleProvider); if(authModal) authModal.classList.remove('active'); document.body.style.overflow = ''; } catch (error) { if(loginError) showError(loginError, error.message); } });
-    if (googleSignupBtn) googleSignupBtn.addEventListener('click', async () => { try { await auth.signInWithPopup(googleProvider); if(authModal) authModal.classList.remove('active'); document.body.style.overflow = ''; } catch (error) { if(signupError) showError(signupError, error.message); } });
+    // --- Auth Actions (FIXED) ---
+    // Google Auth
+    if (googleLoginBtn) googleLoginBtn.addEventListener('click', () => handleGoogleAuth(loginError));
+    if (googleSignupBtn) googleSignupBtn.addEventListener('click', () => handleGoogleAuth(signupError));
+
+    // Email/Password Auth
     if (emailLoginBtn) emailLoginBtn.addEventListener('click', handleEmailLogin);
     if (emailSignupBtn) emailSignupBtn.addEventListener('click', handleEmailSignup);
 
@@ -659,12 +694,11 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', (e) => { if (userProfile && userDropdown && !userProfile.contains(e.target) && userDropdown.classList.contains('active')) userDropdown.classList.remove('active'); });
     if (profileBtnHeader) profileBtnHeader.addEventListener('click', () => { if(authModal) authModal.classList.add('active'); if(dashboardSection) showSection(dashboardSection); if(userDropdown) userDropdown.classList.remove('active'); document.body.style.overflow = 'hidden'; const profileTabBtn = document.querySelector('.tab-btn[data-tab="profile"]'); if (profileTabBtn) profileTabBtn.click(); });
     
-    // --- NEW: Desktop "More" Dropdown Click Handler (Point 5) ---
+    // --- Desktop "More" Dropdown Click Handler ---
     const moreDropdown = document.querySelector('.nav-item.dropdown');
     if (moreDropdown) {
         moreDropdown.addEventListener('click', function(event) {
             const dropdownContent = this.querySelector('.dropdown-content');
-            // Check for desktop size (assuming mobile kicks in at 1024px or less)
             if (window.innerWidth > 1024) { 
                 const isVisible = dropdownContent.style.display === 'block';
                 dropdownContent.style.display = isVisible ? 'none' : 'block';
@@ -693,7 +727,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if(profileImageInput && userAvatarPreview) { profileImageInput.addEventListener('change', handleImagePreview); }
     if (saveProfileBtn) saveProfileBtn.addEventListener('click', () => { const user = auth.currentUser; if (user) saveProfileData(user); });
 
-    // --- Share Profile Logic (Request 7) ---
+    // --- Share Profile Logic ---
     const shareProfileBtn = document.getElementById('shareProfileBtn');
     if (shareProfileBtn) {
         shareProfileBtn.addEventListener('click', () => {
