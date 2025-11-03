@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write a Blog Post | Internadda</title>
+    <meta name="description" content="Share your insights and knowledge with the Internadda community. Submit your blog post for review.">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .create-post-container { max-width: 800px; margin: 40px auto; background: var(--white); padding: 40px; border-radius: 14px; box-shadow: var(--shadow); }
+        .form-group label { font-weight: 600; margin-bottom: 8px; display: block; }
+        .form-group input[type="text"],
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+        .form-group textarea {
+            min-height: 300px; /* Make textarea larger */
+            resize: vertical;
+        }
+         /* Simple Rich Text Editor Buttons (Optional but recommended) */
+        .editor-toolbar button {
+            padding: 5px 10px;
+            margin-right: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+         #submitPostBtn { margin-top: 20px; width: 100%; padding: 15px; }
+         #submissionStatus { margin-top: 15px; font-weight: 600; text-align: center; }
+         .login-prompt { text-align: center; color: var(--warning); font-weight: 600; padding: 30px; border: 1px dashed var(--warning); border-radius: 8px; }
+    </style>
+</head>
+<body>
+
+    <main>
+        <section class="course-section">
+            <div class="create-post-container">
+                <h1 style="text-align: center; margin-bottom: 30px;">Write Your Blog Post</h1>
+
+                <form id="createPostForm" class="hidden">
+                    <div class="form-group">
+                        <label for="postTitle">Title</label>
+                        <input type="text" id="postTitle" required placeholder="Catchy title for your post">
+                    </div>
+                    <div class="form-group">
+                        <label for="postExcerpt">Short Excerpt (for preview)</label>
+                        <textarea id="postExcerpt" rows="3" required placeholder="A brief summary (1-2 sentences)"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="postImageUrl">Featured Image URL (Optional)</label>
+                        <input type="text" id="postImageUrl" placeholder="https://example.com/image.jpg">
+                         <small>Provide a direct link to an image.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="postContent">Content</label>
+                         <textarea id="postContent" required placeholder="Write your full blog post here... You can use basic HTML like <p>, <h2>, <h3>, <ul>, <li>, <a> for formatting."></textarea>
+                    </div>
+
+                    <button type="submit" id="submitPostBtn" class="btn btn-primary">Submit Post for Review</button>
+                    <p id="submissionStatus"></p>
+                </form>
+
+                <div id="loginPrompt" class="login-prompt">
+                    Please <a href="#" id="loginLinkInPrompt">log in</a> or <a href="#" id="signupLinkInPrompt">sign up</a> to write a blog post.
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../script.js"></script>
+</body>
+</html>
