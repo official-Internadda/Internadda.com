@@ -389,22 +389,18 @@ header.scrolled {
 @keyframes slideDown { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
 /* ============================
-   NAVIGATION DROPDOWN STYLES (Point 5 - Desktop "More" Dropdown)
+   NAVIGATION DROPDOWN STYLES
    ============================ */
 .nav-item.dropdown { position: relative; }
-.nav-link.dropdown-toggle { display: flex; align-items: center; gap: 6px; cursor: pointer; } /* Change cursor to pointer */
+.nav-link.dropdown-toggle { display: flex; align-items: center; gap: 6px; cursor: pointer; } 
 .nav-link.dropdown-toggle::after { display: none; }
 .dropdown-arrow { font-size: 0.7em; transition: transform 0.3s ease; }
 .dropdown-content { display: none; position: absolute; top: calc(100% + 10px); left: 0; background-color: var(--white); min-width: 180px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); border-radius: 8px; z-index: 100; padding: 10px 0; animation: fadeIn 0.3s ease-out; }
 .dropdown-link { display: block; padding: 12px 20px; color: var(--dark); text-decoration: none; font-size: 15px; font-weight: 500; transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease; white-space: nowrap; }
 .dropdown-link:hover { background-color: var(--light); color: var(--primary); transform: translateX(5px); }
-/* .nav-item.dropdown:hover .dropdown-content { display: block; } */
-/* .nav-item.dropdown:hover .dropdown-arrow { transform: rotate(180deg); } */
-
 /* Hide mobile specific links/buttons on desktop */
-.nav-actions-mobile { display: none; }
 .nav-link.mobile-only-link { display: none; }
-
+.nav-actions-mobile { display: none; }
 /* ============================
    END NAVIGATION DROPDOWN STYLES
    ============================ */
@@ -496,7 +492,7 @@ header.scrolled {
 .rating-stars { color: var(--warning); }
 .rating-value { font-weight: 600; font-size: 15px; }
 .rating-count { font-size: 15px; color: var(--gray); }
-.course-duration { font-size: 15px; color: var(--gray); margin-bottom: 8px; } /* Added for clarity */
+.course-duration { font-size: 15px; color: var(--gray); margin-bottom: 8px; } 
 .course-price { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
 .current-price { font-weight: 700; font-size: 22px; }
 .original-price { font-size: 15px; color: var(--gray); text-decoration: line-through; }
@@ -607,7 +603,7 @@ input:focus, select:focus { outline: none; border-color: var(--primary); box-sha
     justify-content: center; 
     gap: 14px; 
     border-radius: 14px;
-    padding: 18px 24px; /* Increased padding */
+    padding: 18px 24px; 
     font-size: 17px;
 }
 .btn-google:hover { background: linear-gradient(135deg, var(--secondary), var(--primary)); transform: translateY(-3px); box-shadow: 0 6px 12px rgba(43, 108, 176, 0.3); }
@@ -636,7 +632,7 @@ h3.section-title-small { font-size: 1.8rem; font-weight: 700; margin-bottom: 24p
 .data-section { margin-top: 28px; padding-top: 28px; border-top: var(--border); }
 .form-group-note { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
 .btn-note { padding: 16px 24px; flex-shrink: 0; }
-.user-data-list { max-height: 400px; overflow-y: auto; padding-right: 14px; } /* Increased max-height for desktop view */
+.user-data-list { max-height: 400px; overflow-y: auto; padding-right: 14px; } 
 /* [ENHANCED] Data item list animation & styling (Point 3) */
 .data-item { 
     background-color: var(--light); 
@@ -649,7 +645,7 @@ h3.section-title-small { font-size: 1.8rem; font-weight: 700; margin-bottom: 24p
     transition: var(--transition); 
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     border-left: 5px solid var(--primary); 
-    animation: slideInUp 0.4s ease-out; /* Match tab content slide in */
+    animation: slideInUp 0.4s ease-out; 
 }
 .data-item:hover { 
     transform: translateY(-4px) scale(1.01); 
@@ -726,7 +722,7 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
     overflow: hidden;
     background-color: var(--white);
     text-align: center;
-    box-shadow: inset 0 12px 15px -15px rgba(0, 0, 0, 0.15); 
+    box-shadow: inset 0 12px 15px -5px rgba(0, 0, 0, 0.05); 
 }
 
 /* Hide the unused title style from the previous iteration */
@@ -801,7 +797,7 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
 /* --- End New Partner/Trust Section CSS --- */
 
 
-/* Responsive Design (Point 1, 4 - Mobile Nav/Layout Fixes) */
+/* Responsive Design (Point 4 - Mobile Layout Fixes) */
 @media (max-width: 1024px) {
     
     /* HIDE the standard desktop nav menu */
@@ -834,15 +830,18 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
     }
     
     /* Show ONLY the requested mobile links (Point 1) */
-     .nav-menu.active > a {
+     /* Hide all desktop links except the ones we want to explicitly show via block display */
+     .nav-menu.active > a,
+     .nav-menu.active .nav-item.dropdown {
          display: none !important; 
      }
-     .nav-menu.active > a:nth-child(1), /* Home */
-     .nav-menu.active > a:nth-child(2), /* Courses */
-     .nav-menu.active > a:nth-child(3), /* Internships */
-     .nav-menu.active > a:nth-child(4), /* About (from original HTML) */
-     .nav-menu.active > a:nth-child(5) /* Blog (from original HTML for consistency, though it's now in 'More') */
-     {
+     
+     /* Explicitly show core mobile links */
+     .nav-menu.active > a[href="/index.html"],
+     .nav-menu.active > a[href="/courses/course.html"],
+     .nav-menu.active > a[href="/intern/internship.html"],
+     .nav-menu.active > a[href="/about.html"],
+     .nav-menu.active > a[href="/blog/index.html"] {
          display: block !important; 
          width: 80%;
          text-align: center;
