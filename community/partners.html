@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Partners | Internadda Community</title>
+    <meta name="description" content="Discover the companies and organizations partnering with Internadda to provide valuable internship opportunities and support student career growth.">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+            justify-items: center; /* Center items in grid cells */
+        }
+        .partner-logo {
+            background-color: var(--white);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 120px; /* Consistent height */
+            transition: var(--transition);
+        }
+        .partner-logo:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        .partner-logo img {
+            max-width: 100%;
+            max-height: 70px; /* Limit logo height */
+            object-fit: contain;
+            filter: grayscale(100%); /* Make logos grayscale initially */
+            opacity: 0.8;
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+         .partner-logo:hover img {
+            filter: grayscale(0%);
+            opacity: 1;
+         }
+        .coming-soon {
+             text-align: center;
+             font-style: italic;
+             color: var(--gray);
+             margin-top: 50px;
+             font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        </header>
+
+    <main>
+        <section class="hero" style="padding: 60px 0; text-align: center;">
+            <div class="container">
+                <h1 class="hero-heading" style="font-size: 2.5rem;">Our Valued Partners</h1>
+                <p class="hero-description" style="max-width: 800px; margin: 0 auto;">Companies collaborating with Internadda to shape the future workforce.</p>
+            </div>
+        </section>
+
+        <section class="courses" style="padding-top: 40px; padding-bottom: 80px;">
+            <div class="container">
+                 <h2 class="section-title" style="text-align: center; font-size: 2rem; margin-bottom: 40px;">Companies We Work With</h2>
+                 <p style="text-align: center; color: var(--gray); max-width: 700px; margin: -20px auto 40px auto;">We partner with innovative startups and established companies offering exciting internship opportunities across various domains.</p>
+
+                <div class="partners-grid">
+                    <div class="partner-logo">
+                        <img src="/images/placeholder-logo.png" alt="Partner Company 1">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="/images/placeholder-logo.png" alt="Partner Company 2">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="/images/placeholder-logo.png" alt="Partner Company 3">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="/images/placeholder-logo.png" alt="Partner Company 4">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="/images/placeholder-logo.png" alt="Partner Company 5">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="/images/placeholder-logo.png" alt="Partner Company 6">
+                    </div>
+                    </div>
+                <p class="coming-soon">(More partners coming soon...)</p>
+
+                <div style="text-align: center; margin-top: 60px;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 15px;">Interested in Partnering?</h3>
+                    <p style="color: var(--gray); margin-bottom: 25px;">Help nurture talent and find your next great hire through our internship program.</p>
+                    <a href="/contact.html" class="btn btn-primary">Become a Partner</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>
