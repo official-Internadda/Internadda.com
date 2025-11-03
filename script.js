@@ -225,7 +225,6 @@ async function saveProfileData(user) {
     let photoUrl = user.photoURL || '/images/no_image.png';
 
     // Image upload logic is complex and relies on Firebase Storage, so we will skip actual file upload.
-    // If a new local image is selected, we update the preview but rely on the existing photoURL for persistence for now.
 
     const profileUpdate = {
         name: name,
@@ -652,6 +651,33 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', (e) => { if (userProfile && userDropdown && !userProfile.contains(e.target) && userDropdown.classList.contains('active')) userDropdown.classList.remove('active'); });
     if (profileBtnHeader) profileBtnHeader.addEventListener('click', () => { if(authModal) authModal.classList.add('active'); if(dashboardSection) showSection(dashboardSection); if(userDropdown) userDropdown.classList.remove('active'); document.body.style.overflow = 'hidden'; const profileTabBtn = document.querySelector('.tab-btn[data-tab="profile"]'); if (profileTabBtn) profileTabBtn.click(); });
     
+    // --- NEW: Desktop "More" Dropdown Click Handler (Point 5) ---
+    const moreDropdown = document.querySelector('.nav-item.dropdown');
+    if (moreDropdown) {
+        moreDropdown.addEventListener('click', function(event) {
+            const dropdownContent = this.querySelector('.dropdown-content');
+            // Check for desktop size (assuming mobile kicks in at 1024px or less)
+            if (window.innerWidth > 1024) { 
+                const isVisible = dropdownContent.style.display === 'block';
+                dropdownContent.style.display = isVisible ? 'none' : 'block';
+                
+                const arrow = this.querySelector('.dropdown-arrow');
+                if (arrow) {
+                    arrow.style.transform = isVisible ? 'rotate(0deg)' : 'rotate(180deg)';
+                }
+                event.stopPropagation();
+            }
+        });
+    }
+    document.addEventListener('click', function() {
+         const dropdownContent = document.querySelector('.nav-item.dropdown .dropdown-content');
+         if (dropdownContent && window.innerWidth > 1024) {
+             dropdownContent.style.display = 'none';
+             const arrow = document.querySelector('.nav-item.dropdown .dropdown-arrow');
+             if (arrow) arrow.style.transform = 'rotate(0deg)';
+         }
+    });
+
     // --- Profile Editing ---
     const profileDisplaySectionEl = document.getElementById('profileDisplaySection');
     const profileEditSectionEl = document.getElementById('profileEditSection');
