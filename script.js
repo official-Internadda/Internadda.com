@@ -482,6 +482,9 @@ function escapeHTML(str) {
 function handleImagePreview(event) {
     const file = event.target.files[0];
     if (file && userAvatarPreview) {
+        // NOTE: Actual image upload to Firebase Storage is required here for persistence.
+        // Since Firebase Storage is not implemented in this mock environment, 
+        // this only provides a local preview.
         const reader = new FileReader();
         reader.onload = (e) => { userAvatarPreview.src = e.target.result; };
         reader.readAsDataURL(file);
@@ -495,11 +498,12 @@ function updateProfileUI(profileData) {
     if (userAvatarHeader) userAvatarHeader.src = avatarUrl;
     if (userNameHeader) userNameHeader.textContent = userName.split(' ')[0];
 
-    // Mobile Header (POINT 1)
+    // Mobile Header (Request 4: Hide "My Profile" text for logged-in user)
     const userAvatarHeaderMobile = document.getElementById('userAvatarHeaderMobile');
     const userNameHeaderMobile = document.getElementById('userNameHeaderMobile');
     if (userAvatarHeaderMobile) userAvatarHeaderMobile.src = avatarUrl;
-    if (userNameHeaderMobile) userNameHeaderMobile.textContent = 'My Profile'; // Keep as "My Profile" for mobile link text
+    // Request 4: Ensure the span is hidden for logged-in view to show only icon/signout
+    if (userNameHeaderMobile) userNameHeaderMobile.style.display = 'none'; 
 
     // Dashboard
     if (userAvatarDashboard) userAvatarDashboard.src = avatarUrl;
@@ -684,6 +688,28 @@ document.addEventListener('DOMContentLoaded', function() {
     if (editProfileBtn && profileDisplaySectionEl && profileEditSectionEl) { editProfileBtn.addEventListener('click', () => { profileDisplaySectionEl.classList.add('hidden'); profileEditSectionEl.classList.remove('hidden'); }); }
     if(profileImageInput && userAvatarPreview) { profileImageInput.addEventListener('change', handleImagePreview); }
     if (saveProfileBtn) saveProfileBtn.addEventListener('click', () => { const user = auth.currentUser; if (user) saveProfileData(user); });
+
+    // --- Share Profile Logic (Request 7) ---
+    const shareProfileBtn = document.getElementById('shareProfileBtn');
+    if (shareProfileBtn) {
+        shareProfileBtn.addEventListener('click', () => {
+            const user = auth.currentUser;
+            const profileUrl = user ? `https://www.internadda.com/profile/${user.uid}` : 'https://www.internadda.com/profile/guest';
+            
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(profileUrl)
+                    .then(() => {
+                        alert("Profile Link Copied to clipboard! (Note: This is a placeholder URL)");
+                    })
+                    .catch(err => {
+                        console.error('Could not copy text: ', err);
+                        alert(`Could not automatically copy. Your (placeholder) profile link is: ${profileUrl}`);
+                    });
+            } else {
+                 alert(`Your (placeholder) profile link is: ${profileUrl}`);
+            }
+        });
+    }
 
     // --- Tab Switching Logic ---
     if (tabButtons.length > 0) {
