@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Dev & SWE Final Exam — Internadda</title> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Modernized Styles & Animations from Matched Code */
+        :root {
+            --primary: #4c51bf; /* Deeper Indigo/Violet */
+            --dark: #1a202c;
+            --gray: #4a5568;
+            --warning: #f6ad55; /* More vibrant orange */
+            --success: #38a169;
+            --light: #f7fafc;
+            --accent: #38a169;
+            --hover-light: #f0f4ff; /* Light primary hover */
+        }
+        body { margin: 0; padding: 0; background-color: var(--light); font-family: 'Inter', sans-serif; color: var(--dark); }
+        .exam-container { max-width: 900px; margin: 40px auto; padding: 0 20px; position: relative; }
+        .exam-step { 
+            background: #fff; padding: 40px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-bottom: 30px; 
+            animation: fadeIn 0.5s ease-out; /* Step Animation */
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hidden { display: none !important; }
+
+        /* FIXED TIMER STYLES */
+        #fixed-timer-container {
+            position: fixed; 
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #timer-label {
+            font-size: 0.8rem;
+            color: var(--dark);
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        #timer { 
+            font-size: 1.8rem; 
+            font-weight: 800; 
+            color: var(--primary); 
+            background-color: #fff; 
+            padding: 10px 15px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2); 
+            border: 2px solid var(--primary); 
+            animation: pulseText 1.5s infinite alternate; /* Timer Animation */
+        }
+        @keyframes pulseText { 0% { box-shadow: 0 0 0 0 rgba(76, 81, 191, 0.4); } 100% { box-shadow: 0 0 0 5px rgba(76, 81, 191, 0); } }
+
+        /* Header and Timer (Adjusted for fixed timer) */
+        .exam-header { 
+            display: flex; 
+            justify-content: center; /* Center the title */
+            align-items: center; 
+            margin-bottom: 30px; 
+            padding: 15px 25px; 
+            background: var(--primary); 
+            color: #fff; 
+            border-radius: 12px; 
+            animation: slideDown 0.5s ease-out; 
+        }
+        .exam-header h1 { font-size: 1.8rem; color: #fff; margin: 0; font-family: 'Poppins', sans-serif; }
+
+        /* Instructions Step Style */
+        #instructions-step h2 { text-align: center; font-size: 2.5rem; color: var(--primary); margin-bottom: 25px; } 
+        #instructions-step .instructions-list { margin: 30px auto; padding: 30px; background: var(--hover-light); border-left: 6px solid var(--warning); max-width: 700px; border-radius: 10px; } 
+        #instructions-step .instructions-list ul { padding-left: 25px; text-align: left; font-size: 1.1rem; line-height: 2; } 
+        #instructions-step .instructions-list li { margin-bottom: 12px; position: relative; } 
+        #instructions-step .instructions-list li::before { content: "\f058"; font-family: "Font Awesome 6 Free"; font-weight: 900; color: var(--success); position: absolute; left: -25px; font-size: 0.9em; }
+        .passing-score { font-weight: 800; color: #fff; background-color: var(--accent); padding: 3px 8px; border-radius: 6px; box-shadow: 0 2px 4px rgba(56, 161, 105, 0.4); } 
+        .strict-disclaimer { margin-top: 30px; padding: 25px; background: #fff5f5; border: 2px solid #fbb2b2; color: #c53030; font-weight: 700; border-radius: 10px; text-align: center; box-shadow: 0 4px 8px rgba(197, 48, 48, 0.1); } 
+        .strict-disclaimer i { margin-right: 10px; font-size: 1.2em; }
+
+        /* Exam Step Style */
+        #exam-step { padding-top: 20px; } 
+        .question-block { margin-bottom: 40px; border-bottom: 1px solid #e2e8f0; padding-bottom: 30px; opacity: 1; transform: none; }
+        .question-block:last-child { border-bottom: none; margin-bottom: 0; } 
+        .question-block h3 { font-size: 1.35rem; font-weight: 700; margin-bottom: 25px; line-height: 1.6; display: flex; align-items: flex-start; color: var(--dark); } 
+        .question-block h3 strong { display: inline-block; background: var(--primary); color: white; border-radius: 50%; width: 32px; height: 32px; line-height: 32px; text-align: center; margin-right: 15px; font-size: 1rem; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); } 
+        
+        /* Code block style */
+        .question-block pre { 
+            background-color: #f6f8fa; 
+            border: 1px solid #e2e8f0; 
+            border-radius: 8px; 
+            padding: 12px 16px; 
+            overflow-x: auto; 
+            white-space: pre-wrap; 
+            word-wrap: break-word; 
+            margin: 15px 0; 
+            line-height: 1.5; 
+            font-size: 0.95rem; 
+            color: #2d3748; 
+        }
+
+        .options .option { background-color: var(--light); padding: 16px 20px; border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; transition: all 0.25s ease-in-out; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; font-size: 1.05rem; } 
+        .options .option::before { content: ''; display: inline-block; width: 18px; height: 18px; border: 2px solid var(--gray); border-radius: 50%; transition: all 0.2s ease; flex-shrink: 0; } 
+        .options .option:hover { background-color: var(--hover-light); border-color: var(--primary); transform: translateX(5px); } 
+        .options .option.selected { background-color: #ebf8ff; color: var(--primary); border-color: var(--primary); box-shadow: 0 0 0 3px rgba(76, 81, 191, 0.3); } 
+        .options .option.selected::before { background-color: var(--primary); border-color: var(--primary); box-shadow: inset 0 0 0 4px white; } 
+        
+        .btn { display: inline-block; padding: 14px 30px; font-size: 1.1rem; font-weight: 700; text-align: center; text-decoration: none; border-radius: 10px; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); border: 2px solid transparent; letter-spacing: 0.5px; } 
+        .btn-primary { background-color: var(--primary); color: #fff; box-shadow: 0 4px 10px rgba(76, 81, 191, 0.3); } 
+        .btn-primary:hover { background-color: #3f44af; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(76, 81, 191, 0.4); } 
+        .btn-outline {
+            background-color: transparent;
+            color: var(--dark);
+            border: 2px solid var(--dark);
+        }
+        .btn-outline:hover {
+            background-color: var(--dark);
+            color: white;
+        }
+
+        #submit-exam-btn { width: 100%; padding: 20px; font-size: 1.2rem; margin-top: 40px; }
+        
+        /* Modals/Messages (Only tab-switch retained) */
+        .message-box { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 30px 40px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); z-index: 1005; text-align: center; border-top: 6px solid var(--primary); max-width: 500px; width: 90%; animation: modalPop 0.3s ease-out; } 
+        .message-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); z-index: 1004; }
+        
+        /* Footer Centering Style */
+        footer { text-align: center; }
+
+        /* Submission Step Overhaul */
+        #submission-step { 
+            text-align: center; 
+            padding: 60px 40px; 
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden; 
+            border: none;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15); 
+            background: linear-gradient(145deg, #ffffff, #f0f4ff); 
+        }
+
+        #result-icon {
+            font-size: 5rem; 
+            margin-bottom: 20px;
+            animation: bounceIn 0.8s ease-out; 
+            display: block;
+        }
+
+        /* Success State Styles */
+        .icon.success { 
+            color: var(--success); 
+            text-shadow: 0 0 15px rgba(56, 161, 105, 0.6);
+        }
+        #submission-step.passed #result-title { 
+            font-size: 3.5rem; 
+            color: var(--success); 
+            font-family: 'Poppins', sans-serif; 
+            margin-top: 0;
+        }
+        #submission-step.passed #result-message { 
+            font-size: 1.35rem; 
+            color: var(--gray);
+            max-width: 600px;
+            margin: 15px auto 40px;
+            font-weight: 500;
+        }
+        #submission-step.passed .score-display {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--dark);
+            padding: 15px 30px;
+            background: var(--light);
+            border-radius: 12px;
+            border: 3px solid var(--success);
+            margin: 20px auto 30px;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(56, 161, 105, 0.2);
+        }
+
+        /* Failure State Styles */
+        .icon.fail { 
+            color: #e53e3e; 
+            animation: shake 0.5s;
+        }
+        #submission-step.failed {
+            background: #fffafa; 
+            border: 2px dashed #fbb6b6;
+        }
+        #submission-step.failed #result-title { 
+            font-size: 3rem; 
+            color: #e53e3e; 
+            font-family: 'Poppins', sans-serif; 
+            margin-top: 0;
+        }
+        #submission-step.failed #result-message { 
+            font-size: 1.2rem; 
+            color: var(--gray);
+            max-width: 600px;
+            margin: 15px auto 40px;
+            font-weight: 400;
+        }
+        #submission-step.failed .score-display {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+            padding: 10px 20px;
+            background: #fed7d7;
+            border-radius: 8px;
+            border: 2px solid #e53e3e;
+            margin: 20px auto 30px;
+            display: inline-block;
+        }
+
+        /* Email Instruction Card (Professional Look) */
+        #email-instructions {
+            background-color: #f0fdf4; 
+            border: 1px solid #a7f3d0;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: left;
+            margin-top: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        #email-instructions strong { color: var(--success); }
+        #email-instructions p { font-size: 1.05rem; line-height: 1.8; margin-bottom: 15px; }
+        #email-instructions ul { margin-left: 20px; padding-left: 0; list-style-type: none; }
+        #email-instructions li { margin-bottom: 10px; position: relative; padding-left: 20px; }
+        #email-instructions li::before { 
+            content: "\f00c"; 
+            font-family: "Font Awesome 6 Free"; 
+            font-weight: 900; 
+            color: var(--success); 
+            position: absolute; 
+            left: 0; 
+        }
+        #email-link { 
+            margin-top: 25px; 
+            width: 100%; 
+            padding: 16px; 
+            font-size: 1.15rem;
+            background-color: var(--success);
+            box-shadow: 0 4px 10px rgba(56, 161, 105, 0.4);
+        }
+        #email-link:hover {
+            background-color: #2f855a;
+        }
+
+        /* Confetti Effect (Success Animation) */
+        .confetti {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 18px;
+            background: var(--primary);
+            top: 0;
+            opacity: 0;
+            transform-origin: 0% 0%;
+            animation: confetti 4s infinite;
+        }
+        .confetti-piece:nth-child(even) { background: var(--success); width: 12px; height: 16px; }
+        .confetti-piece:nth-child(3n) { background: #f6ad55; }
+        .confetti-piece:nth-child(4n) { background: #4299e1; }
+        .confetti-piece:nth-child(5n) { background: #ecc94b; }
+
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(500px) rotate(720deg); opacity: 0; }
+        }
+
+        /* Keyframe Animations */
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+    </style>
+</head>
+<body>
+    <header> 
+        <div class="exam-container header-container" style="display: flex; justify-content: space-between; align-items: center; padding-top: 20px;">
+            <a href="#" class="logo" style="text-decoration: none; color: var(--primary); display: flex; align-items: center; font-size: 1.8rem; font-weight: 800; font-family: 'Poppins', sans-serif;"><i class="fas fa-graduation-cap" style="margin-right: 10px;"></i><span class="logo-text">InternAdda</span></a>
+        </div>
+    </header>
+
+    <main>
+        <div id="fixed-timer-container" class="hidden">
+            <span id="timer-label">Time Remaining</span>
+            <div id="timer">30:00</div>
+        </div>
+
+        <section class="course-section">
+            <div class="exam-container">
+                <div id="instructions-step" class="exam-step">
+                    <h2><i class="fas fa-scroll"></i> Final Exam Instructions (Python Dev & SWE)</h2> <p style="text-align: center; font-size: 1.1rem; color: var(--dark); margin-bottom: 30px;">
+                        Welcome to the Python Developer & SWE Final Exam. This test evaluates your Core Development Skills in Python, Web Frameworks (Flask/Django), SQL, and Software Engineering Concepts. Read all rules carefully before proceeding.
+                    </p>
+                    <div class="instructions-list">
+                        <ul>
+                            <li><strong>Duration:</strong> 30 minutes.</li>
+                            <li><strong>Passing Score:</strong>60% (15 out of 25 questions).</li>
+                            <li><strong>Proctoring:</strong> This is not a camera proctored exam, but integrity rules still apply.</li>
+                            <li><strong>Environment:</strong> You must be in a quiet room, alone. No external help is permitted.</li>
+                            <li><strong>Academic Integrity:</strong> No tab switching, other applications, or AI tools. Violations are logged and lead to disqualification.</li>
+                            <li><strong>Connectivity:</strong> A stable internet connection is mandatory.</li>
+                            <li><strong>Questions:</strong> 25 mandatory Multiple Choice Questions (MCQs) focusing on daily-life and business scenarios.</li>
+                            <li><strong>Submission:</strong> The exam auto-submits at time up or submit manually. No changes can be made after submission.</li>
+                        </ul>
+                    </div>
+                    <div class="strict-disclaimer"><i class="fas fa-exclamation-triangle"></i> Strict Anti-Cheating Policy: Starting confirms you accept these rules. Violations will lead to disqualification and a permanent ban.</div>
+                    <button class="btn btn-primary" id="start-exam-btn" style="width: 100%; padding: 20px; font-size: 1.2rem; margin-top: 30px;">Acknowledge and Start Exam</button>
+                </div>
+
+                <div id="exam-step" class="exam-step hidden">
+                    <div class="exam-header">
+                        <h1>Python Dev & SWE Final Exam</h1> </div>
+                    <div id="quiz-container">
+                        <div class="question-block" data-answer="b"><h3><strong>1</strong>What is the output of the following Python code?</h3><pre>x = [1, 2, 3]
+y = x
+y.append(4)
+print(x)</pre><div class="options"><div class="option" data-value="a">[1, 2, 3]</div><div class="option" data-value="b">[1, 2, 3, 4]</div><div class="option" data-value="c">Error</div><div class="option" data-value="d">[4]</div></div></div>
+                        <div class="question-block" data-answer="d"><h3><strong>2</strong>Which data structure in Python is unordered, mutable, and does NOT allow duplicate elements?</h3><div class="options"><div class="option" data-value="a">List</div><div class="option" data-value="b">Tuple</div><div class="option" data-value="c">Dictionary</div><div class="option" data-value="d">Set</div></div></div>
+                        <div class="question-block" data-answer="c"><h3><strong>3</strong>What is the purpose of the `super()` function in Python class inheritance?</h3><div class="options"><div class="option" data-value="a">To define a superclass.</div><div class="option" data-value="b">To check if a class is a superclass of another.</div><div class="option" data-value="c">To call a method from the parent (superclass).</div><div class="option" data-value="d">To create an instance of the superclass.</div></div></div>
+                        <div class="question-block" data-answer="a"><h3><strong>4</strong>Which statement is used to raise a custom error in Python?</h3><div class="options"><div class="option" data-value="a">`raise Exception("Error message")`</div><div class="option" data-value="b">`throw Error("Error message")`</div><div class="option" data-value="c">`error("Error message")`</div><div class="option" data-value="d">`assert False, "Error message"`</div></div></div>
+                        <div class="question-block" data-answer="b"><h3><strong>5</strong>What is a decorator in Python?</h3><div class="options"><div class="option" data-value="a">A way to style the output of a function.</div><div class="option" data-value="b">A function that takes another function as input, adds functionality, and returns the modified function or a wrapper.</div><div class="option" data-value="c">A special type of comment used for documentation.</div><div class="option" data-value="d">A built-in method for object-oriented programming.</div></div></div>
+                        <div class="question-block" data-answer="c"><h3><strong>6</strong>What does the `yield` keyword do in a Python function?</h3><div class="options"><div class="option" data-value="a">Immediately exits the function.</div><div class="option" data-value="b">Returns multiple values as a tuple.</div><div class="option" data-value="c">Turns the function into a generator, allowing it to produce a sequence of values lazily.</div><div class="option" data-value="d">Assigns a value to a variable within the function's scope.</div></div></div>
+                        <div class="question-block" data-answer="d"><h3><strong>7</strong>Which version control system is most commonly used in software engineering alongside Python?</h3><div class="options"><div class="option" data-value="a">SVN</div><div class="option" data-value="b">Mercurial</div><div class="option" data-value="c">CVS</div><div class="option" data-value="d">Git</div></div></div>
+                        <div class="question-block" data-answer="a"><h3><strong>8</strong>What is the primary difference between `==` and `is` in Python?</h3><div class="options"><div class="option" data-value="a">`==` checks for equality of values, while `is` checks for identity (if two variables point to the same object in memory).</div><div class="option" data-value="b">`is` checks for equality of values, while `==` checks for identity.</div><div class="option" data-value="c">They are identical in function.</div><div class="option" data-value="d">`is` is used for comparing strings, `==` for numbers.</div></div></div>
+                        <div class="question-block" data-answer="b"><h3><strong>9</strong>Which popular Python web framework follows the Model-View-Template (MVT) architectural pattern?</h3><div class="options"><div class="option" data-value="a">Flask</div><div class="option" data-value="b">Django</div><div class="option" data-value="c">Pyramid</div><div class="option" data-value="d">FastAPI</div></div></div>
+                        <div class="question-block" data-answer="c"><h3><strong>10</strong>What is the purpose of `pip`, the package installer for Python?</h3><div class="options"><div class="option" data-value="a">To run Python scripts from the command line.</div><div class="option" data-value="b">To format Python code according to PEP 8 standards.</div><div class="option" data-value="c">To install and manage third-party Python libraries and packages.</div><div class="option" data-value="d">To compile Python code into bytecode.</div></div></div>
+                        <div class="question-block" data-answer="a"><h3><strong>11</strong>Consider the SOLID principles in object-oriented design. What does the 'S' stand for?</h3><div class="options"><div class="option" data-value="a">Single Responsibility Principle</div><div class="option" data-value="b">Software Lifecycle Principle</div><div class="option" data-value="c">State Management Principle</div><div class="option" data-value="d">Separation of Concerns Principle</div></div></div>
+                        <div class="question-block" data-answer="d"><h3><strong>12</strong>What is represented by the following list comprehension? `[x*x for x in range(5)]`</h3><div class="options"><div class="option" data-value="a">[0, 1, 2, 3, 4]</div><div class="option" data-value="b">[1, 4, 9, 16, 25]</div><div class="option" data-value="c">[1, 4, 9, 16]</div><div class="option" data-value="d">[0, 1, 4, 9, 16]</div></div></div>
+                        <div class="question-block" data-answer="b"><h3><strong>13</strong>Which built-in Python function is used to get the number of items in a list, tuple, or dictionary?</h3><div class="options"><div class="option" data-value="a">`count()`</div><div class="option" data-value="b">`len()`</div><div class="option" data-value="c">`size()`</div><div class="option" data-value="d">`length()`</div></div></div>
+                        <div class="question-block" data-answer="c"><h3><strong>14</strong>In web development, what is the role of an ORM (Object-Relational Mapper) like SQLAlchemy or Django ORM?</h3><div class="options"><div class="option" data-value="a">To handle user authentication and authorization.</div><div class="option" data-value="b">To render HTML templates with dynamic data.</div><div class="option" data-value="c">To map Python objects to database tables and abstract SQL queries.</div><div class="option" data-value="d">To manage static files like CSS and JavaScript.</div></div></div>
+                        <div class="question-block" data-answer="a"><h3><strong>15</strong>What does the `if __name__ == "__main__":` block typically contain in a Python script?</h3><div class="options"><div class="option" data-value="a">Code that should only run when the script is executed directly, not when imported as a module.</div><div class="option" data-value="b">Code that defines the main class of the script.</div><div class="option" data-value="c">Import statements for necessary libraries.</div><div class="option" data-value="d">Documentation for the script.</div></div></div>
+                        <div class="question-block" data-answer="d"><h3><strong>16</strong>What is the difference between `append()` and `extend()` methods for Python lists?</h3><div class="options"><div class="option" data-value="a">`append()` adds multiple items, `extend()` adds one.</div><div class="option" data-value="b">`extend()` removes items, `append()` adds them.</div><div class="option" data-value="c">They are identical.</div><div class="option" data-value="d">`append()` adds its argument as a single element, `extend()` iterates over its argument adding each element individually.</div></div></div>
+                        <div class="question-block" data-answer="b"><h3><strong>17</strong>Which HTTP method is typically used to retrieve data from a server in a REST API?</h3><div class="options"><div class="option" data-value="a">POST</div><div class="option" data-value="b">GET</div><div class="option" data-value="c">PUT</div><div class="option" data-value="d">DELETE</div></div></div>
+                        <div class="question-block" data-answer="c"><h3><strong>18</strong>What is the concept of duck typing in Python?</h3><div class="options"><div class="option" data-value="a">Checking the explicit type of an object before using it.</div><div class="option" data-value="b">Converting all objects to a 'duck' type for processing.</div><div class="option" data-value="c">"If it walks like a duck and quacks like a duck, it's a duck" - an object's suitability is determined by its methods and properties, not its explicit type.</div><div class="option" data-value="d">A specific design pattern for handling polymorphism.</div></div></div>
+                        <div class="question-block" data-answer="a"><h3><strong>19</strong>What is the purpose of unit testing in software development?</h3><div class="options"><div class="option" data-value="a">To verify that individual components or functions of the code work correctly in isolation.</div><div class="option" data-value="b">To test the integration between different modules of the system.</div><div class="option" data-value="c">To test the complete system from an end-user perspective.</div><div class="option" data-value="d">To measure the performance and load capacity of the software.</div></div></div>
+                        <div class="question-block" data-answer="d"><h3><strong>20</strong>Which Python keyword is used to create an anonymous function (a small, one-line function)?</h3><div class="options"><div class="option" data-value="a">`def`</div><div class="option" data-value="b">`func`</div><div class="option" data-value="c">`anon`</div><div class="option" data-value="d">`lambda`</div></div></div>
+                        <div class="question-block" data-answer="b"><h3><strong>21</strong>What is JSON (JavaScript Object Notation) commonly used for in web applications?</h3><div class="options"><div class="option" data-value="a">Styling web pages.</div><div class="option" data-value="b">Exchanging data between a server and a client (e.g., in APIs).</div><div class="option" data-value="c">Defining the structure of web pages.</div><div class="option" data-value="d">Executing client-side scripts.</div></div></div>
+                        <div class="question-block" data-answer="c"><h3><strong>22</strong>In Git, what does the command `git clone <repository_url>` do?</h3><div class="options"><div class="option" data-value="a">Creates a new branch in the repository.</div><div class="option" data-value="b">Stages changes for the next commit.</div><div class="option" data-value="c">Creates a local copy of a remote repository.</div><div class="option" data-value="d">Merges changes from another branch.</div></div></div>
+                        <div class="question-block" data-answer="a"><h3><strong>23</strong>What is the Global Interpreter Lock (GIL) in CPython (the standard Python implementation)?</h3><div class="options"><div class="option" data-value="a">A mutex that allows only one thread to hold control of the Python interpreter at any time, limiting true parallelism for CPU-bound tasks.</div><div class="option" data-value="b">A mechanism for managing global variables across modules.</div><div class="option" data-value="c">A security feature preventing unauthorized code execution.</div><div class="option" data-value="d">A tool for debugging multi-threaded applications.</div></div></div>
+                        <div class="question-block" data-answer="d"><h3><strong>24</strong>Which of the following describes Agile software development methodology?</h3><div class="options"><div class="option" data-value="a">A linear, sequential approach with distinct phases (Waterfall).</div><div class="option" data-value="b">A focus on extensive documentation before coding begins.</div><div class="option" data-value="c">A process where testing is done only at the very end.</div><div class="option" data-value="d">An iterative and incremental approach focused on collaboration, flexibility, and rapid delivery.</div></div></div>
+                        <div class="question-block" data-answer="b"><h3><strong>25</strong>What is the difference between shallow copy and deep copy in Python?</h3><div class="options"><div class="option" data-value="a">Shallow copy copies the object identity; deep copy copies the value.</div><div class="option" data-value="b">Shallow copy creates a new object but references nested objects; deep copy creates fully independent copies of the object and all nested objects.</div><div class="option" data-value="c">Deep copy is faster than shallow copy.</div><div class="option" data-value="d">There is no difference in standard Python.</div></div></div>
+
+                        <button class="btn btn-primary" id="submit-exam-btn">Submit Final Exam</button>
+                    </div>
+                </div>
+
+                <div id="submission-step" class="exam-step hidden">
+                    <div id="confetti-container" class="confetti hidden"></div>
+                    
+                    <div id="result-icon" class="icon"></div>
+                    <h2 id="result-title">Exam Submitted</h2>
+                    <p id="result-message"></p>
+                    
+                    <div id="score-display" class="score-display">
+                        Your Score: <span id="final-score">--</span>/<span id="total-questions">--</span> 
+                        (<span id="final-percentage">--</span>%)
+                    </div>
+                    
+                    <div id="email-instructions" class="email-instructions hidden">
+                        <p>Excellent Work! 🎉 You have met the minimum score requirement (60%).</p>
+                        <p>To proceed, please email us with the following details:</p>
+                        <ul>
+                            <li>To: official.internadda@gmail.com</li>
+                            <li>Subject: Python Dev & SWE Internship Application - [Your Full Name Here]</li> <li>Body: Mention your score (<span class="final-score-email">--</span>%) and registered email.</li>
+                            <li>Attachment: Screenshot of this results page.</li>
+                        </ul>
+                        <p>We will verify your score and session logs, then reply within 72 business hours.</p>
+                        <a href="#" id="email-link" class="btn btn-primary"><i class="fas fa-envelope"></i> Click to Open Email Draft</a>
+                    </div>
+                    
+                    <a href="../index.html" class="btn btn-outline" style="margin-top: 30px;">Back to Home</a>
+                </div>
+            </div>
+        </section>
+
+        <div id="messageOverlay" class="message-overlay"></div>
+        <div id="tabSwitchWarningBox" class="message-box">
+             <h3><i class="fas fa-exclamation-triangle" style="color: #c53030;"></i> Warning: Focus Lost</h3>
+             <p>Navigating away from the exam tab is logged. Continuous focus loss will lead to disqualification.</p>
+             <button id="resumeExamBtn" class="btn btn-primary">Resume Exam</button>
+        </div>
+    </main>
+
+    <footer><div class="exam-container"><p>© 2025 Internadda. All rights reserved.</p></div></footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get Elements
+            const instructionsStep = document.getElementById('instructions-step');
+            const examStep = document.getElementById('exam-step');
+            const submissionStep = document.getElementById('submission-step');
+            const startExamBtn = document.getElementById('start-exam-btn');
+            const submitExamBtn = document.getElementById('submit-exam-btn');
+            const timerEl = document.getElementById('timer');
+            const fixedTimerContainer = document.getElementById('fixed-timer-container');
+            const messageOverlay = document.getElementById('messageOverlay');
+            const tabSwitchWarningBox = document.getElementById('tabSwitchWarningBox');
+            const resumeExamBtn = document.getElementById('resumeExamBtn');
+            const resultIcon = document.getElementById('result-icon');
+            const resultTitle = document.getElementById('result-title');
+            const resultMessage = document.getElementById('result-message');
+            const finalScoreEl = document.getElementById('final-score');
+            const totalQuestionsEl = document.getElementById('total-questions');
+            const finalPercentageEl = document.getElementById('final-percentage');
+            const emailInstructions = document.getElementById('email-instructions');
+            const emailLink = document.getElementById('email-link');
+            const finalScoreEmailSpan = document.querySelector('.final-score-email'); 
+            const confettiContainer = document.getElementById('confetti-container');
+    
+            // State
+            let examTimerInterval; 
+            let tabSwitchCount = 0; 
+            const MAX_TAB_SWITCHES = 2; 
+            let examStartTime = 0;
+    
+            // Initial State (Start directly at instructions)
+            instructionsStep.classList.remove('hidden'); 
+            examStep.classList.add('hidden'); 
+            submissionStep.classList.add('hidden');
+    
+            // Helper
+            function formatTime(seconds) { 
+                const mins = Math.floor(seconds / 60); 
+                const secs = seconds % 60; 
+                return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`; 
+            }
+    
+            // Instructions -> Exam Start (Directly)
+            startExamBtn.addEventListener('click', proceedToExam);
+            
+            function proceedToExam() { 
+                instructionsStep.classList.add('hidden'); 
+                examStep.classList.remove('hidden'); 
+                fixedTimerContainer.classList.remove('hidden'); 
+                startTimer(); 
+            }
+    
+            // Exam Timers
+            function startTimer() { 
+                let time = 1800; // 30 minutes
+                timerEl.textContent = formatTime(time); 
+                examStartTime = Date.now(); 
+                examTimerInterval = setInterval(() => { 
+                    if (document.hidden) return; 
+                    time--; 
+                    timerEl.textContent = formatTime(time); 
+                    if (time <= 0) { 
+                        clearInterval(examTimerInterval); 
+                        if (!examStep.classList.contains('hidden')) { 
+                            submitExam(); 
+                        } 
+                    } 
+                }, 1000); 
+            }
+            // Timer resume logic (used in Anti-Cheat)
+            function startTimerFrom(startTimeInSeconds) { 
+                let time = startTimeInSeconds; 
+                if (examTimerInterval) clearInterval(examTimerInterval); 
+                timerEl.textContent = formatTime(time); 
+                examTimerInterval = setInterval(() => { 
+                    if (document.hidden) return; 
+                    time--; 
+                    timerEl.textContent = formatTime(time); 
+                    if (time <= 0) { 
+                        clearInterval(examTimerInterval); 
+                        if (!examStep.classList.contains('hidden')) { 
+                            submitExam(); 
+                        } 
+                    } 
+                }, 1000); 
+            }
+    
+            // Question Selection
+            const questions = document.querySelectorAll('.question-block'); 
+            const totalQuestions = questions.length; 
+            totalQuestionsEl.textContent = totalQuestions;
+            questions.forEach(q => { 
+                const opts = q.querySelectorAll('.options .option'); 
+                opts.forEach(opt => opt.addEventListener('click', () => { 
+                    opts.forEach(o => o.classList.remove('selected')); 
+                    opt.classList.add('selected'); 
+                    q.dataset.selectedValue = opt.dataset.value; 
+                })); 
+            });
+    
+            // Submission (Modified for new styling and Python Dev content)
+            function submitExam() {
+                if (examTimerInterval) clearInterval(examTimerInterval); 
+                let score = 0;
+                questions.forEach(q => { 
+                    if (q.dataset.selectedValue === q.dataset.answer) score++; 
+                    q.querySelectorAll('.options .option').forEach(opt => opt.style.pointerEvents = 'none'); 
+                });
+
+                const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
+                finalScoreEl.textContent = score; 
+                finalPercentageEl.textContent = percentage;
+                if(finalScoreEmailSpan) finalScoreEmailSpan.textContent = percentage; 
+
+                submissionStep.classList.remove('passed', 'failed'); // Reset classes
+
+                if (percentage >= 60) {
+                    submissionStep.classList.add('passed'); // Add success class
+                    resultIcon.className = 'icon fas fa-award success'; // Changed icon for success
+                    resultTitle.textContent = "Excellent Work! 🏆 Exam Qualified!"; 
+                    resultMessage.textContent = "Congratulations! You successfully passed the Python Dev & SWE Exam. Follow the instructions below to begin your internship journey."; 
+                    emailInstructions.classList.remove('hidden');
+
+                    // Confetti Effect Trigger
+                    confettiContainer.classList.remove('hidden');
+                    createConfetti();
+
+                    // Update Email Link
+                    const subject = encodeURIComponent(`Python Dev & SWE Internship Application - [Your Full Name Here]`); // Corrected Subject
+                    const body = encodeURIComponent(
+                        `Dear Internadda Team,\n\nI have successfully completed the Python Dev & SWE Final Exam with a score of ${percentage}%. My registered email is [Your Registered Email Address Here].\n\nPlease find attached a screenshot of my exam result page showing the score.\n\nI look forward to hearing about the next steps in the internship selection process.\n\nThank you,\n\n[Your Full Name Here]\n[Your Contact Number Here]\n[Link to your LinkedIn Profile, if available - Optional]`
+                           );
+                    emailLink.href = `mailto:official.internadda@gmail.com?subject=${subject}&body=${body}`;
+                } else {
+                    submissionStep.classList.add('failed'); // Add fail class
+                    resultIcon.className = 'icon fas fa-frown fail'; // Sad icon for not meeting requirement
+                    resultTitle.textContent = "Try Better Next Time"; 
+                    resultMessage.textContent = `Your score is ${percentage}%, which does not meet the 60% requirement. Don't worry, you can re-attempt the exam after 48 hours!`; 
+                    emailInstructions.classList.add('hidden');
+                    confettiContainer.classList.add('hidden');
+                }
+
+                examStep.classList.add('hidden'); 
+                submissionStep.classList.remove('hidden'); 
+                timerEl.textContent = "Finished";
+                fixedTimerContainer.classList.add('hidden'); // Hide fixed timer
+            }
+            submitExamBtn.addEventListener('click', () => { if(confirm("Submit exam?")) { submitExam(); } });
+    
+            // Confetti Generator Function
+            function createConfetti() {
+                const numConfetti = 50;
+                const colors = ['var(--primary)', 'var(--success)', '#f6ad55', '#4299e1', '#ecc94b'];
+                for (let i = 0; i < numConfetti; i++) {
+                    const piece = document.createElement('div');
+                    piece.classList.add('confetti-piece');
+                    piece.style.left = `${Math.random() * 100}%`;
+                    piece.style.top = `${-20 - Math.random() * 20}%`;
+                    piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    piece.style.animationDelay = `${Math.random() * 0.5}s`;
+                    piece.style.animationDuration = `${3 + Math.random() * 2}s`;
+                    piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    confettiContainer.appendChild(piece);
+                }
+                // Clean up after the animation (optional but good practice)
+                setTimeout(() => {
+                    while (confettiContainer.firstChild) {
+                        confettiContainer.removeChild(confettiContainer.firstChild);
+                    }
+                    confettiContainer.classList.add('hidden');
+                }, 5000);
+            }
+    
+            // Anti-Cheat (Tab Switch)
+            document.addEventListener('visibilitychange', () => {
+                if (!examStep.classList.contains('hidden') && document.hidden) {
+                    tabSwitchCount++; 
+                    if (examTimerInterval) clearInterval(examTimerInterval); 
+                    
+                    if (tabSwitchCount >= MAX_TAB_SWITCHES) {
+                        resultIcon.className = 'icon fas fa-exclamation-triangle fail'; 
+                        resultTitle.textContent = "Exam Disqualified"; 
+                        resultMessage.textContent = "Navigating away from exam tab multiple times. Your attempt is now invalid."; 
+                        document.getElementById('score-display').innerText = "Score: N/A"; 
+                        emailInstructions.classList.add('hidden'); 
+                        examStep.classList.add('hidden'); 
+                        submissionStep.classList.remove('hidden'); 
+                        timerEl.textContent = "Disqualified"; 
+                        messageOverlay.style.display = 'none'; 
+                        tabSwitchWarningBox.style.display = 'none';
+                        fixedTimerContainer.classList.add('hidden');
+                    } else { 
+                        messageOverlay.style.display = 'block'; 
+                        tabSwitchWarningBox.style.display = 'block'; 
+                    }
+                }
+            });
+            resumeExamBtn.addEventListener('click', () => {
+                tabSwitchWarningBox.style.display = 'none'; 
+                messageOverlay.style.display = 'none'; 
+                const elapsedSinceStart = Math.floor((Date.now() - examStartTime) / 1000); 
+                const remainingTime = (1800 - elapsedSinceStart > 0) ? 1800 - elapsedSinceStart : 0; 
+                startTimerFrom(remainingTime); 
+            });
+    
+        }); // End DOMContentLoaded
+    </script>
+</body>
+</html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Dev & SWE Practice Test — Internadda</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        /* Re-use the exact same styles from data_science_practice_test.html */
+        :root {
+            --primary: #4c51bf; /* Deeper Indigo/Violet */
+            --dark: #1a202c;
+            --gray: #4a5568;
+            --warning: #f6ad55; /* More vibrant orange */
+            --success: #38a169;
+            --light: #f7fafc;
+            --accent: #38a169;
+            --hover-light: #f0f4ff;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --transition: all 0.25s ease-in-out;
+        }
+        body { margin: 0; padding: 0; background-color: var(--light); font-family: 'Inter', sans-serif; color: var(--dark); }
+        .exam-container { max-width: 900px; margin: 40px auto; padding: 0 20px; position: relative; }
+        .exam-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding: 20px 30px; background: #fff; border-radius: 12px; box-shadow: var(--shadow); border-left: 5px solid var(--primary); }
+        .exam-header h1 { font-size: 1.8rem; font-weight: 700; color: var(--dark); }
+        #timer { font-size: 1.8rem; font-weight: 700; color: var(--primary); background-color: #eef2f7; padding: 8px 16px; border-radius: 8px; }
+        .hidden { display: none !important; }
+
+        /* Quiz Container Styles */
+        #quiz-container { background: #fff; padding: 40px; border-radius: 12px; box-shadow: var(--shadow); }
+        .question-block { margin-bottom: 35px; border-bottom: 1px solid #e2e8f0; padding-bottom: 25px; }
+        .question-block:last-child { border-bottom: none; margin-bottom: 0; }
+        .question-block h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 20px; line-height: 1.6; display: flex; align-items: flex-start; }
+        .question-block h3 strong { display: inline-block; background: var(--primary); color: white; border-radius: 50%; width: 30px; height: 30px; line-height: 30px; text-align: center; margin-right: 12px; font-size: 1rem; flex-shrink: 0; }
+        
+        /* Code block style */
+        .question-block pre { 
+            background-color: #f6f8fa; 
+            border: 1px solid #e2e8f0; 
+            border-radius: 8px; 
+            padding: 12px 16px; 
+            overflow-x: auto; 
+            white-space: pre-wrap; 
+            word-wrap: break-word; 
+            margin: 15px 0; 
+            line-height: 1.5; 
+            font-size: 0.95rem; 
+            color: #2d3748; 
+        }
+        
+        .options .option { background-color: var(--light); padding: 16px 20px; border: 1px solid #e2e8f0; border-radius: 10px; cursor: pointer; transition: var(--transition); margin-bottom: 10px; font-weight: 500; display: flex; align-items: center; gap: 12px; }
+        .options .option::before { content: ''; display: inline-block; width: 18px; height: 18px; border: 2px solid var(--gray); border-radius: 50%; transition: all 0.2s ease; flex-shrink: 0; }
+        .options .option:hover { background-color: #eef2f7; border-color: #cbd5e0; }
+        .options .option:hover::before { border-color: var(--primary); }
+        .options .option.selected { background-color: #ebf8ff; color: var(--primary); border-color: var(--primary); box-shadow: 0 0 0 2px rgba(43, 108, 176, 0.2); }
+        .options .option.selected::before { background-color: var(--primary); border-color: var(--primary); box-shadow: inset 0 0 0 3px white; }
+        
+        #submit-btn { margin-top: 30px; width: 100%; padding: 18px; font-size: 1.1rem; }
+        #results-container { display: none; margin-top: 30px; padding: 30px; background: #f0fff4; border: 1px solid var(--success); border-radius: 12px; text-align: center; animation: fadeIn 0.5s; }
+        #results-container h2 { color: var(--accent); margin-bottom: 15px; font-size: 2rem; }
+        .result-message { font-size: 1.1rem; margin-bottom: 20px; }
+
+        /* Message Box Styles (Proctoring/Tab Switch ONLY) */
+        .message-box { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 30px 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); z-index: 1005; text-align: center; border-top: 5px solid var(--primary); max-width: 500px; width: 90%; }
+        .message-box h3 { margin-bottom: 15px; font-size: 1.4rem;}
+        .message-box p { margin-bottom: 25px; color: var(--gray); font-size: 1.1rem;}
+        .message-box button { margin: 0 10px; }
+        .message-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); z-index: 1004; }
+        
+        /* FOOTER ALIGNMENT OVERRIDE */
+        footer { text-align: center; }
+        footer p { 
+            text-align: center; 
+            width: 100%; 
+            margin: 0;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body onload="startInitialTest()"> 
+
+    <header>
+        <div class="container header-container" style="display: flex; justify-content: space-between; align-items: center; padding-top: 20px;">
+            <a href="../index.html" class="logo" style="text-decoration: none; color: var(--primary); display: flex; align-items: center; font-size: 1.8rem; font-weight: 800; font-family: 'Poppins', sans-serif;"><i class="fas fa-graduation-cap" style="margin-right: 10px;"></i><span class="logo-text">InternAdda</span></a>
+        </div>
+    </header>
+
+    <main>
+        <section class="course-section">
+            <div class="exam-container">
+                
+                <div class="exam-header">
+                    <h1>Python Dev & SWE Practice Test</h1>
+                    <div id="timer">20:00</div>
+                </div>
+
+                <div id="quiz-container">
+                    <div class="question-block" data-answer="c">
+                        <h3><strong>1</strong>What is the primary difference between a Python list and a tuple?</h3>
+                        <div class="options">
+                            <div class="option" data-value="a">Lists can store mixed data types, tuples cannot.</div>
+                            <div class="option" data-value="b">Tuples use square brackets [], lists use parentheses ().</div>
+                            <div class="option" data-value="c">Lists are mutable (changeable), tuples are immutable (unchangeable).</div>
+                            <div class="option" data-value="d">Lists are faster for iteration than tuples.</div>
+                        </div>
+                    </div>
+                    <div class="question-block" data-answer="b">
+                        <h3><strong>2</strong>What will the following Python code print?</h3>
+                        <pre>my_dict = {'a': 1, 'b': 2, 'c': 3}
+print(my_dict.get('d', 0))</pre>
+                        <div class="options">
+                            <div class="option" data-value="a">KeyError</div>
+                            <div class="option" data-value="b">0</div>
+                            <div class="option" data-value="c">None</div>
+                            <div class="option" data-value="d">False</div>
+                        </div>
+                    </div>
+                    <div class="question-block" data-answer="d">
+                        <h3><strong>3</strong>Which of the following is used to define a block of code (like in a function or loop) in Python?</h3>
+                        <div class="options">
+                            <div class="option" data-value="a">Curly braces {}</div>
+                            <div class="option" data-value="b">Parentheses ()</div>
+                            <div class="option" data-value="c">Semicolons ;</div>
+                            <div class="option" data-value="d">Indentation (spaces or tabs)</div>
+                        </div>
+                    </div>
+                    <div class="question-block" data-answer="a">
+                        <h3><strong>4</strong>What is the purpose of the `__init__` method in a Python class?</h3>
+                        <div class="options">
+                            <div class="option" data-value="a">It's the constructor, used to initialize object attributes when an object is created.</div>
+                            <div class="option" data-value="b">It defines how the object should be represented as a string.</div>
+                            <div class="option" data-value="c">It's called automatically when the object is destroyed (garbage collected).</div>
+                            <div class="option" data-value="d">It's used for inheriting methods from a parent class.</div>
+                        </div>
+                    </div>
+                    <div class="question-block" data-answer="c">
+                        <h3><strong>5</strong>How do you open a file named `data.txt` in Python for reading its content?</h3>
+                        <div class="options">
+                            <div class="option" data-value="a">`file = open("data.txt", "w")`</div>
+                            <div class="option" data-value="b">`file = open("data.txt", "a")`</div>
+                            <div class="option" data-value="c">`with open("data.txt", "r") as file:`</div>
+                            <div class="option" data-value="d">`read("data.txt")`</div>
+                        </div>
+                    </div>
+                    <div class="question-block" data-answer="b">
+                        <h3><strong>6</strong>What does the `*args` syntax in a Python function definition allow?</h3>
+                        <div class="options">
+                            <div class="option" data-value="a">Passing keyword arguments only.</div>
+                            <div class="option" data-value="b">Passing a variable number of positional arguments.</div>
+                            <div class="option" data-value="c">Defining default argument values.</div>
+                            <div class="option" data-value="d">Specifying the return type of the function.</div>
+                        </div>
+                    </div>
+                    <div class="question-block" data-answer="d">
+                        <h3><strong>7</strong>Which of the following is NOT a standard Python built-in data type?</h3>
+                        <div class="options">
+                            <div class="option" data-value="a">int</div>
+                            <div class="option" data-value="b">dict</div>
+                            <div class="option" data-value="c">list</div>
+                            <div class="option" data-value="d">array (standard arrays are typically from the `array` module or NumPy)</div>
+                        </div>
+                    </div>
+                    <div class="question-block" data-answer="a">
+                        <h3><strong>8</strong>What is the output of `list(range(1, 5))`?</h3>
+                        <div class="options">
+                            <div class="option" data-value="a">[1, 2, 3, 4]</div>
+                            <div class="option" data-value="b">[1, 2, 3, 4, 5]</div>
+                            <div class="option" data-value="c">[0, 1, 2, 3, 4]</div>
+                            <div class="option" data-value="d">(1, 2, 3, 4)</div>
+                        </div>
+                    </div>
+                    <div class="question-block" data-answer="c">
+                        <h3><strong>9</strong>What is the primary function of a `virtual environment` in Python development?</h3>
+                        <div class="options">
+                            <div class="option" data-value="a">To automatically format Python code according to PEP 8.</div>
+                            <div class="option" data-value="b">To speed up the execution of Python scripts.</div>
+                            <div class="option" data-value="c">To isolate project dependencies and avoid conflicts between different projects.</div>
+                            <div class="option" data-value="d">To provide an interactive Python shell (REPL).</div>
+                        </div>
+                    </div>
+                    <div class="question-block" data-answer="b">
+                        <h3><strong>10</strong>Which keyword is used to handle potential errors in a block of Python code?</h3>
+                        <div class="options">
+                            <div class="option" data-value="a">`catch`</div>
+                            <div class="option" data-value="b">`try` / `except`</div>
+                            <div class="option" data-value="c">`if error`</div>
+                            <div class="option" data-value="d">`handle`</div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" id="submit-btn">Submit Practice Test</button>
+
+                    <div id="results-container">
+                        <h2>Practice Test Complete!</h2>
+                        <p id="score-text" class="result-message">You scored 0 out of 10.</p>
+                        <p id="feedback-text" class="result-message">Keep practicing to improve!</p>
+                        <a href="internship.html" class="btn btn-outline" style="margin-top: 20px;">Back to Internships</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div id="messageOverlay" class="message-overlay"></div>
+        <div id="tabSwitchWarningBox" class="message-box">
+             <h3><i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i> Warning: Focus Lost</h3>
+             <p>You navigated away from the practice test tab. In a real exam, this could lead to disqualification. Click Resume to continue.</p>
+             <button id="resumeTestBtn" class="btn btn-primary">Resume Test</button>
+        </div>
+        <div id="testCancelledBox" class="message-box">
+             <h3><i class="fas fa-ban" style="color: #c53030;"></i> Practice Test Cancelled</h3>
+             <p>Multiple instances of navigating away from the test tab were detected. To maintain fairness simulation, this practice session has been cancelled.</p>
+             <button id="backToIntBtn" class="btn btn-outline">Back to Internships</button>
+        </div>
+    </main>
+
+    <footer>
+        <div class="exam-container">
+            <p>© 2025 Internadda. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Get Elements ---
+            const timerEl = document.getElementById('timer');
+            const submitBtn = document.getElementById('submit-btn');
+            const resultsContainer = document.getElementById('results-container');
+            const scoreText = document.getElementById('score-text');
+            const feedbackText = document.getElementById('feedback-text');
+            const questions = document.querySelectorAll('.question-block');
+            const totalQuestions = questions.length; // Should be 10
+
+            const quizContainer = document.getElementById('quiz-container');
+
+            // Proctoring Elements
+            const messageOverlay = document.getElementById('messageOverlay');
+            const tabSwitchWarningBox = document.getElementById('tabSwitchWarningBox');
+            const resumeTestBtn = document.getElementById('resumeTestBtn');
+            const testCancelledBox = document.getElementById('testCancelledBox');
+            const backToIntBtn = document.getElementById('backToIntBtn');
+
+            // --- State Variables ---
+            let examTimerInterval;
+            let tabSwitchCount = 0;
+            const MAX_TAB_SWITCHES = 2; // (1 = warning, 2 = cancel)
+            let testStartTime = 0;
+            const TOTAL_DURATION_SECONDS = 1200; // 20 minutes
+
+            // --- Helper: Format Time ---
+            function formatTime(seconds) {
+                const mins = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            }
+
+            // --- Timer Logic ---
+            // The onload function is now directly starting the timer
+            window.startInitialTest = function() {
+                 startExamTimer(TOTAL_DURATION_SECONDS); // Start 20 minute timer
+                 testStartTime = Date.now(); // Record start time
+            };
+            
+            function startExamTimer(startTimeInSeconds) {
+                let time = startTimeInSeconds;
+                if(timerEl) timerEl.textContent = formatTime(time);
+                if (examTimerInterval) clearInterval(examTimerInterval); 
+
+                examTimerInterval = setInterval(() => {
+                    if (document.hidden) return; 
+                    time--;
+                    if(timerEl) timerEl.textContent = formatTime(time);
+                    if (time <= 0) {
+                        clearInterval(examTimerInterval);
+                        if (!quizContainer.classList.contains('hidden') && submitBtn.style.display !== 'none') {
+                            submitTest(true); 
+                        }
+                    }
+                }, 1000);
+            }
+            
+            // --- Option Selection Logic ---
+            questions.forEach(question => {
+                const options = question.querySelectorAll('.options .option');
+                options.forEach(opt => {
+                    opt.addEventListener('click', () => {
+                        if (!quizContainer.classList.contains('hidden') && submitBtn.style.display !== 'none'){
+                            options.forEach(o => o.classList.remove('selected'));
+                            opt.classList.add('selected');
+                            question.dataset.selectedValue = opt.dataset.value;
+                        }
+                    });
+                });
+            });
+
+            // --- Submission Logic ---
+            function submitTest(autoSubmitted = false) {
+                if (!autoSubmitted && !confirm("Submit your practice test?")) {
+                    return; 
+                }
+                clearInterval(examTimerInterval);
+                
+                let score = 0;
+                questions.forEach(question => {
+                    if (question.dataset.selectedValue === question.dataset.answer) {
+                        score++;
+                    }
+                    question.querySelectorAll('.options .option').forEach(opt => opt.style.pointerEvents = 'none');
+                });
+
+                const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
+                scoreText.textContent = `You scored ${score} out of ${totalQuestions} (${percentage}%).`;
+
+                if (percentage >= 80) feedbackText.textContent = "Excellent work! You seem well-prepared.";
+                else if (percentage >= 60) feedbackText.textContent = "Good job! Review the incorrect answers.";
+                else feedbackText.textContent = "Keep practicing! Review the course material.";
+
+                resultsContainer.style.display = 'block';
+                submitBtn.style.display = 'none';
+                if(timerEl) timerEl.textContent = "Finished";
+                
+                messageOverlay.style.display = 'none';
+                tabSwitchWarningBox.style.display = 'none';
+                testCancelledBox.style.display = 'none';
+            }
+
+            // --- Cancellation Logic ---
+            function cancelTest() {
+                clearInterval(examTimerInterval);
+                
+                quizContainer.classList.add('hidden');
+                resultsContainer.style.display = 'none';
+                submitBtn.style.display = 'none';
+                if(timerEl) timerEl.textContent = "Cancelled";
+
+                messageOverlay.style.display = 'block';
+                testCancelledBox.style.display = 'block';
+                
+                tabSwitchWarningBox.style.display = 'none';
+            }
+
+
+            // --- Event Listeners ---
+
+            // Submit Button
+            submitBtn.addEventListener('click', () => submitTest(false)); 
+
+            // Resume Button (from warning)
+            resumeTestBtn.addEventListener('click', () => {
+                tabSwitchWarningBox.style.display = 'none';
+                messageOverlay.style.display = 'none';
+
+                // Resume timers by calculating remaining time
+                const elapsedMillis = Date.now() - testStartTime;
+                const elapsedSeconds = Math.floor(elapsedMillis / 1000);
+                const remainingTime = (TOTAL_DURATION_SECONDS - elapsedSeconds > 0) ? TOTAL_DURATION_SECONDS - elapsedSeconds : 0;
+
+                startExamTimer(remainingTime); 
+            });
+
+            // Back to Internships Button (from cancellation)
+            backToIntBtn.addEventListener('click', () => {
+                window.location.href = 'internship.html'; 
+            });
+
+
+            // Anti-Cheat: Tab Switch Detection
+            document.addEventListener('visibilitychange', () => {
+                if (!quizContainer.classList.contains('hidden') && submitBtn.style.display !== 'none' && document.hidden) {
+                    tabSwitchCount++;
+
+                    // Pause exam timer
+                    if (examTimerInterval) clearInterval(examTimerInterval);
+
+                    if (tabSwitchCount >= MAX_TAB_SWITCHES) {
+                        cancelTest();
+                    } else if (tabSwitchCount === 1) {
+                        messageOverlay.style.display = 'block';
+                        tabSwitchWarningBox.style.display = 'block';
+                    }
+                }
+            });
+
+        }); // End DOMContentLoaded
+    </script>
+</body>
+</html>

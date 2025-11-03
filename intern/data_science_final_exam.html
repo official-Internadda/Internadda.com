@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science Final Exam — Internadda</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Modernized Styles & Animations (Matched to AI & ML Code) */
+        :root {
+            --primary: #4c51bf; /* Deeper Indigo/Violet */
+            --dark: #1a202c;
+            --gray: #4a5568;
+            --warning: #f6ad55; /* More vibrant orange */
+            --success: #38a169;
+            --light: #f7fafc;
+            --accent: #38a169;
+            --hover-light: #f0f4ff; /* Light primary hover */
+        }
+        body { margin: 0; padding: 0; background-color: var(--light); font-family: 'Inter', sans-serif; color: var(--dark); }
+        .exam-container { max-width: 900px; margin: 40px auto; padding: 0 20px; position: relative; }
+        .exam-step { 
+            background: #fff; padding: 40px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-bottom: 30px; 
+            animation: fadeIn 0.5s ease-out; /* Step Animation */
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hidden { display: none !important; }
+
+        /* FIXED TIMER STYLES */
+        #fixed-timer-container {
+            position: fixed; /* Fixes timer position */
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #timer-label {
+            font-size: 0.8rem;
+            color: var(--dark);
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        #timer { 
+            font-size: 1.8rem; 
+            font-weight: 800; 
+            color: var(--primary); 
+            background-color: #fff; 
+            padding: 10px 15px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2); 
+            border: 2px solid var(--primary); 
+            animation: pulseText 1.5s infinite alternate; /* Timer Animation */
+        }
+        @keyframes pulseText { 0% { box-shadow: 0 0 0 0 rgba(76, 81, 191, 0.4); } 100% { box-shadow: 0 0 0 5px rgba(76, 81, 191, 0); } }
+
+        /* Header and Timer */
+        .exam-header { 
+            display: flex; 
+            justify-content: center; /* Center the title */
+            align-items: center; 
+            margin-bottom: 30px; 
+            padding: 15px 25px; 
+            background: var(--primary); 
+            color: #fff; 
+            border-radius: 12px; 
+            animation: slideDown 0.5s ease-out; 
+        }
+        .exam-header h1 { font-size: 1.8rem; color: #fff; margin: 0; font-family: 'Poppins', sans-serif; }
+
+        /* Instructions Step Style */
+        #instructions-step h2 { text-align: center; font-size: 2.5rem; color: var(--primary); margin-bottom: 25px; } 
+        #instructions-step .instructions-list { margin: 30px auto; padding: 30px; background: var(--hover-light); border-left: 6px solid var(--warning); max-width: 700px; border-radius: 10px; } 
+        #instructions-step .instructions-list ul { padding-left: 25px; text-align: left; font-size: 1.1rem; line-height: 2; } 
+        #instructions-step .instructions-list li { margin-bottom: 12px; position: relative; } 
+        #instructions-step .instructions-list li::before { content: "\f058"; font-family: "Font Awesome 6 Free"; font-weight: 900; color: var(--success); position: absolute; left: -25px; font-size: 0.9em; }
+        .passing-score { font-weight: 800; color: #fff; background-color: var(--accent); padding: 3px 8px; border-radius: 6px; box-shadow: 0 2px 4px rgba(56, 161, 105, 0.4); } 
+        .strict-disclaimer { margin-top: 30px; padding: 25px; background: #fff5f5; border: 2px solid #fbb2b2; color: #c53030; font-weight: 700; border-radius: 10px; text-align: center; box-shadow: 0 4px 8px rgba(197, 48, 48, 0.1); } 
+        .strict-disclaimer i { margin-right: 10px; font-size: 1.2em; }
+
+        /* Exam Step Style */
+        #exam-step { padding-top: 20px; } 
+        .question-block { margin-bottom: 40px; border-bottom: 1px solid #e2e8f0; padding-bottom: 30px; opacity: 1; transform: none; }
+        .question-block:last-child { border-bottom: none; margin-bottom: 0; } 
+        .question-block h3 { font-size: 1.35rem; font-weight: 700; margin-bottom: 25px; line-height: 1.6; display: flex; align-items: flex-start; color: var(--dark); } 
+        .question-block h3 strong { display: inline-block; background: var(--primary); color: white; border-radius: 50%; width: 32px; height: 32px; line-height: 32px; text-align: center; margin-right: 15px; font-size: 1rem; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); } 
+        .question-block pre {
+            background-color: #f6f8fa;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin: 15px 0;
+            line-height: 1.5;
+            font-size: 0.95rem;
+            color: #2d3748;
+        }
+        .options .option { background-color: var(--light); padding: 16px 20px; border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; transition: all 0.25s ease-in-out; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; font-size: 1.05rem; } 
+        .options .option::before { content: ''; display: inline-block; width: 18px; height: 18px; border: 2px solid var(--gray); border-radius: 50%; transition: all 0.2s ease; flex-shrink: 0; } 
+        .options .option:hover { background-color: var(--hover-light); border-color: var(--primary); transform: translateX(5px); } 
+        .options .option.selected { background-color: #ebf8ff; color: var(--primary); border-color: var(--primary); box-shadow: 0 0 0 3px rgba(76, 81, 191, 0.3); } 
+        .options .option.selected::before { background-color: var(--primary); border-color: var(--primary); box-shadow: inset 0 0 0 4px white; } 
+        
+        .btn { display: inline-block; padding: 14px 30px; font-size: 1.1rem; font-weight: 700; text-align: center; text-decoration: none; border-radius: 10px; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); border: 2px solid transparent; letter-spacing: 0.5px; } 
+        .btn-primary { background-color: var(--primary); color: #fff; box-shadow: 0 4px 10px rgba(76, 81, 191, 0.3); } 
+        .btn-primary:hover { background-color: #3f44af; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(76, 81, 191, 0.4); } 
+        .btn-outline {
+            background-color: transparent;
+            color: var(--dark);
+            border: 2px solid var(--dark);
+        }
+        .btn-outline:hover {
+            background-color: var(--dark);
+            color: white;
+        }
+
+        #submit-exam-btn { width: 100%; padding: 20px; font-size: 1.2rem; margin-top: 40px; }
+        
+        /* Submission Step Overhaul */
+        #submission-step { 
+            text-align: center; 
+            padding: 60px 40px; 
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden; 
+            border: none;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15); 
+            background: linear-gradient(145deg, #ffffff, #f0f4ff); 
+        }
+
+        #result-icon {
+            font-size: 5rem; 
+            margin-bottom: 20px;
+            animation: bounceIn 0.8s ease-out; 
+            display: block;
+        }
+        .icon.success { 
+            color: var(--success); 
+            text-shadow: 0 0 15px rgba(56, 161, 105, 0.6);
+        }
+        #submission-step.passed #result-title { 
+            font-size: 3.5rem; 
+            color: var(--success); 
+            font-family: 'Poppins', sans-serif; 
+            margin-top: 0;
+        }
+        #submission-step.passed #result-message { 
+            font-size: 1.35rem; 
+            color: var(--gray);
+            max-width: 600px;
+            margin: 15px auto 40px;
+            font-weight: 500;
+        }
+        #submission-step.passed .score-display {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--dark);
+            padding: 15px 30px;
+            background: var(--light);
+            border-radius: 12px;
+            border: 3px solid var(--success);
+            margin: 20px auto 30px;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(56, 161, 105, 0.2);
+        }
+
+        /* Failure State Styles */
+        .icon.fail { 
+            color: #e53e3e; 
+            animation: shake 0.5s;
+        }
+        #submission-step.failed {
+            background: #fffafa; 
+            border: 2px dashed #fbb6b6;
+        }
+        #submission-step.failed #result-title { 
+            font-size: 3rem; 
+            color: #e53e3e; 
+            font-family: 'Poppins', sans-serif; 
+            margin-top: 0;
+        }
+        #submission-step.failed #result-message { 
+            font-size: 1.2rem; 
+            color: var(--gray);
+            max-width: 600px;
+            margin: 15px auto 40px;
+            font-weight: 400;
+        }
+        #submission-step.failed .score-display {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+            padding: 10px 20px;
+            background: #fed7d7;
+            border-radius: 8px;
+            border: 2px solid #e53e3e;
+            margin: 20px auto 30px;
+            display: inline-block;
+        }
+
+        /* Email Instruction Card */
+        #email-instructions {
+            background-color: #f0fdf4; 
+            border: 1px solid #a7f3d0;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: left;
+            margin-top: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        #email-instructions strong { color: var(--success); }
+        #email-instructions p { font-size: 1.05rem; line-height: 1.8; margin-bottom: 15px; }
+        #email-instructions ul { margin-left: 20px; padding-left: 0; list-style-type: none; }
+        #email-instructions li { margin-bottom: 10px; position: relative; padding-left: 20px; }
+        #email-instructions li::before { 
+            content: "\f00c"; 
+            font-family: "Font Awesome 6 Free"; 
+            font-weight: 900; 
+            color: var(--success); 
+            position: absolute; 
+            left: 0; 
+        }
+        #email-link { 
+            margin-top: 25px; 
+            width: 100%; 
+            padding: 16px; 
+            font-size: 1.15rem;
+            background-color: var(--success);
+            box-shadow: 0 4px 10px rgba(56, 161, 105, 0.4);
+        }
+        #email-link:hover {
+            background-color: #2f855a;
+        }
+
+        /* Confetti Effect (Success Animation) */
+        .confetti {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 18px;
+            background: var(--primary);
+            top: 0;
+            opacity: 0;
+            transform-origin: 0% 0%;
+            animation: confetti 4s infinite;
+        }
+        .confetti-piece:nth-child(even) { background: var(--success); width: 12px; height: 16px; }
+        .confetti-piece:nth-child(3n) { background: #f6ad55; }
+        .confetti-piece:nth-child(4n) { background: #4299e1; }
+        .confetti-piece:nth-child(5n) { background: #ecc94b; }
+
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(500px) rotate(720deg); opacity: 0; }
+        }
+
+        /* Keyframe Animations */
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+
+        /* Modals/Messages */
+        .message-box { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 30px 40px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); z-index: 1005; text-align: center; border-top: 6px solid var(--primary); max-width: 500px; width: 90%; animation: modalPop 0.3s ease-out; } 
+        .message-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); z-index: 1004; }
+        
+        /* FOOTER CENTERING STYLE */
+        footer { 
+            background-color: #f7fafc; 
+            padding: 40px 0; 
+            border-top: 1px solid #e2e8f0; 
+            text-align: center; /* Centered Footer Text */
+        }
+        
+    </style>
+</head>
+<body>
+    <header> 
+        <div class="exam-container header-container" style="display: flex; justify-content: space-between; align-items: center; padding-top: 20px;">
+            <a href="#" class="logo" style="text-decoration: none; color: var(--primary); display: flex; align-items: center; font-size: 1.8rem; font-weight: 800; font-family: 'Poppins', sans-serif;"><i class="fas fa-graduation-cap" style="margin-right: 10px;"></i><span class="logo-text">InternAdda</span></a>
+        </div>
+    </header>
+
+    <main>
+        <div id="fixed-timer-container" class="hidden">
+            <span id="timer-label">Time Remaining</span>
+            <div id="timer">30:00</div>
+        </div>
+        
+        <section class="course-section">
+            <div class="exam-container">
+                
+                <div id="instructions-step" class="exam-step">
+                    <h2><i class="fas fa-scroll"></i> Final Exam Instructions (Data Science)</h2>
+                    <p style="text-align: center; font-size: 1.1rem; color: var(--dark); margin-bottom: 30px;">
+                        Welcome to the Data Science Final Exam. This test evaluates your Practical, Real-World knowledge in Python, SQL, Tableau, and ML Algorithms. Read all rules carefully before proceeding.
+                    </p>
+                    <div class="instructions-list">
+                        <ul>
+                            <li><strong>Duration:</strong> 30 minutes.</li>
+                            <li><strong>Passing Score:</strong>60% (15 out of 25 questions).</li>
+                            <li><strong>Proctoring:</strong> This is not a camera proctored exam, but integrity rules still apply.</li>
+                            <li><strong>Environment:</strong> You must be in a quiet room, alone. No external help is permitted.</li>
+                            <li><strong>Academic Integrity:</strong> No tab switching, other applications, or AI tools. Violations are logged and lead to disqualification.</li>
+                            <li><strong>Connectivity:</strong> A stable internet connection is mandatory.</li>
+                            <li><strong>Questions:</strong> 25 mandatory Multiple Choice Questions (MCQs) focusing on daily-life and business scenarios.</li>
+                            <li><strong>Submission:</strong> The exam auto-submits at time up or submit manually. No changes can be made after submission.</li>
+                        </ul>
+                    </div>
+                    <div class="strict-disclaimer"><i class="fas fa-exclamation-triangle"></i> Strict Anti-Cheating Policy: Starting confirms you accept these rules. Violations will lead to disqualification and a permanent ban.</div>
+                    <button class="btn btn-primary" id="start-exam-btn" style="width: 100%; padding: 20px; font-size: 1.2rem; margin-top: 30px;">Acknowledge and Start Exam</button>
+                </div>
+
+                <div id="exam-step" class="exam-step hidden">
+                    <div class="exam-header">
+                        <h1>Data Science Final Exam</h1>
+                    </div>
+                    <div id="quiz-container">
+                        <div class="question-block" data-answer="b"><h3><strong>1</strong>(Python/Pandas) You have a CSV file named `sales_data.csv`. Which is the correct and conventional way to load it into a Pandas DataFrame?</h3><div class="options"><div class="option" data-value="a"><code>df = read_csv('sales_data.csv')</code></div><div class="option" data-value="b"><code>df = pd.read_csv('sales_data.csv')</code></div><div class="option" data-value="c"><code>df = load_csv('sales_data.csv', pandas)</code></div><div class="option" data-value="d"><code>df = pd.DataFrame.load('sales_data.csv')</code></div></div></div>
+                        <div class="question-block" data-answer="c"><h3><strong>2</strong>(SQL) Write the SQL query to retrieve all employee names from the `Employees` table where their salary is greater than $50,000.</h3><div class="options"><div class="option" data-value="a"><code>GET Name FROM Employees HAVING Salary > 50000;</code></div><div class="option" data-value="b"><code>SELECT Name FROM Employees CHECK Salary > 50000;</code></div><div class="option" data-value="c"><code>SELECT Name FROM Employees WHERE Salary > 50000;</code></div><div class="option" data-value="d"><code>SELECT Name IF Salary > 50000;</code></div></div></div>
+                        <div class="question-block" data-answer="a"><h3><strong>3</strong>(Tableau/Visualization) Which chart type is best suited to show the relationship between two continuous numerical variables (e.g., Sales vs. Profit)?</h3><div class="options"><div class="option" data-value="a">Scatter Plot</div><div class="option" data-value="b">Bar Chart</div><div class="option" data-value="c">Pie Chart</div><div class="option" data-value="d">Area Chart</div></div></div>
+                        <div class="question-block" data-answer="d"><h3><strong>4</strong>(Python/Pandas) You need to find the average price (`price` column) for each category (`category` column) in a DataFrame `products_df`. Which code is correct?</h3><div class="options"><div class="option" data-value="a"><code>products_df.agg('category', mean('price'))</code></div><div class="option" data-value="b"><code>products_df['price'].group_by('category').average()</code></div><div class="option" data-value="c"><code>products_df.group_by('category').mean()</code></div><div class="option" data-value="d"><code>products_df.groupby('category')['price'].mean()</code></div></div></div>
+                        <div class="question-block" data-answer="b"><h3><strong>5</strong>(SQL) What does the following SQL query return? <br>
+                        SELECT COUNT(DISTINCT country) FROM Customers;</h3><div class="options"><div class="option" data-value="a">The total number of customers.</div><div class="option" data-value="b">The number of unique countries.</div><div class="option" data-value="c">The name of the customer from the last country.</div><div class="option" data-value="d">The customers' country list, without duplicates.</div></div></div>
+                        <div class="question-block" data-answer="d"><h3><strong>6</strong>(Data Preprocessing) You have a column 'Age' with some missing values (`NaN`). Which is generally the most robust method to fill these missing values if the data has outliers?</h3><div class="options"><div class="option" data-value="a">Fill with 0.</div><div class="option" data-value="b">Fill with the mean age.</div><div class="option" data-value="c">Drop the rows with missing age.</div><div class="option" data-value="d">Fill with the median age.</div></div></div>
+                        <div class="question-block" data-answer="c"><h3><strong>7</strong>(Tableau) In Tableau, what type of filter is executed before dimension filters, often used for setting a fixed top-N selection across the entire data source?</h3><div class="options"><div class="option" data-value="a">Regular Dimension Filter</div><div class="option" data-value="b">Measure Filter</div><div class="option" data-value="c">Context Filter</div><div class="option" data-value="d">Table Calculation Filter</div></div></div>
+                        <div class="question-block" data-answer="a"><h3><strong>8</strong>(Python/Pandas) You want to select rows from a Pandas DataFrame `df` where the `Age` is greater than 30 AND the `City` is 'London'. Which code is correct?</h3><div class="options"><div class="option" data-value="a"><code>df[(df['Age'] > 30) & (df['City'] == 'London')]</code></div><div class="option" data-value="b"><code>df.query('Age > 30' or 'City == London')</code></div><div class="option" data-value="c"><code>df.loc[df['Age'] > 30 and df['City'] == 'London']</code></div><div class="option" data-value="d"><code>df['Age'] > 30 | df['City'] == 'London'</code></div></div></div>
+                        <div class="question-block" data-answer="b"><h3><strong>9</strong>(SQL) You are joining two tables, `A` and `B`. You want to return ALL rows from table `A`, and the matching rows from table `B`. Which type of JOIN should you use?</h3><div class="options"><div class="option" data-value="a">INNER JOIN</div><div class="option" data-value="b">LEFT JOIN</div><div class="option" data-value="c">RIGHT JOIN</div><div class="option" data-value="d">FULL JOIN</div></div></div>
+                        <div class="question-block" data-answer="d"><h3><strong>10</strong>(ML Concept) If your manager asks you to build a model to predict the exact stock price next week, what kind of Machine Learning task are you performing?</h3><div class="options"><div class="option" data-value="a">Classification</div><div class="option" data-value="b">Clustering</div><div class="option" data-value="c">Time Series Classification</div><div class="option" data-value="d">Regression</div></div></div>
+                        <div class="question-block" data-answer="a"><h3><strong>11</strong>(Python/NumPy) Given a NumPy array arr = np.array([[1, 2, 3], [4, 5, 6]]), what is the result of arr.shape ?</h3><div class="options"><div class="option" data-value="a"><code>(2, 3)</code></div><div class="option" data-value="b"><code>(6,)</code></div><div class="option" data-value="c"><code>2</code></div><div class="option" data-value="d"><code>(3, 2)</code></div></div></div>
+                        <div class="question-block" data-answer="c"><h3><strong>12</strong>(Tableau) To calculate the percentage difference between the current year's sales and the previous year's sales in Tableau, which is the most appropriate feature category?</h3><div class="options"><div class="option" data-value="a">LOD Calculation</div><div class="option" data-value="b">Date Calculation (DATEPART)</div><div class="option" data-value="c">Table Calculation (e.g., LOOKUP or Percent Difference)</div><div class="option" data-value="d">Set Action</div></div></div>
+                        <div class="question-block" data-answer="a"><h3><strong>13</strong>(SQL/DDL) Which SQL command is used to add a new column named `Email` to an existing table named `Users`?</h3><div class="options"><div class="option" data-value="a"><code>ALTER TABLE Users ADD COLUMN Email VARCHAR(100);</code></div><div class="option" data-value="b"><code>UPDATE Users ADD Email;</code></div><div class="option" data-value="c"><code>INSERT COLUMN Email INTO Users;</code></div><div class="option" data-value="d"><code>ADD COLUMN Email TO Users;</code></div></div></div>
+                        <div class="question-block" data-answer="b"><h3><strong>14</strong>(Python) In Python, which standard built-in data type is immutable (cannot be changed after creation)?</h3><div class="options"><div class="option" data-value="a">List</div><div class="option" data-value="b">Tuple</div><div class="option" data-value="c">Dictionary</div><div class="option" data-value="d">Set</div></div></div>
+                        <div class="question-block" data-answer="a"><h3><strong>15</strong>(Tableau) If you drag a field like 'Customer Name' to the Rows shelf in Tableau, it is usually treated as a:</h3><div class="options"><div class="option" data-value="a">Dimension (Categorical)</div><div class="option" data-value="b">Measure (Quantitative)</div><div class="option" data-value="c">Parameter</div><div class="option" data-value="d">Set</div></div></div>
+                        <div class="question-block" data-answer="c"><h3><strong>16</strong>(ML Concept) A model with high bias and low variance typically suggests:</h3><div class="options"><div class="option" data-value="a">Overfitting</div><div class="option" data-value="b">Perfect fit</div><div class="option" data-value="c">Underfitting</div><div class="option" data-value="d">Data leakage</div></div></div>
+                        <div class="question-block" data-answer="d"><h3><strong>17</strong>(Python/Pandas) Which Pandas function is used to reshape data, calculating aggregate functions for multiple values and grouping variables into columns/rows (similar to pivot tables in Excel)?</h3><div class="options"><div class="option" data-value="a"><code>df.reshape()</code></div><div class="option" data-value="b"><code>df.transpose()</code></div><div class="option" data-value="c"><code>df.aggregate()</code></div><div class="option" data-value="d"><code>pd.pivot_table()</code></div></div></div>
+                        <div class="question-block" data-answer="a"><h3><strong>18</strong>(SQL) Which SQL clause is used to filter the results of a GROUP BY operation (e.g., filtering out product categories with less than 10 orders)?</h3><div class="options"><div class="option" data-value="a">HAVING</div><div class="option" data-value="b">WHERE</div><div class="option" data-value="c">FILTER</div><div class="option" data-value="d">ORDER BY</div></div></div>
+                        <div class="question-block" data-answer="b"><h3><strong>19</strong>(Data Preparation) Why is Min-Max Scaling often necessary before training a K-Nearest Neighbors (KNN) model?</h3><div class="options"><div class="option" data-value="a">It allows the model to run faster.</div><div class="option" data-value="b">KNN is distance-based, and large-range features would unfairly dominate the distance calculation.</div><div class="option" data-value="c">It is needed to convert categorical data to numerical data.</div><div class="option" data-value="d">It prevents overfitting on the training data.</div></div></div>
+                        <div class="question-block" data-answer="a"><h3><strong>20</strong>(Data Workflow) Which of these is typically the FIRST step in the data science workflow after understanding the business problem?</h3><div class="options"><div class="option" data-value="a">Data Collection / Acquisition</div><div class="option" data-value="b">Model Building</div><div class="option" data-value="c">Data Visualization</div><div class="option" data-value="d">Feature Engineering</div></div></div>
+                        <div class="question-block" data-answer="a"><h3><strong>21</strong>(Python/Pandas) Which Pandas method provides a concise summary of a DataFrame, including the data types, non-null values, and memory usage?</h3><div class="options"><div class="option" data-value="a"><code>.info()</code></div><div class="option" data-value="b"><code>.describe()</code></div><div class="option" data-value="c"><code>.shape()</code></div><div class="option" data-value="d"><code>.head()</code></div></div></div>
+                        <div class="question-block" data-answer="d"><h3><strong>22</strong>(ML Concept) When dealing with an imbalanced classification dataset (e.g., 95% negative, 5% positive), which metric is a better indicator of model performance than simple Accuracy?</h3><div class="options"><div class="option" data-value="a">Mean Absolute Error (MAE)</div><div class="option" data-value="b">R-Squared</div><div class="option" data-value="c">Loss Function Value</div><div class="option" data-value="d">F1-Score or AUC</div></div></div>
+                        <div class="question-block" data-answer="b"><h3><strong>23</strong>(SQL/DML) The SQL command used to permanently delete all rows from a table, but keep the table structure, is:</h3><div class="options"><div class="option" data-value="a">DROP TABLE</div><div class="option" data-value="b">TRUNCATE TABLE</div><div class="option" data-value="c">DELETE ALL FROM TABLE</div><div class="option" data-value="d">REMOVE TABLE</div></div></div>
+                        <div class="question-block" data-answer="c"><h3><strong>24</strong>(Python) Why is it considered best practice to use a virtual environment (like `venv` or `conda env`) for a new Python project?</h3><div class="options"><div class="option" data-value="a">It allows the code to run faster.</div><div class="option" data-value="b">It automatically compresses the project files.</div><div class="option" data-value="c">It isolates the project's dependencies from other Python projects and the global environment.</div><div class="option" data-value="d">It is required to import NumPy and Pandas.</div></div></div>
+                        <div class="question-block" data-answer="a"><h3><strong>25</strong>(Data Visualization) When creating a bar chart to compare the total sales across 15 different product categories, which best practice ensures readability?</h3><div class="options"><div class="option" data-value="a">Sort the bars by measure value (e.g., by sales amount).</div><div class="option" data-value="b">Use 3D effects to make the bars stand out.</div><div class="option" data-value="c">Use a wide variety of colors for each bar.</div><div class="option" data-value="d">Use a continuous axis for the categorical product names.</div></div></div>
+                        <button class="btn btn-primary" id="submit-exam-btn">Submit Final Exam</button>
+                    </div>
+                </div>
+
+                <div id="submission-step" class="exam-step hidden">
+                    <div id="confetti-container" class="confetti hidden"></div>
+                    
+                    <div id="result-icon" class="icon"></div>
+                    <h2 id="result-title">Exam Submitted</h2>
+                    <p id="result-message"></p>
+                    
+                    <div id="score-display" class="score-display">
+                        Your Score: <span id="final-score">--</span>/<span id="total-questions">--</span> 
+                        (<span id="final-percentage">--</span>%)
+                    </div>
+                    
+                    <div id="email-instructions" class="email-instructions hidden">
+                        <p>Excellent Work! 🎉 You have met the minimum score requirement (60%).</p>
+                        <p>To proceed, please email us with the following details:</p>
+                        <ul>
+                            <li>To: official.internadda@gmail.com</li>
+                            <li>Subject: Data Science Internship Application - [Your Full Name Here]</li>
+                            <li>Body: Mention your score (<span class="final-score-email">--</span>%) and registered email.</li>
+                            <li>Attachment: Screenshot of this results page.</li>
+                        </ul>
+                        <p>We will verify your score and session logs, then reply within 72 business hours.</p>
+                        <a href="#" id="email-link" class="btn btn-primary"><i class="fas fa-envelope"></i> Click to Open Email Draft</a>
+                    </div>
+                    
+                    <a href="../index.html" class="btn btn-outline" style="margin-top: 30px;">Back to Home</a>
+                </div>
+            </div>
+        </section>
+
+        <div id="messageOverlay" class="message-overlay"></div>
+        <div id="tabSwitchWarningBox" class="message-box">
+            <h3><i class="fas fa-exclamation-triangle" style="color: #c53030;"></i> Warning: Focus Lost</h3>
+            <p>Navigating away from the exam tab is logged. Continuous focus loss will lead to disqualification.</p>
+            <button id="resumeExamBtn" class="btn btn-primary">Resume Exam</button>
+        </div>
+        
+        <!-- Submission Confirmation Modal (Replaces confirm()) -->
+        <div id="submitConfirmBox" class="message-box">
+            <h3><i class="fas fa-question-circle" style="color: var(--primary);"></i> Confirm Submission</h3>
+            <p>Are you sure you want to submit your exam? You cannot change your answers after submitting.</p>
+            <button id="confirmSubmitBtn" class="btn btn-primary" style="margin-right: 10px;">Yes, Submit</button>
+            <button id="cancelSubmitBtn" class="btn btn-outline">Cancel</button>
+        </div>
+    </main>
+
+    <footer><div class="exam-container"><p>© 2025 Internadda. All rights reserved.</p></div></footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Get all HTML Elements ---
+            const instructionsStep = document.getElementById('instructions-step');
+            const examStep = document.getElementById('exam-step');
+            const submissionStep = document.getElementById('submission-step');
+            const startExamBtn = document.getElementById('start-exam-btn');
+            const submitExamBtn = document.getElementById('submit-exam-btn');
+            const timerEl = document.getElementById('timer');
+            const fixedTimerContainer = document.getElementById('fixed-timer-container');
+            const messageOverlay = document.getElementById('messageOverlay');
+            const tabSwitchWarningBox = document.getElementById('tabSwitchWarningBox');
+            const resumeExamBtn = document.getElementById('resumeExamBtn');
+            const resultIcon = document.getElementById('result-icon');
+            const resultTitle = document.getElementById('result-title');
+            const resultMessage = document.getElementById('result-message');
+            const finalScoreEl = document.getElementById('final-score');
+            const totalQuestionsEl = document.getElementById('total-questions');
+            const finalPercentageEl = document.getElementById('final-percentage');
+            const emailInstructions = document.getElementById('email-instructions');
+            const emailLink = document.getElementById('email-link');
+            const finalScoreEmailSpan = document.querySelector('.final-score-email'); 
+            const confettiContainer = document.getElementById('confetti-container');
+
+            // Custom Submission Modal Elements
+            const submitConfirmBox = document.getElementById('submitConfirmBox');
+            const confirmSubmitBtn = document.getElementById('confirmSubmitBtn');
+            const cancelSubmitBtn = document.getElementById('cancelSubmitBtn');
+
+            // --- Global State Variables ---
+            let examTimerInterval; 
+            let tabSwitchCount = 0; 
+            const MAX_TAB_SWITCHES = 2; 
+            let examStartTime = 0;
+
+            // --- Initial Page State (Starts directly at Instructions) ---
+            instructionsStep.classList.remove('hidden'); 
+            examStep.classList.add('hidden'); 
+            submissionStep.classList.add('hidden');
+            
+            // --- Helper: Format Time ---
+            function formatTime(seconds) { 
+                const mins = Math.floor(seconds / 60); 
+                const secs = seconds % 60; 
+                return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`; 
+            }
+
+            // --- 1. Instructions -> Exam Start (Directly on button click) ---
+            startExamBtn.addEventListener('click', proceedToExam);
+            
+            function proceedToExam() { 
+                instructionsStep.classList.add('hidden'); 
+                examStep.classList.remove('hidden'); 
+                fixedTimerContainer.classList.remove('hidden'); 
+                startTimer(); 
+            }
+
+            // --- Timer Logic ---
+            function startTimer() { 
+                let time = 1800; // 30 minutes
+                timerEl.textContent = formatTime(time); 
+                examStartTime = Date.now(); 
+                examTimerInterval = setInterval(() => { 
+                    if (document.hidden) return; // Pause timer if tab not visible
+                    time--; 
+                    timerEl.textContent = formatTime(time); 
+                    if (time <= 0) { 
+                        clearInterval(examTimerInterval); 
+                        if (!examStep.classList.contains('hidden')) { 
+                            submitExam(); // Auto-submit
+                        } 
+                    } 
+                }, 1000); 
+            }
+            
+            // --- Question Selection Logic ---
+            const questions = document.querySelectorAll('.question-block'); 
+            const totalQuestions = questions.length; 
+            totalQuestionsEl.textContent = totalQuestions;
+
+            questions.forEach(question => {
+                const options = question.querySelectorAll('.options .option');
+                options.forEach(opt => {
+                    opt.addEventListener('click', () => {
+                        options.forEach(o => o.classList.remove('selected'));
+                        opt.classList.add('selected');
+                        question.dataset.selectedValue = opt.dataset.value;
+                    });
+                });
+            });
+
+            // --- Submission Logic ---
+            function submitExam() {
+                if (examTimerInterval) clearInterval(examTimerInterval); 
+                
+                let score = 0;
+                questions.forEach(question => {
+                    if (question.dataset.selectedValue === question.dataset.answer) {
+                        score++;
+                    }
+                    // Disable options after submission
+                    question.querySelectorAll('.options .option').forEach(opt => opt.style.pointerEvents = 'none');
+                });
+
+                const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
+
+                // Update results display
+                finalScoreEl.textContent = score;
+                finalPercentageEl.textContent = percentage;
+                if(finalScoreEmailSpan) finalScoreEmailSpan.textContent = percentage; 
+
+                submissionStep.classList.remove('passed', 'failed'); // Reset classes
+
+                if (percentage >= 60) {
+                    submissionStep.classList.add('passed'); // Add success class
+                    resultIcon.className = 'icon fas fa-award success'; // Changed icon for success
+                    resultTitle.textContent = "Excellent Work! 🏆 Exam Qualified!";
+                    resultMessage.textContent = "Congratulations! You successfully passed the Data Science Exam. Follow the instructions below to begin your internship journey.";
+                    emailInstructions.classList.remove('hidden');
+
+                    // Confetti Effect Trigger
+                    confettiContainer.classList.remove('hidden');
+                    createConfetti();
+
+                    // --- IMPORTANT: Update Subject/Body for the SPECIFIC EXAM (Data Science here) ---
+                    const subject = encodeURIComponent(`Data Science Internship Application - [Your Full Name Here]`);
+                    const body = encodeURIComponent(
+                        `Dear Internadda Team,\n\nI have successfully completed the Data Science Final Exam with a score of ${percentage}%. My registered email is [Your Registered Email Address Here].\n\nPlease find attached a screenshot of my exam result page showing the score.\n\nI look forward to hearing about the next steps in the internship selection process.\n\nThank you,\n\n[Your Full Name Here]\n[Your Contact Number Here]\n[Link to your LinkedIn Profile, if available - Optional]`
+                    );
+                    emailLink.href = `mailto:official.internadda@gmail.com?subject=${subject}&body=${body}`;
+
+                } else {
+                    submissionStep.classList.add('failed'); // Add fail class
+                    resultIcon.className = 'icon fas fa-frown fail'; // Sad icon for not meeting requirement
+                    resultTitle.textContent = "Try Better Next Time";
+                    resultMessage.textContent = `Your score is ${percentage}%, which does not meet the 60% requirement. Don't worry, you can re-attempt the exam after 48 hours!`;
+                    emailInstructions.classList.add('hidden');
+                    confettiContainer.classList.add('hidden');
+                }
+
+                examStep.classList.add('hidden');
+                submissionStep.classList.remove('hidden');
+                timerEl.textContent = "Finished";
+                fixedTimerContainer.classList.add('hidden'); // Hide fixed timer
+            }
+            
+            // --- Custom Modal Functions ---
+            function showConfirmSubmission() {
+                messageOverlay.style.display = 'block';
+                submitConfirmBox.style.display = 'block';
+            }
+
+            function hideConfirmSubmission() {
+                messageOverlay.style.display = 'none';
+                submitConfirmBox.style.display = 'none';
+            }
+
+            submitExamBtn.addEventListener('click', showConfirmSubmission);
+            confirmSubmitBtn.addEventListener('click', () => {
+                hideConfirmSubmission();
+                submitExam();
+            });
+            cancelSubmitBtn.addEventListener('click', hideConfirmSubmission);
+
+
+            // --- Confetti Generator Function ---
+            function createConfetti() {
+                const numConfetti = 50;
+                const colors = ['var(--primary)', 'var(--success)', '#f6ad55', '#4299e1', '#ecc94b'];
+                for (let i = 0; i < numConfetti; i++) {
+                    const piece = document.createElement('div');
+                    piece.classList.add('confetti-piece');
+                    piece.style.left = `${Math.random() * 100}%`;
+                    piece.style.top = `${-20 - Math.random() * 20}%`;
+                    piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    piece.style.animationDelay = `${Math.random() * 0.5}s`;
+                    piece.style.animationDuration = `${3 + Math.random() * 2}s`;
+                    piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    confettiContainer.appendChild(piece);
+                }
+                // Clean up after the animation (optional but good practice)
+                setTimeout(() => {
+                    while (confettiContainer.firstChild) {
+                        confettiContainer.removeChild(confettiContainer.firstChild);
+                    }
+                    confettiContainer.classList.add('hidden');
+                }, 5000);
+            }
+            
+            // --- Anti-Cheat: Tab Switch Detection ---
+            document.addEventListener('visibilitychange', () => {
+                if (!examStep.classList.contains('hidden') && document.hidden) {
+                    tabSwitchCount++;
+                    if (examTimerInterval) clearInterval(examTimerInterval); 
+                    
+                    if (tabSwitchCount >= MAX_TAB_SWITCHES) {
+                        // Disqualify on second or later switch
+                        resultIcon.className = 'icon fas fa-exclamation-triangle fail'; 
+                        resultTitle.textContent = "Exam Disqualified"; 
+                        resultMessage.textContent = "Navigating away from exam tab multiple times. Your attempt is now invalid."; 
+                        document.getElementById('score-display').innerText = "Score: N/A"; 
+                        emailInstructions.classList.add('hidden'); 
+                        examStep.classList.add('hidden'); 
+                        submissionStep.classList.remove('hidden'); 
+                        timerEl.textContent = "Disqualified"; 
+                        messageOverlay.style.display = 'none'; 
+                        tabSwitchWarningBox.style.display = 'none';
+                        fixedTimerContainer.classList.add('hidden');
+                        
+                    } else { 
+                        // Show warning only on the first switch
+                        messageOverlay.style.display = 'block'; 
+                        tabSwitchWarningBox.style.display = 'block'; 
+                    }
+                }
+            });
+            
+            // --- Resume Exam after Warning ---
+            resumeExamBtn.addEventListener('click', () => {
+                tabSwitchWarningBox.style.display = 'none'; 
+                messageOverlay.style.display = 'none'; 
+                
+                // Resume timers
+                const elapsedSinceStart = Math.floor((Date.now() - examStartTime) / 1000); 
+                const remainingTime = (1800 - elapsedSinceStart > 0) ? 1800 - elapsedSinceStart : 0; 
+                startTimerFrom(remainingTime); 
+            });
+            
+            // --- Helper Function to Resume Timer ---
+            function startTimerFrom(startTimeInSeconds) { 
+                let time = startTimeInSeconds; 
+                if (examTimerInterval) clearInterval(examTimerInterval); 
+                timerEl.textContent = formatTime(time); 
+                examTimerInterval = setInterval(() => { 
+                    if (document.hidden) return; 
+                    time--; 
+                    timerEl.textContent = formatTime(time); 
+                    if (time <= 0) { 
+                        clearInterval(examTimerInterval); 
+                        if (!examStep.classList.contains('hidden')) { 
+                            submitExam(); 
+                        } 
+                    } 
+                }, 1000); 
+            }
+
+        }); // End DOMContentLoaded
+    </script>
+</body>
+</html>

@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & ML Final Exam — Internadda</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Modernized Styles & Animations */
+        :root {
+            --primary: #4c51bf; /* Deeper Indigo/Violet */
+            --dark: #1a202c;
+            --gray: #4a5568;
+            --warning: #f6ad55; /* More vibrant orange */
+            --success: #38a169;
+            --light: #f7fafc;
+            --accent: #38a169;
+            --hover-light: #f0f4ff; /* Light primary hover */
+        }
+        body { margin: 0; padding: 0; background-color: var(--light); font-family: 'Inter', sans-serif; color: var(--dark); }
+        .exam-container { max-width: 900px; margin: 40px auto; padding: 0 20px; position: relative; }
+        .exam-step { 
+            background: #fff; padding: 40px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-bottom: 30px; 
+            animation: fadeIn 0.5s ease-out; /* Step Animation */
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hidden { display: none !important; }
+
+        /* FIXED TIMER STYLES */
+        #fixed-timer-container {
+            position: fixed; /* Fixes timer position */
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #timer-label {
+            font-size: 0.8rem;
+            color: var(--dark);
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        #timer { 
+            font-size: 1.8rem; 
+            font-weight: 800; 
+            color: var(--primary); 
+            background-color: #fff; 
+            padding: 10px 15px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2); 
+            border: 2px solid var(--primary); 
+            animation: pulseText 1.5s infinite alternate; /* Timer Animation */
+        }
+        @keyframes pulseText { 0% { box-shadow: 0 0 0 0 rgba(76, 81, 191, 0.4); } 100% { box-shadow: 0 0 0 5px rgba(76, 81, 191, 0); } }
+
+        /* Header and Timer (Adjusted for fixed timer) */
+        .exam-header { 
+            display: flex; 
+            justify-content: center; /* Center the title */
+            align-items: center; 
+            margin-bottom: 30px; 
+            padding: 15px 25px; 
+            background: var(--primary); 
+            color: #fff; 
+            border-radius: 12px; 
+            animation: slideDown 0.5s ease-out; 
+        }
+        .exam-header h1 { font-size: 1.8rem; color: #fff; margin: 0; font-family: 'Poppins', sans-serif; }
+
+        /* Instructions Step Style */
+        #instructions-step h2 { text-align: center; font-size: 2.5rem; color: var(--primary); margin-bottom: 25px; } 
+        #instructions-step .instructions-list { margin: 30px auto; padding: 30px; background: var(--hover-light); border-left: 6px solid var(--warning); max-width: 700px; border-radius: 10px; } 
+        #instructions-step .instructions-list ul { padding-left: 25px; text-align: left; font-size: 1.1rem; line-height: 2; } 
+        #instructions-step .instructions-list li { margin-bottom: 12px; position: relative; } 
+        #instructions-step .instructions-list li::before { content: "\f058"; font-family: "Font Awesome 6 Free"; font-weight: 900; color: var(--success); position: absolute; left: -25px; font-size: 0.9em; }
+        .passing-score { font-weight: 800; color: #fff; background-color: var(--accent); padding: 3px 8px; border-radius: 6px; box-shadow: 0 2px 4px rgba(56, 161, 105, 0.4); } 
+        .strict-disclaimer { margin-top: 30px; padding: 25px; background: #fff5f5; border: 2px solid #fbb2b2; color: #c53030; font-weight: 700; border-radius: 10px; text-align: center; box-shadow: 0 4px 8px rgba(197, 48, 48, 0.1); } 
+        .strict-disclaimer i { margin-right: 10px; font-size: 1.2em; }
+
+        /* Exam Step Style */
+        #exam-step { padding-top: 20px; } 
+        .question-block { margin-bottom: 40px; border-bottom: 1px solid #e2e8f0; padding-bottom: 30px; opacity: 1; transform: none; }
+        .question-block:last-child { border-bottom: none; margin-bottom: 0; } 
+        .question-block h3 { font-size: 1.35rem; font-weight: 700; margin-bottom: 25px; line-height: 1.6; display: flex; align-items: flex-start; color: var(--dark); } 
+        .question-block h3 strong { display: inline-block; background: var(--primary); color: white; border-radius: 50%; width: 32px; height: 32px; line-height: 32px; text-align: center; margin-right: 15px; font-size: 1rem; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); } 
+        .options .option { background-color: var(--light); padding: 16px 20px; border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; transition: all 0.25s ease-in-out; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; font-size: 1.05rem; } 
+        .options .option::before { content: ''; display: inline-block; width: 18px; height: 18px; border: 2px solid var(--gray); border-radius: 50%; transition: all 0.2s ease; flex-shrink: 0; } 
+        .options .option:hover { background-color: var(--hover-light); border-color: var(--primary); transform: translateX(5px); } 
+        .options .option.selected { background-color: #ebf8ff; color: var(--primary); border-color: var(--primary); box-shadow: 0 0 0 3px rgba(76, 81, 191, 0.3); } 
+        .options .option.selected::before { background-color: var(--primary); border-color: var(--primary); box-shadow: inset 0 0 0 4px white; } 
+        
+        .btn { display: inline-block; padding: 14px 30px; font-size: 1.1rem; font-weight: 700; text-align: center; text-decoration: none; border-radius: 10px; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); border: 2px solid transparent; letter-spacing: 0.5px; } 
+        .btn-primary { background-color: var(--primary); color: #fff; box-shadow: 0 4px 10px rgba(76, 81, 191, 0.3); } 
+        .btn-primary:hover { background-color: #3f44af; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(76, 81, 191, 0.4); } 
+        .btn-outline {
+            background-color: transparent;
+            color: var(--dark);
+            border: 2px solid var(--dark);
+        }
+        .btn-outline:hover {
+            background-color: var(--dark);
+            color: white;
+        }
+
+        #submit-exam-btn { width: 100%; padding: 20px; font-size: 1.2rem; margin-top: 40px; }
+        
+        /* Modals/Messages (Only tab-switch retained) */
+        .message-box { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 30px 40px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); z-index: 1005; text-align: center; border-top: 6px solid var(--primary); max-width: 500px; width: 90%; animation: modalPop 0.3s ease-out; } 
+        .message-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); z-index: 1004; }
+        
+        /* Footer Centering Style */
+        footer { text-align: center; }
+
+        /* =======================================
+           * NEW/MODIFIED SUBMISSION STEP STYLES *
+           ======================================= */
+
+        /* Submission Step Overhaul */
+        #submission-step { 
+            text-align: center; 
+            padding: 60px 40px; /* Increased Padding */
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden; /* For Confetti/Effects */
+            border: none;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15); /* Stronger Shadow */
+            background: linear-gradient(145deg, #ffffff, #f0f4ff); /* Subtle Gradient */
+        }
+
+        #result-icon {
+            font-size: 5rem; /* Larger Icon */
+            margin-bottom: 20px;
+            animation: bounceIn 0.8s ease-out; /* Icon Animation */
+            display: block;
+        }
+
+        /* Success State Styles */
+        .icon.success { 
+            color: var(--success); 
+            text-shadow: 0 0 15px rgba(56, 161, 105, 0.6);
+        }
+        #submission-step.passed #result-title { 
+            font-size: 3.5rem; 
+            color: var(--success); 
+            font-family: 'Poppins', sans-serif; 
+            margin-top: 0;
+        }
+        #submission-step.passed #result-message { 
+            font-size: 1.35rem; 
+            color: var(--gray);
+            max-width: 600px;
+            margin: 15px auto 40px;
+            font-weight: 500;
+        }
+        #submission-step.passed .score-display {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--dark);
+            padding: 15px 30px;
+            background: var(--light);
+            border-radius: 12px;
+            border: 3px solid var(--success);
+            margin: 20px auto 30px;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(56, 161, 105, 0.2);
+        }
+
+        /* Failure State Styles */
+        .icon.fail { 
+            color: #e53e3e; /* Red for Disqualification/Failure */
+            animation: shake 0.5s;
+        }
+        #submission-step.failed {
+            background: #fffafa; /* Light Red Background */
+            border: 2px dashed #fbb6b6;
+        }
+        #submission-step.failed #result-title { 
+            font-size: 3rem; 
+            color: #e53e3e; 
+            font-family: 'Poppins', sans-serif; 
+            margin-top: 0;
+        }
+        #submission-step.failed #result-message { 
+            font-size: 1.2rem; 
+            color: var(--gray);
+            max-width: 600px;
+            margin: 15px auto 40px;
+            font-weight: 400;
+        }
+        #submission-step.failed .score-display {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+            padding: 10px 20px;
+            background: #fed7d7;
+            border-radius: 8px;
+            border: 2px solid #e53e3e;
+            margin: 20px auto 30px;
+            display: inline-block;
+        }
+
+        /* Email Instruction Card (Professional Look) */
+        #email-instructions {
+            background-color: #f0fdf4; /* Very Light Green for success */
+            border: 1px solid #a7f3d0;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: left;
+            margin-top: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        #email-instructions strong { color: var(--success); }
+        #email-instructions p { font-size: 1.05rem; line-height: 1.8; margin-bottom: 15px; }
+        #email-instructions ul { margin-left: 20px; padding-left: 0; list-style-type: none; }
+        #email-instructions li { margin-bottom: 10px; position: relative; padding-left: 20px; }
+        #email-instructions li::before { 
+            content: "\f00c"; /* Checkmark icon */
+            font-family: "Font Awesome 6 Free"; 
+            font-weight: 900; 
+            color: var(--success); 
+            position: absolute; 
+            left: 0; 
+        }
+        #email-link { 
+            margin-top: 25px; 
+            width: 100%; 
+            padding: 16px; 
+            font-size: 1.15rem;
+            background-color: var(--success);
+            box-shadow: 0 4px 10px rgba(56, 161, 105, 0.4);
+        }
+        #email-link:hover {
+            background-color: #2f855a;
+        }
+
+        /* Confetti Effect (Success Animation) */
+        .confetti {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 18px;
+            background: var(--primary);
+            top: 0;
+            opacity: 0;
+            transform-origin: 0% 0%;
+            animation: confetti 4s infinite;
+        }
+        .confetti-piece:nth-child(even) { background: var(--success); width: 12px; height: 16px; }
+        .confetti-piece:nth-child(3n) { background: #f6ad55; }
+        .confetti-piece:nth-child(4n) { background: #4299e1; }
+        .confetti-piece:nth-child(5n) { background: #ecc94b; }
+
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(500px) rotate(720deg); opacity: 0; }
+        }
+
+        /* Keyframe Animations */
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+    </style>
+</head>
+<body>
+    <header> 
+        <div class="exam-container header-container" style="display: flex; justify-content: space-between; align-items: center; padding-top: 20px;">
+            <a href="#" class="logo" style="text-decoration: none; color: var(--primary); display: flex; align-items: center; font-size: 1.8rem; font-weight: 800; font-family: 'Poppins', sans-serif;"><i class="fas fa-graduation-cap" style="margin-right: 10px;"></i><span class="logo-text">InternAdda</span></a>
+        </div>
+    </header>
+
+    <main>
+        <div id="fixed-timer-container" class="hidden">
+            <span id="timer-label">Time Remaining</span>
+            <div id="timer">30:00</div>
+        </div>
+
+        <section class="course-section">
+            <div class="exam-container">
+                <div id="instructions-step" class="exam-step">
+                    <h2><i class="fas fa-scroll"></i> Final Exam Instructions (AI & ML)</h2>
+                    <p style="text-align: center; font-size: 1.1rem; color: var(--dark); margin-bottom: 30px;">
+                        Welcome to the <strong>AI & Machine Learning Final Exam</strong>. This test evaluates your <strong>Practical, Real-World</strong> knowledge in <strong>Python, TensorFlow, ML Algorithms, and Deep Learning</strong>. Read all rules carefully before proceeding.
+                    </p>
+                    <div class="instructions-list">
+                        <ul>
+                            <li><strong>Duration:</strong> 30 minutes.</li>
+                            <li><strong>Passing Score:</strong>60% (15 out of 25 questions).</li>
+                            <li><strong>Proctoring:</strong> This is not a camera proctored exam, but integrity rules still apply.</li>
+                            <li><strong>Environment:</strong> You must be in a quiet room, alone. No external help is permitted.</li>
+                            <li><strong>Academic Integrity:</strong> No tab switching, other applications, or AI tools. Violations are logged and lead to disqualification.</li>
+                            <li><strong>Connectivity:</strong> A stable internet connection is mandatory.</li>
+                            <li><strong>Questions:</strong> 25 mandatory Multiple Choice Questions (MCQs) focusing on daily-life and business scenarios.</li>
+                            <li><strong>Submission:</strong> The exam auto-submits at time up or submit manually. No changes can be made after submission.</li>
+                        </ul>
+                    </div>
+                    <div class="strict-disclaimer"><i class="fas fa-exclamation-triangle"></i> <strong>Strict Anti-Cheating Policy:</strong> Starting confirms you accept these rules. Violations will lead to disqualification and a permanent ban.</div>
+                    <button class="btn btn-primary" id="start-exam-btn" style="width: 100%; padding: 20px; font-size: 1.2rem; margin-top: 30px;">Acknowledge and Start Exam</button>
+                </div>
+
+                <div id="exam-step" class="exam-step hidden">
+                    <div class="exam-header">
+                        <h1>Practical AI & ML Final Exam</h1>
+                    </div>
+                    <div id="quiz-container">
+                        <div class="question-block" data-answer="b"><h3><strong>1</strong> A food delivery startup wants to predict which customers are likely to stop ordering next month. Which Machine Learning task is best suited for this Customer Churn prediction?</h3><div class="options"><div class="option" data-value="a">Regression</div><div class="option" data-value="b">Binary Classification</div><div class="option" data-value="c">Clustering</div><div class="option" data-value="d">Reinforcement Learning</div></div></div>
+                        <div class="question-block" data-answer="d"><h3><strong>2</strong> You are developing an ML model to identify fraudulent credit card transactions. You discover only 0.5% of your data is fraudulent. Which metric is the least reliable for evaluating this highly imbalanced scenario?</h3><div class="options"><div class="option" data-value="a">Recall</div><div class="option" data-value="b">F1-Score</div><div class="option" data-value="c">Area Under Curve (AUC)</div><div class="option" data-value="d">Accuracy</div></div></div>
+                        <div class="question-block" data-answer="a"><h3><strong>3</strong> Your e-commerce website uses a recommendation system. A user views a product, and the system instantly recommends 5 related items. Which ML approach is most likely used for this real-time 'similar item' recommendation?</h3><div class="options"><div class="option" data-value="a">K-Nearest Neighbors (KNN) or collaborative filtering</div><div class="option" data-value="b">Linear Regression</div><div class="option" data-value="c">Time Series Forecasting</div><div class="option" data-value="d">K-Means Clustering</div></div></div>
+                        <div class="question-block" data-answer="c"><h3><strong>4</strong> A logistics company wants to predict the ideal delivery time (a continuous value in minutes) for a parcel based on traffic and weather. Which type of ML algorithm should be used?</h3><div class="options"><div class="option" data-value="a">Classification</div><div class="option" data-value="b">Clustering</div><div class="option" data-value="c">Regression</div><div class="option" data-value="d">Association Rule Mining</div></div></div>
+                        <div class="question-block" data-answer="b"><h3><strong>5</strong> You're training a custom object detection model using TensorFlow. To make the model robust against pictures taken from slightly different angles or lighting, what technique is most critical to use on your input images?</h3><div class="options"><div class="option" data-value="a">Feature Scaling (Normalization)</div><div class="option" data-value="b">Data Augmentation (Rotation, Cropping, Flipping)</div><div class="option" data-value="c">One-Hot Encoding</div><div class="option" data-value="d">Principal Component Analysis (PCA)</div></div></div>
+                        <div class="question-block" data-answer="a"><h3><strong>6</strong> A bank's internal memo mentions that their new loan approval ML model shows a significant 'bias' against a certain demographic. This indicates a failure in which crucial area of responsible AI?</h3><div class="options"><div class="option" data-value="a">Fairness and Transparency</div><div class="option" data-value="b">Hardware Acceleration</div><div class="option" data-value="c">Gradient Descent Optimization</div><div class="option" data-value="d">Curse of Dimensionality</div></div></div>
+                        <div class="question-block" data-answer="d"><h3><strong>7</strong> A data scientist needs to build a model that predicts whether a stock's price will go up or down tomorrow based on today's and yesterday's price movements. Which architecture is best for handling this kind of sequential data dependency?</h3><div class="options"><div class="option" data-value="a">Feedforward Neural Network (FNN)</div><div class="option" data-value="b">K-Means Clustering</div><div class="option" data-value="c">Convolutional Neural Network (CNN)</div><div class="option" data-value="d">Recurrent Neural Network (RNN) or LSTM</div></div></div>
+                        <div class="question-block" data-answer="c"><h3><strong>8</strong> In a large dataset for house price prediction, the 'zip code' feature has 10,000 unique values. Converting this feature using One-Hot Encoding will likely lead to which practical problem?</h3><div class="options"><div class="option" data-value="a">Vanishing Gradient</div><div class="option" data-value="b">Overfitting the labels</div><div class="option" data-value="c">Curse of Dimensionality</div><div class="option" data-value="d">High Bias</div></div></div>
+                        <div class="question-block" data-answer="b"><h3><strong>9</strong> You are using a complex Deep Learning model that is overfitting badly. What is the most common technique used to regularize and prevent this problem in a neural network?</h3><div class="options"><div class="option" data-value="a">Increasing the size of the training dataset only.</div><div class="option" data-value="b">Adding Dropout layers.</div><div class="option" data-value="c">Decreasing the number of layers.</div><div class="option" data-value="d">Using a linear activation function.</div></div></div>
+                        <div class="question-block" data-answer="d"><h3><strong>10</strong> When deploying an image classification model (like identifying defects on a production line), what is the primary role of the Softmax activation function in the final layer?</h3><div class="options"><div class="option" data-value="a">To convert inputs into binary (0 or 1) outputs.</div><div class="option" data-value="b">To introduce non-linearity into the model.</div><div class="option" data-value="c">To perform feature extraction.</div><div class="option" data-value="d">To output a probability distribution across all possible defect types.</div></div></div>
+                        <div class="question-block" data-answer="a"><h3><strong>11</strong> A movie streaming company wants to automatically categorize its new film library into genres (Action, Comedy, Drama, etc.). This is an example of what type of supervised learning?</h3><div class="options"><div class="option" data-value="a">Multi-Class Classification</div><div class="option" data-value="b">Binary Classification</div><div class="option" data-value="c">Clustering</div><div class="option" data-value="d">Dimension Reduction</div></div></div>
+                        <div class="question-block" data-answer="c"><h3><strong>12</strong> In a self-driving car system using Reinforcement Learning, the reward function is designed to maximize safety. What would be the strongest negative reward given to the agent?</h3><div class="options"><div class="option" data-value="a">Driving slightly over the speed limit.</div><div class="option" data-value="b">Making a wide turn.</div><div class="option" data-value="c">Causing a collision.</div><div class="option" data-value="d">Arriving 5 minutes late to the destination.</div></div></div>
+                        <div class="question-block" data-answer="d"><h3><strong>13</strong> You are using Transfer Learning to build a custom dog breed classifier. What does this process primarily involve?</h3><div class="options"><div class="option" data-value="a">Creating a model from scratch with a small dataset.</div><div class="option" data-value="b">Using a simpler algorithm like Linear Regression.</div><div class="option" data-value="c">Training a single massive layer network.</div><div class="option" data-value="d">Re-using a pre-trained model (like VGG or ResNet) on a massive image database and fine-tuning its final layers.</div></div></div>
+                        <div class="question-block" data-answer="b"><h3><strong>14</strong> A medical diagnostic tool is built to detect a rare disease. A False Negative (Failing to detect a sick patient) is extremely dangerous. Which metric should you prioritize to minimize False Negatives?</h3><div class="options"><div class="option" data-value="a">Precision</div><div class="option" data-value="b">Recall (Sensitivity)</div><div class="option" data-value="c">Specificity</div><div class="option" data-value="d">Accuracy</div></div></div>
+                        <div class="question-block" data-answer="c"><h3><strong>15</strong> Your goal is to simplify a dataset with 50 highly correlated features into a smaller set of 10 uncorrelated features, while retaining most of the variance. Which technique is most appropriate?</h3><div class="options"><div class="option" data-value="a">L1 Regularization</div><div class="option" data-value="b">Feature Selection</div><div class="option" data-value="c">Principal Component Analysis (PCA)</div><div class="option" data-value="d">One-Hot Encoding</div></div></div>
+                        <div class="question-block" data-answer="a"><h3><strong>16</strong> An online forum is constantly flooded with hate speech, and you need a system to flag new comments automatically. Which NLP technique is most effective for converting text into numerical inputs for a classifier model?</h3><div class="options"><div class="option" data-value="a">Word Embeddings (like Word2Vec, GloVe, or BERT)</div><div class="option" data-value="b">Stemming and Lemmatization only</div><div class="option" data-value="c">Viterbi Algorithm</div><div class="option" data-value="d">HMM (Hidden Markov Models)</div></div></div>
+                        <div class="question-block" data-answer="d"><h3><strong>17</strong> You are building a model ensemble where subsequent models are trained to specifically fix the errors made by previous models. Which technique are you using?</h3><div class="options"><div class="option" data-value="a">Bagging (Random Forest)</div><div class="option" data-value="b">Stacking</div><div class="option" data-value="c">Bootstrap Aggregating</div><div class="option" data-value="d">Boosting (e.g., XGBoost, AdaBoost)</div></div></div>
+                        <div class="question-block" data-answer="b"><h3><strong>18</strong> A manufacturing plant monitors machine sensor data to detect when a machine is about to fail. This is a crucial, rare event. Which unsupervised ML technique is typically used to spot these abnormal sensor readings?</h3><div class="options"><div class="option" data-value="a">K-Means Clustering</div><div class="option" data-value="b">Anomaly Detection (Outlier Detection)</div><div class="option" data-value="c">Market Basket Analysis</div><div class="option" data-value="d">Linear Regression</div></div></div>
+                        <div class="question-block" data-answer="a"><h3><strong>19</strong> Your marketing team segments customers into distinct groups based on purchasing history without pre-defining the segments. This is a classic example of:</h3><div class="options"><div class="option" data-value="a">Unsupervised Learning (Clustering)</div><div class="option" data-value="b">Supervised Learning (Classification)</div><div class="option" data-value="c">Feature Engineering</div><div class="option" data-value="d">Dimensionality Reduction</div></div></div>
+                        <div class="question-block" data-answer="c"><h3><strong>20</strong> You notice the weights in your Deep Neural Network are becoming extremely large during training, leading to NaNs (Not a Number) in the output. This phenomenon is known as:</h3><div class="options"><div class="option" data-value="a">Vanishing Gradient</div><div class="option" data-value="b">Overfitting</div><div class="option" data-value="c">Gradient Explosion</div><div class="option" data-value="d">High Bias</div></div></div>
+                        <div class="question-block" data-answer="b"><h3><strong>21</strong> An oil company wants to predict the exact oil barrel price next week. This involves predicting a future numerical value based on a sequence of past values. Which model type is required?</h3><div class="options"><div class="option" data-value="a">Standard Regression Model</div><div class="option" data-value="b">Time Series Forecasting Model (e.g., ARIMA, LSTM)</div><div class="option" data-value="c">Clustering Model</div><div class="option" data-value="d">Decision Tree Classifier</div></div></div>
+                        <div class="question-block" data-answer="a"><h3><strong>22</strong> When designing a Convolutional Neural Network (CNN) for image processing, which component is primarily responsible for extracting local features like edges, lines, and corners from the image?</h3><div class="options"><div class="option" data-value="a">Convolutional Layer (using Kernels/Filters)</div><div class="option" data-value="b">Pooling Layer</div><div class="option" data-value="c">Fully Connected Layer</div><div class="option" data-value="d">Softmax Layer</div></div></div>
+                        <div class="question-block" data-answer="d"><h3><strong>23</strong> During the data preprocessing stage for a new project, you accidentally include a column that contains the true target value for each row, but disguised in another format. This leads to unrealistically high performance on the test set. What is this common mistake called?</h3><div class="options"><div class="option" data-value="a">Overfitting</div><div class="option" data-value="b">Underfitting</div><div class="option" data-value="c">High Variance</div><div class="option" data-value="d">Data Leakage</div></div></div>
+                        <div class="question-block" data-answer="c"><h3><strong>24</strong> You have a simple ML model (e.g., Linear Regression) that performs poorly on both the training data and the test data. This is a classic sign of:</h3><div class="options"><div class="option" data-value="a">High Variance (Overfitting)</div><div class="option" data-value="b">Feature Scaling Error</div><div class="option" data-value="c">High Bias (Underfitting)</div><div class="option" data-value="d">Lack of Regularization</div></div></div>
+                        <div class="question-block" data-answer="a"><h3><strong>25</strong> A large company wants to automate its customer service responses for common inquiries. The AI needs to understand the customer's intent from their text input. This capability is known in NLP as:</h3><div class="options"><div class="option" data-value="a">Intent Classification</div><div class="option" data-value="b">Machine Translation</div><div class="option" data-value="c">Part-of-Speech Tagging</div><div class="option" data-value="d">Topic Modeling</div></div></div>
+
+                        <button class="btn btn-primary" id="submit-exam-btn">Submit Final Exam</button>
+                    </div>
+                </div>
+
+                <div id="submission-step" class="exam-step hidden">
+                    <div id="confetti-container" class="confetti hidden"></div>
+                    
+                    <div id="result-icon" class="icon"></div>
+                    <h2 id="result-title">Exam Submitted</h2>
+                    <p id="result-message"></p>
+                    
+                    <div id="score-display" class="score-display">
+                        Your Score: <span id="final-score">--</span>/<span id="total-questions">--</span> 
+                        (<span id="final-percentage">--</span>%)
+                    </div>
+                    
+                    <div id="email-instructions" class="email-instructions hidden">
+                        <p><strong>Excellent Work!</strong> 🎉 You have met the minimum score requirement (60%).</p>
+                        <p>To proceed, please <strong>email us with the following details:</strong></p>
+                        <ul>
+                            <li><strong>To:</strong> official.internadda@gmail.com</li>
+                            <li><strong>Subject:</strong> AI & ML Internship Application - [Your Full Name Here]</li>
+                            <li><strong>Body:</strong> Mention your score (<span class="final-score-email">--</span>%) and registered email.</li>
+                            <li><strong>Attachment:</strong> Screenshot of this results page.</li>
+                        </ul>
+                        <p>We will verify your score and session logs, then reply within <strong>72 business hours</strong>.</p>
+                        <a href="#" id="email-link" class="btn btn-primary"><i class="fas fa-envelope"></i> Click to Open Email Draft</a>
+                    </div>
+                    
+                    <a href="../index.html" class="btn btn-outline" style="margin-top: 30px;">Back to Home</a>
+                </div>
+            </div>
+        </section>
+
+        <div id="messageOverlay" class="message-overlay"></div>
+        <div id="tabSwitchWarningBox" class="message-box">
+            <h3><i class="fas fa-exclamation-triangle" style="color: #c53030;"></i> Warning: Focus Lost</h3>
+            <p>Navigating away from the exam tab is logged. Continuous focus loss will lead to disqualification.</p>
+            <button id="resumeExamBtn" class="btn btn-primary">Resume Exam</button>
+          </div>
+    </main>
+
+    <footer><div class="exam-container"><p>© 2025 Internadda. All rights reserved.</p></div></footer>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get Elements
+            const instructionsStep = document.getElementById('instructions-step');
+            const examStep = document.getElementById('exam-step');
+            const submissionStep = document.getElementById('submission-step');
+            const startExamBtn = document.getElementById('start-exam-btn');
+            const submitExamBtn = document.getElementById('submit-exam-btn');
+            const timerEl = document.getElementById('timer');
+            const fixedTimerContainer = document.getElementById('fixed-timer-container');
+            const messageOverlay = document.getElementById('messageOverlay');
+            const tabSwitchWarningBox = document.getElementById('tabSwitchWarningBox');
+            const resumeExamBtn = document.getElementById('resumeExamBtn');
+            const resultIcon = document.getElementById('result-icon');
+            const resultTitle = document.getElementById('result-title');
+            const resultMessage = document.getElementById('result-message');
+            const finalScoreEl = document.getElementById('final-score');
+            const totalQuestionsEl = document.getElementById('total-questions');
+            const finalPercentageEl = document.getElementById('final-percentage');
+            const emailInstructions = document.getElementById('email-instructions');
+            const emailLink = document.getElementById('email-link');
+            const finalScoreEmailSpan = document.querySelector('.final-score-email'); 
+            const confettiContainer = document.getElementById('confetti-container');
+ 
+            // State
+            let examTimerInterval; let tabSwitchCount = 0; const MAX_TAB_SWITCHES = 2; let examStartTime = 0;
+ 
+            // Initial State
+            instructionsStep.classList.remove('hidden'); examStep.classList.add('hidden'); submissionStep.classList.add('hidden');
+ 
+            // Helper
+            function formatTime(seconds) { const mins = Math.floor(seconds / 60); const secs = seconds % 60; return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`; }
+ 
+            // Instructions -> Exam Start (Directly)
+            startExamBtn.addEventListener('click', proceedToExam);
+            
+            function proceedToExam() { 
+                instructionsStep.classList.add('hidden'); 
+                examStep.classList.remove('hidden'); 
+                fixedTimerContainer.classList.remove('hidden'); 
+                startTimer(); 
+            }
+ 
+            // Exam Timers
+            function startTimer() { 
+                let time = 1800; // 30 minutes
+                timerEl.textContent = formatTime(time); 
+                examStartTime = Date.now(); 
+                examTimerInterval = setInterval(() => { 
+                    if (document.hidden) return; 
+                    time--; 
+                    timerEl.textContent = formatTime(time); 
+                    if (time <= 0) { 
+                        clearInterval(examTimerInterval); 
+                        if (!examStep.classList.contains('hidden')) { 
+                            submitExam(); 
+                        } 
+                    } 
+                }, 1000); 
+            }
+ 
+            // Question Selection
+            const questions = document.querySelectorAll('.question-block'); 
+            const totalQuestions = questions.length; 
+            totalQuestionsEl.textContent = totalQuestions;
+            questions.forEach(q => { 
+                const opts = q.querySelectorAll('.options .option'); 
+                opts.forEach(opt => opt.addEventListener('click', () => { 
+                    opts.forEach(o => o.classList.remove('selected')); 
+                    opt.classList.add('selected'); 
+                    q.dataset.selectedValue = opt.dataset.value; 
+                })); 
+            });
+ 
+            // Submission (UPDATED for Confetti/New Styling)
+            function submitExam() {
+                 if (examTimerInterval) clearInterval(examTimerInterval); 
+                 let score = 0;
+                 questions.forEach(q => { 
+                     if (q.dataset.selectedValue === q.dataset.answer) score++; 
+                     q.querySelectorAll('.options .option').forEach(opt => opt.style.pointerEvents = 'none'); 
+                 });
+
+                 const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
+                 finalScoreEl.textContent = score; 
+                 finalPercentageEl.textContent = percentage;
+                 if(finalScoreEmailSpan) finalScoreEmailSpan.textContent = percentage; 
+ 
+                 submissionStep.classList.remove('passed', 'failed'); // Reset classes
+
+                 if (percentage >= 60) {
+                     submissionStep.classList.add('passed'); // Add success class
+                     resultIcon.className = 'icon fas fa-award success'; // Changed icon for success
+                     resultTitle.textContent = "Excellent Work! 🏆 Exam Qualified!"; 
+                     resultMessage.textContent = "Congratulations! You successfully passed the Practical AI & ML Exam. Follow the instructions below to begin your internship journey."; 
+                     emailInstructions.classList.remove('hidden');
+
+                     // Confetti Effect Trigger
+                     confettiContainer.classList.remove('hidden');
+                     createConfetti();
+
+                     // Update Email Link
+                      const subject = encodeURIComponent(`AI & ML Internship Application - [Your Full Name Here]`); 
+                      const body = encodeURIComponent(
+                          `Dear Internadda Team,\n\nI have successfully completed the AI & Machine Learning Final Exam with a score of ${percentage}%. My registered email is [Your Registered Email Address Here].\n\nPlease find attached a screenshot of my exam result page showing the score.\n\nI look forward to hearing about the next steps in the internship selection process.\n\nThank you,\n\n[Your Full Name Here]\n[Your Contact Number Here]\n[Link to your LinkedIn Profile, if available - Optional]`
+                           );
+                      emailLink.href = `mailto:official.internadda@gmail.com?subject=${subject}&body=${body}`;
+                 } else {
+                     submissionStep.classList.add('failed'); // Add fail class
+                     resultIcon.className = 'icon fas fa-frown fail'; // Sad icon for not meeting requirement
+                     resultTitle.textContent = "Try Better Next Time"; 
+                     resultMessage.textContent = `Your score is ${percentage}%, which does not meet the 60% requirement. Don't worry, you can re-attempt the exam after 48 hours!`; 
+                     emailInstructions.classList.add('hidden');
+                     confettiContainer.classList.add('hidden');
+                 }
+
+                 examStep.classList.add('hidden'); 
+                 submissionStep.classList.remove('hidden'); 
+                 timerEl.textContent = "Finished";
+                 fixedTimerContainer.classList.add('hidden'); // Hide fixed timer
+            }
+            submitExamBtn.addEventListener('click', () => { if(confirm("Submit exam?")) { submitExam(); } });
+ 
+            // Confetti Generator Function
+            function createConfetti() {
+                const numConfetti = 50;
+                const colors = ['var(--primary)', 'var(--success)', '#f6ad55', '#4299e1', '#ecc94b'];
+                for (let i = 0; i < numConfetti; i++) {
+                    const piece = document.createElement('div');
+                    piece.classList.add('confetti-piece');
+                    piece.style.left = `${Math.random() * 100}%`;
+                    piece.style.top = `${-20 - Math.random() * 20}%`;
+                    piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    piece.style.animationDelay = `${Math.random() * 0.5}s`;
+                    piece.style.animationDuration = `${3 + Math.random() * 2}s`;
+                    piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    confettiContainer.appendChild(piece);
+                }
+                // Clean up after the animation (optional but good practice)
+                setTimeout(() => {
+                    while (confettiContainer.firstChild) {
+                        confettiContainer.removeChild(confettiContainer.firstChild);
+                    }
+                    confettiContainer.classList.add('hidden');
+                }, 5000);
+            }
+
+            // Anti-Cheat (Tab Switch)
+            document.addEventListener('visibilitychange', () => {
+                 if (!examStep.classList.contains('hidden') && document.hidden) {
+                     tabSwitchCount++; 
+                     if (examTimerInterval) clearInterval(examTimerInterval); 
+                     
+                     if (tabSwitchCount >= MAX_TAB_SWITCHES) {
+                         resultIcon.className = 'icon fas fa-exclamation-triangle fail'; 
+                         resultTitle.textContent = "Exam Disqualified"; 
+                         resultMessage.textContent = "Navigating away from exam tab multiple times. Your attempt is now invalid."; 
+                         // Use innerText for consistency
+                         document.getElementById('score-display').innerText = "Score: N/A"; 
+                         emailInstructions.classList.add('hidden'); 
+                         examStep.classList.add('hidden'); 
+                         submissionStep.classList.remove('hidden'); 
+                         timerEl.textContent = "Disqualified"; 
+                         messageOverlay.style.display = 'none'; 
+                         tabSwitchWarningBox.style.display = 'none';
+                         fixedTimerContainer.classList.add('hidden');
+                     } else { 
+                         messageOverlay.style.display = 'block'; 
+                         tabSwitchWarningBox.style.display = 'block'; 
+                     }
+                 }
+            });
+            resumeExamBtn.addEventListener('click', () => {
+                 tabSwitchWarningBox.style.display = 'none'; 
+                 messageOverlay.style.display = 'none'; 
+                 const elapsedSinceStart = Math.floor((Date.now() - examStartTime) / 1000); 
+                 const remainingTime = (1800 - elapsedSinceStart > 0) ? 1800 - elapsedSinceStart : 0; 
+                 startTimerFrom(remainingTime); 
+            });
+            function startTimerFrom(startTimeInSeconds) { 
+                 let time = startTimeInSeconds; 
+                 if (examTimerInterval) clearInterval(examTimerInterval); 
+                 timerEl.textContent = formatTime(time); 
+                 examTimerInterval = setInterval(() => { 
+                     if (document.hidden) return; 
+                     time--; 
+                     timerEl.textContent = formatTime(time); 
+                     if (time <= 0) { 
+                         clearInterval(examTimerInterval); 
+                         if (!examStep.classList.contains('hidden')) { 
+                             submitExam(); 
+                         } 
+                     } 
+                 }, 1000); 
+            }
+ 
+        }); // End DOMContentLoaded
+      </script>
+</body>
+</html>

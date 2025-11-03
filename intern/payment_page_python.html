@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Exam Fee Payment — Python Developer Internship</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght[700]&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Modernized Styles & Animations */
+        :root {
+            --primary: #4c51bf; /* Deeper Indigo/Violet */
+            --dark: #1a202c;
+            --gray: #4a5568;
+            --success: #38a169;
+            --light: #f7fafc;
+            --hover-light: #f0f4ff; /* Light primary hover */
+            /* Adjusted Meter Colors: Green to Yellow, minimal Red hint */
+            --meter-start-color: #38a169; /* Green (Easy) */
+            --meter-mid-color: #f6ad55; /* Orange/Yellow (Moderate) */
+            --meter-end-color: #e53e3e; /* Red (Advanced) */
+            --moderate-fill-height: 45%; /* Fill to 45% for Moderate */
+            --moderate-color: #f6ad55; /* Use mid-color for text */
+        }
+        body { margin: 0; padding: 0; background-color: var(--light); font-family: 'Inter', sans-serif; color: var(--dark); }
+        .exam-container { max-width: 900px; margin: 40px auto; padding: 0 20px; position: relative; }
+        .exam-step { 
+            background: #fff; padding: 40px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-bottom: 30px; 
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Header */
+        .header-container { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; }
+        .logo { text-decoration: none; color: var(--primary); display: flex; align-items: center; font-size: 1.8rem; font-weight: 800; font-family: 'Poppins', sans-serif;}
+        .logo i { margin-right: 10px; }
+
+        /* Payment Step Style */
+        #payment-step { text-align: center; } 
+        #payment-step h2 { font-size: 2.5rem; margin-bottom: 20px; color: var(--primary); animation: slideInUp 0.5s ease-out; } 
+        #payment-step p { font-size: 1.15rem; color: var(--gray); margin-bottom: 25px; max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.6;} 
+        
+        /* EXAM OVERVIEW BOX */
+        .details-box {
+            background: linear-gradient(145deg, #f0f4ff, #e2e8f0);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: left;
+            margin-top: 25px;
+            box-shadow: 0 6px 15px rgba(76, 81, 191, 0.15);
+        }
+        .details-box h3 { 
+            font-size: 1.5rem; color: var(--dark); margin-top: 0; display: flex; align-items: center; 
+            border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 15px; margin-bottom: 20px;
+        }
+        .details-box h3 i { margin-right: 15px; color: var(--primary); font-size: 1.2em; } 
+
+        .exam-detail-grid {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+        .exam-details-left {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; 
+        }
+        .detail-row {
+            display: flex;
+            align-items: flex-start;
+            line-height: 1.5;
+            padding-left: 10px;
+        }
+        .detail-row i {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-right: 15px;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+        .detail-row span {
+            font-size: 1.15rem; 
+            font-weight: 600;
+            color: var(--dark);
+        }
+        .detail-label {
+            font-weight: 500;
+            color: var(--gray);
+            margin-right: 10px;
+        }
+        .detail-value {
+            font-weight: 700;
+            color: var(--dark);
+        }
+        .skill-list {
+            display: inline-flex; 
+            flex-wrap: wrap; 
+            gap: 8px; 
+            margin-top: 5px;
+        }
+        .skill-list span {
+            display: inline-block;
+            background: #c3dafe;
+            color: var(--primary);
+            padding: 4px 10px; 
+            border-radius: 6px; 
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        /* DYNAMIC DIFFICULTY METER (MODERATE ADJUSTMENTS) */
+        .difficulty-visual {
+            text-align: center;
+            padding: 15px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            animation: popIn 0.5s ease-out;
+        }
+        .difficulty-visual h4 {
+            margin: 0 0 10px 0;
+            font-size: 1.1rem;
+            color: var(--dark);
+        }
+        .meter-bar-container {
+            display: flex;
+            flex-direction: column-reverse; 
+            height: 100px; 
+            width: 30px;
+            background: #cbd5e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 10px auto;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+        }
+        .meter-fill {
+            width: 100%;
+            height: var(--moderate-fill-height); /* MODERATE FILL HEIGHT */
+            background: linear-gradient(to top, var(--meter-start-color), var(--meter-mid-color) 70%, var(--meter-end-color) 90%); 
+            transition: height 1s ease-out;
+            animation: fillMeter 1.5s forwards;
+        }
+        @keyframes fillMeter {
+            from { height: 0; }
+            to { height: var(--moderate-fill-height); } /* Fill to MODERATE height */
+        }
+
+        /* Media Query for Mobile View: Hide Difficulty Meter */
+        @media (max-width: 768px) {
+            .exam-detail-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .difficulty-visual {
+                display: none; 
+            }
+        }
+        /* End Media Query */
+
+        /* BUTTON STYLES OVERRIDES/ADJUSTMENTS */
+        #payment-button-container { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            margin: 40px 0; 
+        }
+        /* Overriding some properties from original CSS to respect new button's inline style, but keeping hover animation */
+        .button-container:hover { 
+            transform: translateY(-4px); 
+            box-shadow: 0 10px 25px rgba(29, 59, 226, 0.5); /* Keeping the hover effect */
+        }
+        a { text-decoration: none; }
+        
+        /* Footer */
+        footer { background-color: #e2e8f0; padding: 30px 0; border-top: 1px solid #cbd5e0; text-align: center; color: var(--gray); margin-top: 50px; }
+    </style>
+</head>
+<body>
+    <header> 
+        <div class="exam-container header-container">
+            <a href="#" class="logo"><i class="fas fa-graduation-cap"></i><span class="logo-text">InternAdda</span></a>
+        </div>
+    </header>
+
+    <main>
+        <section class="course-section">
+            <div class="exam-container">
+                <div id="payment-step" class="exam-step">
+                    <h2><i class="fas fa-file-invoice-dollar"></i> Secure Exam Fee Payment</h2> 
+                    
+                    <p>This fee grants you access to the <b>Python Developer Final Exam</b>, a mandatory, proctored step in our internship selection process. The fee covers professional, real-time proctoring services to ensure a fair and secure evaluation for all candidates.</p>
+                    
+                    <div class="details-box">
+                        <h3><i class="fas fa-laptop-code"></i> Python Developer Assessment Overview</h3>
+                        
+                        <div class="exam-detail-grid">
+                            <div class="exam-details-left">
+                                
+                                <div class="detail-row">
+                                    <i class="fas fa-brain"></i> 
+                                    <div>
+                                        <span class="detail-label">Assessment Topic:</span><br>
+                                        <span class="detail-value">Python Web Development & Database Integration</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="detail-row">
+                                    <i class="fas fa-code"></i> 
+                                    <div>
+                                        <span class="detail-label">Key Skills Tested:</span><br>
+                                        <div class="skill-list">
+                                            <span>Python</span>
+                                            <span>Flask/Django</span>
+                                            <span>SQL</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="detail-row">
+                                    <i class="fas fa-clock"></i> 
+                                    <div>
+                                        <span class="detail-label">Exam Format:</span><br>
+                                        <span class="detail-value">25 MCQs | 30 Minutes Duration</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="difficulty-visual">
+                                <h4>Difficulty Level:</h4>
+                                <div class="meter-bar-container">
+                                    <div class="meter-fill" style="height: var(--moderate-fill-height);"></div>
+                                </div>
+                                <span class="detail-value" style="font-size: 1.2rem; color: var(--moderate-color);">MODERATE</span>
+                                <p style="font-size: 0.85rem; color: var(--gray); margin: 5px 0 0 0;">(Core Developer Concepts)</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <p style="margin-top: 40px; font-weight: 700; color: var(--primary); font-size: 1.2rem;">Click the trusted <b>PAY NOW</b> button below to secure your spot and instantly unlock the examination.</p>
+
+                    <div id="payment-button-container">
+                        <form>
+                          <a href="https://payments.cashfree.com/forms/python_dev_final_exam" target="_parent">
+                            <div class="button-container" style="background: #0043fd; 
+                                border: 1px solid black; border-radius: 15px; 
+                                display: flex; padding: 10px; width: fit-content; 
+                                cursor: pointer;
+                                box-shadow: 0 8px 20px rgba(0, 67, 253, 0.35); /* Adjusted shadow to match new button color */">
+                              <div>
+                                <img src="https://cashfree-checkoutcartimages-prod.cashfree.com/logo-removebg-previewj9ds2a8p77e0_prod.png" alt="logo" class="logo-container" style="width: 40px; height: 40px;">
+                              </div>
+                              <div class="text-container" style="display: flex; flex-direction: column; align-items: center; margin-left: 10px; justify-content: center; margin-right: 10px;">
+                                <div style="font-family: Arial; color: #ffffff; margin-bottom: 5px; font-size: 18px; font-weight: 700;"> <i class="fas fa-lock" style="margin-right: 5px;"></i> Pay Now
+                                </div>
+                                <div style="font-family: Arial; color: #e2e8f0; font-size: 11px;"> <span>Powered By Cashfree</span>
+                                  <img src="https://cashfreelogo.cashfree.com/cashfreepayments/logosvgs/Group_4355.svg" alt="logo" class="seconday-logo-container" style="width: 14px; height: 14px; vertical-align: middle; filter: brightness(0) invert(1);"> </div>
+                              </div>
+                            </div>
+                          </a>
+                        </form>
+                        </div>
+
+                    <div style="background: #e6fffa; border: 2px solid var(--success); color: var(--dark); font-weight: 700; border-radius: 10px; padding: 15px; margin-top: 20px; font-size: 0.95rem;">
+                        <i class="fas fa-check-circle"></i> <b>Instant Access:</b> Upon successful payment, you will be <b>automatically redirected</b> to the exam instructions page to start your test.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer><div class="exam-container"><p>© 2025 Internadda. All rights reserved. | Secured Payment Gateway</p></div></footer>
+</body>
+</html>
