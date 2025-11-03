@@ -536,7 +536,7 @@ header.scrolled {
 .team-member-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; border: 3px solid var(--primary); }
 .team-member-name { font-size: 1.25rem; font-weight: 600; margin: 0 0 5px 0; color: var(--dark); }
 .team-member-title { font-size: 1rem; color: var(--primary); margin: 0 0 15px 0; font-weight: 500; }
-.team-member-desc { font-size: 0.9rem; color: var(--gray); line-height: 1.6; }
+.team-member-desc { color: var(--gray); font-size: 0.9rem; line-height: 1.6; }
 
 /* Jobs page styles */
 /* .jobs-hero padding adjusted above */
@@ -861,6 +861,7 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
     }
     
     .nav-menu.active .nav-actions-mobile > .user-profile {
+        /* Request 4: Ensure mobile profile button shows only icon/signout, hides 'My Profile' text */
         display: flex; /* Show the profile when active */
         justify-content: center;
         align-items: center;
@@ -871,7 +872,7 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
         transform: none; 
         background: none;
     }
-    
+
     .nav-menu.active .nav-actions-mobile #authButtonsMobile {
          display: flex; 
          gap: 10px;
@@ -930,6 +931,16 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
     .hero-cta, .cta-buttons { flex-direction: column; }
     .value-cards, .courses-grid, .testimonials-grid, .footer-grid, .team-grid, .partners-grid { grid-template-columns: 1fr; }
     
+    /* Request 1: Ensure team member details are fully centered on mobile */
+    .team-member {
+        text-align: center;
+        align-items: center;
+    }
+    .team-member-img {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     /* Dashboard Modal Responsiveness */
     .modal-content { 
         width: 100%; 
