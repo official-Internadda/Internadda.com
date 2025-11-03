@@ -597,13 +597,29 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // 1. Get Elements
+            const loginBtnHeader = document.getElementById('loginBtnHeader');
+            const signupBtnHeader = document.getElementById('signupBtnHeader');
             const loginBtnMobile = document.getElementById('loginBtnHeaderMobile');
             const signupBtnMobile = document.getElementById('signupBtnHeaderMobile');
             const authModal = document.getElementById('authModal');
+            const closeModalBtn = document.getElementById('closeModal'); // Cross button
             const loginSection = document.getElementById('loginSection');
             const signupSection = document.getElementById('signupSection');
             const navMenu = document.querySelector('.nav-menu');
             const hamburgerMenu = document.getElementById('hamburgerMenu');
+
+            // Helper function to show correct modal section
+            const showSection = (sectionElement) => {
+                 if (!sectionElement || !authModal) return;
+                 authModal.querySelectorAll('.auth-section').forEach(sec => sec.classList.remove('active'));
+                 sectionElement.classList.add('active');
+            };
+            
+            const closeAuthModal = () => {
+                 if(authModal) authModal.classList.remove('active'); 
+                 document.body.style.overflow = '';
+            };
 
             const closeHamburgerMenu = () => {
                 if (navMenu && hamburgerMenu) {
@@ -611,33 +627,50 @@
                     hamburgerMenu.classList.remove('active');
                 }
             };
+            
+            // 2. Event Listeners for Login (Desktop and Mobile)
+            const handleLoginClick = (e) => {
+                e.preventDefault();
+                if (authModal && loginSection) {
+                    authModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    showSection(loginSection);
+                    closeHamburgerMenu();
+                }
+            };
+            
+            if (loginBtnHeader) loginBtnHeader.addEventListener('click', handleLoginClick);
+            if (loginBtnMobile) loginBtnMobile.addEventListener('click', handleLoginClick);
 
-            if (loginBtnMobile) {
-                loginBtnMobile.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (authModal && loginSection && signupSection) {
-                        authModal.classList.add('active');
-                        document.body.style.overflow = 'hidden';
-                        signupSection.classList.remove('active');
-                        loginSection.classList.add('active');
-                        closeHamburgerMenu();
-                    }
-                });
+            // 3. Event Listeners for Signup (Desktop and Mobile)
+            const handleSignupClick = (e) => {
+                e.preventDefault();
+                if (authModal && signupSection) {
+                    authModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    showSection(signupSection);
+                    closeHamburgerMenu();
+                }
+            };
+            
+            if (signupBtnHeader) signupBtnHeader.addEventListener('click', handleSignupClick);
+            if (signupBtnMobile) signupBtnMobile.addEventListener('click', handleSignupClick);
+            
+            // 4. Fix for Modal Close Button (Cross Button) and Backdrop
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', closeAuthModal);
+            }
+            
+            if (authModal) {
+                 window.addEventListener('click', (e) => {
+                     if (e.target === authModal) {
+                         closeAuthModal();
+                     }
+                 });
             }
 
-            if (signupBtnMobile) {
-                signupBtnMobile.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (authModal && loginSection && signupSection) {
-                        authModal.classList.add('active');
-                        document.body.style.overflow = 'hidden';
-                        loginSection.classList.remove('active');
-                        signupSection.classList.add('active');
-                        closeHamburgerMenu();
-                    }
-                });
-            }
-             // FIX: Re-adding the core hamburger toggle logic for this page
+
+            // 5. Fix for Hamburger Menu Toggle
             if (hamburgerMenu && navMenu) {
                 hamburgerMenu.addEventListener('click', () => {
                     hamburgerMenu.classList.toggle('active');
