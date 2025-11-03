@@ -647,44 +647,95 @@
             </div>
         </div>
     </div>
-    <script src="script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Note: The main carousel logic for auto-scrolling is removed to comply with Point 4.
-            const sliderWrapper = document.querySelector('.slider-wrapper');
-            const slides = document.querySelectorAll('.slide');
-            const dots = document.querySelectorAll('.dot');
-            const totalSlides = slides.length;
-            let currentIndex = 0;
+    <script src="../script.js"></script>
 
-            const updateSlider = () => {
-                sliderWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
-                dots.forEach((dot, index) => {
-                    dot.classList.toggle('active', index === currentIndex);
-                });
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Get Elements
+            const loginBtnHeader = document.getElementById('loginBtnHeader');
+            const signupBtnHeader = document.getElementById('signupBtnHeader');
+            const loginBtnMobile = document.getElementById('loginBtnHeaderMobile');
+            const signupBtnMobile = document.getElementById('signupBtnHeaderMobile');
+            const authModal = document.getElementById('authModal');
+            const closeModalBtn = document.getElementById('closeModal'); // Cross button
+            const loginSection = document.getElementById('loginSection');
+            const signupSection = document.getElementById('signupSection');
+            const navMenu = document.querySelector('.nav-menu');
+            const hamburgerMenu = document.getElementById('hamburgerMenu');
+            
+            // Special elements for navigation inside modal
+            const showSignupInModal = document.getElementById('showSignup');
+            const showLoginInModal = document.getElementById('showLogin');
+
+            // Helper function to show correct modal section
+            const showSection = (sectionElement) => {
+                 if (!sectionElement || !authModal) return;
+                 authModal.querySelectorAll('.auth-section').forEach(sec => sec.classList.remove('active'));
+                 sectionElement.classList.add('active');
+            };
+            
+            const closeAuthModal = () => {
+                 if(authModal) authModal.classList.remove('active'); 
+                 document.body.style.overflow = '';
             };
 
-            // Manual navigation via dots (auto-scroll removed)
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    currentIndex = index;
-                    updateSlider();
-                });
-            });
+            const closeHamburgerMenu = () => {
+                if (navMenu && hamburgerMenu) {
+                    navMenu.classList.remove('active');
+                    hamburgerMenu.classList.remove('active');
+                }
+            };
             
-            // Hamburger menu toggle (ensuring it works if external script fails)
-            const hamburgerMenu = document.getElementById('hamburgerMenu');
-            const navMenu = document.querySelector('.nav-menu');
-            if (hamburgerMenu) {
+            // 2. Event Listeners for Login (Desktop and Mobile)
+            const handleLoginClick = (e) => {
+                e.preventDefault();
+                if (authModal && loginSection) {
+                    authModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    showSection(loginSection);
+                    closeHamburgerMenu();
+                }
+            };
+            
+            if (loginBtnHeader) loginBtnHeader.addEventListener('click', handleLoginClick);
+            if (loginBtnMobile) loginBtnMobile.addEventListener('click', handleLoginClick);
+
+            // 3. Event Listeners for Signup (Desktop and Mobile)
+            const handleSignupClick = (e) => {
+                e.preventDefault();
+                if (authModal && signupSection) {
+                    authModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    showSection(signupSection);
+                    closeHamburgerMenu();
+                }
+            };
+            
+            if (signupBtnHeader) signupBtnHeader.addEventListener('click', handleSignupClick);
+            if (signupBtnMobile) signupBtnMobile.addEventListener('click', handleSignupClick);
+            
+            // 4. Fix for Modal Close Button (Cross Button) and Backdrop
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', closeAuthModal);
+            }
+            
+            if (authModal) {
+                 window.addEventListener('click', (e) => {
+                     if (e.target === authModal) {
+                         closeAuthModal();
+                     }
+                 });
+            }
+            
+            // 5. Fix for internal modal navigation
+            if (showSignupInModal) showSignupInModal.addEventListener('click', (e) => { e.preventDefault(); showSection(signupSection); });
+            if (showLoginInModal) showLoginInModal.addEventListener('click', (e) => { e.preventDefault(); showSection(loginSection); });
+
+            // 6. Fix for Hamburger Menu Toggle
+            if (hamburgerMenu && navMenu) {
                 hamburgerMenu.addEventListener('click', () => {
                     hamburgerMenu.classList.toggle('active');
                     navMenu.classList.toggle('active');
-
-                    // Desktop dropdown click handler must be re-initialized if JS is complex
-                    const moreDropdown = document.querySelector('.nav-item.dropdown');
-                    if (moreDropdown) {
-                        moreDropdown.style.display = navMenu.classList.contains('active') ? 'none' : '';
-                    }
                 });
             }
         });
