@@ -39,6 +39,7 @@
                 <a href="/courses/course.html" class="nav-link">Courses</a>
                 <a href="/intern/internship.html" class="nav-link">Internships</a>
                 <a href="/about.html" class="nav-link">About</a>
+                
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
@@ -50,6 +51,8 @@
                         <a href="/community/academy.html" class="dropdown-link">Offline Academy</a>
                     </div>
                 </div>
+                
+                <a href="/blog/index.html" class="nav-link mobile-only-link">Blog</a>
                 
                 <div class="nav-actions-mobile">
                      <div class="user-profile hidden" id="userProfileMobile">
@@ -675,37 +678,13 @@
                     hamburgerMenu.classList.toggle('active');
                     navMenu.classList.toggle('active');
 
-                    // Toggle visibility of the desktop dropdown content when opening the mobile menu
-                    const dropdownContent = document.querySelector('.nav-item.dropdown .dropdown-content');
-                    if (dropdownContent) {
-                         if (navMenu.classList.contains('active')) {
-                              // Hide dropdown when mobile menu is active
-                             dropdownContent.style.display = 'none';
-                         } else {
-                             // Re-enable dropdown on desktop close
-                              dropdownContent.style.display = '';
-                         }
+                    // Desktop dropdown click handler must be re-initialized if JS is complex
+                    const moreDropdown = document.querySelector('.nav-item.dropdown');
+                    if (moreDropdown) {
+                        moreDropdown.style.display = navMenu.classList.contains('active') ? 'none' : '';
                     }
                 });
             }
-            
-            // Desktop dropdown click handler
-            const moreDropdown = document.querySelector('.nav-item.dropdown');
-            if (moreDropdown) {
-                moreDropdown.addEventListener('click', function(event) {
-                    const dropdownContent = this.querySelector('.dropdown-content');
-                    if (window.innerWidth > 1024) { // Only enable click on desktop
-                        dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
-                        event.stopPropagation();
-                    }
-                });
-            }
-            document.addEventListener('click', function() {
-                 const dropdownContent = document.querySelector('.nav-item.dropdown .dropdown-content');
-                 if (dropdownContent && window.innerWidth > 1024) {
-                     dropdownContent.style.display = 'none';
-                 }
-            });
         });
     </script>
 </body>
