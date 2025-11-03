@@ -35,7 +35,7 @@
             </a>
 
             <nav class="nav-menu">
-                 <a href="/" class="nav-link">Home</a>
+                 <a href="/index.html" class="nav-link">Home</a>
                 <a href="/courses/course.html" class="nav-link">Courses</a>
                 <a href="/intern/internship.html" class="nav-link">Internships</a>
                 <a href="/jobs.html" class="nav-link">Jobs</a>
@@ -49,13 +49,22 @@
                         <a href="/community/academy.html" class="dropdown-link">Offline Academy</a>
                     </div>
                 </div>
-                <a href="/community/join.html" class="nav-link mobile-only-link">Join Community</a>
-                 <a href="/community/partners.html" class="nav-link mobile-only-link">Partners</a>
-                 <a href="/blog/index.html" class="nav-link mobile-only-link">Blog</a>
-                 <a href="/community/academy.html" class="nav-link mobile-only-link">Offline Academy</a>
+                 <a href="/jobs.html" class="nav-link mobile-only-link">Jobs</a>
+                <a href="/contact.html" class="nav-link mobile-only-link">Contact</a>
+                <a href="/blog/index.html" class="nav-link mobile-only-link">Blog</a>
+                <a href="/community/join.html" class="nav-link mobile-only-link">Community</a>
+                <a href="/community/partners.html" class="nav-link mobile-only-link">Partners</a>
+                <a href="/community/academy.html" class="nav-link mobile-only-link">Offline Academy</a>
                 
                 <div class="nav-actions-mobile">
-                     <div id="authButtonsMobile">
+                     <div class="user-profile hidden" id="userProfileMobile">
+                         <button id="profileBtnHeaderMobile" style="border:none; background:none; color:var(--dark); font-weight:600; font-size:16px; cursor:pointer; padding: 10px 0; width:100%; text-align:center;">
+                             <img src="images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeaderMobile" style="display:inline-block; vertical-align:middle; width:30px; height:30px; border-radius:50%; margin-right:8px;">
+                             <span id="userNameHeaderMobile">My Profile</span> 
+                         </button>
+                         <button id="logoutBtnHeaderMobile" class="btn btn-outline" style="width: 100%;">Sign Out</button>
+                     </div>
+                     <div id="authButtonsMobile" style="width: 100%; display: flex; gap: 10px; justify-content: center;">
                         <a href="#" class="btn btn-outline" id="loginBtnHeaderMobile">Log in</a>
                         <a href="#" class="btn btn-primary" id="signupBtnHeaderMobile">Sign up</a>
                     </div>
@@ -319,6 +328,7 @@
                                      <strong>Interested Domain:</strong> <span id="profileDomainDisplay">Not specified</span>
                                  </div>
                              </div>
+                             <button class="btn btn-primary" id="shareProfileBtn" style="width: 100%; margin-top: 20px;"><i class="fas fa-share-alt" style="margin-right: 8px;"></i> Share My Profile</button>
                              <button class="btn btn-outline" id="editProfileBtn">Edit Profile</button>
                          </div>
 
@@ -329,6 +339,7 @@
                                      <i class="fas fa-upload"></i> Upload Image
                                  </label>
                                  <input type="file" id="profileImageInput" accept="image/*">
+                                 <p class="profile-avatar-hint" style="margin-top: 5px; font-size: 0.85rem; color: #f56565;">*Image upload is for demo only; file storage is not active.</p>
                              </div>
                              <div class="form-group">
                                  <label for="profileName">Full Name</label>
