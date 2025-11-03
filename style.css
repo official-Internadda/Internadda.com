@@ -954,6 +954,7 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
         justify-content: flex-start; 
         margin: 0;
         padding-left: 0;
+        text-align: left; /* Ensure list text itself is left aligned */
     }
 
     .internship-image {
