@@ -38,9 +38,9 @@
             /* Enhanced card border on hover */
             border: 1px solid var(--primary);
         }
-        /* Ensure search bar is visible and functional on desktop */
-        .header-actions .search-container {
-            display: flex;
+        /* New CSS for fixed search bar display */
+        .search-container {
+            display: flex !important; /* Ensure search bar is always a flex container for alignment */
         }
     </style>
 </head>
@@ -699,7 +699,6 @@
             // Special elements for navigation inside modal
             const showSignupInModal = document.getElementById('showSignup');
             const showLoginInModal = document.getElementById('showLogin');
-            const searchInput = document.getElementById('searchInput'); // Search input element
 
             // Helper function to show correct modal section
             const showSection = (sectionElement) => {
@@ -798,21 +797,6 @@
                      if (desktopDropdownArrow) desktopDropdownArrow.style.transform = 'rotate(0deg)';
                  }
             });
-
-            // 7. Search Bar Fix (Ensuring UI state changes on focus/click)
-            const searchIcon = document.querySelector('.search-icon');
-            if (searchInput && searchIcon) {
-                // Focus handler (CSS already covers styling via :focus + .search-icon)
-                searchInput.addEventListener('input', () => {
-                    // Simple logic to show results/perform search can be added here
-                    // For now, focusing on the functional UI fix
-                });
-                
-                // Clicking the icon should focus the input
-                searchIcon.addEventListener('click', () => {
-                    searchInput.focus();
-                });
-            }
             
             // SLIDER LOGIC
             const sliderWrapper = document.querySelector('.slider-wrapper');
