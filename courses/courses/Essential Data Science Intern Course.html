@@ -3,376 +3,883 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Courses | Skill Up for Internships with Internadda</title>
-    <meta name="description" content="Browse Internadda's free courses in Data Science, AI, Web Dev, Cybersecurity, and more. Gain practical skills needed for top internships.">
-    
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <title>Essential Data Science Intern Course — Internadda</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Your Main Stylesheet (Assuming this contains styles for header, footer, cards, etc.) -->
-    <link rel="stylesheet" href="../style.css">
-
-    <!-- Inline Styles to ensure Modal/Dashboard looks correct if external styles are missing -->
     <style>
+        /* Global variables and resets */
         :root {
-            --primary: #2b6cb0;
-            --secondary: #9f7aea;
-            --dark: #2d3748;
-            --light: #f7fafc;
+            --primary: #2b6cb0; /* Trustworthy blue */
+            --secondary: #9f7aea; /* Approachable purple */
+            --accent: #38a169; /* Success green for positivity */
+            --dark: #2d3748; /* Softer dark for text */
+            --light: #f7fafc; /* Clean, light background */
+            --gray: #718096; /* Neutral gray for secondary text */
+            --success: #48bb78; /* Vibrant success green */
+            --warning: #ed8936; /* Warm, approachable orange */
             --white: #ffffff;
-            --gray: #718096;
+            --border: 1px solid #e2e8f0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
         }
 
-        /* Essential Modal/Dashboard Styles (from previous snippet + enhancements) */
-        .modal {
-            display: none; 
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.6);
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            overflow: auto;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .modal.active { display: flex; }
-        .modal-content {
-            background-color: var(--white);
-            padding: 30px;
-            border-radius: 12px;
-            max-width: 450px;
-            width: 100%;
-            position: relative;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            background-color: var(--light);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-        .close-btn { color: var(--gray); font-size: 28px; font-weight: bold; position: absolute; top: 10px; right: 15px; cursor: pointer; }
-        .auth-section { display: none; }
-        .auth-section.active { display: block; }
-        .auth-title { text-align: center; margin-bottom: 20px; color: var(--dark); }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-weight: 500; margin-bottom: 5px; }
-        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
-        .btn-primary, .btn-google { width: 100%; margin-top: 10px; }
-        .separator { text-align: center; margin: 20px 0; }
-        .separator span { background: var(--white); padding: 0 10px; color: var(--gray); font-size: 14px; }
-        .toggle-auth { text-align: center; margin-top: 20px; font-size: 15px; }
         
-        /* Dashboard Tabs */
-        .profile-tabs { display: flex; justify-content: space-between; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px; }
-        .tab-btn { flex-grow: 1; padding: 10px 0; background: none; border: none; cursor: pointer; font-weight: 600; color: var(--gray); border-bottom: 3px solid transparent; transition: all 0.3s; }
-        .tab-btn.active { color: var(--primary); border-bottom: 3px solid var(--primary); }
-        .tab-content.hidden { display: none; }
+        /* Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
 
-        /* Profile Card Styles */
-        .user-info-profile { display: flex; align-items: center; gap: 20px; margin-bottom: 30px; }
-        .user-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); }
-        .user-profile-details h2 { font-size: 1.8rem; margin-bottom: 5px; }
-        .profile-details { margin-top: 20px; padding: 15px; background: var(--light); border-radius: 8px; }
-        .profile-info-item { margin-bottom: 10px; font-size: 1.1rem; }
-        #editProfileBtn, #saveProfileBtn { margin-top: 15px; width: 100%; }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-        /* Courses Section overrides */
-        .course-card {
-            display: block;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .main-content-container {
+             max-width: 800px;
+             margin: 0 auto;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        header {
             background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        .course-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        }
-        .course-image img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-        }
-        .course-content {
-            padding: 20px;
-        }
-        .badge.free {
-            background-color: var(--success);
-            color: var(--white);
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: 700;
-        }
-        .course-price {
+
+        .header-container {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-top: 10px;
+            justify-content: space-between;
+            padding: 24px 0;
         }
-        .original-price {
-            text-decoration: line-through;
-            color: var(--gray);
-            font-size: 0.9rem;
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 14px;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: translateY(-2px) scale(1.03);
+        }
+
+        .logo-img {
+            height: 50px;
+            width: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 2.2rem;
+            letter-spacing: -0.03em;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 36px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 16px;
+            position: relative;
+            transition: var(--transition);
+            padding: 10px 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -6px;
+            left: 0;
+            background: var(--gradient);
+            transition: width 0.4s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+            transform: translateY(-1px);
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            position: relative;
+            padding: 10px;
+            border-radius: 14px;
+            transition: var(--transition);
+        }
+        .user-profile:hover {
+            background: rgba(43, 108, 176, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .user-profile img {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            transition: var(--transition);
+        }
+        .user-profile span {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: var(--white);
+        }
+
+        .course-section {
+            padding: 60px 0;
+        }
+
+        .course-title-main {
+            font-size: 2.8rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 20px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin: 40px auto;
+        }
+        .progress-bar-bg {
+            flex-grow: 1;
+            height: 12px;
+            background-color: #e2e8f0;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .progress-text {
+            font-weight: 600;
+            color: var(--dark);
+            min-width: 120px;
+            text-align: right;
+        }
+
+        .course-content-wrapper {
+            margin-top: 50px;
+        }
+
+        .course-page {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            transition: opacity 0.5s ease-in-out;
+            position: relative;
+        }
+
+        .course-page.hidden {
+            display: none !important;
+        }
+
+        .course-page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 15px;
+        }
+
+        .course-page-body p, .course-page-body li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .course-page-body h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .course-page-body ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .course-page-body li {
+            margin-bottom: 10px;
+        }
+
+        .course-page-body pre {
+            background-color: #f6f8fa;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin: 20px 0;
+            line-height: 1.5;
+        }
+
+        .course-page-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        .course-page-body th, .course-page-body td {
+            border: 1px solid #e2e8f0;
+            padding: 12px 16px;
+            text-align: left;
+        }
+        .course-page-body th {
+            background-color: var(--dark);
+            color: var(--light);
+            font-weight: 600;
+        }
+        .course-page-body tr:nth-child(even) {
+            background-color: #f7fafc;
+        }
+
+        .quiz-section {
+            border-top: 2px solid #e2e8f0;
+            padding-top: 30px;
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .quiz-question {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .quiz-options .option {
+            background-color: #f7fafc;
+            padding: 18px 24px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s;
+            font-weight: 500;
+        }
+        .quiz-options .option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .quiz-options .option.correct {
+            background-color: #d1f7e0;
+            border-color: var(--success);
+            box-shadow: 0 0 0 3px var(--success);
+        }
+        .quiz-options .option.incorrect {
+            background-color: #fcebeb;
+            border-color: #f56565;
+            box-shadow: 0 0 0 3px #f56565;
+        }
+        .quiz-feedback {
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 600;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .quiz-feedback.hidden {
+            display: none;
+        }
+        .btn.hidden {
+            display: none !important;
+        }
+        #finishButton {
+            width: 100%;
+            text-align: center;
+        }
+        
+        .takeaways {
+            margin-top: 40px;
+            padding: 30px;
+            background: #eef2f7;
+            border-left: 5px solid var(--primary);
+            border-radius: 8px;
+        }
+        .takeaways h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        .takeaways ul {
+            list-style-type: '✅ ';
+            padding-left: 20px;
+        }
+        
+        /* Video Section */
+        .video-wrapper {
+            margin: 30px 0;
+            position: relative;
+            cursor: pointer;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+        .video-wrapper:hover {
+            transform: scale(1.02);
+        }
+        .video-wrapper img {
+            width: 100%;
+            display: block;
+            border-radius: 16px;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+        }
+        .video-wrapper .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            transition: transform 0.2s ease, color 0.2s ease;
+            pointer-events: none;
+        }
+        .video-wrapper:hover .play-button {
+            transform: translate(-50%, -50%) scale(1.1);
+            color: #fff;
+        }
+        .video-embed-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+        }
+        .video-embed-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+        }
+
+
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 80px 0 48px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 56px;
+            margin-bottom: 56px;
+        }
+        .footer-brand {
+            grid-column: span 1;
+        }
+        .footer-logo {
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--white);
+        }
+        .footer-description {
+            color: #e2e8f0;
+            margin-bottom: 36px;
+        }
+        .social-links {
+            display: flex;
+            gap: 24px;
+        }
+        .social-link {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: all 0.3s ease;
+        }
+        .social-link:hover {
+            background: var(--gradient);
+            transform: scale(1.15);
+        }
+        .footer-links-title {
+            font-size: 19px;
+            font-weight: 600;
+            margin-bottom: 28px;
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 18px;
+        }
+        .footer-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: var(--white);
+            transform: translateX(6px);
+        }
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 48px;
+            text-align: center;
+            color: #e2e8f0;
+            font-size: 15px;
+        }
+        @media (max-width: 1024px) {
+            .nav-menu {
+                display: none;
+            }
+            .hamburger-menu {
+                display: flex;
+            }
+            .nav-menu.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                padding: 28px;
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            }
+        }
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 24px;
+            }
+            .logo {
+                width: 100%;
+                justify-content: center;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
-
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-3ZZ3HGFM3Q');
-    </script>
 </head>
-
 <body>
+
     <header>
         <div class="container header-container">
-            <a href="/" class="logo">
-                <img src="../images/logo.jpg" alt="InternAdda Logo" class="logo-img">
-                <span class="logo-text">InternAdda</span>
+            <a href="../../index.html" class="logo">
+                <img src="../../images/logo.jpg" alt="InternAdda Logo" class="logo-img">
+                <span class="logo-text">Internadda</span>
             </a>
-
             <nav class="nav-menu">
-                <a href="/index.html" class="nav-link">Home</a>
-                <a href="/courses/course.html" class="nav-link">Courses</a>
-                <a href="/intern/internship.html" class="nav-link">Internships</a>
-                <a href="/jobs.html" class="nav-link">Jobs</a>
-                <a href="/about.html" class="nav-link">About</a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle">Community <i class="fas fa-chevron-down dropdown-arrow"></i></a>
-                    <div class="dropdown-content">
-                        <a href="/community/join.html" class="dropdown-link">Join Community</a>
-                        <a href="/community/partners.html" class="dropdown-link">Partners</a>
-                        <a href="/blog/index.html" class="dropdown-link">Blog</a>
-                        <a href="/community/academy.html" class="dropdown-link">Offline Academy</a>
-                    </div>
-                </div>
-
-                <!-- Mobile links, consolidated -->
-                <a href="/contact.html" class="nav-link mobile-only-link">Contact</a>
-                <a href="/terms.html" class="nav-link mobile-only-link">Terms</a>
-                <a href="/refund.html" class="nav-link mobile-only-link">Refund</a>
-                
-                <!-- Mobile Auth Actions (using data-action for global listener) -->
-                <div class="nav-actions-mobile">
-                    <div class="user-profile hidden" id="userProfileMobile">
-                        <img src="../images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeaderMobile" style="display:inline-block; vertical-align:middle; width:40px; height:40px; border-radius:50%; margin-right:8px;">
-                        <button data-action="logout" class="btn btn-outline" style="width: 100%;">Sign Out</button>
-                    </div>
-                    <div id="authButtonsMobile" style="width: 100%; display: flex; gap: 10px; justify-content: center;">
-                        <a href="#" class="btn btn-outline" data-action="login">Log in</a>
-                        <a href="#" class="btn btn-primary" data-action="signup">Sign up</a>
-                    </div>
-                </div>
+                <a href="../../index.html" class="nav-link">Home</a>
+                <a href="../course.html" class="nav-link">Courses</a>
+                <a href="../../intern/internship.html" class="nav-link">Internships</a>
+                <a href="#" class="nav-link">Jobs</a>
+                <a href="../../about.html" class="nav-link">About</a>
             </nav>
-
             <div class="header-actions">
-                <div class="search-container">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="searchInput" class="search-input" placeholder="Search for courses...">
+                <div class="user-profile" id="userProfile">
+                    <img src="../../images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeader">
+                    <span id="userNameHeader">Intern</span>
                 </div>
-
-                <div id="authButtons">
-                    <a href="#" class="btn btn-outline" data-action="login">Log in</a>
-                    <a href="#" class="btn btn-primary" data-action="signup">Sign up</a>
-                </div>
-
-                <div class="user-profile hidden" id="userProfile" data-action="profile-dropdown">
-                    <img src="../images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeader">
-                    <span id="userNameHeader"></span>
-                    <div class="dropdown-menu hidden" id="userDropdown">
-                        <button data-action="dashboard">My Profile</button>
-                        <button data-action="logout">Sign Out</button>
-                    </div>
-                </div>
+                <button class="hamburger-menu" id="hamburgerMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
-
-            <button class="hamburger-menu" id="hamburgerMenu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
         </div>
-        <div id="searchResults" class="search-results-container container hidden"></div>
     </header>
 
     <main>
-        <section class="courses">
-            <div class="container">
-                <div class="courses-header">
-                    <h2 class="section-title">All Courses</h2>
+        <section class="course-section">
+            <div class="main-content-container">
+                <h1 class="course-title-main fade-in">Essential Data Science Intern Course</h1>
+                
+                <div id="video-container" class="fade-in">
+                    <div class="video-wrapper" id="video-thumbnail">
+                        <img src="" alt="Essential Data Science Course Thumbnail">
+                        <div class="play-button"><i class="fas fa-play-circle"></i></div>
+                    </div>
                 </div>
 
-                <div class="courses-grid" id="coursesGrid">
-
-                    <!-- Course Card 1 -->
-                    <a href="courses/Essential Data Science Intern Course.html"
-                        class="course-card"
-                        style="text-decoration:none; color:inherit;">
-                        <div class="course-image">
-                            <img src="../images/Essential Data Science Intern Course.png"
-                                alt="Essential Data Science Intern Course" onerror="this.onerror=null;this.src='https://placehold.co/400x180/2b6cb0/ffffff?text=Data+Science'">
-                        </div>
-                        <div class="course-content">
-                            <h3 class="course-title">Data Science Intern Course</h3>
-                            <p class="course-author">Instructed by Lucky Kumar</p>
-                            <div class="course-rating">
-                                <div class="rating-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="rating-value">4.9</span>
-                            </div>
-                            <div class="course-duration">
-                                <i class="far fa-clock"></i> Average Duration: 27 mins
-                            </div>
-                            <div class="course-price">
-                                <span class="original-price">₹1,999</span>
-                                <span class="badge free">FREE</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Course Card 2 -->
-                    <a href="courses/Generative-AI-Prompt-Engineering-Masterclass.html"
-                        class="course-card"
-                        style="text-decoration:none; color:inherit;">
-                        <div class="course-image">
-                            <img src="../images/Generative-AI-Prompt-Engineering-Masterclass.png"
-                                alt="Generative AI & Prompt Engineering Masterclass" onerror="this.onerror=null;this.src='https://placehold.co/400x180/9f7aea/ffffff?text=Gen+AI+Prompting'">
-                        </div>
-                        <div class="course-content">
-                            <h3 class="course-title">Generative AI & Prompt Engineering</h3>
-                            <p class="course-author">Instructed by Lucky Kumar</p>
-                            <div class="course-rating">
-                                <div class="rating-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="rating-value">4.7</span>
-                            </div>
-                            <div class="course-duration">
-                                <i class="far fa-clock"></i> Average Duration: 30 mins
-                            </div>
-                            <div class="course-price">
-                                <span class="original-price">₹2,999</span>
-                                <span class="badge free">FREE</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Course Card 3 -->
-                    <a href="courses/Ethical-Hacking-Mastery.html"
-                        class="course-card"
-                        style="text-decoration:none; color:inherit;">
-                        <div class="course-image">
-                            <img src="../images/Ethical-Hacking-Mastery.png"
-                                alt="Ethical Hacking Mastery" onerror="this.onerror=null;this.src='https://placehold.co/400x180/38a169/ffffff?text=Ethical+Hacking'">
-                        </div>
-                        <div class="course-content">
-                            <h3 class="course-title">Ethical Hacking Mastery</h3>
-                            <p class="course-author">Instructed by Lucky Kumar</p>
-                            <div class="course-rating">
-                                <div class="rating-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="rating-value">4.8</span>
-                            </div>
-                            <div class="course-duration">
-                                <i class="far fa-clock"></i> Average Duration: 29 mins
-                            </div>
-                            <div class="course-price">
-                                <span class="original-price">₹4,999</span>
-                                <span class="badge free">FREE</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Course Card 4 -->
-                    <a href="courses/Python-Essentials-for-All.html"
-                        class="course-card"
-                        style="text-decoration:none; color:inherit;">
-                        <div class="course-image">
-                            <img src="../images/Python-Essentials-for-All.png"
-                                alt="Python Essentials for All" onerror="this.onerror=null;this.src='https://placehold.co/400x180/ed8936/ffffff?text=Python+Essentials'">
-                        </div>
-                        <div class="course-content">
-                            <h3 class="course-title">Python Essentials for All</h3>
-                            <p class="course-author">Instructed by Lucky Kumar</p>
-                            <div class="course-rating">
-                                <div class="rating-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="rating-value">4.8</span>
-                            </div>
-                            <div class="course-duration">
-                                <i class="far fa-clock"></i> Average Duration: 28 mins
-                            </div>
-                            <div class="course-price">
-                                <span class="original-price">₹1,999</span>
-                                <span class="badge free">FREE</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Course Card 5 -->
-                    <a href="courses/Cloud-DevOps-Essentials.html"
-                        class="course-card"
-                        style="text-decoration:none; color:inherit;">
-                        <div class="course-image">
-                            <img src="../images/Cloud-DevOps-Essentials.png"
-                                alt="Cloud & DevOps Essentials" onerror="this.onerror=null;this.src='https://placehold.co/400x180/718096/ffffff?text=Cloud+DevOps'">
-                        </div>
-                        <div class="course-content">
-                            <h3 class="course-title">Cloud & DevOps Essentials</h3>
-                            <p class="course-author">Instructed by Lucky Kumar</p>
-                            <div class="course-rating">
-                                <div class="rating-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="rating-value">4.8</span>
-                            </div>
-                            <div class="course-duration">
-                                <i class="far fa-clock"></i> Average Duration: 26 mins
-                            </div>
-                            <div class="course-price">
-                                <span class="original-price">₹2,999</span>
-                                <span class="badge free">FREE</span>
-                            </div>
-                        </div>
-                    </a>
-                    </div> 
+                <div class="progress-container fade-in">
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="progressBar"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">0% Complete</span>
                 </div>
-        </section>
 
-        <section class="cta-section">
-            <div class="container">
-                <h2 class="cta-title">Start Your Career Journey Today</h2>
-                <p class="cta-description">Join thousands of students who have transformed their careers through Internadda's learn, intern, and earn model.</p>
-                <div class="cta-buttons">
-                    <button class="btn btn-light btn-lg" onclick="window.location.href='/intern/internship.html'">Get Started</button>
-                    <button class="btn btn-transparent btn-lg" onclick="window.location.href='/courses/course.html'">Browse Courses</button>
+                <div class="course-content-wrapper">
+                    <div class="course-page active" data-page="1">
+                        <div class="fade-in">
+                            <h2 class="course-page-title">Page 1: Foundations & The Data Science Ecosystem</h2>
+                            <div class="course-page-body">
+                                <h3>1️⃣ <b>What is Data Science?</b></h3>
+                                <p>Data Science is an **interdisciplinary field** that uses scientific methods, processes, algorithms, and systems to extract **knowledge and insights** from structured and unstructured data. It is the core of modern decision-making.</p>
+                                <ul>
+                                    <li><b>Interdisciplinary</b> – It sits at the intersection of **Statistics**, **Computer Science**, and **Domain Expertise** (Business Knowledge).</li>
+                                    <li><b>Goal</b> – To turn raw data into actionable insights and predictions.</li>
+                                </ul>
+                                <h3>2️⃣ <b>Key Roles in a Data Team</b></h3>
+                                <p>Understanding the roles helps you choose your career path:</p>
+                                <div class="table-container">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Role</th>
+                                                <th>Primary Focus</th>
+                                                <th>Key Toolset</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><b>Data Analyst</b></td>
+                                                <td>Business Insights, Reporting, Visualization (The "What")</td>
+                                                <td>SQL, Excel, Tableau/PowerBI</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Data Engineer</b></td>
+                                                <td>Building & Maintaining Data Pipelines (ETL)</td>
+                                                <td>Cloud (AWS/GCP), SQL, Python, Spark</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Data Scientist</b></td>
+                                                <td>Predictive Modeling, Machine Learning (The "Why" & "Future")</td>
+                                                <td>Python (Scikit-learn/TensorFlow), R, Advanced Stats</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <h3>3️⃣ <b>Data Science Lifecycle Overview</b></h3>
+                                <p>The process follows a loop: Ask **Business Question** → **Acquire** Data → **Clean/Prepare** Data → **Explore** Data (EDA) → **Model** Data (ML) → **Communicate** Results.</p>
+                                <p>💡 <b>Intern Tip</b><br>
+                                Start by mastering **Python** and **SQL**. These are the most demanded foundational skills for any Data Science or Analytics internship.</p>
+                            </div>
+                            <div class="quiz-section">
+                                <h3 class="quiz-question">❓ Check Your Understanding</h3>
+                                <p>Which core area is NOT typically considered one of the three foundational pillars of Data Science (excluding Domain Expertise)?</p>
+                                <div class="quiz-options">
+                                    <div class="option" data-answer="1">A) Statistics/Mathematics</div>
+                                    <div class="option" data-answer="2">B) Visual Art</div>
+                                    <div class="option" data-answer="3">C) Computer Science (Programming)</div>
+                                    <div class="option" data-answer="4">D) Machine Learning</div>
+                                </div>
+                                <div class="quiz-feedback hidden" id="feedback1"></div>
+                                <button class="btn btn-primary hidden" id="nextButton1">Next Page</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="course-page hidden" data-page="2">
+                        <div class="fade-in">
+                            <h2 class="course-page-title">Page 2: Data Acquisition & Preparation (ETL)</h2>
+                            <div class="course-page-body">
+                                <h3>1️⃣ <b>The 80/20 Rule in Data Science</b></h3>
+                                <p>Data scientists typically spend **80% of their time** simply finding, cleaning, and organizing data, and only 20% on the actual analysis or modeling. This is the hardest part of the job!</p>
+                                <pre># Bad data in = Bad results out (Garbage In, Garbage Out)</pre>
+                                <h3>2️⃣ <b>Data Cleaning Checklist</b></h3>
+                                <p>Cleaning involves making sure the data is accurate, consistent, and complete.</p>
+                                <ul>
+                                    <li><b>Handle Missing Values:</b> Decide whether to **impute** (fill with mean/median/mode) or **drop** rows/columns with missing data.</li>
+                                    <li><b>Outlier Management:</b> Identify extreme values (outliers) that could skew your model and decide whether to remove or transform them.</li>
+                                    <li><b>Data Type Conversion:</b> Ensure columns are the correct type (e.g., numbers aren't stored as strings).</li>
+                                    <li><b>Deduplication:</b> Remove duplicate rows that might inflate your dataset size artificially.</li>
+                                </ul>
+                                <h3>3️⃣ <b>Data Wrangling with Pandas</b></h3>
+                                <p>**Pandas** is the essential Python library for structured data manipulation. It introduces the `DataFrame` object, which acts like a powerful spreadsheet.</p>
+                                <p>Basic Pandas operations:</p>
+                                <pre>import pandas as pd
+
+# 1. Read Data
+df = pd.read_csv('intern_data.csv')
+
+# 2. Check info
+print(df.info())
+
+# 3. Handle Missing Values (Impute with Mean)
+df['Age'].fillna(df['Age'].mean(), inplace=True)</pre>
+                            </div>
+                            <div class="quiz-section">
+                                <h3 class="quiz-question">❓ Check Your Understanding</h3>
+                                <p>In the Data Science process, which crucial step is considered to take up the majority (around 80%) of a Data Scientist's time?</p>
+                                <div class="quiz-options">
+                                    <div class="option" data-answer="1">A) Model Deployment</div>
+                                    <div class="option" data-answer="2">B) Machine Learning Model Training</div>
+                                    <div class="option" data-answer="3">C) Data Cleaning and Preparation (Wrangling)</div>
+                                    <div class="option" data-answer="4">D) Creating final Powerpoint presentations</div>
+                                </div>
+                                <div class="quiz-feedback hidden" id="feedback2"></div>
+                                <button class="btn btn-primary hidden" id="nextButton2">Next Page</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="course-page hidden" data-page="3">
+                        <div class="fade-in">
+                            <h2 class="course-page-title">Page 3: Exploratory Data Analysis (EDA) & Visualization</h2>
+                            <div class="course-page-body">
+                                <h3>1️⃣ <b>What is EDA?</b></h3>
+                                <p>Exploratory Data Analysis (EDA) is the initial investigation of data to discover patterns, detect anomalies, test hypotheses, and check assumptions, often with the help of statistical graphics and visualization. It guides your entire modeling strategy.</p>
+                                <h3>2️⃣ <b>Key Python Visualization Tools</b></h3>
+                                <p>We use Python libraries for plotting:</p>
+                                <ul>
+                                    <li><b>Matplotlib:</b> The fundamental plotting library in Python. It's powerful but often verbose.</li>
+                                    <li><b>Seaborn:</b> Built on top of Matplotlib, it provides a high-level interface for drawing attractive and informative statistical graphics.</li>
+                                </ul>
+                                <h3>3️⃣ <b>Essential Plot Types</b></h3>
+                                <div class="table-container">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Plot Type</th>
+                                                <th>Purpose</th>
+                                                <th>Primary Insight</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><b>Histogram</b></td>
+                                                <td>Shows the distribution of a single numerical variable.</td>
+                                                <td>Checking for normality, skewness.</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Box Plot</b></td>
+                                                <td>Displays spread (quartiles) and identifies outliers.</td>
+                                                <td>Finding extreme values and distribution range.</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Scatter Plot</b></td>
+                                                <td>Shows the relationship between two variables.</td>
+                                                <td>Checking for correlation (positive, negative, none).</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Heatmap</b></td>
+                                                <td>Visualizes matrices, often correlation matrices.</td>
+                                                <td>Quickly seeing which features are correlated with each other.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <h3>4️⃣ <b>A Simple Scatter Plot Example</b></h3>
+                                <pre>import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Check relationship between two numerical columns
+sns.scatterplot(x='Experience', y='Salary', data=df)
+plt.title('Experience vs. Salary')
+plt.show()</pre>
+                            </div>
+                            <div class="quiz-section">
+                                <h3 class="quiz-question">❓ Check Your Understanding</h3>
+                                <p>Which type of plot is most effective for visualizing the relationship between two continuous numerical variables, like Age and Income?</p>
+                                <div class="quiz-options">
+                                    <div class="option" data-answer="1">A) Histogram</div>
+                                    <div class="option" data-answer="2">B) Box Plot</div>
+                                    <div class="option" data-answer="3">C) Bar Chart</div>
+                                    <div class="option" data-answer="4">D) Scatter Plot</div>
+                                </div>
+                                <div class="quiz-feedback hidden" id="feedback3"></div>
+                                <button class="btn btn-primary hidden" id="nextButton3">Next Page</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="course-page hidden" data-page="4">
+                        <div class="fade-in">
+                            <h2 class="course-page-title">Page 4: Introduction to Machine Learning Modeling</h2>
+                            <div class="course-page-body">
+                                <h3>1️⃣ <b>Supervised Learning</b> 
+
+[Image of Supervised vs Unsupervised Machine Learning]
+</h3>
+                                <p>Supervised learning involves training a model on **labeled data** (input features $X$ and known output labels $y$). The goal is to predict the output based on new input data.</p>
+                                <ul>
+                                    <li><b>Classification:</b> Predicts a **category** (e.g., Spam or Not Spam, Yes or No, Dog or Cat).</li>
+                                    <li><b>Regression:</b> Predicts a **continuous numerical value** (e.g., House Price, Stock Value, Temperature).</li>
+                                </ul>
+                                <h3>2️⃣ <b>The Machine Learning Workflow (Scikit-learn)</b></h3>
+                                <p>Scikit-learn is the most popular library for classical ML in Python. The universal workflow involves these steps:</p>
+                                <pre>from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+
+# 1. Separate Features (X) and Target (y)
+
+# 2. Split Data (Most critical step!)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# 3. Choose and Train Model
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+# 4. Predict
+predictions = model.predict(X_test)</pre>
+                                <h3>3️⃣ <b>Key Learning Concepts</b></h3>
+                                <p>Before fitting a model, you must split your data to ensure the model isn't tested on data it was trained on. This prevents a common problem known as **Overfitting**.</p>
+                                <ul>
+                                    <li><b>Training Set:</b> Used to build the model. (e.g., 70% of data)</li>
+                                    <li><b>Test Set:</b> Used to evaluate the model's performance on unseen data. (e.g., 30% of data)</li>
+                                </ul>
+                            </div>
+                            <div class="quiz-section">
+                                <h3 class="quiz-question">❓ Check Your Understanding</h3>
+                                <p>If you build an ML model to predict the *exact number* of rainfall (in mm) next month, which type of supervised learning task are you performing?</p>
+                                <div class="quiz-options">
+                                    <div class="option" data-answer="1">A) Classification</div>
+                                    <div class="option" data-answer="2">B) Clustering</div>
+                                    <div class="option" data-answer="3">C) Regression</div>
+                                    <div class="option" data-answer="4">D) Feature Engineering</div>
+                                </div>
+                                <div class="quiz-feedback hidden" id="feedback4"></div>
+                                <button class="btn btn-primary hidden" id="nextButton4">Next Page</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="course-page hidden" data-page="5">
+                        <div class="fade-in">
+                            <h2 class="course-page-title">Page 5: Model Evaluation & Practical Takeaways</h2>
+                            <div class="course-page-body">
+                                <h3>1️⃣ <b>Classification Evaluation Metrics</b></h3>
+                                <p>Accuracy isn't enough! We use several metrics for Classification models:</p>
+                                <ul>
+                                    <li><b>Accuracy:</b> Overall number of correct predictions / Total predictions. (Simplest measure)</li>
+                                    <li><b>Precision:</b> Of all the cases predicted as positive, how many were actually positive? (Important when False Positives are costly)</li>
+                                    <li><b>Recall (Sensitivity):</b> Of all the cases that were actually positive, how many did the model correctly identify? (Important when False Negatives are costly, e.g., disease detection)</li>
+                                </ul>
+                                <h3>2️⃣ <b>Dealing with Model Flaws</b></h3>
+                                <p>Two common problems:</p>
+                                <ul>
+                                    <li><b>Overfitting:</b> Model learns the training data and noise too well. It fails completely on new data. (Solution: Use simpler models, get more data, or use regularization.)</li>
+                                    <li><b>Underfitting:</b> Model is too simple and cannot capture the underlying pattern of the data, performing poorly everywhere. (Solution: Use a more complex model or add more relevant features.)</li>
+                                </ul>
+                                <h3>3️⃣ <b>Your Next Steps as a Data Science Intern</b></h3>
+                                <p>To succeed in your internship and career:</p>
+                                <ul>
+                                    <li>**Build a Portfolio:** Showcase your skills with projects on Kaggle or GitHub.</li>
+                                    <li>**Deepen Math Skills:** Understand the statistics behind the ML algorithms.</li>
+                                    <li>**Learn Cloud Tools:** Familiarize yourself with AWS, Azure, or GCP for data storage and scalable ML deployment.</li>
+                                </ul>
+                                   <div class="takeaways">
+                                    <h3>Key Takeaways from This Course</h3>
+                                    <ul>
+                                        <li>Data Science combines **Stats, Computer Science, and Domain Knowledge** to extract value.</li>
+                                        <li>You will spend **80% of your time on Data Cleaning** using tools like **Pandas**.</li>
+                                        <li>**EDA** and **Visualization** (Matplotlib/Seaborn) are necessary to guide your modeling decisions.</li>
+                                        <li>Machine Learning tasks are either **Regression** (predicting a number) or **Classification** (predicting a category).</li>
+                                        <li>Model evaluation must go beyond accuracy, focusing on **Precision** and **Recall** based on the business problem.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="quiz-section">
+                                <h3 class="quiz-question">❓ Check Your Understanding</h3>
+                                <p>Which Python library is specifically designed to provide high-level functionality for building and evaluating classic Machine Learning models like Linear Regression and Support Vector Machines?</p>
+                                <div class="quiz-options">
+                                    <div class="option" data-answer="1">A) Pandas</div>
+                                    <div class="option" data-answer="2">B) Seaborn</div>
+                                    <div class="option" data-answer="3">C) NumPy</div>
+                                    <div class="option" data-answer="4">D) Scikit-learn</div>
+                                </div>
+                                <div class="quiz-feedback hidden" id="feedback5"></div>
+                                <a href="javascript:void(0);" class="btn btn-primary hidden" id="finishButton">Get Certificate of Completion</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -396,602 +903,213 @@
                         </a>
                     </div>
                 </div>
-
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Learn</h3>
                     <ul class="footer-links">
-                        <li><a href="/courses/course.html">Browse Courses</a></li>
-                        <li><a href="/courses/course.html">Free Courses</a></li>
-                        <li><a href="#">Paid Courses</a></li>
+                        <li><a href="../course.html">Browse Courses</a></li>
+                        <li><a href="#">Free Courses</a></li>
+                        <li><a href="#">For Businesses</a></li>
                         <li><a href="#">Become an Instructor</a></li>
+                        <li><a href="#">Affiliate Program</a></li>
                     </ul>
                 </div>
-
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Intern</h3>
                     <ul class="footer-links">
-                        <li><a href="/intern/internship.html">Find Internships</a></li>
+                        <li><a href="../../intern/internship.html">Find Internships</a></li>
                         <li><a href="#">For Companies</a></li>
                         <li><a href="#">Success Stories</a></li>
                         <li><a href="#">Career Coaching</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Community</h3>
-                    <ul class="footer-links">
-                        <li><a href="/community/join.html">Join Community</a></li>
-                        <li><a href="/community/partners.html">Partners</a></li>
-                        <li><a href="/blog/index.html">Blog</a></li>
-                        <li><a href="/community/academy.html">Offline Academy</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">InternAdda</h3>
-                    <ul class="footer-links">
-                        <li><a href="/about.html">About Us</a></li>
-                        <li><a href="/contact.html">Contact Us</a></li>
-                        <li><a href="/terms.html">Terms & Conditions</a></li>
-                        <li><a href="/refund.html">Refund Policy</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">More</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Affiliate Program</a></li>
                         <li><a href="#">FAQ</a></li>
-                        <li><a href="#">QnA</a></li>
-                        <li><a href="#">Daily Challenges</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">Contact & Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="../../about.html">About Us</a></li>
+                        <li><a href="../../contact.html">Contact Us</a></li>
+                        <li><a href="../../terms.html">Terms & Conditions</a></li>
+                        <li><a href="../../privacy.html">Privacy Policy</a></li>
+                        <li><a href="../../refund.html">Refund Policy</a></li>
                     </ul>
                 </div>
             </div>
-
             <div class="footer-bottom">
                 <p>© 2025 Internadda. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Auth Modal Structure (hidden by default) -->
-    <div id="authModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" data-action="close">&times;</span>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const coursePages = document.querySelectorAll('.course-page');
+            const progressFill = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const finishButton = document.getElementById('finishButton');
+            const userNameHeader = document.getElementById('userNameHeader');
+            const userAvatarHeader = document.getElementById('userAvatarHeader');
+            let currentPage = 1;
 
-            <!-- Login Section -->
-            <div id="loginSection" class="auth-section">
-                <div class="auth-notification">
-                    <i class="fas fa-lock"></i> <strong>Log in Required:</strong> Log in to take courses, track progress, and apply for internships.
-                </div>
-                <h2 class="auth-title">Welcome Back</h2>
-                <div class="loading hidden" id="loginLoading">
-                    <div class="spinner"></div>
-                    <span>Signing in...</span>
-                </div>
-                <div id="loginError" class="error"></div>
+            // Updated Quiz Data for Data Science Course
+            const quizData = {
+                1: { correct: 2, feedback: "✅ Correct! While ML is a huge part of DS, Visual Art is not a foundational pillar. The core is Math/Stats, CS/Programming, and Domain Expertise." },
+                2: { correct: 3, feedback: "✅ Exactly! Data cleaning and wrangling often consume the majority (around 80%) of a Data Scientist's project time." },
+                3: { correct: 4, feedback: "✅ You got it! A Scatter Plot is the best visual tool for determining the correlation between two continuous variables." },
+                4: { correct: 3, feedback: "✅ Correct! Predicting a continuous number (like rainfall or price) is known as a Regression task in supervised learning." },
+                5: { correct: 4, feedback: "✅ Perfect! Scikit-learn (sklearn) is the standard, high-level library in Python for implementing traditional Machine Learning models." }
+            };
 
-                <div class="form-group">
-                    <label for="loginEmail">Email</label>
-                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
-                </div>
+            // Animation observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
 
-                <div class="form-group">
-                    <label for="loginPassword">Password</label>
-                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
-                </div>
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
 
-                <button class="btn btn-primary" id="emailLoginBtn">Sign In</button>
-                <div class="separator"><span>OR</span></div>
-                <button class="btn btn-google" id="googleLoginBtn"><i class="fab fa-google"></i> Continue with Google</button>
-
-                <div class="toggle-auth">
-                    <span>Don't have an account?</span> <a href="#" data-action="show-signup">Sign up</a>
-                </div>
-            </div>
-
-            <!-- Signup Section -->
-            <div id="signupSection" class="auth-section">
-                <h2 class="auth-title">Create Account</h2>
-                <div class="loading hidden" id="signupLoading">
-                    <div class="spinner"></div>
-                    <span>Creating account...</span>
-                </div>
-                <div id="signupError" class="error"></div>
-
-                <div class="form-group">
-                    <label for="signupEmail">Email</label>
-                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="signupPassword">Password</label>
-                    <input type="password" id="signupPassword" placeholder="Create a password (6+ characters)" required>
-                </div>
-
-                <button class="btn btn-primary" id="emailSignupBtn">Create Account</button>
-                <div class="separator"><span>OR</span></div>
-                <button class="btn btn-google" id="googleSignupBtn"><i class="fab fa-google"></i> Sign up with Google</button>
-
-                <div class="toggle-auth">
-                    <span>Already have an account?</span> <a href="#" data-action="show-login">Sign in</a>
-                </div>
-            </div>
-
-            <!-- Dashboard/Profile Section -->
-            <div id="dashboardSection" class="auth-section">
-                <h2 class="auth-title">My Dashboard</h2>
-                <div class="dashboard-content">
-                    <div class="profile-tabs">
-                        <button class="tab-btn active" data-tab="profile">Profile</button>
-                        <button class="tab-btn" data-tab="courses">Courses</button>
-                        <button class="tab-btn" data-tab="internships">Internships</button>
-                    </div>
-
-                    <div id="profileTabContent" class="tab-content active">
-                        <div id="profileDisplaySection">
-                            <div class="user-info-profile">
-                                <div class="profile-avatar-display">
-                                    <img id="userAvatarDashboard" class="user-avatar" src="../images/no_image.png" alt="User Avatar">
-                                </div>
-                                <div class="user-profile-details">
-                                    <h2 id="userNameDashboard">Guest User</h2>
-                                    <p id="userEmailDashboard"></p>
-                                </div>
-                            </div>
-                            <div class="profile-details">
-                                <h3 class="section-title-small">Profile Information</h3>
-                                <div class="profile-info-item">
-                                    <strong>Gender:</strong> <span id="profileGenderDisplay">Not specified</span>
-                                </div>
-                                <div class="profile-info-item">
-                                    <strong>Interested Domain:</strong> <span id="profileDomainDisplay">Not specified</span>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary" id="shareProfileBtn" style="width: 100%; margin-top: 20px;"><i class="fas fa-share-alt" style="margin-right: 8px;"></i> Share My Profile</button>
-                            <button class="btn btn-outline" data-action="edit-profile">Edit Profile</button>
-                        </div>
-
-                        <div id="profileEditSection" class="hidden">
-                            <div id="profileEditError" class="error hidden" style="color: var(--warning);"></div>
-                            <div class="profile-avatar-display" style="text-align: center; margin-bottom: 20px;">
-                                <img id="userAvatarPreview" class="user-avatar" src="../images/no_image.png" alt="User Avatar Preview">
-                                <label for="profileImageInput" class="file-upload-label" style="display: block; margin-top: 10px; color: var(--primary); cursor: pointer;">
-                                    <i class="fas fa-upload"></i> Upload Image
-                                </label>
-                                <input type="file" id="profileImageInput" accept="image/*" class="hidden">
-                                <p class="profile-avatar-hint" style="margin-top: 5px; font-size: 0.85rem; color: #f56565;">*Image upload is for demo only; file storage is not active.</p>
-                            </div>
-                            <div class="form-group">
-                                <label for="profileName">Full Name</label>
-                                <input type="text" id="profileName" placeholder="Enter your full name">
-                            </div>
-                            <div class="form-group">
-                                <label for="profileGender">Gender</label>
-                                <select id="profileGender">
-                                    <option value="">Select Gender</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="interestedDomain">Interested Domain</label>
-                                <select id="interestedDomain">
-                                    <option value="">Select Domain</option>
-                                    <option value="Web Development">Web Development</option>
-                                    <option value="Data Science & AI">Data Science & AI</option>
-                                    <option value="Digital Marketing">Digital Marketing</option>
-                                    <option value="UI/UX Design">UI/UX Design</option>
-                                </select>
-                            </div>
-                            <button class="btn btn-primary" data-action="save-profile">Save Profile</button>
-                        </div>
-                    </div>
-
-                    <div id="coursesTabContent" class="tab-content hidden">
-                        <h3 class="section-title-small">📚 Enrolled Courses & Certificates</h3>
-                        <p style="color: var(--gray); margin-bottom: 20px;">Track your progress and access completion certificates here.</p>
-                        <div id="coursesListContainer" class="user-data-list">
-                            <p style="text-align: center; padding: 20px;">You are not enrolled in any courses yet. <a href="/courses/course.html">Browse now</a>.</p>
-                        </div>
-                    </div>
-
-                    <div id="internshipsTabContent" class="tab-content hidden">
-                        <h3 class="section-title-small">💼 Internship Application History</h3>
-                        <p style="color: var(--gray); margin-bottom: 20px;">View your exam results and application status for different domains.</p>
-                        <div id="internshipsListContainer" class="user-data-list">
-                            <p style="text-align: center; padding: 20px;">No application history found. <a href="/intern/internship.html">Find an Internship</a>.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Firebase Imports and Main Script Logic -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, collection, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // Enable debug logging for Firebase
-        setLogLevel('Debug');
-
-        // --- 1. Canvas Global Variables and Firebase Setup ---
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-        let db = null;
-        let auth = null;
-        let userId = null;
-        let unsubscribeUser = null;
-
-        const userData = {
-            name: "Guest User",
-            email: "",
-            avatar: "../images/no_image.png",
-            gender: "",
-            domain: ""
-        };
-
-        // --- 2. DOM Element Mapping ---
-        const DOMElements = {
-            // Navigation
-            navMenu: document.querySelector('.nav-menu'),
-            hamburgerMenu: document.getElementById('hamburgerMenu'),
-
-            // Auth Header States
-            authButtons: document.getElementById('authButtons'),
-            authButtonsMobile: document.getElementById('authButtonsMobile'),
-            userProfile: document.getElementById('userProfile'),
-            userProfileMobile: document.getElementById('userProfileMobile'),
-            userDropdown: document.getElementById('userDropdown'),
-            
-            // Modal Sections
-            authModal: document.getElementById('authModal'),
-            loginSection: document.getElementById('loginSection'),
-            signupSection: document.getElementById('signupSection'),
-            dashboardSection: document.getElementById('dashboardSection'),
-
-            // Dashboard
-            tabButtons: document.querySelectorAll('#dashboardSection .tab-btn'),
-            tabContents: document.querySelectorAll('#dashboardSection .tab-content'),
-            profileDisplaySection: document.getElementById('profileDisplaySection'),
-            profileEditSection: document.getElementById('profileEditSection'),
-            
-            // Input Fields
-            loginEmail: document.getElementById('loginEmail'),
-            loginPassword: document.getElementById('loginPassword'),
-            signupEmail: document.getElementById('signupEmail'),
-            signupPassword: document.getElementById('signupPassword'),
-            profileName: document.getElementById('profileName'),
-            profileGender: document.getElementById('profileGender'),
-            interestedDomain: document.getElementById('interestedDomain'),
-            
-            // Error/Loading
-            loginError: document.getElementById('loginError'),
-            signupError: document.getElementById('signupError'),
-            loginLoading: document.getElementById('loginLoading'),
-            signupLoading: document.getElementById('signupLoading'),
-        };
-
-        // --- 3. Core Utility Functions ---
-
-        const closeHamburgerMenu = () => {
-            DOMElements.navMenu?.classList.remove('active');
-            DOMElements.hamburgerMenu?.classList.remove('active');
-        };
-
-        const showError = (element, message) => {
-            element.textContent = message;
-            element.classList.remove('hidden');
-            setTimeout(() => element.classList.add('hidden'), 5000);
-        };
-
-        const startLoading = (element) => element?.classList.remove('hidden');
-        const stopLoading = (element) => element?.classList.add('hidden');
-
-        const openModal = (section) => {
-            DOMElements.authModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            closeHamburgerMenu();
-            showSection(section);
-        };
-
-        const closeModal = () => {
-            DOMElements.authModal.classList.remove('active');
-            document.body.style.overflow = '';
-            // Default to login section on close
-            showSection(DOMElements.loginSection);
-        };
-        
-        const showSection = (sectionElement) => {
-            document.querySelectorAll('.auth-section').forEach(sec => sec.classList.remove('active'));
-            if (sectionElement) {
-                sectionElement.classList.add('active');
-                if (sectionElement === DOMElements.dashboardSection) {
-                    activateDashboardTab('profile');
-                    updateProfileDisplay();
+            const updateProgress = () => {
+                const totalPages = coursePages.length;
+                const progressPercentage = Math.floor(((currentPage - 1) / totalPages) * 100);
+                progressFill.style.width = `${progressPercentage}%`;
+                progressText.textContent = `${progressPercentage}% Complete`;
+                if (currentPage > totalPages) {
+                    progressFill.style.width = `100%`;
+                    progressText.textContent = `100% Complete`;
                 }
-            }
-        };
+            };
 
-        // --- 4. Profile & State Management (Client-side display logic) ---
+            const showPage = (pageNumber) => {
+                coursePages.forEach(page => page.classList.add('hidden'));
+                const newPage = document.querySelector(`[data-page="${pageNumber}"]`);
+                if (newPage) {
+                    newPage.classList.remove('hidden');
+                    const newContent = newPage.querySelector('.fade-in');
+                    newContent.classList.remove('visible');
+                    setTimeout(() => observer.observe(newContent), 10);
+                }
+            };
 
-        const updateHeaderState = (user) => {
-            const loggedIn = !!user;
-            
-            if (loggedIn) {
-                DOMElements.authButtons.classList.add('hidden');
-                DOMElements.authButtonsMobile.classList.add('hidden');
-                DOMElements.userProfile.classList.remove('hidden');
-                DOMElements.userProfileMobile.classList.remove('hidden');
-            } else {
-                DOMElements.authButtons.classList.remove('hidden');
-                DOMElements.authButtonsMobile.classList.remove('hidden');
-                DOMElements.userProfile.classList.add('hidden');
-                DOMElements.userProfileMobile.classList.add('hidden');
-                
-                // Clear state on logout
-                userData.name = "Guest User";
-                userData.email = "";
+            const handleQuiz = (pageNumber) => {
+                const page = document.querySelector(`[data-page="${pageNumber}"]`);
+                const options = page.querySelectorAll('.option');
+                const feedbackDiv = page.querySelector('.quiz-feedback');
+                const nextButton = page.querySelector(`#nextButton${pageNumber}`);
+
+                options.forEach(option => {
+                    option.addEventListener('click', () => {
+                        const selected = parseInt(option.dataset.answer);
+                        const isCorrect = selected === quizData[pageNumber].correct;
+
+                        options.forEach(opt => opt.style.pointerEvents = 'none');
+                        option.classList.remove('incorrect');
+                        option.classList.remove('correct');
+
+                        if (isCorrect) {
+                            option.classList.add('correct');
+                            feedbackDiv.textContent = quizData[pageNumber].feedback;
+                            feedbackDiv.style.color = 'var(--success)';
+                            if (nextButton) {
+                                nextButton.classList.remove('hidden');
+                            } else if (finishButton) {
+                                finishButton.classList.remove('hidden');
+                            }
+                        } else {
+                            option.classList.add('incorrect');
+                            feedbackDiv.textContent = "❌ Incorrect. Please review the content on this page and try again. You can reattempt in 2 seconds.";
+                            feedbackDiv.style.color = 'var(--warning)';
+                            if (nextButton) {
+                                nextButton.classList.add('hidden');
+                            }
+
+                            setTimeout(() => {
+                                options.forEach(opt => {
+                                    opt.classList.remove('incorrect');
+                                    opt.style.pointerEvents = 'auto';
+                                });
+                                feedbackDiv.classList.add('hidden');
+                            }, 2000);
+                        }
+                        feedbackDiv.classList.remove('hidden');
+                    });
+                });
+
+                if (nextButton) {
+                    nextButton.addEventListener('click', () => {
+                        currentPage++;
+                        showPage(currentPage);
+                        updateProgress();
+                    });
+                }
+            };
+
+            for (let i = 1; i <= coursePages.length; i++) {
+                handleQuiz(i);
             }
 
-            // Update Header User Info (Desktop & Mobile)
-            document.getElementById('userNameHeader').textContent = userData.name.split(' ')[0] || 'User';
-            document.getElementById('userAvatarHeader').src = userData.avatar;
-            document.getElementById('userAvatarHeaderMobile').src = userData.avatar;
-            document.getElementById('userEmailDashboard').textContent = userData.email;
-        };
-        
-        const updateProfileDisplay = () => {
-            document.getElementById('userNameDashboard').textContent = userData.name;
-            document.getElementById('userAvatarDashboard').src = userData.avatar;
-            document.getElementById('profileGenderDisplay').textContent = userData.gender || 'Not specified';
-            document.getElementById('profileDomainDisplay').textContent = userData.domain || 'Not specified';
-            DOMElements.profileDisplaySection.classList.remove('hidden');
-            DOMElements.profileEditSection.classList.add('hidden');
-        };
-        
-        const loadProfileForEdit = () => {
-            DOMElements.profileName.value = userData.name;
-            DOMElements.profileGender.value = userData.gender || '';
-            DOMElements.interestedDomain.value = userData.domain || '';
-            document.getElementById('userAvatarPreview').src = userData.avatar;
-            DOMElements.profileDisplaySection.classList.add('hidden');
-            DOMElements.profileEditSection.classList.remove('hidden');
-        };
+            updateProgress();
+            showPage(1);
 
-        const activateDashboardTab = (tabName) => {
-            DOMElements.tabButtons.forEach(btn => {
-                if (btn.dataset.tab === tabName) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
-            DOMElements.tabContents.forEach(content => {
-                if (content.id === `${tabName}TabContent`) {
-                    content.classList.remove('hidden');
-                } else {
-                    content.classList.add('hidden');
-                }
-            });
-        };
-        
-        // --- 5. Firebase Authentication Functions ---
+            // Placeholder user data
+            if (userNameHeader) {
+                userNameHeader.textContent = "Intern";
+            }
+            if (userAvatarHeader) {
+                userAvatarHeader.src = "../../images/no_image.png";
+            }
 
-        const fetchUserData = (uid) => {
-            if (unsubscribeUser) unsubscribeUser();
-            
-            if (db) {
-                const userDocRef = doc(db, `artifacts/${appId}/users/${uid}/profile/info`);
-                
-                // Real-time listener for user profile data
-                unsubscribeUser = onSnapshot(userDocRef, (docSnap) => {
-                    if (docSnap.exists()) {
-                        const data = docSnap.data();
-                        userData.name = data.name || auth.currentUser.displayName || 'Intern User';
-                        userData.avatar = data.avatar || auth.currentUser.photoURL || '../images/no_image.png';
-                        userData.gender = data.gender || '';
-                        userData.domain = data.domain || '';
-                    } else {
-                        // Create initial document if it doesn't exist
-                        setDoc(userDocRef, { 
-                            name: auth.currentUser.displayName || 'Intern User',
-                            email: auth.currentUser.email || 'N/A',
-                            createdAt: new Date().toISOString()
-                        }, { merge: true });
-                        userData.name = auth.currentUser.displayName || 'Intern User';
-                    }
-                    userData.email = auth.currentUser.email || 'N/A';
-                    updateHeaderState(auth.currentUser);
-                    if (DOMElements.dashboardSection.classList.contains('active')) {
-                        updateProfileDisplay();
-                    }
-                }, (error) => {
-                    console.error("Error fetching user data:", error);
+            const hamburgerMenu = document.getElementById('hamburgerMenu');
+            const navMenu = document.querySelector('.nav-menu');
+            if (hamburgerMenu) {
+                hamburgerMenu.addEventListener('click', () => {
+                    hamburgerMenu.classList.toggle('active');
+                    navMenu.classList.toggle('active');
                 });
             }
-        };
 
-        const handleAuthError = (action, error) => {
-            const errorElement = action === 'login' ? DOMElements.loginError : DOMElements.signupError;
-            const loadingElement = action === 'login' ? DOMElements.loginLoading : DOMElements.signupLoading;
-            stopLoading(loadingElement);
-            console.error(`${action} failed:`, error);
-            showError(errorElement, `Authentication failed: ${error.message.replace('Firebase: ', '')}`);
-        };
+            // Video Player Logic
+            const videoThumbnail = document.getElementById('video-thumbnail');
+            const videoContainer = document.getElementById('video-container');
+            const videoId = "X3paOmcrTjQ"; // Data Science In 5 Minutes | Simplilearn
 
-        const emailSignup = async () => {
-            startLoading(DOMElements.signupLoading);
-            try {
-                const email = DOMElements.signupEmail.value;
-                const password = DOMElements.signupPassword.value;
-                await createUserWithEmailAndPassword(auth, email, password);
-                // AuthStateChanged listener handles the rest
-                closeModal();
-            } catch (error) {
-                handleAuthError('signup', error);
-            }
-        };
-
-        const emailLogin = async () => {
-            startLoading(DOMElements.loginLoading);
-            try {
-                const email = DOMElements.loginEmail.value;
-                const password = DOMElements.loginPassword.value;
-                await signInWithEmailAndPassword(auth, email, password);
-                // AuthStateChanged listener handles the rest
-                closeModal();
-            } catch (error) {
-                handleAuthError('login', error);
-            }
-        };
-
-        const handleLogout = async () => {
-            try {
-                if (unsubscribeUser) unsubscribeUser();
-                await signOut(auth);
-                updateHeaderState(null);
-                closeModal();
-            } catch (error) {
-                console.error("Logout failed:", error);
-            }
-        };
-
-        const saveProfileData = async () => {
-            if (!auth.currentUser || !db) return;
-
-            const name = DOMElements.profileName.value.trim();
-            const gender = DOMElements.profileGender.value;
-            const domain = DOMElements.interestedDomain.value;
-            
-            if (name.length < 3) {
-                showError(document.getElementById('profileEditError'), "Name must be at least 3 characters.");
-                return;
-            }
-
-            try {
-                const userDocRef = doc(db, `artifacts/${appId}/users/${auth.currentUser.uid}/profile/info`);
-                await setDoc(userDocRef, { name, gender, domain }, { merge: true });
+            if (videoThumbnail) {
+                videoThumbnail.querySelector('img').src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
                 
-                // Update local state and display
-                userData.name = name;
-                userData.gender = gender;
-                userData.domain = domain;
-
-                updateProfileDisplay();
-                updateHeaderState(auth.currentUser); // Update header with new name
-            } catch (error) {
-                showError(document.getElementById('profileEditError'), `Failed to save: ${error.message}`);
-                console.error("Error saving profile:", error);
-            }
-        };
-
-        // --- 6. Initialization and Event Setup ---
-
-        const initApp = async () => {
-            if (firebaseConfig) {
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-            } else {
-                console.error("Firebase configuration is missing.");
-                return;
+                videoThumbnail.addEventListener('click', () => {
+                    const iframeContainer = document.createElement('div');
+                    iframeContainer.classList.add('video-embed-container');
+                    
+                    const iframe = document.createElement('iframe');
+                    iframe.setAttribute('src', `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`);
+                    iframe.setAttribute('title', 'YouTube video player');
+                    iframe.setAttribute('frameborder', '0');
+                    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+                    iframe.setAttribute('allowfullscreen', '');
+                    
+                    iframeContainer.appendChild(iframe);
+                    videoContainer.innerHTML = '';
+                    videoContainer.appendChild(iframeContainer);
+                });
             }
 
-            // Authentication listener
-            onAuthStateChanged(auth, async (user) => {
-                if (user) {
-                    userId = user.uid;
-                    fetchUserData(user.uid);
-                } else {
-                    // Initial sign-in logic for Canvas environment
-                    if (initialAuthToken) {
-                        try {
-                            await signInWithCustomToken(auth, initialAuthToken);
-                        } catch (e) {
-                            console.error("Custom token sign-in failed. Signing in anonymously.", e);
-                            await signInAnonymously(auth);
-                        }
-                    } else {
-                        // Fallback to anonymous for unauthenticated users in a hosted environment
-                        await signInAnonymously(auth);
+            if (finishButton) {
+                finishButton.addEventListener('click', () => {
+                    const name = prompt("Please enter the name you'd like on the certificate:");
+                    if (name) {
+                        const courseName = "Essential Data Science Intern Course";
+                        const courseNameEncoded = encodeURIComponent(courseName);
+                        const nameEncoded = encodeURIComponent(name);
+                        window.location.href = `certificate.html?name=${nameEncoded}&course=${courseNameEncoded}`;
                     }
-                    updateHeaderState(auth.currentUser);
-                }
-            });
-
-            // Global Click Handler using event delegation
-            document.addEventListener('click', (e) => {
-                const target = e.target.closest('[data-action]');
-                
-                // Handle modal backdrop click
-                if (e.target === DOMElements.authModal) {
-                    closeModal();
-                }
-
-                // Handle dropdown close
-                if (!e.target.closest('#userProfile')) {
-                    DOMElements.userDropdown?.classList.add('hidden');
-                }
-
-                if (!target) return;
-                e.preventDefault();
-
-                switch (target.dataset.action) {
-                    case 'login':
-                    case 'show-login':
-                        showSection(DOMElements.loginSection);
-                        openModal(DOMElements.loginSection);
-                        break;
-                    case 'signup':
-                    case 'show-signup':
-                        showSection(DOMElements.signupSection);
-                        openModal(DOMElements.signupSection);
-                        break;
-                    case 'dashboard':
-                        // If user is logged in, show dashboard, otherwise prompt login
-                        if (auth.currentUser?.uid) {
-                            openModal(DOMElements.dashboardSection);
-                        } else {
-                            openModal(DOMElements.loginSection);
-                        }
-                        DOMElements.userDropdown?.classList.add('hidden');
-                        break;
-                    case 'close':
-                        closeModal();
-                        break;
-                    case 'profile-dropdown':
-                        DOMElements.userDropdown?.classList.toggle('hidden');
-                        break;
-                    case 'logout':
-                        handleLogout();
-                        break;
-                    case 'edit-profile':
-                        loadProfileForEdit();
-                        break;
-                    case 'save-profile':
-                        saveProfileData();
-                        break;
-                }
-            });
-
-            // Specific Button Listeners
-            document.getElementById('emailSignupBtn')?.addEventListener('click', emailSignup);
-            document.getElementById('emailLoginBtn')?.addEventListener('click', emailLogin);
-            
-            // Dashboard Tab Switching
-            DOMElements.tabButtons.forEach(button => {
-                button.addEventListener('click', () => activateDashboardTab(button.dataset.tab));
-            });
-        };
-
-        initApp();
+                });
+            }
+        });
     </script>
 </body>
 </html>
