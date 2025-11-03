@@ -914,18 +914,18 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
     .hero-cta {
         flex-direction: column; /* Stack buttons */
     }
-    .hero-stats { 
-        flex-direction: column; 
-        gap: 24px; 
-        align-items: center; 
-        text-align: center;
-    }
-    .hero-stats > .stat-item {
-        /* Ensure stats align left, not center for better structure */
-        align-items: flex-start; 
-        text-align: left;
-        width: 100%;
-    }
+.hero-stats { 
+    flex-direction: column; 
+    gap: 24px; 
+    align-items: center; 
+    text-align: center;
+}
+.hero-stats > .stat-item {
+    /* FIX: Center align hero stats for mobile view (Requested by User) */
+    align-items: center; 
+    text-align: center;
+    width: 100%;
+}
     
     /* Generic mobile stack for layouts */
     .hero-cta, .cta-buttons { flex-direction: column; }
