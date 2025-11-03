@@ -1,0 +1,14 @@
+# Main pages (clean URLs)
+/
+/about        /about.html        200
+/contact      /contact.html      200
+/jobs         /jobs.html         200
+/privacy      /privacy.html      200
+/refund       /refund.html       200
+/internship   /internship.html   200
+
+# Courses page
+/courses/course   /courses/course.html   200
+
+/intern/internship   /intern/internship.html   200
+

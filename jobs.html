@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3ZZ3HGFM3Q');
+</script>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers at Internadda | Future Job Opportunities</title>
+    <meta name="description" content="Interested in joining Internadda? Check back for future job openings or follow us on social media for the latest career updates.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-app-compat.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-auth-compat.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-firestore-compat.min.js"></script>
+    <style>
+        .jobs-hero {
+            text-align: center;
+            background-color: var(--light);
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .jobs-content {
+            max-width: 700px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        .jobs-heading {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .jobs-description {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+        .social-follow {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+        }
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .social-btn i {
+            font-size: 1.4rem;
+        }
+        .btn-linkedin {
+            background-color: #0077B5;
+            color: var(--white);
+        }
+        .btn-linkedin:hover {
+            background-color: #005582;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 119, 181, 0.2);
+        }
+        .btn-instagram {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: var(--white);
+        }
+        .btn-instagram:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(220, 39, 67, 0.25);
+        }
+        .animation-container {
+            margin-bottom: 30px;
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+             <a href="/" class="logo">
+                 <img src="images/logo.jpg" alt="InternAdda Logo" class="logo-img">
+                <span class="logo-text">InternAdda</span>
+            </a>
+
+            <nav class="nav-menu">
+                 <a href="/" class="nav-link">Home</a>
+                <a href="/courses/course.html" class="nav-link">Courses</a>
+                <a href="/intern/internship.html" class="nav-link">Internships</a>
+                <a href="/jobs.html" class="nav-link">Jobs</a>
+                <a href="/about.html" class="nav-link">About</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">Community <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                    <div class="dropdown-content">
+                        <a href="/community/join.html" class="dropdown-link">Join Community</a>
+                        <a href="/community/partners.html" class="dropdown-link">Partners</a>
+                        <a href="/blog/index.html" class="dropdown-link">Blog</a>
+                        <a href="/community/academy.html" class="dropdown-link">Offline Academy</a>
+                    </div>
+                </div>
+                <a href="/community/join.html" class="nav-link mobile-only-link">Join Community</a>
+                 <a href="/community/partners.html" class="nav-link mobile-only-link">Partners</a>
+                 <a href="/blog/index.html" class="nav-link mobile-only-link">Blog</a>
+                 <a href="/community/academy.html" class="nav-link mobile-only-link">Offline Academy</a>
+                
+                <div class="nav-actions-mobile">
+                     <div id="authButtonsMobile">
+                        <a href="#" class="btn btn-outline" id="loginBtnHeaderMobile">Log in</a>
+                        <a href="#" class="btn btn-primary" id="signupBtnHeaderMobile">Sign up</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="header-actions">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                     <input type="text" id="searchInput" class="search-input" placeholder="Search...">
+                </div>
+
+                <div id="authButtons">
+                    <a href="#" class="btn btn-outline" id="loginBtnHeader">Log in</a>
+                    <a href="#" class="btn btn-primary" id="signupBtnHeader">Sign up</a>
+                </div>
+
+                <div class="user-profile hidden" id="userProfile">
+                    <img src="images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeader">
+                    <span id="userNameHeader"></span>
+                    <div class="dropdown-menu" id="userDropdown">
+                        <button id="profileBtnHeader">My Profile</button>
+                        <button id="logoutBtnHeader">Sign Out</button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="hamburger-menu" id="hamburgerMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div id="searchResults" class="search-results-container container hidden"></div>
+    </header>
+
+    <main>
+        <section class="jobs-hero"> <div class="container">
+                <div class="jobs-content">
+                    <div class="animation-container">
+                        <svg width="120" height="120" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="url(#grad)">
+                            <defs>
+                                <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:var(--primary);stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:var(--secondary);stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"/>
+                            <path d="M11,6a1,1,0,0,0-1,1V9a1,1,0,0,0,2,0V7A1,1,0,0,0,11,6Z"/>
+                            <path d="M11,13a1,1,0,0,0-1,1v2a1,1,0,0,0,2,0V14A1,1,0,0,0,11,13Z"/>
+                        </svg>
+                    </div>
+                    <h1 class="jobs-heading">Our Next Chapter Awaits</h1>
+                    <p class="jobs-description">We're hard at work building the future of career development and currently aren't hiring for full-time roles. New opportunities are on the horizon, so please check back soon. The best way to stay updated is by following us!</p>
+                    <div class="social-follow">
+                        <a href="https://www.linkedin.com/company/internadda-india/?viewAsMember=true" target="_blank" class="social-btn btn-linkedin">
+                            <i class="fab fa-linkedin"></i> Follow on LinkedIn
+                        </a>
+                        <a href="https://www.instagram.com/internadda.india" target="_blank" class="social-btn btn-instagram"> <i class="fab fa-instagram"></i> Follow on Instagram
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+             <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">Internadda</div>
+                    <p class="footer-description">Transforming careers through learning, interning, and earning opportunities.</p>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/company/internadda-india" target="_blank" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@theinternadda" target="_blank" class="social-link" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://www.instagram.com/internadda.india" target="_blank" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">Learn</h3>
+                    <ul class="footer-links">
+                        <li><a href="/courses/course.html">Browse Courses</a></li>
+                        <li><a href="/courses/course.html">Free Courses</a></li>
+                        <li><a href="#">Paid Courses</a></li>
+                        <li><a href="#">Become an Instructor</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">Intern</h3>
+                    <ul class="footer-links">
+                        <li><a href="/intern/internship.html">Find Internships</a></li>
+                        <li><a href="#">For Companies</a></li>
+                        <li><a href="#">Success Stories</a></li>
+                        <li><a href="#">Career Coaching</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">Community</h3>
+                    <ul class="footer-links">
+                        <li><a href="/community/join.html">Join Community</a></li>
+                        <li><a href="/community/partners.html">Partners</a></li>
+                        <li><a href="/blog/index.html">Blog</a></li>
+                        <li><a href="/community/academy.html">Offline Academy</a></li>
+                    </ul>
+                </div>
+
+
+                     <div class="footer-links-column">
+                    <h3 class="footer-links-title">InternAdda</h3>
+                    <ul class="footer-links">
+                        <li><a href="/about.html">About Us</a></li>
+                        <li><a href="/contact.html">Contact Us</a></li>
+                        <li><a href="/terms.html">Terms & Conditions</a></li>
+                        <li><a href="/refund.html">Refund Policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">More</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Affiliate Program</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">QnA</a></li>
+                        <li><a href="#">Daily Challenges</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2025 Internadda. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+
+            <div id="loginSection" class="auth-section">
+                <div class="auth-notification">
+                    <i class="fas fa-lock"></i> <strong>Log in Required:</strong> Log in to take courses, track progress, and apply for internships.
+                 </div>
+                <h2 class="auth-title">Welcome Back</h2>
+                <div class="loading" id="loginLoading">
+                    <div class="spinner"></div>
+                    <span>Signing in...</span>
+                </div>
+                <div id="loginError" class="error"></div>
+
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+
+                <button class="btn btn-primary" id="emailLoginBtn">Sign In</button>
+                <div class="separator"><span>OR</span></div>
+                <button class="btn btn-google" id="googleLoginBtn"><i class="fab fa-google"></i> Continue with Google</button>
+
+                <div class="toggle-auth">
+                    <span>Don't have an account?</span> <a href="#" id="showSignup">Sign up</a>
+                </div>
+            </div>
+
+            <div id="signupSection" class="auth-section">
+                <h2 class="auth-title">Create Account</h2>
+                <div class="loading" id="signupLoading">
+                    <div class="spinner"></div>
+                    <span>Creating account...</span>
+                </div>
+                <div id="signupError" class="error"></div>
+
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" placeholder="Create a password (6+ characters)" required>
+                </div>
+
+                <button class="btn btn-primary" id="emailSignupBtn">Create Account</button>
+                <div class="separator"><span>OR</span></div>
+                <button class="btn btn-google" id="googleSignupBtn"><i class="fab fa-google"></i> Sign up with Google</button>
+
+                <div class="toggle-auth">
+                    <span>Already have an account?</span> <a href="#" id="showLogin">Sign in</a>
+                </div>
+            </div>
+
+            <div id="dashboardSection" class="auth-section">
+                 <div class="dashboard-content">
+                    <div class="profile-tabs">
+                         <button class="tab-btn active" data-tab="profile">Profile</button>
+                         <button class="tab-btn" data-tab="courses">Courses</button>
+                         <button class="tab-btn" data-tab="internships">Internships</button>
+                    </div>
+
+                    <div id="profileTabContent" class="tab-content">
+                         <div id="profileDisplaySection">
+                             <div class="user-info-profile">
+                                 <div class="profile-avatar-display">
+                                     <img id="userAvatarDashboard" class="user-avatar" src="images/no_image.png" alt="User Avatar">
+                                 </div>
+                                 <div class="user-profile-details">
+                                     <h2 id="userNameDashboard"></h2>
+                                     <p id="userEmailDashboard"></p>
+                                 </div>
+                             </div>
+                             <div class="profile-details">
+                                 <h3 class="section-title-small">Profile Information</h3>
+                                 <div class="profile-info-item">
+                                     <strong>Gender:</strong> <span id="profileGenderDisplay">Not specified</span>
+                                 </div>
+                                 <div class="profile-info-item">
+                                     <strong>Interested Domain:</strong> <span id="profileDomainDisplay">Not specified</span>
+                                 </div>
+                             </div>
+                             <button class="btn btn-outline" id="editProfileBtn">Edit Profile</button>
+                         </div>
+
+                         <div id="profileEditSection" class="hidden">
+                             <div class="profile-avatar-display">
+                                 <img id="userAvatarPreview" class="user-avatar" src="images/no_image.png" alt="User Avatar Preview">
+                                 <label for="profileImageInput" class="file-upload-label">
+                                     <i class="fas fa-upload"></i> Upload Image
+                                 </label>
+                                 <input type="file" id="profileImageInput" accept="image/*">
+                             </div>
+                             <div class="form-group">
+                                 <label for="profileName">Full Name</label>
+                                 <input type="text" id="profileName" placeholder="Enter your full name">
+                             </div>
+                             <div class="form-group">
+                                 <label for="profileGender">Gender</label>
+                                 <select id="profileGender">
+                                     <option value="">Select Gender</option>
+                                     <option value="Male">Male</option>
+                                     <option value="Female">Female</option>
+                                     <option value="Other">Other</option>
+                                 </select>
+                             </div>
+                             <div class="form-group">
+                                 <label for="interestedDomain">Interested Domain</label>
+                                 <select id="interestedDomain">
+                                     <option value="">Select Domain</option>
+                                     <option value="Web Development">Web Development</option>
+                                     <option value="Data Science & AI">Data Science & AI</option>
+                                     <option value="Digital Marketing">Digital Marketing</option>
+                                     <option value="UI/UX Design">UI/UX Design</option>
+                                 </select>
+                             </div>
+                             <button class="btn btn-primary" id="saveProfileBtn">Save Profile</button>
+                         </div>
+                    </div>
+
+                    <div id="coursesTabContent" class="tab-content hidden">
+                        <h3 class="section-title-small">📚 Enrolled Courses & Certificates</h3>
+                        <p style="color: var(--gray); margin-bottom: 20px;">Track your progress and access completion certificates here.</p>
+                        <div id="coursesListContainer" class="user-data-list">
+                            <p style="text-align: center; padding: 20px;">Please log in to view your courses.</p>
+                        </div>
+                    </div>
+
+                    <div id="internshipsTabContent" class="tab-content hidden">
+                        <h3 class="section-title-small">💼 Internship Application History</h3>
+                        <p style="color: var(--gray); margin-bottom: 20px;">View your exam results and application status for different domains.</p>
+                        <div id="internshipsListContainer" class="user-data-list">
+                            <p style="text-align: center; padding: 20px;">Please log in to view your internship history.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginBtnMobile = document.getElementById('loginBtnHeaderMobile');
+            const signupBtnMobile = document.getElementById('signupBtnHeaderMobile');
+            const authModal = document.getElementById('authModal');
+            const loginSection = document.getElementById('loginSection');
+            const signupSection = document.getElementById('signupSection');
+            const navMenu = document.querySelector('.nav-menu');
+            const hamburgerMenu = document.getElementById('hamburgerMenu');
+
+            const closeHamburgerMenu = () => {
+                if (navMenu && hamburgerMenu) {
+                    navMenu.classList.remove('active');
+                    hamburgerMenu.classList.remove('active');
+                }
+            };
+
+            if (loginBtnMobile) {
+                loginBtnMobile.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (authModal && loginSection && signupSection) {
+                        authModal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                        signupSection.classList.remove('active');
+                        loginSection.classList.add('active');
+                        closeHamburgerMenu();
+                    }
+                });
+            }
+
+            if (signupBtnMobile) {
+                signupBtnMobile.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (authModal && loginSection && signupSection) {
+                        authModal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                        loginSection.classList.remove('active');
+                        signupSection.classList.add('active');
+                        closeHamburgerMenu();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

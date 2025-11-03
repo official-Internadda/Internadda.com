@@ -1,0 +1,13 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/about", "destination": "/about.html", "statusCode": 200 },
+    { "source": "/contact", "destination": "/contact.html", "statusCode": 200 },
+    { "source": "/jobs", "destination": "/jobs.html", "statusCode": 200 },
+    { "source": "/privacy", "destination": "/privacy.html", "statusCode": 200 },
+    { "source": "/refund", "destination": "/refund.html", "statusCode": 200 },
+    { "source": "/internship", "destination": "/internship.html", "statusCode": 200 },
+    { "source": "/courses/course", "destination": "/courses/course.html", "statusCode": 200 }
+  ]
+}
