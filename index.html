@@ -38,6 +38,10 @@
             /* Enhanced card border on hover */
             border: 1px solid var(--primary);
         }
+        /* New CSS for fixed search bar display */
+        .search-container {
+            display: flex !important; /* Ensure search bar is always a flex container for alignment */
+        }
     </style>
 </head>
 
@@ -748,6 +752,7 @@
             
             if (authModal) {
                  window.addEventListener('click', (e) => {
+                     // Only close if click is directly on the backdrop (modal element itself)
                      if (e.target === authModal) {
                          closeAuthModal();
                      }
@@ -766,17 +771,21 @@
                 });
             }
 
-            // 6. Fix for Desktop "More" Dropdown
+            // 6. FIX FOR DESKTOP "MORE" DROPDOWN
             if (desktopMoreDropdown) {
                 desktopMoreDropdown.addEventListener('click', function(event) {
-                    // Only run for desktop view (prevent mobile interference)
+                    // Only run for desktop view 
                     if (window.innerWidth > 1024) { 
                         const isVisible = desktopDropdownContent.style.display === 'block';
+                        // Toggle Visibility
                         desktopDropdownContent.style.display = isVisible ? 'none' : 'block';
                         if (desktopDropdownArrow) {
                             desktopDropdownArrow.style.transform = isVisible ? 'rotate(0deg)' : 'rotate(180deg)';
                         }
+                        // Stop propagation to prevent document listener from closing it immediately
                         event.stopPropagation();
+                        // Prevent the default link action too
+                        event.preventDefault(); 
                     }
                 });
             }
