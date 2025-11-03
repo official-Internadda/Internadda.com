@@ -8,223 +8,384 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <link rel="stylesheet" href="../../style.css">
-    <style>
-        /* FIX: Ensure body takes up vertical space for spinner */
-        body {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        main {
-             flex-grow: 1;
-             position: relative;
-        }
+  <script>
+        // Course Specific Details
+        const COURSE_TITLE = "Essential Data Science Intern Course";
+        const TOTAL_LESSON_PAGES = 5; // Pages 1 to 5 are content pages
+        const TOTAL_PAGES = 1 + TOTAL_LESSON_PAGES; // Page 0 (Overview) + 5 Lesson Pages
+        const LOGIN_REDIRECT_ELEMENT_ID = 'loginBtnHeader'; // Element to click to open the modal
 
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
+        // FIX: Re-mapped correct answers and ensured 4 options (MCQ fix)
+        const quizData = {
+            1: { correct: 2, options: 4, feedback: "✅ Correct! Starting with historical data (Step 2) is essential to define the problem and understand underlying trends before building any model (Step 4)." },
+            2: { correct: 3, options: 4, feedback: "✅ Correct! Median is preferred over Mean for imputation when outliers are present, as the Median is robust against extreme values." },
+            3: { correct: 3, options: 4, feedback: "✅ Correct! An A/B test with a T-Test is the statistical framework used to determine if the observed difference is statistically significant (i.e., not random chance)." },
+            4: { correct: 2, options: 4, feedback: "✅ Correct! The `WHERE` clause filters rows before aggregation (GROUP BY), while `HAVING` filters results AFTER aggregation." },
+            5: { correct: 3, options: 4, feedback: "✅ Correct! Version control tracks history, enables collaboration (merging), and protects against catastrophic errors by allowing quick rollback." }
+        };
+        
+        // Video IDs for each page (simulating dynamic content)
+        const pageVideoIds = {
+            1: "x-G-dSSUNQE", 
+            2: "JOlruyTytz8", 
+            3: "Cc-RKfvITzo", 
+            4: "4tYY6NFRfws", 
+            5: "i_LwzRVP7bg" 
+        };
+        
+        // --- Core Logic Elements ---
+        const coursePages = document.querySelectorAll('.course-page');
+        const progressFill = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const finishButton = document.getElementById('finishButton');
+        const videoContainer = document.getElementById('video-container');
+        const startEnrollmentButtonActual = document.getElementById('startEnrollmentButtonActual'); 
 
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
+        let currentPage = 0; 
+        let isUserEnrolled = false;
+        
+        // Helper to get Firestore path (Assumes global auth and db from script.js)
+        function getUserPath(collection) {
+            const user = firebase.auth().currentUser;
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+            return `artifacts/${appId}/users/${user.uid}/${collection}`;
         }
         
-        /* FIX: Loading Overlay Styles */
-        #loadingOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 1);
-            z-index: 2000; 
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.5s ease-in-out;
-        }
-        .spinner-large {
-            border: 6px solid #f3f3f3;
-            border-top: 6px solid var(--primary);
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 1.5s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        #loadingText {
-             margin-top: 20px;
-             font-size: 1.1rem;
-             color: var(--dark);
-        }
-        /* End Loading Fix */
+        // Helper to load and save progress (replaces old logic from script.js global functions for this page)
+        const saveProgressLocal = async (pageNumber, isCompleted) => {
+            const user = firebase.auth().currentUser;
+            if (!user || user.isAnonymous) return;
+            
+            // Calculate progress based on lesson pages (1-5)
+            const progressPage = Math.max(0, pageNumber - 1);
+            const progressForDb = Math.min(100, Math.floor((progressPage / TOTAL_LESSON_PAGES) * 100));
+            
+            const enrollmentsRef = db.collection(getUserPath('enrollments'));
+            const docTitle = COURSE_TITLE;
+            
+            try {
+                const existingEnrollment = await enrollmentsRef.where('title', '==', docTitle).get();
+                if (!existingEnrollment.empty) {
+                    const docId = existingEnrollment.docs[0].id;
+                    await enrollmentsRef.doc(docId).update({
+                        progress: progressForDb,
+                        lastPage: pageNumber,
+                        completed: isCompleted,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                } else {
+                    // Initial enrollment 
+                     await enrollmentsRef.add({
+                        title: docTitle,
+                        progress: progressForDb, 
+                        completed: isCompleted,
+                        lastPage: pageNumber,
+                        userId: user.uid,
+                        url: window.location.pathname 
+                    });
+                }
+                isUserEnrolled = true;
+            } catch(e) {
+                console.error("Error saving progress:", e);
+            }
+        };
 
-
-        /* FIX: Main content container starts hidden */
-        .main-content-container {
-            max-width: 800px;
-            margin: 0 auto;
-            min-height: 500px; 
-            opacity: 0; 
-            transition: opacity 0.4s ease-in-out;
-            position: relative; 
+        const loadProgressLocal = async (user) => {
+             if (!user || user.isAnonymous) return null;
+             try {
+                const enrollmentsRef = db.collection(getUserPath('enrollments'));
+                const existingEnrollment = await enrollmentsRef.where('title', '==', COURSE_TITLE).limit(1).get();
+                 
+                if (!existingEnrollment.empty) {
+                    const data = existingEnrollment.docs[0].data();
+                    isUserEnrolled = true;
+                    return data;
+                }
+                isUserEnrolled = false;
+                return null;
+             } catch(e) {
+                 console.error("Error loading progress:", e);
+                 isUserEnrolled = false;
+                 return null;
+             }
         }
         
-        /* Class added by JS once auth state is confirmed */
-        .content-loaded {
-            opacity: 1 !important;
-        }
+        // Helper to update progress visualization
+        const updateProgressUI = (pageNumber) => {
+            // Only pages 1-5 count towards progress
+            const progressPage = Math.max(0, pageNumber - 1);
+            const progressPercentage = Math.min(100, Math.floor((progressPage / TOTAL_LESSON_PAGES) * 100));
+            
+            if (progressFill && progressText) {
+                progressFill.style.width = `${progressPercentage}%`;
+                progressText.textContent = `${progressPercentage}% Complete`;
+            }
+        };
 
-        .hidden {
-            display: none !important;
-        }
+        const loadVideoForPage = (pageNumber) => {
+             // Only load video for actual lesson pages (1-5)
+            if (pageNumber < 1) {
+                if (videoContainer) videoContainer.innerHTML = ''; 
+                return;
+            }
+            const videoId = pageVideoIds[pageNumber];
+            
+            if (videoContainer) {
+                 // Reset video container to thumbnail view
+                videoContainer.innerHTML = `
+                    <div class="video-wrapper" id="video-thumbnail-new">
+                        <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" alt="Course Video Thumbnail" onerror="this.onerror=null; this.src='https://placehold.co/600x338/546e7a/ffffff?text=Video+Not+Available'">
+                        <div class="play-button"><i class="fas fa-play-circle"></i></div>
+                    </div>
+                `;
+                const currentVideoThumbnail = videoContainer.querySelector('#video-thumbnail-new');
+                if (currentVideoThumbnail) {
+                    currentVideoThumbnail.addEventListener('click', () => {
+                        const iframeContainer = document.createElement('div');
+                        iframeContainer.classList.add('video-embed-container');
+                        const iframe = document.createElement('iframe');
+                        // FIX: Use the video ID for embedding
+                        iframe.setAttribute('src', `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`);
+                        iframe.setAttribute('title', 'YouTube video player');
+                        iframe.setAttribute('frameborder', '0');
+                        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+                        iframe.setAttribute('allowfullscreen', '');
+                        iframeContainer.appendChild(iframe);
+                        videoContainer.innerHTML = ''; 
+                        videoContainer.appendChild(iframeContainer);
+                    });
+                }
+            }
+        };
 
-        /* --- Course Content Styles --- */
-        .course-title-main {
-            font-size: 2.8rem;
-            font-weight: 800;
-            text-align: center;
-            margin-bottom: 20px;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .course-page-body p, .course-page-body li {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-        
-        .quiz-options .option.correct {
-            background-color: #d1f7e0;
-            border-color: var(--success);
-            box-shadow: 0 0 0 3px var(--success);
-        }
-        .quiz-options .option.incorrect {
-            background-color: #fcebeb;
-            border-color: #f56565;
-            box-shadow: 0 0 0 3px #f56565;
-        }
-        
-         /* Video Section Styles (Needed here for thumbnail) */
-        .video-wrapper {
-            margin: 30px 0;
-            position: relative;
-            cursor: pointer;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            transition: transform 0.3s ease;
-            aspect-ratio: 16/9;
-        }
-        .video-wrapper:hover { transform: scale(1.02); }
-        .video-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        .video-wrapper .play-button {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 4.5rem; color: rgba(255, 255, 255, 0.9); text-shadow: 0 2px 10px rgba(0,0,0,0.3); transition: transform 0.2s ease, color 0.2s ease; pointer-events: none;
-        }
-        .video-embed-container {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            height: 0;
-        }
-        .video-embed-container iframe {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 16px;
-        }
-        
-        /* Instructor Card Styling (Point 6) */
-        .instructor-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 30px;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            margin-bottom: 40px;
-            background: #f7fafc;
-        }
-        .instructor-card img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--secondary);
-            margin-bottom: 15px;
-        }
-        .overview-details p {
-            display: flex;
-            align-items: center;
-            font-size: 1.1rem;
-        }
-        .course-page-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 15px;
-        }
-        .takeaways {
-            margin-top: 40px;
-            padding: 30px;
-            background: #eef2f7;
-            border-left: 5px solid var(--primary);
-            border-radius: 8px;
-        }
-        .takeaways h3 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: var(--primary);
-        }
-        .takeaways ul {
-            list-style-type: '✅ ';
-            padding-left: 20px;
-        }
+        const showPage = (pageNumber) => {
+            coursePages.forEach(page => page.classList.add('hidden'));
+            let newPage = document.querySelector(`[data-page="${pageNumber}"]`);
+            
+            if (!newPage) {
+                pageNumber = 1; // Fallback to page 1
+                newPage = document.querySelector(`[data-page="${pageNumber}"]`);
+                if (newPage) currentPage = 1;
+            }
+            
+            if (newPage) {
+                currentPage = pageNumber; // Update global page state
+                newPage.classList.remove('hidden');
+                const newContent = newPage.querySelector('.fade-in');
+                if(newContent) {
+                     newContent.classList.remove('visible');
+                     // Use setTimeout to ensure re-observing works
+                     setTimeout(() => {
+                         const tempObserver = new IntersectionObserver((entries) => {
+                             entries.forEach(entry => {
+                                 if (entry.isIntersecting) {
+                                     entry.target.classList.add('visible');
+                                     tempObserver.unobserve(entry.target); 
+                                 }
+                             });
+                         }, { threshold: 0.1 });
+                         tempObserver.observe(newContent);
+                     }, 10);
+                }
+                
+                updateProgressUI(pageNumber); 
+                loadVideoForPage(pageNumber);
+                
+                // Save the current page to track progress (only save progress for pages >= 1)
+                if(pageNumber >= 1) {
+                    saveProgressLocal(pageNumber, pageNumber > TOTAL_LESSON_PAGES);
+                }
 
-        /* General course structure updates */
-         .course-page-body table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-        }
-        .course-page-body th, .course-page-body td {
-            border: 1px solid #e2e8f0;
-            padding: 12px 16px;
-            text-align: left;
-        }
-        .course-page-body th {
-            background-color: var(--dark);
-            color: var(--light);
-            font-weight: 600;
-        }
-        .course-page-body pre {
-            background-color: #f6f8fa;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 16px;
-            overflow-x: auto;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            margin: 20px 0;
-            line-height: 1.5;
-        }
+                // Smooth scroll to the content wrapper
+                document.querySelector('main').scrollIntoView({ behavior: 'smooth' });
+            }
+        };
         
-    </style>
+        const updateUI = () => {
+            // Setup navigation buttons functionality for pages 1-5
+            for (let i = 1; i <= TOTAL_LESSON_PAGES; i++) {
+                const page = document.querySelector(`[data-page="${i}"]`);
+                const nextButton = page.querySelector(`#nextButton${i}`);
+                if (nextButton) {
+                    nextButton.addEventListener('click', () => {
+                        currentPage = Math.min(TOTAL_LESSON_PAGES + 1, currentPage + 1);
+                        showPage(currentPage);
+                    });
+                }
+            }
+        };
+        
+        const handleQuiz = (pageNumber) => {
+            const page = document.querySelector(`[data-page="${pageNumber}"]`);
+            const options = page.querySelectorAll('.option');
+            const quizSection = page.querySelector('.quiz-section');
+            const feedbackDiv = page.querySelector('.quiz-feedback');
+            const nextButton = page.querySelector(`#nextButton${pageNumber}`);
+            const finishButtonEl = document.getElementById('finishButton');
+            
+            // Re-enable options on page load for retries
+            options.forEach(opt => opt.style.pointerEvents = 'auto');
+            if (nextButton) nextButton.classList.add('hidden');
+            if (finishButtonEl) finishButtonEl.classList.add('hidden');
+            if (feedbackDiv) feedbackDiv.classList.add('hidden');
+
+            // Add event listeners only once
+            if (quizSection.dataset.listeners !== 'true') {
+                 options.forEach(option => {
+                    option.addEventListener('click', () => {
+                        const selected = parseInt(option.dataset.answer);
+                        const correctOption = quizData[pageNumber].correct;
+
+                        options.forEach(opt => opt.style.pointerEvents = 'none');
+                        option.classList.remove('incorrect');
+                        option.classList.remove('correct');
+                        
+                        // Display correct answer visually
+                        options.forEach(opt => {
+                            if(parseInt(opt.dataset.answer) === correctOption) {
+                                 opt.classList.add('correct');
+                            }
+                        });
+
+                        if (selected === correctOption) {
+                            feedbackDiv.textContent = quizData[pageNumber].feedback;
+                            feedbackDiv.style.color = 'var(--success)';
+                            
+                            if (nextButton) {
+                                nextButton.classList.remove('hidden');
+                            } else if (pageNumber === TOTAL_LESSON_PAGES && finishButtonEl) {
+                                // Last page completed
+                                finishButtonEl.classList.remove('hidden');
+                                saveProgressLocal(TOTAL_LESSON_PAGES + 1, true); 
+                            }
+                        } else {
+                            option.classList.add('incorrect');
+                            feedbackDiv.textContent = "❌ Incorrect. Please review the content on this page and try again in 2 seconds.";
+                            feedbackDiv.style.color = 'var(--warning)';
+                            
+                            if (nextButton) nextButton.classList.add('hidden');
+                            if (finishButtonEl) finishButtonEl.classList.add('hidden');
+
+                            setTimeout(() => {
+                                options.forEach(opt => {
+                                    opt.classList.remove('incorrect');
+                                    opt.classList.remove('correct');
+                                    opt.style.pointerEvents = 'auto';
+                                });
+                                feedbackDiv.classList.add('hidden');
+                            }, 2000);
+                        }
+                        feedbackDiv.classList.remove('hidden');
+                    });
+                });
+                quizSection.dataset.listeners = 'true';
+            }
+        };
+        
+        // --- MODIFICATION: REMOVED LOGIN CHECK FROM ENROLLMENT ---
+        const enrollAndStart = async (e) => {
+            e.preventDefault();
+            const user = firebase.auth().currentUser;
+            
+            // Logged In/Anonymous: Enroll/Continue (Only track progress if user is logged in)
+            if(user && !user.isAnonymous && !isUserEnrolled) {
+               await saveProgressLocal(1, false);
+            }
+            currentPage = 1;
+            showPage(currentPage);
+        };
+
+        // --- FIREBASE AUTH GATE & ENROLLMENT FIX ---
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize quiz handlers for pages 1-5
+            for (let i = 1; i <= TOTAL_LESSON_PAGES; i++) {
+                handleQuiz(i);
+            }
+
+            if (finishButton) {
+                finishButton.addEventListener('click', () => {
+                     const user = firebase.auth().currentUser;
+                     if (!user || user.isAnonymous) { // Check for non-anonymous user only for certificate
+                         alert("Login required to generate certificate. Please log in first."); 
+                         // Show login modal if user is not logged in
+                         window.showLoginModal(); 
+                         return;
+                     }
+                    
+                    const userName = user.displayName || user.email.split('@')[0]; 
+                    const courseNameEncoded = encodeURIComponent(COURSE_TITLE);
+                    const nameEncoded = encodeURIComponent(userName);
+                    
+                    // Redirect to certificate page (will auto-generate PDF and load in browser)
+                    window.location.href = `certificate.html?name=${nameEncoded}&course=${courseNameEncoded}`;
+                });
+            }
+            
+            const mainContentContainer = document.getElementById('mainContentContainer');
+            const startEnrollmentButtonActual = document.getElementById('startEnrollmentButtonActual');
+
+            // Set up initial view and listeners
+            showPage(0); 
+
+            // Bind the main button to the enrollment/login handler
+            startEnrollmentButtonActual.addEventListener('click', enrollAndStart);
+            
+            // Show content immediately as no hard gate is needed
+            mainContentContainer.classList.add('content-loaded');
+            
+            firebase.auth().onAuthStateChanged(async user => {
+                const enrollmentLink = document.getElementById(LOGIN_REDIRECT_ELEMENT_ID);
+                
+                // Hide loading overlay once state is determined
+                loadingOverlay.style.opacity = 0;
+                setTimeout(() => { loadingOverlay.style.display = 'none'; }, 500);
+
+                if (user && !user.isAnonymous) {
+                    // User is logged in
+                    const savedProgress = await loadProgressLocal(user);
+                    
+                    if (savedProgress) {
+                        // User is enrolled: set button state to continue/completed
+                        if (savedProgress.completed) {
+                            startEnrollmentButtonActual.textContent = "View Completed Course & Certificate";
+                            if(document.getElementById('finishButton')) document.getElementById('finishButton').classList.remove('hidden');
+                        } else {
+                            startEnrollmentButtonActual.textContent = "Continue Course";
+                        }
+                        currentPage = (savedProgress.lastPage >= 1 && savedProgress.lastPage <= TOTAL_PAGES) ? savedProgress.lastPage : 1;
+                        isUserEnrolled = true;
+                    } else {
+                        // Logged in but not enrolled (initial state)
+                        startEnrollmentButtonActual.textContent = "Enroll for Free";
+                        currentPage = 0;
+                        isUserEnrolled = false;
+                    }
+                    
+                    updateUI();
+                    showPage(currentPage === 0 ? 0 : currentPage);
+
+                } else {
+                    // User is logged out/anonymous
+                    startEnrollmentButtonActual.textContent = "Enroll for Free"; // Removed (Sign In) prompt
+                    currentPage = 0;
+                    updateProgressUI(0);
+                    showPage(0);
+                }
+            });
+            
+            // FIX: Hamburger Menu functionality for mobile view on this specific page
+            const navMenu = document.querySelector('.nav-menu');
+            const hamburgerMenu = document.getElementById('hamburgerMenu');
+            if (hamburgerMenu && navMenu) {
+                hamburgerMenu.addEventListener('click', () => {
+                    hamburgerMenu.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                });
+            }
+        });
+        
+    </script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-app-compat.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-auth-compat.min.js"></script>
