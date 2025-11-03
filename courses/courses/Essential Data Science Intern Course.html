@@ -247,7 +247,6 @@
                 <a href="/index.html" class="nav-link">Home</a>
                 <a href="/courses/course.html" class="nav-link">Courses</a>
                 <a href="/intern/internship.html" class="nav-link">Internships</a>
-                <a href="/jobs.html" class="nav-link">Jobs</a>
                 <a href="/about.html" class="nav-link">About</a>
                 
                 <div class="nav-item dropdown">
@@ -266,10 +265,7 @@
                 
                 <div class="nav-actions-mobile">
                      <div class="user-profile hidden" id="userProfileMobile">
-                         <button id="profileBtnHeaderMobile" style="border:none; background:none; color:var(--dark); font-weight:600; font-size:16px; cursor:pointer; padding: 10px 0; width:100%; text-align:center;">
-                             <img src="../../images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeaderMobile" style="display:inline-block; vertical-align:middle; width:30px; height:30px; border-radius:50%; margin-right:8px;">
-                             <span id="userNameHeaderMobile">My Profile</span>
-                         </button>
+                         <img src="../../images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeaderMobile" style="display:inline-block; vertical-align:middle; width:40px; height:40px; border-radius:50%; margin-right:8px;">
                          <button id="logoutBtnHeaderMobile" class="btn btn-outline" style="width: 100%;">Sign Out</button>
                      </div>
                      <div id="authButtonsMobile" style="width: 100%; display: flex; gap: 10px; justify-content: center;">
@@ -474,7 +470,7 @@
                                         <div class="option" data-answer="1">A. Remove all rows containing the `NaN` values.</div>
                                         <div class="option" data-answer="2">B. Replace missing prices with the column's mean (Average).</div>
                                         <div class="option" data-answer="3">C. Replace missing prices with the column's median (Middle Value).</div>
-                                        <div class="option" data-value="4">D. Replace missing prices with the numerical value 0.</div>
+                                        <div class="option" data-answer="4">D. Replace missing prices with the numerical value 0.</div>
                                     </div>
                                     <div class="quiz-feedback hidden" id="feedback2"></div>
                                     <button class="btn btn-primary hidden" id="nextButton2">Next Lesson <i class="fas fa-chevron-right"></i></button>
@@ -752,74 +748,73 @@
 
             <div id="dashboardSection" class="auth-section">
                  <div class="dashboard-content">
-                    
-                     <div class="profile-tabs">
+                    <div class="profile-tabs">
                          <button class="tab-btn active" data-tab="profile">Profile</button>
                          <button class="tab-btn" data-tab="courses">Courses</button>
                          <button class="tab-btn" data-tab="internships">Internships</button>
-                     </div>
+                    </div>
 
                     <div id="profileTabContent" class="tab-content">
-                        <div id="profileDisplaySection">
-                            <div class="user-info-profile">
-                                <div class="profile-avatar-display">
-                                    <img id="userAvatarDashboard" class="user-avatar" src="../../images/no_image.png" alt="User Avatar">
-                                </div>
-                                <div class="user-profile-details">
-                                    <h2 id="userNameDashboard"></h2>
-                                    <p id="userEmailDashboard"></p>
-                                </div>
-                            </div>
-                            <div class="profile-details">
-                                <h3 class="section-title-small">Profile Information</h3>
-                                <div class="profile-info-item">
-                                    <strong>Gender:</strong> <span id="profileGenderDisplay">Not specified</span>
-                                </div>
-                                <div class="profile-info-item">
-                                    <strong>Interested Domain:</strong> <span id="profileDomainDisplay">Not specified</span>
-                                </div>
-                            </div>
+                         <div id="profileDisplaySection">
+                             <div class="user-info-profile">
+                                 <div class="profile-avatar-display">
+                                     <img id="userAvatarDashboard" class="user-avatar" src="../../images/no_image.png" alt="User Avatar">
+                                 </div>
+                                 <div class="user-profile-details">
+                                     <h2 id="userNameDashboard"></h2>
+                                     <p id="userEmailDashboard"></p>
+                                 </div>
+                             </div>
+                             <div class="profile-details">
+                                 <h3 class="section-title-small">Profile Information</h3>
+                                 <div class="profile-info-item">
+                                     <strong>Gender:</strong> <span id="profileGenderDisplay">Not specified</span>
+                                 </div>
+                                 <div class="profile-info-item">
+                                     <strong>Interested Domain:</strong> <span id="profileDomainDisplay">Not specified</span>
+                                 </div>
+                             </div>
                             <button class="btn btn-primary" id="shareProfileBtn" style="width: 100%; margin-top: 20px;"><i class="fas fa-share-alt" style="margin-right: 8px;"></i> Share My Profile</button>
-                            <button class="btn btn-outline" id="editProfileBtn">Edit Profile</button>
-                        </div>
+                             <button class="btn btn-outline" id="editProfileBtn">Edit Profile</button>
+                         </div>
 
-                        <div id="profileEditSection" class="hidden">
-                            <div id="profileEditError" class="error" style="display: none;"></div>
-                            <div class="profile-avatar-display">
-                                <img id="userAvatarPreview" class="user-avatar" src="../../images/no_image.png" alt="User Avatar Preview">
-                                <label for="profileImageInput" class="file-upload-label">
-                                    <i class="fas fa-upload"></i> Upload Image
-                                </label>
-                                <input type="file" id="profileImageInput" accept="image/*">
-                                <p class="profile-avatar-hint" style="margin-top: 5px; font-size: 0.85rem; color: #f56565;">*Image upload is for demo only; file storage is not active.</p>
-                            </div>
-                            <div class="form-group">
-                                <label for="profileName">Full Name</label>
-                                <input type="text" id="profileName" placeholder="Enter your full name">
-                            </div>
-                            <div class="form-group">
-                                <label for="profileGender">Gender</label>
-                                <select id="profileGender">
-                                    <option value="">Select Gender</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="interestedDomain">Interested Domain</label>
-                                <select id="interestedDomain">
-                                    <option value="">Select Domain</option>
-                                    <option value="Web Development">Web Development</option>
-                                    <option value="Data Science & AI">Data Science & AI</option>
-                                    <option value="Digital Marketing">Digital Marketing</option>
-                                    <option value="UI/UX Design">UI/UX Design</option>
-                                </select>
-                            </div>
-                            <button class="btn btn-primary" id="saveProfileBtn">Save Profile</button>
-                        </div>
+                         <div id="profileEditSection" class="hidden">
+                             <div id="profileEditError" class="error" style="display: none;"></div>
+                             <div class="profile-avatar-display">
+                                 <img id="userAvatarPreview" class="user-avatar" src="../../images/no_image.png" alt="User Avatar Preview">
+                                 <label for="profileImageInput" class="file-upload-label">
+                                     <i class="fas fa-upload"></i> Upload Image
+                                 </label>
+                                 <input type="file" id="profileImageInput" accept="image/*">
+                                 <p class="profile-avatar-hint" style="margin-top: 5px; font-size: 0.85rem; color: #f56565;">*Image upload is for demo only; file storage is not active.</p>
+                             </div>
+                             <div class="form-group">
+                                 <label for="profileName">Full Name</label>
+                                 <input type="text" id="profileName" placeholder="Enter your full name">
+                             </div>
+                             <div class="form-group">
+                                 <label for="profileGender">Gender</label>
+                                 <select id="profileGender">
+                                     <option value="">Select Gender</option>
+                                     <option value="Male">Male</option>
+                                     <option value="Female">Female</option>
+                                     <option value="Other">Other</option>
+                                 </select>
+                             </div>
+                             <div class="form-group">
+                                 <label for="interestedDomain">Interested Domain</label>
+                                 <select id="interestedDomain">
+                                     <option value="">Select Domain</option>
+                                     <option value="Web Development">Web Development</option>
+                                     <option value="Data Science & AI">Data Science & AI</option>
+                                     <option value="Digital Marketing">Digital Marketing</option>
+                                     <option value="UI/UX Design">UI/UX Design</option>
+                                 </select>
+                             </div>
+                             <button class="btn btn-primary" id="saveProfileBtn">Save Profile</button>
+                         </div>
                     </div>
-                     
+
                     <div id="coursesTabContent" class="tab-content hidden">
                         <h3 class="section-title-small">📚 Enrolled Courses & Certificates</h3>
                         <p style="color: var(--gray); margin-bottom: 20px;">Track your progress and access completion certificates here.</p>
@@ -860,11 +855,11 @@
         
         // Video IDs for each page (simulating dynamic content)
         const pageVideoIds = {
-            1: "x-G-dSSUNQE", // User Provided ID: Introduction to Data Science
-            2: "JOlruyTytz8", // User Provided ID: Python & Essential Libraries
-            3: "Cc-RKfvITzo", // User Provided ID: Statistics & Probability Essentials
-            4: "4tYY6NFRfws", // User Provided ID: Data Wrangling & Visualization
-            5: "i_LwzRVP7bg" // User Provided ID: Machine Learning & The Intern Mindset
+            1: "x-G-dSSUNQE", 
+            2: "JOlruyTytz8", 
+            3: "Cc-RKfvITzo", 
+            4: "4tYY6NFRfws", 
+            5: "i_LwzRVP7bg" 
         };
         
         // --- Core Logic Elements ---
@@ -873,9 +868,9 @@
         const progressText = document.getElementById('progressText');
         const finishButton = document.getElementById('finishButton');
         const videoContainer = document.getElementById('video-container');
-        const startEnrollmentButtonActual = document.getElementById('startEnrollmentButtonActual'); // Button on Page 0
+        const startEnrollmentButtonActual = document.getElementById('startEnrollmentButtonActual'); 
 
-        let currentPage = 0; // Start at overview page (Page 0)
+        let currentPage = 0; 
         let isUserEnrolled = false;
         
         // Helper to get Firestore path (Assumes global auth and db from script.js)
@@ -915,7 +910,7 @@
                         completed: isCompleted,
                         lastPage: pageNumber,
                         userId: user.uid,
-                        url: window.location.pathname // Save the URL for access later
+                        url: window.location.pathname 
                     });
                 }
                 isUserEnrolled = true;
@@ -959,7 +954,7 @@
         const loadVideoForPage = (pageNumber) => {
              // Only load video for actual lesson pages (1-5)
             if (pageNumber < 1) {
-                if (videoContainer) videoContainer.innerHTML = ''; // Clear video container for Page 0
+                if (videoContainer) videoContainer.innerHTML = ''; 
                 return;
             }
             const videoId = pageVideoIds[pageNumber];
@@ -1014,7 +1009,7 @@
                              entries.forEach(entry => {
                                  if (entry.isIntersecting) {
                                      entry.target.classList.add('visible');
-                                     tempObserver.unobserve(entry.target); // Stop observing once visible
+                                     tempObserver.unobserve(entry.target); 
                                  }
                              });
                          }, { threshold: 0.1 });
@@ -1090,7 +1085,7 @@
                             } else if (pageNumber === TOTAL_LESSON_PAGES && finishButtonEl) {
                                 // Last page completed
                                 finishButtonEl.classList.remove('hidden');
-                                saveProgressLocal(TOTAL_LESSON_PAGES + 1, true); // Mark 100% completion in Firestore
+                                saveProgressLocal(TOTAL_LESSON_PAGES + 1, true); 
                             }
                         } else {
                             option.classList.add('incorrect');
@@ -1144,4 +1139,73 @@
 
             if (finishButton) {
                 finishButton.addEventListener('click', () => {
-                     const user = firebase.auth
+                     const user = firebase.auth().currentUser;
+                     if (!user) {
+                         alert("Login required to generate certificate."); 
+                         return;
+                     }
+                    
+                    const userName = user.displayName || user.email.split('@')[0]; 
+                    const courseNameEncoded = encodeURIComponent(COURSE_TITLE);
+                    const nameEncoded = encodeURIComponent(userName);
+                    
+                    // Redirect to certificate page (will auto-generate PDF and load in browser)
+                    window.location.href = `certificate.html?name=${nameEncoded}&course=${courseNameEncoded}`;
+                });
+            }
+            
+            const mainContentContainer = document.getElementById('mainContentContainer');
+            const startEnrollmentButtonActual = document.getElementById('startEnrollmentButtonActual');
+
+            // Set up initial view and listeners
+            showPage(0); 
+
+            // Bind the main button to the enrollment/login handler
+            startEnrollmentButtonActual.addEventListener('click', enrollAndStart);
+            
+            // Show content immediately as no hard gate is needed
+            mainContentContainer.classList.add('content-loaded');
+            
+            firebase.auth().onAuthStateChanged(async user => {
+                const enrollmentLink = document.getElementById(LOGIN_REDIRECT_ELEMENT_ID);
+                
+                // Hide loading overlay once state is determined
+                loadingOverlay.style.opacity = 0;
+                setTimeout(() => { loadingOverlay.style.display = 'none'; }, 500);
+
+                if (user && !user.isAnonymous) {
+                    // User is logged in
+                    const savedProgress = await loadProgressLocal(user);
+                    
+                    if (isUserEnrolled) {
+                        // User is enrolled: set button state to continue/completed
+                        if (savedProgress.completed) {
+                            startEnrollmentButtonActual.textContent = "View Completed Course & Certificate";
+                            if(document.getElementById('finishButton')) document.getElementById('finishButton').classList.remove('hidden');
+                        } else {
+                            startEnrollmentButtonActual.textContent = "Continue Course";
+                        }
+                        currentPage = (savedProgress.lastPage >= 1 && savedProgress.lastPage <= TOTAL_PAGES) ? savedProgress.lastPage : 1;
+
+                    } else {
+                        // Logged in but not enrolled (initial state)
+                        startEnrollmentButtonActual.textContent = "Enroll for Free";
+                        currentPage = 0;
+                    }
+                    
+                    updateUI();
+                    showPage(currentPage === 0 ? 0 : currentPage);
+
+                } else {
+                    // User is logged out/anonymous
+                    startEnrollmentButtonActual.textContent = "Enroll for Free (Sign In)";
+                    currentPage = 0;
+                    updateProgressUI(0);
+                    showPage(0);
+                }
+            });
+        });
+        
+    </script>
+</body>
+</html>
