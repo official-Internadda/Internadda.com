@@ -3,430 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Essential Data Science Intern Course — Internadda</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+    <title>Free Courses | Skill Up for Internships with Internadda</title>
+    <meta name="description" content="Browse Internadda's free courses in Data Science, AI, Web Dev, Cybersecurity, and more. Gain practical skills needed for top internships.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link rel="stylesheet" href="../../style.css">
-  <script>
-        // Course Specific Details
-        const COURSE_TITLE = "Essential Data Science Intern Course";
-        const TOTAL_LESSON_PAGES = 5; // Pages 1 to 5 are content pages
-        const TOTAL_PAGES = 1 + TOTAL_LESSON_PAGES; // Page 0 (Overview) + 5 Lesson Pages
-        const LOGIN_REDIRECT_ELEMENT_ID = 'loginBtnHeader'; // Element to click to open the modal
+    <link rel="stylesheet" href="../style.css">
 
-        // FIX: Re-mapped correct answers and ensured 4 options (MCQ fix)
-        const quizData = {
-            1: { correct: 2, options: 4, feedback: "✅ Correct! Starting with historical data (Step 2) is essential to define the problem and understand underlying trends before building any model (Step 4)." },
-            2: { correct: 3, options: 4, feedback: "✅ Correct! Median is preferred over Mean for imputation when outliers are present, as the Median is robust against extreme values." },
-            3: { correct: 3, options: 4, feedback: "✅ Correct! An A/B test with a T-Test is the statistical framework used to determine if the observed difference is statistically significant (i.e., not random chance)." },
-            4: { correct: 2, options: 4, feedback: "✅ Correct! The `WHERE` clause filters rows before aggregation (GROUP BY), while `HAVING` filters results AFTER aggregation." },
-            5: { correct: 3, options: 4, feedback: "✅ Correct! Version control tracks history, enables collaboration (merging), and protects against catastrophic errors by allowing quick rollback." }
-        };
-        
-        // Video IDs for each page (simulating dynamic content)
-        const pageVideoIds = {
-            1: "x-G-dSSUNQE", 
-            2: "JOlruyTytz8", 
-            3: "Cc-RKfvITzo", 
-            4: "4tYY6NFRfws", 
-            5: "i_LwzRVP7bg" 
-        };
-        
-        // --- Core Logic Elements ---
-        const coursePages = document.querySelectorAll('.course-page');
-        const progressFill = document.getElementById('progressBar');
-        const progressText = document.getElementById('progressText');
-        const finishButton = document.getElementById('finishButton');
-        const videoContainer = document.getElementById('video-container');
-        const startEnrollmentButtonActual = document.getElementById('startEnrollmentButtonActual'); 
-
-        let currentPage = 0; 
-        let isUserEnrolled = false;
-        
-        // Helper to get Firestore path (Assumes global auth and db from script.js)
-        function getUserPath(collection) {
-            const user = firebase.auth().currentUser;
-            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-            return `artifacts/${appId}/users/${user.uid}/${collection}`;
-        }
-        
-        // Helper to load and save progress (replaces old logic from script.js global functions for this page)
-        const saveProgressLocal = async (pageNumber, isCompleted) => {
-            const user = firebase.auth().currentUser;
-            if (!user || user.isAnonymous) return;
-            
-            // Calculate progress based on lesson pages (1-5)
-            const progressPage = Math.max(0, pageNumber - 1);
-            const progressForDb = Math.min(100, Math.floor((progressPage / TOTAL_LESSON_PAGES) * 100));
-            
-            const enrollmentsRef = db.collection(getUserPath('enrollments'));
-            const docTitle = COURSE_TITLE;
-            
-            try {
-                const existingEnrollment = await enrollmentsRef.where('title', '==', docTitle).get();
-                if (!existingEnrollment.empty) {
-                    const docId = existingEnrollment.docs[0].id;
-                    await enrollmentsRef.doc(docId).update({
-                        progress: progressForDb,
-                        lastPage: pageNumber,
-                        completed: isCompleted,
-                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                } else {
-                    // Initial enrollment 
-                     await enrollmentsRef.add({
-                        title: docTitle,
-                        progress: progressForDb, 
-                        completed: isCompleted,
-                        lastPage: pageNumber,
-                        userId: user.uid,
-                        url: window.location.pathname 
-                    });
-                }
-                isUserEnrolled = true;
-            } catch(e) {
-                console.error("Error saving progress:", e);
-            }
-        };
-
-        const loadProgressLocal = async (user) => {
-             if (!user || user.isAnonymous) return null;
-             try {
-                const enrollmentsRef = db.collection(getUserPath('enrollments'));
-                const existingEnrollment = await enrollmentsRef.where('title', '==', COURSE_TITLE).limit(1).get();
-                 
-                if (!existingEnrollment.empty) {
-                    const data = existingEnrollment.docs[0].data();
-                    isUserEnrolled = true;
-                    return data;
-                }
-                isUserEnrolled = false;
-                return null;
-             } catch(e) {
-                 console.error("Error loading progress:", e);
-                 isUserEnrolled = false;
-                 return null;
-             }
-        }
-        
-        // Helper to update progress visualization
-        const updateProgressUI = (pageNumber) => {
-            // Only pages 1-5 count towards progress
-            const progressPage = Math.max(0, pageNumber - 1);
-            const progressPercentage = Math.min(100, Math.floor((progressPage / TOTAL_LESSON_PAGES) * 100));
-            
-            if (progressFill && progressText) {
-                progressFill.style.width = `${progressPercentage}%`;
-                progressText.textContent = `${progressPercentage}% Complete`;
-            }
-        };
-
-        const loadVideoForPage = (pageNumber) => {
-             // Only load video for actual lesson pages (1-5)
-            if (pageNumber < 1) {
-                if (videoContainer) videoContainer.innerHTML = ''; 
-                return;
-            }
-            const videoId = pageVideoIds[pageNumber];
-            
-            if (videoContainer) {
-                 // Reset video container to thumbnail view
-                videoContainer.innerHTML = `
-                    <div class="video-wrapper" id="video-thumbnail-new">
-                        <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" alt="Course Video Thumbnail" onerror="this.onerror=null; this.src='https://placehold.co/600x338/546e7a/ffffff?text=Video+Not+Available'">
-                        <div class="play-button"><i class="fas fa-play-circle"></i></div>
-                    </div>
-                `;
-                const currentVideoThumbnail = videoContainer.querySelector('#video-thumbnail-new');
-                if (currentVideoThumbnail) {
-                    currentVideoThumbnail.addEventListener('click', () => {
-                        const iframeContainer = document.createElement('div');
-                        iframeContainer.classList.add('video-embed-container');
-                        const iframe = document.createElement('iframe');
-                        // FIX: Use the video ID for embedding
-                        iframe.setAttribute('src', `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`);
-                        iframe.setAttribute('title', 'YouTube video player');
-                        iframe.setAttribute('frameborder', '0');
-                        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
-                        iframe.setAttribute('allowfullscreen', '');
-                        iframeContainer.appendChild(iframe);
-                        videoContainer.innerHTML = ''; 
-                        videoContainer.appendChild(iframeContainer);
-                    });
-                }
-            }
-        };
-
-        const showPage = (pageNumber) => {
-            coursePages.forEach(page => page.classList.add('hidden'));
-            let newPage = document.querySelector(`[data-page="${pageNumber}"]`);
-            
-            if (!newPage) {
-                pageNumber = 1; // Fallback to page 1
-                newPage = document.querySelector(`[data-page="${pageNumber}"]`);
-                if (newPage) currentPage = 1;
-            }
-            
-            if (newPage) {
-                currentPage = pageNumber; // Update global page state
-                newPage.classList.remove('hidden');
-                const newContent = newPage.querySelector('.fade-in');
-                if(newContent) {
-                     newContent.classList.remove('visible');
-                     // Use setTimeout to ensure re-observing works
-                     setTimeout(() => {
-                         const tempObserver = new IntersectionObserver((entries) => {
-                             entries.forEach(entry => {
-                                 if (entry.isIntersecting) {
-                                     entry.target.classList.add('visible');
-                                     tempObserver.unobserve(entry.target); 
-                                 }
-                             });
-                         }, { threshold: 0.1 });
-                         tempObserver.observe(newContent);
-                     }, 10);
-                }
-                
-                updateProgressUI(pageNumber); 
-                loadVideoForPage(pageNumber);
-                
-                // Save the current page to track progress (only save progress for pages >= 1)
-                if(pageNumber >= 1) {
-                    saveProgressLocal(pageNumber, pageNumber > TOTAL_LESSON_PAGES);
-                }
-
-                // Smooth scroll to the content wrapper
-                document.querySelector('main').scrollIntoView({ behavior: 'smooth' });
-            }
-        };
-        
-        const updateUI = () => {
-            // Setup navigation buttons functionality for pages 1-5
-            for (let i = 1; i <= TOTAL_LESSON_PAGES; i++) {
-                const page = document.querySelector(`[data-page="${i}"]`);
-                const nextButton = page.querySelector(`#nextButton${i}`);
-                if (nextButton) {
-                    nextButton.addEventListener('click', () => {
-                        currentPage = Math.min(TOTAL_LESSON_PAGES + 1, currentPage + 1);
-                        showPage(currentPage);
-                    });
-                }
-            }
-        };
-        
-        const handleQuiz = (pageNumber) => {
-            const page = document.querySelector(`[data-page="${pageNumber}"]`);
-            const options = page.querySelectorAll('.option');
-            const quizSection = page.querySelector('.quiz-section');
-            const feedbackDiv = page.querySelector('.quiz-feedback');
-            const nextButton = page.querySelector(`#nextButton${pageNumber}`);
-            const finishButtonEl = document.getElementById('finishButton');
-            
-            // Re-enable options on page load for retries
-            options.forEach(opt => opt.style.pointerEvents = 'auto');
-            if (nextButton) nextButton.classList.add('hidden');
-            if (finishButtonEl) finishButtonEl.classList.add('hidden');
-            if (feedbackDiv) feedbackDiv.classList.add('hidden');
-
-            // Add event listeners only once
-            if (quizSection.dataset.listeners !== 'true') {
-                 options.forEach(option => {
-                    option.addEventListener('click', () => {
-                        const selected = parseInt(option.dataset.answer);
-                        const correctOption = quizData[pageNumber].correct;
-
-                        options.forEach(opt => opt.style.pointerEvents = 'none');
-                        option.classList.remove('incorrect');
-                        option.classList.remove('correct');
-                        
-                        // Display correct answer visually
-                        options.forEach(opt => {
-                            if(parseInt(opt.dataset.answer) === correctOption) {
-                                 opt.classList.add('correct');
-                            }
-                        });
-
-                        if (selected === correctOption) {
-                            feedbackDiv.textContent = quizData[pageNumber].feedback;
-                            feedbackDiv.style.color = 'var(--success)';
-                            
-                            if (nextButton) {
-                                nextButton.classList.remove('hidden');
-                            } else if (pageNumber === TOTAL_LESSON_PAGES && finishButtonEl) {
-                                // Last page completed
-                                finishButtonEl.classList.remove('hidden');
-                                saveProgressLocal(TOTAL_LESSON_PAGES + 1, true); 
-                            }
-                        } else {
-                            option.classList.add('incorrect');
-                            feedbackDiv.textContent = "❌ Incorrect. Please review the content on this page and try again in 2 seconds.";
-                            feedbackDiv.style.color = 'var(--warning)';
-                            
-                            if (nextButton) nextButton.classList.add('hidden');
-                            if (finishButtonEl) finishButtonEl.classList.add('hidden');
-
-                            setTimeout(() => {
-                                options.forEach(opt => {
-                                    opt.classList.remove('incorrect');
-                                    opt.classList.remove('correct');
-                                    opt.style.pointerEvents = 'auto';
-                                });
-                                feedbackDiv.classList.add('hidden');
-                            }, 2000);
-                        }
-                        feedbackDiv.classList.remove('hidden');
-                    });
-                });
-                quizSection.dataset.listeners = 'true';
-            }
-        };
-        
-        // --- MODIFICATION: REMOVED LOGIN CHECK FROM ENROLLMENT ---
-        const enrollAndStart = async (e) => {
-            e.preventDefault();
-            const user = firebase.auth().currentUser;
-            
-            // Logged In/Anonymous: Enroll/Continue (Only track progress if user is logged in)
-            if(user && !user.isAnonymous && !isUserEnrolled) {
-               await saveProgressLocal(1, false);
-            }
-            currentPage = 1;
-            showPage(currentPage);
-        };
-
-        // --- FIREBASE AUTH GATE & ENROLLMENT FIX ---
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initialize quiz handlers for pages 1-5
-            for (let i = 1; i <= TOTAL_LESSON_PAGES; i++) {
-                handleQuiz(i);
-            }
-
-            if (finishButton) {
-                finishButton.addEventListener('click', () => {
-                     const user = firebase.auth().currentUser;
-                     if (!user || user.isAnonymous) { // Check for non-anonymous user only for certificate
-                         alert("Login required to generate certificate. Please log in first."); 
-                         // Show login modal if user is not logged in
-                         window.showLoginModal(); 
-                         return;
-                     }
-                    
-                    const userName = user.displayName || user.email.split('@')[0]; 
-                    const courseNameEncoded = encodeURIComponent(COURSE_TITLE);
-                    const nameEncoded = encodeURIComponent(userName);
-                    
-                    // Redirect to certificate page (will auto-generate PDF and load in browser)
-                    window.location.href = `certificate.html?name=${nameEncoded}&course=${courseNameEncoded}`;
-                });
-            }
-            
-            const mainContentContainer = document.getElementById('mainContentContainer');
-            const startEnrollmentButtonActual = document.getElementById('startEnrollmentButtonActual');
-
-            // Set up initial view and listeners
-            showPage(0); 
-
-            // Bind the main button to the enrollment/login handler
-            startEnrollmentButtonActual.addEventListener('click', enrollAndStart);
-            
-            // Show content immediately as no hard gate is needed
-            mainContentContainer.classList.add('content-loaded');
-            
-            firebase.auth().onAuthStateChanged(async user => {
-                const enrollmentLink = document.getElementById(LOGIN_REDIRECT_ELEMENT_ID);
-                
-                // Hide loading overlay once state is determined
-                loadingOverlay.style.opacity = 0;
-                setTimeout(() => { loadingOverlay.style.display = 'none'; }, 500);
-
-                if (user && !user.isAnonymous) {
-                    // User is logged in
-                    const savedProgress = await loadProgressLocal(user);
-                    
-                    if (savedProgress) {
-                        // User is enrolled: set button state to continue/completed
-                        if (savedProgress.completed) {
-                            startEnrollmentButtonActual.textContent = "View Completed Course & Certificate";
-                            if(document.getElementById('finishButton')) document.getElementById('finishButton').classList.remove('hidden');
-                        } else {
-                            startEnrollmentButtonActual.textContent = "Continue Course";
-                        }
-                        currentPage = (savedProgress.lastPage >= 1 && savedProgress.lastPage <= TOTAL_PAGES) ? savedProgress.lastPage : 1;
-                        isUserEnrolled = true;
-                    } else {
-                        // Logged in but not enrolled (initial state)
-                        startEnrollmentButtonActual.textContent = "Enroll for Free";
-                        currentPage = 0;
-                        isUserEnrolled = false;
-                    }
-                    
-                    updateUI();
-                    showPage(currentPage === 0 ? 0 : currentPage);
-
-                } else {
-                    // User is logged out/anonymous
-                    startEnrollmentButtonActual.textContent = "Enroll for Free"; // Removed (Sign In) prompt
-                    currentPage = 0;
-                    updateProgressUI(0);
-                    showPage(0);
-                }
-            });
-            
-            // FIX: Hamburger Menu functionality for mobile view on this specific page
-            const navMenu = document.querySelector('.nav-menu');
-            const hamburgerMenu = document.getElementById('hamburgerMenu');
-            if (hamburgerMenu && navMenu) {
-                hamburgerMenu.addEventListener('click', () => {
-                    hamburgerMenu.classList.toggle('active');
-                    navMenu.classList.toggle('active');
-                });
-            }
-        });
-        
-    </script>
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-app-compat.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-auth-compat.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-firestore-compat.min.js"></script>
 </head>
-<body>
-    <div id="loadingOverlay">
-        <div class="spinner-large"></div>
-        <p id="loadingText">Loading secure content...</p>
-    </div>
 
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3ZZ3HGFM3Q');
+</script>
+
+
+<body>
     <header>
         <div class="container header-container">
-             <a href="/" class="logo">
-                 <img src="../../images/logo.jpg" alt="InternAdda Logo" class="logo-img">
+            <a href="/" class="logo">
+                 <img src="../images/logo.jpg" alt="InternAdda Logo" class="logo-img">
                 <span class="logo-text">InternAdda</span>
             </a>
 
             <nav class="nav-menu">
-                <a href="/index.html" class="nav-link">Home</a>
+                 <a href="/index.html" class="nav-link">Home</a>
                 <a href="/courses/course.html" class="nav-link">Courses</a>
                 <a href="/intern/internship.html" class="nav-link">Internships</a>
+                <a href="/jobs.html" class="nav-link">Jobs</a>
                 <a href="/about.html" class="nav-link">About</a>
-                
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                    <a href="#" class="nav-link dropdown-toggle">Community <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
-                        <a href="/jobs.html" class="dropdown-link">Jobs</a>
-                        <a href="/contact.html" class="dropdown-link">Contact</a>
-                        <a href="/blog/index.html" class="dropdown-link">Blog</a>
-                        <a href="/community/join.html" class="dropdown-link">Community</a>
+                        <a href="/community/join.html" class="dropdown-link">Join Community</a>
                         <a href="/community/partners.html" class="dropdown-link">Partners</a>
+                        <a href="/blog/index.html" class="dropdown-link">Blog</a>
                         <a href="/community/academy.html" class="dropdown-link">Offline Academy</a>
                     </div>
                 </div>
-                
+                <a href="/jobs.html" class="nav-link mobile-only-link">Jobs</a>
+                <a href="/contact.html" class="nav-link mobile-only-link">Contact</a>
                 <a href="/blog/index.html" class="nav-link mobile-only-link">Blog</a>
-                
+                <a href="/community/join.html" class="nav-link mobile-only-link">Community</a>
+                <a href="/community/partners.html" class="nav-link mobile-only-link">Partners</a>
+                <a href="/community/academy.html" class="nav-link mobile-only-link">Offline Academy</a>
+
                 <div class="nav-actions-mobile">
                      <div class="user-profile hidden" id="userProfileMobile">
-                         <img src="../../images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeaderMobile" style="display:inline-block; vertical-align:middle; width:40px; height:40px; border-radius:50%; margin-right:8px;">
+                         <img src="../images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeaderMobile" style="display:inline-block; vertical-align:middle; width:40px; height:40px; border-radius:50%; margin-right:8px;">
                          <button id="logoutBtnHeaderMobile" class="btn btn-outline" style="width: 100%;">Sign Out</button>
                      </div>
                      <div id="authButtonsMobile" style="width: 100%; display: flex; gap: 10px; justify-content: center;">
@@ -435,7 +67,7 @@
                     </div>
                 </div>
             </nav>
-            
+
             <div class="header-actions">
                 <div class="search-container">
                     <i class="fas fa-search search-icon"></i>
@@ -448,7 +80,7 @@
                 </div>
 
                 <div class="user-profile hidden" id="userProfile">
-                    <img src="../../images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeader">
+                    <img src="../images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeader">
                     <span id="userNameHeader"></span>
                     <div class="dropdown-menu" id="userDropdown">
                         <button id="profileBtnHeader">My Profile</button>
@@ -456,7 +88,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <button class="hamburger-menu" id="hamburgerMenu">
                 <span></span>
                 <span></span>
@@ -465,335 +97,183 @@
         </div>
         <div id="searchResults" class="search-results-container container hidden"></div>
     </header>
+
     <main>
-        <section class="course-section">
-            <div class="main-content-container" id="mainContentContainer">
-                
-                <div id="courseContent" class="course-content-loaded"> <h1 class="course-title-main fade-in">Essential Data Science Intern Course</h1>
-                    
-                    <div id="video-container" class="fade-in">
+        <section class="courses">
+            <div class="container">
+                <div class="courses-header">
+                    <h2 class="section-title">All Courses</h2>
+                </div>
+
+                <div class="courses-grid" id="coursesGrid">
+
+                    <a href="courses/Essential Data Science Intern Course.html"
+                       class="course-card"
+                       style="text-decoration:none; color:inherit;">
+                        <div class="course-image">
+                            <img src="../images/Essential Data Science Intern Course.png"
+                                 alt="Essential Data Science Intern Course">
                         </div>
-
-                    <div class="progress-container fade-in">
-                        <div class="progress-bar-bg">
-                            <div class="progress-bar-fill" id="progressBar"></div>
-                        </div>
-                        <span class="progress-text" id="progressText">0% Complete</span>
-                    </div>
-
-                    <div class="course-content-wrapper">
-                        
-                         <div class="course-page active" data-page="0">
-                            <div class="fade-in">
-                                <h2 class="course-page-title" style="text-align: center; font-size: 2.5rem; border-bottom: none;">Course Overview: Get Enrolled</h2>
-                                
-                                <div class="instructor-card">
-                                    <img src="../../images/founder.jpg" alt="Instructor Lucky Kumar" style="border-color: var(--secondary);">
-                                    <h3 style="font-size: 1.5rem; margin-bottom: 5px;">Lucky Kumar</h3>
-                                    <p style="color: var(--primary); font-weight: 600; margin-bottom: 15px;">Your Instructor, Founder & CEO</p>
-                                    <p style="font-size: 1rem; color: var(--gray);"><strong>DU Graduate</strong> with <strong>3+ years</strong> of teaching experience. Dedicated to bridging the gap between academia and industry.</p>
+                        <div class="course-content">
+                            <h3 class="course-title">Data Science Intern Course</h3>
+                            <p class="course-author">Instructed by Lucky Kumar</p>
+                            <div class="course-rating">
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
                                 </div>
-
-                                <h3 style="font-size: 1.8rem; margin-bottom: 15px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">Course Details</h3>
-                                <div class="overview-details">
-                                     <p style="margin-bottom: 10px;"><i class="fas fa-clock" style="color: var(--primary); margin-right: 10px;"></i> <strong>Estimated Time:</strong> 30 Minutes</p>
-                                     <p style="margin-bottom: 10px;"><i class="fas fa-trophy" style="color: var(--primary); margin-right: 10px;"></i> <strong>Certification:</strong> Professional Certificate of Completion</p>
-                                     <h3 style="font-size: 1.2rem; margin-top: 20px; margin-bottom: 10px;">Why This Course?</h3>
-                                     <p style="font-size: 1.05rem;">This course is designed to instill the **"Intern Mindset"**—focusing only on the technical skills and professional habits required to succeed in your first 90 days as a Data Science Intern. It skips theory and dives straight into practical, essential tasks.</p>
-
-                                     <h3 style="font-size: 1.2rem; margin-top: 20px; margin-bottom: 10px;">Key Topics Covered:</h3>
-                                     <ul style="list-style-type: none; padding-left: 0; margin-bottom: 30px;">
-                                         <li><i class="fas fa-code" style="color: var(--accent); margin-right: 8px;"></i> Python Fundamentals & Data Handling (Pandas/NumPy)</li>
-                                         <li><i class="fas fa-chart-line" style="color: var(--accent); margin-right: 8px;"></i> SQL Basics & Data Visualization (Tableau Concepts)</li>
-                                         <li><i class="fas fa-calculator" style="color: var(--accent); margin-right: 8px;"></i> Statistics, Hypothesis Testing, and ML/AI Concepts</li>
-                                         <li><i class="fas fa-briefcase" style="color: var(--accent); margin-right: 8px;"></i> Professional Data Workflow & Career Tips</li>
-                                     </ul>
-                                </div>
-                                
-                                <button class="btn btn-primary btn-lg" style="width: 100%;" id="startEnrollmentButtonActual">Enroll for Free</button>
+                                <span class="rating-value">4.9</span>
+                            </div>
+                            <div class="course-duration">
+                                <i class="far fa-clock"></i> Average Duration: 27 mins
+                            </div>
+                            <div class="course-price">
+                                <span class="original-price">₹1,999</span>
+                                <span class="badge free">FREE</span>
                             </div>
                         </div>
-                        <div class="course-page hidden" data-page="1">
-                            <div class="fade-in">
-                                <h2 class="course-page-title">Page 1: Data Science Fundamentals & Workflow</h2>
-                                <div class="course-page-body">
-                                    <p><strong>🎯 Objective:</strong> Understand the definition of Data Science, its core required skills, and the professional workflow used in the industry.</p>
-                                    
-                                    <h3>1️⃣ The Foundation of Data Science</h3>
-                                    <p>At its core, data science is the discipline of <strong>extracting valuable knowledge and actionable insights from data</strong>. It’s a powerful fusion of fields, where mastering the overlap creates true value.</p>
-                                    
-                                    <div class="table-container">
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th>Skill</th>
-                                                    <th>Role</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td><strong>Statistics & Math</strong></td>
-                                                    <td>To understand patterns in data and validate conclusions rigorously.</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Programming (Python/SQL)</strong></td>
-                                                    <td>The tool to automate data collection, analysis, and model building efficiently.</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Domain Knowledge</strong></td>
-                                                    <td>To ask the right business questions and accurately interpret the results.</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    
-                                    <h3>2️⃣ The Industry Workflow (CRISP-DM Essence)</h3>
-                                    <p>Professional Data Science projects follow a systematic 6-step process:</p>
-                                    <ol>
-                                        <li><strong>Business Understanding:</strong> Clearly defining the problem and project goals.</li>
-                                        <li><strong>Data Understanding:</strong> Collecting raw data and performing initial exploration.</li>
-                                        <li><strong>Data Preparation:</strong> Handling missing values, cleaning data, and performing Feature Engineering.</li>
-                                        <li><strong>Modeling:</strong> Building and training Machine Learning models.</li>
-                                        <li><strong>Evaluation:</strong> Assessing the model's performance and impact.</li>
-                                        <li><strong>Deployment:</strong> Sharing findings and implementing the solution for real-world use.</li>
-                                    </ol>
+                    </a>
+
+                    <a href="courses/Generative-AI-Prompt-Engineering-Masterclass.html"
+                       class="course-card"
+                       style="text-decoration:none; color:inherit;">
+                        <div class="course-image">
+                             <img src="../images/Generative-AI-Prompt-Engineering-Masterclass.png"
+                                 alt="Generative AI & Prompt Engineering Masterclass">
+                        </div>
+                        <div class="course-content">
+                            <h3 class="course-title">Generative AI & Prompt Engineering</h3>
+                            <p class="course-author">Instructed by Lucky Kumar</p>
+                            <div class="course-rating">
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
                                 </div>
-                                <div class="quiz-section">
-                                    <h3 class="quiz-question">❓ Question 1/5</h3>
-                                    <p>A food delivery startup wants to forecast pizza demand by neighborhood. Which critical step should be done first?</p>
-                                    <div class="quiz-options">
-                                        <div class="option" data-answer="1">A. Immediately train a complex deep neural network model.</div>
-                                        <div class="option" data-answer="2">B. Collect, clean, and thoroughly explore the historical order data.</div>
-                                        <div class="option" data-answer="3">C. Double the marketing budget for a month to check the impact.</div>
-                                        <div class="option" data-answer="4">D. Create a colorful dashboard for management, ignoring the data quality.</div>
-                                    </div>
-                                    <div class="quiz-feedback hidden" id="feedback1"></div>
-                                    <button class="btn btn-primary hidden" id="nextButton1">Next Lesson <i class="fas fa-chevron-right"></i></button>
-                                </div>
+                                <span class="rating-value">4.7</span>
+                            </div>
+                             <div class="course-duration">
+                                <i class="far fa-clock"></i> Average Duration: 30 mins
+                            </div>
+                            <div class="course-price">
+                                <span class="original-price">₹2,999</span>
+                                <span class="badge free">FREE</span>
                             </div>
                         </div>
+                    </a>
 
-                        <div class="course-page hidden" data-page="2">
-                           <div class="fade-in">
-                                <h2 class="course-page-title">Page 2: Python and Data Handling Libraries</h2>
-                                <div class="course-page-body">
-                                    <p><strong>🎯 Objective:</strong> Gain mastery over essential Python libraries (Pandas, NumPy) used for manipulation and analysis in Data Science.</p>
-
-                                    <h3>1️⃣ The Big 3 Data Tools</h3>
-                                    <p>These core Python libraries are non-negotiable for professional data work:</p>
-
-                                    <div class="table-container">
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th>Library</th>
-                                                    <th>Purpose</th>
-                                                    <th>Example</th>
-                                                    <th>Primary Data Structure</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td><strong>NumPy</strong></td>
-                                                    <td>Fast numerical computations, especially for arrays and matrices.</td>
-                                                    <td><code>np.mean(my_array)</code></td>
-                                                    <td>NumPy Array</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Pandas</strong></td>
-                                                    <td>Data manipulation, cleaning, and analysis (the 'Excel' of Python).</td>
-                                                    <td><code>df.groupby('category')['sales'].sum()</code></td>
-                                                    <td>DataFrame</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Matplotlib/Seaborn</strong></td>
-                                                    <td>Creating informative and aesthetic data visualizations.</td>
-                                                    <td><code>sns.scatterplot(x, y, data=df)</code></td>
-                                                    <td>Plots/Charts</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                    <h3>2️⃣ Handling Missing Data</h3>
-                                    <p>Missing values (`NaN`) are common in real-world data. Treating them incorrectly can heavily skew your results. Imputation (filling them in) is safer than dropping rows, especially if the dataset is small.</p>
-
-                                    <h3>3️⃣ Professional Habits</h3>
-                                    <ul>
-                                        <li><strong>Virtual Environments:</strong> Always isolate project dependencies using <code>venv</code> to prevent conflicts.</li>
-                                        <li><strong>Readable Code:</strong> Write clear, commented code—your future self and teammates will thank you.</li>
-                                    </ul>
+                    <a href="courses/Ethical-Hacking-Mastery.html"
+                       class="course-card"
+                       style="text-decoration:none; color:inherit;">
+                        <div class="course-image">
+                             <img src="../images/Ethical-Hacking-Mastery.png"
+                                 alt="Ethical Hacking Mastery">
+                        </div>
+                        <div class="course-content">
+                            <h3 class="course-title">Ethical Hacking Mastery</h3>
+                            <p class="course-author">Instructed by Lucky Kumar</p>
+                            <div class="course-rating">
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
                                 </div>
-                                <div class="quiz-section">
-                                    <h3 class="quiz-question">❓ Question 2/5</h3>
-                                    <p>You find several `NaN` (missing) values in a Pandas DataFrame column that represents product price. Which imputation method is generally the safest when the column may contain outliers?</p>
-                                    <div class="quiz-options">
-                                        <div class="option" data-answer="1">A. Remove all rows containing the `NaN` values.</div>
-                                        <div class="option" data-answer="2">B. Replace missing prices with the column's mean (Average).</div>
-                                        <div class="option" data-answer="3">C. Replace missing prices with the column's median (Middle Value).</div>
-                                        <div class="option" data-answer="4">D. Replace missing prices with the numerical value 0.</div>
-                                    </div>
-                                    <div class="quiz-feedback hidden" id="feedback2"></div>
-                                    <button class="btn btn-primary hidden" id="nextButton2">Next Lesson <i class="fas fa-chevron-right"></i></button>
-                                </div>
+                                <span class="rating-value">4.8</span>
+                            </div>
+                             <div class="course-duration">
+                                <i class="far fa-clock"></i> Average Duration: 29 mins
+                            </div>
+                            <div class="course-price">
+                                <span class="original-price">₹4,999</span>
+                                <span class="badge free">FREE</span>
                             </div>
                         </div>
+                    </a>
 
-                        <div class="course-page hidden" data-page="3">
-                            <div class="fade-in">
-                                <h2 class="course-page-title">Page 3: Statistics and Hypothesis Testing</h2>
-                                <div class="course-page-body">
-                                    <p><strong>🎯 Objective:</strong> Understand the statistical rigor needed to validate your data findings and make confident business recommendations.</p>
-
-                                    <h3>1️⃣ Proving Your Claims</h3>
-                                    <p>Statistics allows you to measure <strong>uncertainty</strong> and moves your conclusions from mere opinions to empirically <strong>validated insights</strong>. This is critical for driving trustworthy business decisions.</p>
-
-                                    <h3>2️⃣ The Core of Hypothesis Testing</h3>
-                                    <ol>
-                                        <li><strong>Null Hypothesis (H₀):</strong> The default assumption of "no effect" or "no difference." (e.g., "The new website button has no impact on sales.")</li>
-                                        <li><strong>Alternative Hypothesis (H₁):</strong> The claim you are trying to prove.</li>
-                                    </ol>
-                                    <p>You calculate a <strong>P-Value</strong>, which tells you the probability of observing your current data if the Null Hypothesis (H₀) were true. If the P-Value is very low (typically below 0.05), you <strong>reject H₀</strong> and conclude there is a real, significant effect.</p>
-                                    
-                                    <h3>3️⃣ Key Statistical Tools</h3>
-                                    <ul>
-                                        <li><strong>A/B Testing:</strong> Comparing two versions (A and B) to see which performs better based on a measurable goal.</li>
-                                        <li><strong>T-Test:</strong> Used to compare the means (averages) of two different groups.</li>
-                                        <li><strong>Chi-Squared Test:</strong> Used to test relationships between categorical variables.</li>
-                                    </ul>
+                    <a href="courses/Python-Essentials-for-All.html"
+                       class="course-card"
+                       style="text-decoration:none; color:inherit;">
+                        <div class="course-image">
+                             <img src="../images/Python-Essentials-for-All.png"
+                                 alt="Python Essentials for All">
+                        </div>
+                        <div class="course-content">
+                            <h3 class="course-title">Python Essentials for All</h3>
+                            <p class="course-author">Instructed by Lucky Kumar</p>
+                            <div class="course-rating">
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
                                 </div>
-                                <div class="quiz-section">
-                                    <h3 class="quiz-question">❓ Question 3/5</h3>
-                                    <p>A company launched a new website layout (Version B) and saw a 10% increase in sign-ups compared to the old layout (Version A). What method should the data scientist use to confirm this improvement is not due to random chance?</p>
-                                    <div class="quiz-options">
-                                        <div class="option" data-answer="1">A. Reject the results because the increase is only 10%.</div>
-                                        <div class="option" data-answer="2">B. Visualize the sign-up rates over time using a line chart.</div>
-                                        <div class="option" data-answer="3">C. Perform a statistical A/B Test (e.g., T-Test) to calculate the P-Value and confidence level.</div>
-                                        <div class="option" data-answer="4">D. Immediately delete the old website layout (Version A).</div>
-                                    </div>
-                                    <div class="quiz-feedback hidden" id="feedback3"></div>
-                                    <button class="btn btn-primary hidden" id="nextButton3">Next Lesson <i class="fas fa-chevron-right"></i></button>
-                                </div>
+                                <span class="rating-value">4.8</span>
+                            </div>
+                            <div class="course-duration">
+                                <i class="far fa-clock"></i> Average Duration: 28 mins
+                            </div>
+                            <div class="course-price">
+                                <span class="original-price">₹1,999</span>
+                                <span class="badge free">FREE</span>
                             </div>
                         </div>
+                    </a>
 
-                        <div class="course-page hidden" data-page="4">
-                            <div class="fade-in">
-                                <h2 class="course-page-title">Page 4: Data Storytelling with Visualization and SQL</h2>
-                                <div class="course-page-body">
-                                    <p><strong>🎯 Objective:</strong> Learn essential SQL commands for data access and the visualization best practices for communicating complex insights effectively.</p>
-
-                                    <h3>1️⃣ SQL Fundamentals for Data Access</h3>
-                                    <p>SQL is the standard language for querying, updating, and managing relational databases. As a Data Scientist, mastering the following is crucial:</p>
-                                    <ul>
-                                        <li><strong>SELECT</strong> and <strong>FROM</strong>: Specifies the columns and tables to retrieve data from.</li>
-                                        <li><strong>WHERE</strong>: Filters records based on a specified condition (e.g., sales > 1000).</li>
-                                        <li><strong>GROUP BY</strong>: Aggregates rows with identical values into summary rows (e.g., total sales per city).</li>
-                                        <li><strong>JOIN</strong>: Combines columns from two or more tables based on a related column between them.</li>
-                                    </ul>
-
-                                    <h3>2️⃣ Effective Visualization Choices</h3>
-                                    <p>The right chart makes your findings instantly understandable. Choose wisely:</p>
-                                    <div class="table-container">
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th>Chart Type</th>
-                                                    <th>When to Use It</th>
-                                                    <th>Best for</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td><strong>Line Chart</strong></td>
-                                                    <td>Tracking stock price, temperatures, or website traffic over time.</td>
-                                                    <td>Showing Trends</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Bar Chart</strong></td>
-                                                    <td>Comparing the total count or value across distinct product categories or regions.</td>
-                                                    <td>Comparing Categories</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Scatter Plot</strong></td>
-                                                    <td>Investigating the relationship (correlation) between two numerical variables.</td>
-                                                    <td>Showing Relationships</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                    <a href="courses/Cloud-DevOps-Essentials.html"
+                       class="course-card"
+                       style="text-decoration:none; color:inherit;">
+                        <div class="course-image">
+                             <img src="../images/Cloud-DevOps-Essentials.png"
+                                 alt="Cloud & DevOps Essentials">
+                        </div>
+                        <div class="course-content">
+                            <h3 class="course-title">Cloud & DevOps Essentials</h3>
+                            <p class="course-author">Instructed by Lucky Kumar</p>
+                            <div class="course-rating">
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
                                 </div>
-                                <div class="quiz-section">
-                                    <h3 class="quiz-question">❓ Question 4/5</h3>
-                                    <p>Which SQL clause is used to filter records BEFORE any aggregation (GROUP BY) takes place?</p>
-                                    <div class="quiz-options">
-                                        <div class="option" data-answer="1">A. `SELECT`</div>
-                                        <div class="option" data-answer="2">B. `WHERE`</div>
-                                        <div class="option" data-answer="3">C. `HAVING`</div>
-                                        <div class="option" data-answer="4">D. `FILTER`</div>
-                                    </div>
-                                    <div class="quiz-feedback hidden" id="feedback4"></div>
-                                    <button class="btn btn-primary hidden" id="nextButton4">Next Lesson <i class="fas fa-chevron-right"></i></button>
-                                </div>
+                                <span class="rating-value">4.8</span>
+                            </div>
+                             <div class="course-duration">
+                                <i class="far fa-clock"></i> Average Duration: 26 mins
+                            </div>
+                            <div class="course-price">
+                                <span class="original-price">₹2,999</span>
+                                <span class="badge free">FREE</span>
                             </div>
                         </div>
+                    </a>
+                    </div> </div>
+        </section>
 
-                        <div class="course-page hidden" data-page="5">
-                            <div class="fade-in">
-                                <h2 class="course-page-title">Page 5: Machine Learning and Career Success</h2>
-                                <div class="course-page-body">
-                                    <p><strong>🎯 Objective:</strong> Understand core ML concepts like Overfitting and learn the soft skills necessary to thrive in a technical internship.</p>
-
-                                    <h3>1️⃣ Supervised vs. Unsupervised Learning</h3>
-                                    <ul>
-                                        <li><strong>Supervised Learning:</strong> Predicts output based on labeled input data (e.g., Classification, Regression).</li>
-                                        <li><strong>Unsupervised Learning:</strong> Finds patterns in unlabeled data without guidance (e.g., Clustering, finding anomalies).</li>
-                                    </ul>
-
-                                    <h3>2️⃣ The Pitfall of Overfitting</h3>
-                                    <p><strong>Overfitting</strong> is the most critical ML failure: the model performs perfectly on the training data but fails miserably on new data because it learned the "noise," not the general pattern. The solution is often adding more data or using <strong>Regularization</strong> (like Dropout or L1/L2 penalties) to simplify the model.</p>
-
-                                    <h3>3️⃣ Key Internship Habits</h3>
-                                    <p>Your soft skills will determine your career trajectory:</p>
-                                    <ul>
-                                        <li><strong>Version Control (Git):</strong> This is mandatory. Learn how to commit, push, pull, and manage branches efficiently.</li>
-                                        <li><strong>Clear Communication:</strong> Always summarize your complex work into simple, clear points for non-technical stakeholders.</li>
-                                        <li><strong>Self-Sufficiency:</strong> Debug before you ask. Show that you have put in maximum effort before seeking help.</li>
-                                    </ul>
-                                        <div class="takeaways">
-                                            <h3>Key Takeaways from This Course</h3>
-                                            <ul>
-                                                <li>Data Science is driven by Business Value, validated by Statistics.</li>
-                                                <li>The core stack is Python, Pandas, SQL, and effective Visualization.</li>
-                                                <li>Avoid Overfitting and prioritize Git for version control.</li>
-                                                <li>Clear communication and documentation are essential for career growth.</li>
-                                            </ul>
-                                        </div>
-                                </div>
-                                <div class="quiz-section">
-                                    <h3 class="quiz-question">❓ Final Question 5/5</h3>
-                                    <p>Which concept best describes the necessity of using Git for any professional software or data project?</p>
-                                    <div class="quiz-options">
-                                        <div class="option" data-answer="1">A. It is only required for deployment to the production server.</div>
-                                        <div class="option" data-answer="2">B. It automates testing and deployment pipelines.</div>
-                                        <div class="option" data-answer="3">C. It tracks code history, enables team collaboration, and allows quick rollback to previous versions in case of errors.</div>
-                                        <div class="option" data-answer="4">D. It speeds up the data loading process for Pandas DataFrames.</div>
-                                    </div>
-                                    <div class="quiz-feedback hidden" id="feedback5"></div>
-                                    <a href="javascript:void(0);" class="btn btn-primary hidden" id="finishButton">Get Certificate of Completion <i class="fas fa-award"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        </div>
+        <section class="cta-section">
+            <div class="container">
+                <h2 class="cta-title">Start Your Career Journey Today</h2>
+                <p class="cta-description">Join thousands of students who have transformed their careers through Internadda's learn, intern, and earn model.</p>
+                <div class="cta-buttons">
+                     <button class="btn btn-light btn-lg" onclick="window.location.href='/intern/internship.html'">Get Started</button>
+                    <button class="btn btn-transparent btn-lg" onclick="window.location.href='/courses/course.html'">Browse Courses</button>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer>
+     <footer>
         <div class="container">
-            <div class="footer-grid">
+             <div class="footer-grid">
                 <div class="footer-brand">
                     <div class="footer-logo">Internadda</div>
                     <p class="footer-description">Transforming careers through learning, interning, and earning opportunities.</p>
@@ -809,49 +289,71 @@
                         </a>
                     </div>
                 </div>
+
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Learn</h3>
                     <ul class="footer-links">
-                        <li><a href="../course.html">Browse Courses</a></li>
-                        <li><a href="#">Free Courses</a></li>
-                        <li><a href="#">For Businesses</a></li>
+                        <li><a href="/courses/course.html">Browse Courses</a></li>
+                        <li><a href="/courses/course.html">Free Courses</a></li>
+                        <li><a href="#">Paid Courses</a></li>
                         <li><a href="#">Become an Instructor</a></li>
-                        <li><a href="#">Affiliate Program</a></li>
                     </ul>
                 </div>
+
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Intern</h3>
                     <ul class="footer-links">
-                        <li><a href="../../intern/internship.html">Find Internships</a></li>
+                        <li><a href="/intern/internship.html">Find Internships</a></li>
                         <li><a href="#">For Companies</a></li>
                         <li><a href="#">Success Stories</a></li>
                         <li><a href="#">Career Coaching</a></li>
-                        <li><a href="#">FAQ</a></li>
                     </ul>
                 </div>
+
                 <div class="footer-links-column">
-                    <h3 class="footer-links-title">Contact & Legal</h3>
+                    <h3 class="footer-links-title">Community</h3>
                     <ul class="footer-links">
-                        <li><a href="../../about.html">About Us</a></li>
-                        <li><a href="../../contact.html">Contact Us</a></li>
-                        <li><a href="../../terms.html">Terms & Conditions</a></li>
-                        <li><a href="../../privacy.html">Privacy Policy</a></li>
-                        <li><a href="../../refund.html">Refund Policy</a></li>
+                        <li><a href="/community/join.html">Join Community</a></li>
+                        <li><a href="/community/partners.html">Partners</a></li>
+                        <li><a href="/blog/index.html">Blog</a></li>
+                        <li><a href="/community/academy.html">Offline Academy</a></li>
+                    </ul>
+                </div>
+
+
+                     <div class="footer-links-column">
+                    <h3 class="footer-links-title">InternAdda</h3>
+                    <ul class="footer-links">
+                        <li><a href="/about.html">About Us</a></li>
+                        <li><a href="/contact.html">Contact Us</a></li>
+                        <li><a href="/terms.html">Terms & Conditions</a></li>
+                        <li><a href="/refund.html">Refund Policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">More</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Affiliate Program</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">QnA</a></li>
+                        <li><a href="#">Daily Challenges</a></li>
                     </ul>
                 </div>
             </div>
+
             <div class="footer-bottom">
                 <p>© 2025 Internadda. All rights reserved.</p>
             </div>
         </div>
     </footer>
-    
+
     <div id="authModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" id="closeModal">&times;</span>
 
             <div id="loginSection" class="auth-section">
-                 <div class="auth-notification">
+                <div class="auth-notification">
                     <i class="fas fa-lock"></i> <strong>Log in Required:</strong> Log in to take courses, track progress, and apply for internships.
                  </div>
                 <h2 class="auth-title">Welcome Back</h2>
@@ -919,7 +421,7 @@
                          <div id="profileDisplaySection">
                              <div class="user-info-profile">
                                  <div class="profile-avatar-display">
-                                     <img id="userAvatarDashboard" class="user-avatar" src="../../images/no_image.png" alt="User Avatar">
+                                     <img id="userAvatarDashboard" class="user-avatar" src="../images/no_image.png" alt="User Avatar">
                                  </div>
                                  <div class="user-profile-details">
                                      <h2 id="userNameDashboard"></h2>
@@ -942,7 +444,7 @@
                          <div id="profileEditSection" class="hidden">
                              <div id="profileEditError" class="error" style="display: none;"></div>
                              <div class="profile-avatar-display">
-                                 <img id="userAvatarPreview" class="user-avatar" src="../../images/no_image.png" alt="User Avatar Preview">
+                                 <img id="userAvatarPreview" class="user-avatar" src="../images/no_image.png" alt="User Avatar Preview">
                                  <label for="profileImageInput" class="file-upload-label">
                                      <i class="fas fa-upload"></i> Upload Image
                                  </label>
@@ -995,378 +497,99 @@
             </div>
         </div>
     </div>
-    
-    <script src="../../script.js"></script>
-    
+    <script src="../script.js"></script>
+
     <script>
-        // Course Specific Details
-        const COURSE_TITLE = "Essential Data Science Intern Course";
-        const TOTAL_LESSON_PAGES = 5; // Pages 1 to 5 are content pages
-        const TOTAL_PAGES = 1 + TOTAL_LESSON_PAGES; // Page 0 (Overview) + 5 Lesson Pages
-        const LOGIN_REDIRECT_ELEMENT_ID = 'loginBtnHeader'; // Element to click to open the modal
-
-        // FIX: Re-mapped correct answers and ensured 4 options (MCQ fix)
-        const quizData = {
-            1: { correct: 2, options: 4, feedback: "✅ Correct! Starting with historical data (Step 2) is essential to define the problem and understand underlying trends before building any model (Step 4)." },
-            2: { correct: 3, options: 4, feedback: "✅ Correct! Median is preferred over Mean for imputation when outliers are present, as the Median is robust against extreme values." },
-            3: { correct: 3, options: 4, feedback: "✅ Correct! An A/B test with a T-Test is the statistical framework used to determine if the observed difference is statistically significant (i.e., not random chance)." },
-            4: { correct: 2, options: 4, feedback: "✅ Correct! The `WHERE` clause filters rows before aggregation (GROUP BY), while `HAVING` filters results AFTER aggregation." },
-            5: { correct: 3, options: 4, feedback: "✅ Correct! Version control tracks history, enables collaboration (merging), and protects against catastrophic errors by allowing quick rollback." }
-        };
-        
-        // Video IDs for each page (simulating dynamic content)
-        const pageVideoIds = {
-            1: "x-G-dSSUNQE", 
-            2: "JOlruyTytz8", 
-            3: "Cc-RKfvITzo", 
-            4: "4tYY6NFRfws", 
-            5: "i_LwzRVP7bg" 
-        };
-        
-        // --- Core Logic Elements ---
-        const coursePages = document.querySelectorAll('.course-page');
-        const progressFill = document.getElementById('progressBar');
-        const progressText = document.getElementById('progressText');
-        const finishButton = document.getElementById('finishButton');
-        const videoContainer = document.getElementById('video-container');
-        const startEnrollmentButtonActual = document.getElementById('startEnrollmentButtonActual'); 
-
-        let currentPage = 0; 
-        let isUserEnrolled = false;
-        
-        // Helper to get Firestore path (Assumes global auth and db from script.js)
-        function getUserPath(collection) {
-            const user = firebase.auth().currentUser;
-            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-            return `artifacts/${appId}/users/${user.uid}/${collection}`;
-        }
-        
-        // Helper to load and save progress (replaces old logic from script.js global functions for this page)
-        const saveProgressLocal = async (pageNumber, isCompleted) => {
-            const user = firebase.auth().currentUser;
-            if (!user || user.isAnonymous) return;
-            
-            // Calculate progress based on lesson pages (1-5)
-            const progressPage = Math.max(0, pageNumber - 1);
-            const progressForDb = Math.min(100, Math.floor((progressPage / TOTAL_LESSON_PAGES) * 100));
-            
-            const enrollmentsRef = db.collection(getUserPath('enrollments'));
-            const docTitle = COURSE_TITLE;
-            
-            try {
-                const existingEnrollment = await enrollmentsRef.where('title', '==', docTitle).get();
-                if (!existingEnrollment.empty) {
-                    const docId = existingEnrollment.docs[0].id;
-                    await enrollmentsRef.doc(docId).update({
-                        progress: progressForDb,
-                        lastPage: pageNumber,
-                        completed: isCompleted,
-                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                } else {
-                    // Initial enrollment 
-                     await enrollmentsRef.add({
-                        title: docTitle,
-                        progress: progressForDb, 
-                        completed: isCompleted,
-                        lastPage: pageNumber,
-                        userId: user.uid,
-                        url: window.location.pathname 
-                    });
-                }
-                isUserEnrolled = true;
-            } catch(e) {
-                console.error("Error saving progress:", e);
-            }
-        };
-
-        const loadProgressLocal = async (user) => {
-             if (!user || user.isAnonymous) return null;
-             try {
-                const enrollmentsRef = db.collection(getUserPath('enrollments'));
-                const existingEnrollment = await enrollmentsRef.where('title', '==', COURSE_TITLE).limit(1).get();
-                 
-                if (!existingEnrollment.empty) {
-                    const data = existingEnrollment.docs[0].data();
-                    isUserEnrolled = true;
-                    return data;
-                }
-                isUserEnrolled = false;
-                return null;
-             } catch(e) {
-                 console.error("Error loading progress:", e);
-                 isUserEnrolled = false;
-                 return null;
-             }
-        }
-        
-        // Helper to update progress visualization
-        const updateProgressUI = (pageNumber) => {
-            // Only pages 1-5 count towards progress
-            const progressPage = Math.max(0, pageNumber - 1);
-            const progressPercentage = Math.min(100, Math.floor((progressPage / TOTAL_LESSON_PAGES) * 100));
-            
-            if (progressFill && progressText) {
-                progressFill.style.width = `${progressPercentage}%`;
-                progressText.textContent = `${progressPercentage}% Complete`;
-            }
-        };
-
-        const loadVideoForPage = (pageNumber) => {
-             // Only load video for actual lesson pages (1-5)
-            if (pageNumber < 1) {
-                if (videoContainer) videoContainer.innerHTML = ''; 
-                return;
-            }
-            const videoId = pageVideoIds[pageNumber];
-            
-            if (videoContainer) {
-                 // Reset video container to thumbnail view
-                videoContainer.innerHTML = `
-                    <div class="video-wrapper" id="video-thumbnail-new">
-                        <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" alt="Course Video Thumbnail" onerror="this.onerror=null; this.src='https://placehold.co/600x338/546e7a/ffffff?text=Video+Not+Available'">
-                        <div class="play-button"><i class="fas fa-play-circle"></i></div>
-                    </div>
-                `;
-                const currentVideoThumbnail = videoContainer.querySelector('#video-thumbnail-new');
-                if (currentVideoThumbnail) {
-                    currentVideoThumbnail.addEventListener('click', () => {
-                        const iframeContainer = document.createElement('div');
-                        iframeContainer.classList.add('video-embed-container');
-                        const iframe = document.createElement('iframe');
-                        // FIX: Use the video ID for embedding
-                        iframe.setAttribute('src', `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`);
-                        iframe.setAttribute('title', 'YouTube video player');
-                        iframe.setAttribute('frameborder', '0');
-                        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
-                        iframe.setAttribute('allowfullscreen', '');
-                        iframeContainer.appendChild(iframe);
-                        videoContainer.innerHTML = ''; 
-                        videoContainer.appendChild(iframeContainer);
-                    });
-                }
-            }
-        };
-
-        const showPage = (pageNumber) => {
-            coursePages.forEach(page => page.classList.add('hidden'));
-            let newPage = document.querySelector(`[data-page="${pageNumber}"]`);
-            
-            if (!newPage) {
-                pageNumber = 1; // Fallback to page 1
-                newPage = document.querySelector(`[data-page="${pageNumber}"]`);
-                if (newPage) currentPage = 1;
-            }
-            
-            if (newPage) {
-                currentPage = pageNumber; // Update global page state
-                newPage.classList.remove('hidden');
-                const newContent = newPage.querySelector('.fade-in');
-                if(newContent) {
-                     newContent.classList.remove('visible');
-                     // Use setTimeout to ensure re-observing works
-                     setTimeout(() => {
-                         const tempObserver = new IntersectionObserver((entries) => {
-                             entries.forEach(entry => {
-                                 if (entry.isIntersecting) {
-                                     entry.target.classList.add('visible');
-                                     tempObserver.unobserve(entry.target); 
-                                 }
-                             });
-                         }, { threshold: 0.1 });
-                         tempObserver.observe(newContent);
-                     }, 10);
-                }
-                
-                updateProgressUI(pageNumber); 
-                loadVideoForPage(pageNumber);
-                
-                // Save the current page to track progress (only save progress for pages >= 1)
-                if(pageNumber >= 1) {
-                    saveProgressLocal(pageNumber, pageNumber > TOTAL_LESSON_PAGES);
-                }
-
-                // Smooth scroll to the content wrapper
-                document.querySelector('main').scrollIntoView({ behavior: 'smooth' });
-            }
-        };
-        
-        const updateUI = () => {
-            // Setup navigation buttons functionality for pages 1-5
-            for (let i = 1; i <= TOTAL_LESSON_PAGES; i++) {
-                const page = document.querySelector(`[data-page="${i}"]`);
-                const nextButton = page.querySelector(`#nextButton${i}`);
-                if (nextButton) {
-                    nextButton.addEventListener('click', () => {
-                        currentPage = Math.min(TOTAL_LESSON_PAGES + 1, currentPage + 1);
-                        showPage(currentPage);
-                    });
-                }
-            }
-        };
-        
-        const handleQuiz = (pageNumber) => {
-            const page = document.querySelector(`[data-page="${pageNumber}"]`);
-            const options = page.querySelectorAll('.option');
-            const quizSection = page.querySelector('.quiz-section');
-            const feedbackDiv = page.querySelector('.quiz-feedback');
-            const nextButton = page.querySelector(`#nextButton${pageNumber}`);
-            const finishButtonEl = document.getElementById('finishButton');
-            
-            // Re-enable options on page load for retries
-            options.forEach(opt => opt.style.pointerEvents = 'auto');
-            if (nextButton) nextButton.classList.add('hidden');
-            if (finishButtonEl) finishButtonEl.classList.add('hidden');
-            if (feedbackDiv) feedbackDiv.classList.add('hidden');
-
-            // Add event listeners only once
-            if (quizSection.dataset.listeners !== 'true') {
-                 options.forEach(option => {
-                    option.addEventListener('click', () => {
-                        const selected = parseInt(option.dataset.answer);
-                        const correctOption = quizData[pageNumber].correct;
-
-                        options.forEach(opt => opt.style.pointerEvents = 'none');
-                        option.classList.remove('incorrect');
-                        option.classList.remove('correct');
-                        
-                        // Display correct answer visually
-                        options.forEach(opt => {
-                            if(parseInt(opt.dataset.answer) === correctOption) {
-                                 opt.classList.add('correct');
-                            }
-                        });
-
-                        if (selected === correctOption) {
-                            feedbackDiv.textContent = quizData[pageNumber].feedback;
-                            feedbackDiv.style.color = 'var(--success)';
-                            
-                            if (nextButton) {
-                                nextButton.classList.remove('hidden');
-                            } else if (pageNumber === TOTAL_LESSON_PAGES && finishButtonEl) {
-                                // Last page completed
-                                finishButtonEl.classList.remove('hidden');
-                                saveProgressLocal(TOTAL_LESSON_PAGES + 1, true); 
-                            }
-                        } else {
-                            option.classList.add('incorrect');
-                            feedbackDiv.textContent = "❌ Incorrect. Please review the content on this page and try again in 2 seconds.";
-                            feedbackDiv.style.color = 'var(--warning)';
-                            
-                            if (nextButton) nextButton.classList.add('hidden');
-                            if (finishButtonEl) finishButtonEl.classList.add('hidden');
-
-                            setTimeout(() => {
-                                options.forEach(opt => {
-                                    opt.classList.remove('incorrect');
-                                    opt.classList.remove('correct');
-                                    opt.style.pointerEvents = 'auto';
-                                });
-                                feedbackDiv.classList.add('hidden');
-                            }, 2000);
-                        }
-                        feedbackDiv.classList.remove('hidden');
-                    });
-                });
-                quizSection.dataset.listeners = 'true';
-            }
-        };
-        
-        // Function to handle enrollment and transition to the first lesson
-        const enrollAndStart = async (e) => {
-            e.preventDefault();
-            const user = firebase.auth().currentUser;
-            
-            if (user && !user.isAnonymous) {
-                // Logged In: Enroll/Continue
-                if(!isUserEnrolled) {
-                   await saveProgressLocal(1, false);
-                }
-                currentPage = 1;
-                showPage(currentPage);
-            } else {
-                 // Logged Out: Trigger login modal (Point 6)
-                 window.showLoginModal();
-            }
-        };
-
-        // --- FIREBASE AUTH GATE & ENROLLMENT FIX ---
-        
         document.addEventListener('DOMContentLoaded', () => {
-            // Initialize quiz handlers for pages 1-5
-            for (let i = 1; i <= TOTAL_LESSON_PAGES; i++) {
-                handleQuiz(i);
-            }
+            // 1. Get Elements
+            const loginBtnHeader = document.getElementById('loginBtnHeader');
+            const signupBtnHeader = document.getElementById('signupBtnHeader');
+            const loginBtnMobile = document.getElementById('loginBtnHeaderMobile');
+            const signupBtnMobile = document.getElementById('signupBtnHeaderMobile');
+            const authModal = document.getElementById('authModal');
+            const closeModalBtn = document.getElementById('closeModal'); // Cross button
+            const loginSection = document.getElementById('loginSection');
+            const signupSection = document.getElementById('signupSection');
+            const navMenu = document.querySelector('.nav-menu');
+            const hamburgerMenu = document.getElementById('hamburgerMenu');
+            
+            // Special elements for navigation inside modal
+            const showSignupInModal = document.getElementById('showSignup');
+            const showLoginInModal = document.getElementById('showLogin');
 
-            if (finishButton) {
-                finishButton.addEventListener('click', () => {
-                     const user = firebase.auth().currentUser;
-                     if (!user) {
-                         alert("Login required to generate certificate."); 
-                         return;
+            // Helper function to show correct modal section
+            const showSection = (sectionElement) => {
+                 if (!sectionElement || !authModal) return;
+                 authModal.querySelectorAll('.auth-section').forEach(sec => sec.classList.remove('active'));
+                 sectionElement.classList.add('active');
+            };
+            
+            const closeAuthModal = () => {
+                 if(authModal) authModal.classList.remove('active'); 
+                 document.body.style.overflow = '';
+            };
+
+            const closeHamburgerMenu = () => {
+                if (navMenu && hamburgerMenu) {
+                    navMenu.classList.remove('active');
+                    hamburgerMenu.classList.remove('active');
+                }
+            };
+            
+            // 2. Event Listeners for Login (Desktop and Mobile)
+            const handleLoginClick = (e) => {
+                e.preventDefault();
+                if (authModal && loginSection) {
+                    authModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    showSection(loginSection);
+                    closeHamburgerMenu();
+                }
+            };
+            
+            if (loginBtnHeader) loginBtnHeader.addEventListener('click', handleLoginClick);
+            if (loginBtnMobile) loginBtnMobile.addEventListener('click', handleLoginClick);
+
+            // 3. Event Listeners for Signup (Desktop and Mobile)
+            const handleSignupClick = (e) => {
+                e.preventDefault();
+                if (authModal && signupSection) {
+                    authModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    showSection(signupSection);
+                    closeHamburgerMenu();
+                }
+            };
+            
+            if (signupBtnHeader) signupBtnHeader.addEventListener('click', handleSignupClick);
+            if (signupBtnMobile) signupBtnMobile.addEventListener('click', handleSignupClick);
+            
+            // 4. Fix for Modal Close Button (Cross Button) and Backdrop
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', closeAuthModal);
+            }
+            
+            if (authModal) {
+                 window.addEventListener('click', (e) => {
+                     if (e.target === authModal) {
+                         closeAuthModal();
                      }
-                    
-                    const userName = user.displayName || user.email.split('@')[0]; 
-                    const courseNameEncoded = encodeURIComponent(COURSE_TITLE);
-                    const nameEncoded = encodeURIComponent(userName);
-                    
-                    // Redirect to certificate page (will auto-generate PDF and load in browser)
-                    window.location.href = `certificate.html?name=${nameEncoded}&course=${courseNameEncoded}`;
+                 });
+            }
+            
+            // 5. Fix for internal modal navigation
+            if (showSignupInModal) showSignupInModal.addEventListener('click', (e) => { e.preventDefault(); showSection(signupSection); });
+            if (showLoginInModal) showLoginInModal.addEventListener('click', (e) => { e.preventDefault(); showSection(loginSection); });
+
+
+            // 6. Fix for Hamburger Menu Toggle
+            if (hamburgerMenu && navMenu) {
+                hamburgerMenu.addEventListener('click', () => {
+                    hamburgerMenu.classList.toggle('active');
+                    navMenu.classList.toggle('active');
                 });
             }
-            
-            const mainContentContainer = document.getElementById('mainContentContainer');
-            const startEnrollmentButtonActual = document.getElementById('startEnrollmentButtonActual');
-
-            // Set up initial view and listeners
-            showPage(0); 
-
-            // Bind the main button to the enrollment/login handler
-            startEnrollmentButtonActual.addEventListener('click', enrollAndStart);
-            
-            // Show content immediately as no hard gate is needed
-            mainContentContainer.classList.add('content-loaded');
-            
-            firebase.auth().onAuthStateChanged(async user => {
-                const enrollmentLink = document.getElementById(LOGIN_REDIRECT_ELEMENT_ID);
-                
-                // Hide loading overlay once state is determined
-                loadingOverlay.style.opacity = 0;
-                setTimeout(() => { loadingOverlay.style.display = 'none'; }, 500);
-
-                if (user && !user.isAnonymous) {
-                    // User is logged in
-                    const savedProgress = await loadProgressLocal(user);
-                    
-                    if (isUserEnrolled) {
-                        // User is enrolled: set button state to continue/completed
-                        if (savedProgress.completed) {
-                            startEnrollmentButtonActual.textContent = "View Completed Course & Certificate";
-                            if(document.getElementById('finishButton')) document.getElementById('finishButton').classList.remove('hidden');
-                        } else {
-                            startEnrollmentButtonActual.textContent = "Continue Course";
-                        }
-                        currentPage = (savedProgress.lastPage >= 1 && savedProgress.lastPage <= TOTAL_PAGES) ? savedProgress.lastPage : 1;
-
-                    } else {
-                        // Logged in but not enrolled (initial state)
-                        startEnrollmentButtonActual.textContent = "Enroll for Free";
-                        currentPage = 0;
-                    }
-                    
-                    updateUI();
-                    showPage(currentPage === 0 ? 0 : currentPage);
-
-                } else {
-                    // User is logged out/anonymous
-                    startEnrollmentButtonActual.textContent = "Enroll for Free (Sign In)";
-                    currentPage = 0;
-                    updateProgressUI(0);
-                    showPage(0);
-                }
-            });
         });
-        
     </script>
 </body>
 </html>
