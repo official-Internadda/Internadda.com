@@ -92,7 +92,6 @@
         }
 
         /* --- Course Content Styles --- */
-
         .course-title-main {
             font-size: 2.8rem;
             font-weight: 800;
@@ -119,24 +118,6 @@
             box-shadow: 0 0 0 3px #f56565;
         }
         
-        /* Login Gate Modal - Adjusted for relative positioning */
-        .login-gate { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(255, 255, 255, 0.95); 
-            z-index: 10; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 40px; 
-            text-align: center;
-            border-radius: 16px;
-            min-height: 500px; /* Ensure space for content gate */
-        }
          /* Video Section Styles (Needed here for thumbnail) */
         .video-wrapper {
             margin: 30px 0;
@@ -211,6 +192,37 @@
             list-style-type: '✅ ';
             padding-left: 20px;
         }
+
+        /* General course structure updates */
+         .course-page-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        .course-page-body th, .course-page-body td {
+            border: 1px solid #e2e8f0;
+            padding: 12px 16px;
+            text-align: left;
+        }
+        .course-page-body th {
+            background-color: var(--dark);
+            color: var(--light);
+            font-weight: 600;
+        }
+        .course-page-body pre {
+            background-color: #f6f8fa;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin: 20px 0;
+            line-height: 1.5;
+        }
         
     </style>
     
@@ -236,6 +248,7 @@
                 <a href="/courses/course.html" class="nav-link">Courses</a>
                 <a href="/intern/internship.html" class="nav-link">Internships</a>
                 <a href="/about.html" class="nav-link">About</a>
+                
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
@@ -247,6 +260,8 @@
                         <a href="/community/academy.html" class="dropdown-link">Offline Academy</a>
                     </div>
                 </div>
+                
+                <a href="/blog/index.html" class="nav-link mobile-only-link">Blog</a>
                 
                 <div class="nav-actions-mobile">
                      <div class="user-profile hidden" id="userProfileMobile">
@@ -296,16 +311,7 @@
         <section class="course-section">
             <div class="main-content-container" id="mainContentContainer">
                 
-                <div class="login-gate" id="contentGate">
-                    <i class="fas fa-lock" style="font-size: 4rem; color: var(--primary); margin-bottom: 30px;"></i>
-                    <h2>Login Required to View Course</h2>
-                    <p>Please sign in to access the full course material and track your learning progress.</p>
-                    <button class="btn btn-primary" onclick="window.showLoginModal()" id="enrollmentOrLoginBtn">Sign In Now</button>
-                </div>
-                
-                <div id="courseContent" class="hidden">
-                    
-                    <h1 class="course-title-main fade-in">Essential Data Science Intern Course</h1>
+                <div id="courseContent" class="course-content-loaded"> <h1 class="course-title-main fade-in">Essential Data Science Intern Course</h1>
                     
                     <div id="video-container" class="fade-in">
                         </div>
@@ -319,7 +325,7 @@
 
                     <div class="course-content-wrapper">
                         
-                         <div class="course-page hidden" data-page="0">
+                         <div class="course-page active" data-page="0">
                             <div class="fade-in">
                                 <h2 class="course-page-title" style="text-align: center; font-size: 2.5rem; border-bottom: none;">Course Overview: Get Enrolled</h2>
                                 
@@ -715,11 +721,6 @@
         const progressText = document.getElementById('progressText');
         const finishButton = document.getElementById('finishButton');
         const videoContainer = document.getElementById('video-container');
-        const contentGate = document.getElementById('contentGate');
-        const courseContent = document.getElementById('courseContent');
-        const mainContentContainer = document.getElementById('mainContentContainer');
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        const enrollmentOrLoginBtn = document.getElementById('enrollmentOrLoginBtn');
         const startEnrollmentButtonActual = document.getElementById('startEnrollmentButtonActual'); // Button on Page 0
 
         let currentPage = 0; // Start at overview page (Page 0)
@@ -738,7 +739,8 @@
             if (!user || user.isAnonymous) return;
             
             // Calculate progress based on lesson pages (1-5)
-            const progressForDb = pageNumber <= 0 ? 0 : Math.min(100, Math.floor(((pageNumber - 1) / TOTAL_LESSON_PAGES) * 100));
+            const progressPage = Math.max(0, pageNumber - 1);
+            const progressForDb = Math.min(100, Math.floor((progressPage / TOTAL_LESSON_PAGES) * 100));
             
             const enrollmentsRef = db.collection(getUserPath('enrollments'));
             const docTitle = COURSE_TITLE;
@@ -901,10 +903,12 @@
             const quizSection = page.querySelector('.quiz-section');
             const feedbackDiv = page.querySelector('.quiz-feedback');
             const nextButton = page.querySelector(`#nextButton${pageNumber}`);
+            const finishButtonEl = document.getElementById('finishButton');
             
             // Re-enable options on page load for retries
             options.forEach(opt => opt.style.pointerEvents = 'auto');
             if (nextButton) nextButton.classList.add('hidden');
+            if (finishButtonEl) finishButtonEl.classList.add('hidden');
             if (feedbackDiv) feedbackDiv.classList.add('hidden');
 
             // Add event listeners only once
@@ -931,9 +935,9 @@
                             
                             if (nextButton) {
                                 nextButton.classList.remove('hidden');
-                            } else if (finishButton) {
+                            } else if (pageNumber === TOTAL_LESSON_PAGES && finishButtonEl) {
                                 // Last page completed
-                                finishButton.classList.remove('hidden');
+                                finishButtonEl.classList.remove('hidden');
                                 saveProgressLocal(TOTAL_LESSON_PAGES + 1, true); // Mark 100% completion in Firestore
                             }
                         } else {
@@ -942,6 +946,7 @@
                             feedbackDiv.style.color = 'var(--warning)';
                             
                             if (nextButton) nextButton.classList.add('hidden');
+                            if (finishButtonEl) finishButtonEl.classList.add('hidden');
 
                             setTimeout(() => {
                                 options.forEach(opt => {
@@ -963,13 +968,16 @@
         const enrollAndStart = async (e) => {
             e.preventDefault();
             const user = firebase.auth().currentUser;
+            
             if (user && !user.isAnonymous) {
-                // Perform enrollment in Firestore
-                await saveProgressLocal(1, false);
+                // Logged In: Enroll/Continue
+                if(!isUserEnrolled) {
+                   await saveProgressLocal(1, false);
+                }
                 currentPage = 1;
                 showPage(currentPage);
             } else {
-                 // Trigger login modal if not logged in
+                 // Logged Out: Trigger login modal (Point 6)
                  window.showLoginModal();
             }
         };
@@ -999,90 +1007,56 @@
                 });
             }
             
-            // FIX: Show loading overlay immediately
-            loadingOverlay.style.opacity = 1;
+            const mainContentContainer = document.getElementById('mainContentContainer');
+            const startEnrollmentButtonActual = document.getElementById('startEnrollmentButtonActual');
+
+            // Set up initial view and listeners
+            showPage(0); // Show Page 0 immediately
+
+            // Bind the main button to the enrollment/login handler
+            startEnrollmentButtonActual.addEventListener('click', enrollAndStart);
+            
+            // Show content immediately as no hard gate is needed
+            mainContentContainer.classList.add('content-loaded');
             
             firebase.auth().onAuthStateChanged(async user => {
+                const enrollmentLink = document.getElementById(LOGIN_REDIRECT_ELEMENT_ID);
+                
                 // Hide loading overlay once state is determined
                 loadingOverlay.style.opacity = 0;
                 setTimeout(() => { loadingOverlay.style.display = 'none'; }, 500);
 
                 if (user && !user.isAnonymous) {
-                    // 1. User is logged in: Check enrollment
-                    contentGate.classList.add('hidden');
-                    courseContent.classList.remove('hidden');
-                    
+                    // User is logged in
                     const savedProgress = await loadProgressLocal(user);
                     
                     if (isUserEnrolled) {
-                        // User is enrolled: Set starting page to last page or 1
-                        currentPage = (savedProgress && savedProgress.lastPage >= 1 && savedProgress.lastPage <= TOTAL_PAGES) ? savedProgress.lastPage : 1;
-                        if(currentPage === 0) currentPage = 1; // Skip page 0 if enrolled
-                        
-                        // Update button on page 0 to "Continue Course"
-                        if(startEnrollmentButtonActual) startEnrollmentButtonActual.textContent = "Continue Course";
-                         // Reroute the click event to directly show page 1
-                        if(startEnrollmentButtonActual) startEnrollmentButtonActual.removeEventListener('click', enrollAndStart);
-                        if(startEnrollmentButtonActual) startEnrollmentButtonActual.addEventListener('click', (e) => { 
-                            e.preventDefault(); 
-                            if(savedProgress.completed) {
-                                // If completed, open page 0 but show the certificate button immediately
-                                showPage(0);
-                                if(document.getElementById('finishButton')) document.getElementById('finishButton').classList.remove('hidden');
-                            } else {
-                                // Continue from where they left off
-                                showPage(currentPage); 
-                            }
-                        });
-                        
+                        // User is enrolled: set button state to continue/completed
+                        if (savedProgress.completed) {
+                            startEnrollmentButtonActual.textContent = "View Completed Course & Certificate";
+                            if(document.getElementById('finishButton')) document.getElementById('finishButton').classList.remove('hidden');
+                        } else {
+                            startEnrollmentButtonActual.textContent = "Continue Course";
+                        }
+                        currentPage = (savedProgress.lastPage >= 1 && savedProgress.lastPage <= TOTAL_PAGES) ? savedProgress.lastPage : 1;
+
                     } else {
-                        // User is NOT enrolled: Show overview page (Page 0)
+                        // Logged in but not enrolled (initial state)
+                        startEnrollmentButtonActual.textContent = "Enroll for Free";
                         currentPage = 0;
-                        if(startEnrollmentButtonActual) startEnrollmentButtonActual.textContent = "Enroll for Free";
-                        // Set up enrollment logic for button on page 0
-                        if(startEnrollmentButtonActual) startEnrollmentButtonActual.removeEventListener('click', enrollAndStart);
-                        if(startEnrollmentButtonActual) startEnrollmentButtonActual.addEventListener('click', enrollAndStart);
-                        
                     }
                     
                     updateUI();
-                    showPage(currentPage);
-                    
-                    // Final step: make content visible
-                    mainContentContainer.classList.add('content-loaded');
-                    // Ensure finish button shows if already completed and on the final page, or on page 0/5 when loading
-                    if (isUserEnrolled && savedProgress && savedProgress.completed && finishButton) {
-                        finishButton.classList.remove('hidden');
-                    }
-                    if(savedProgress && savedProgress.completed && currentPage === 5) {
-                         if(document.getElementById('finishButton')) document.getElementById('finishButton').classList.remove('hidden');
-                    }
-
+                    showPage(currentPage === 0 ? 0 : currentPage);
 
                 } else {
-                    // 2. User is logged out/anonymous: Show gate and overview page
-                    contentGate.classList.remove('hidden');
-                    courseContent.classList.add('hidden');
-                    
-                    currentPage = 0; 
-                    updateProgressUI(0); 
-                    
-                    // Final step: make content visible (only the gate/overview in this case)
-                    mainContentContainer.classList.add('content-loaded');
-                    
-                    // Bind login button on gate to open the modal
-                    const signInNowBtn = contentGate.querySelector('.btn-primary');
-                    if (signInNowBtn) {
-                         signInNowBtn.onclick = function() { 
-                             const loginBtnHeader = document.getElementById(LOGIN_REDIRECT_ELEMENT_ID);
-                             if(loginBtnHeader) loginBtnHeader.click(); // Fallback to normal click
-                         };
-                    }
+                    // User is logged out/anonymous
+                    startEnrollmentButtonActual.textContent = "Enroll for Free (Sign In)";
+                    currentPage = 0;
+                    updateProgressUI(0);
+                    showPage(0);
                 }
             });
-            
-            // Initial call to show Page 0 in the content section (hidden behind the gate if logged out)
-            showPage(0);
         });
         
     </script>
