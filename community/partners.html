@@ -9,47 +9,106 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../style.css">
     <style>
-        /* Existing inline styles */
         .partners-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 30px;
             margin-top: 40px;
-            justify-items: center; /* Center items in grid cells */
+            justify-items: center;
         }
-        .partner-logo {
+        .partner-logo-container {
+            text-align: center;
             background-color: var(--white);
-            padding: 20px;
             border-radius: 12px;
             box-shadow: var(--shadow);
+            padding: 20px;
+            transition: var(--transition);
+            width: 100%;
+        }
+        .partner-logo-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+        .partner-logo {
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 120px; /* Consistent height */
-            transition: var(--transition);
+            height: 100px;
+            margin-bottom: 10px;
         }
-        .partner-logo:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-        }
+        /* Overriding base style.css to display logos in color */
         .partner-logo img {
             max-width: 100%;
-            max-height: 70px; /* Limit logo height */
+            max-height: 70px;
             object-fit: contain;
-            filter: grayscale(100%); /* Make logos grayscale initially */
-            opacity: 0.8;
-            transition: filter 0.3s ease, opacity 0.3s ease;
-        }
-         .partner-logo:hover img {
-            filter: grayscale(0%);
+            filter: none; 
             opacity: 1;
-         }
+            transition: transform 0.3s ease;
+        }
+        .partner-logo-container:hover .partner-logo img {
+            transform: scale(1.05);
+        }
+        .social-links-partner {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+        .social-links-partner a {
+            color: var(--dark);
+            font-size: 1.2rem;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+        .social-links-partner a:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
         .coming-soon {
              text-align: center;
              font-style: italic;
              color: var(--gray);
              margin-top: 50px;
              font-size: 1.1rem;
+        }
+        .partner-benefits {
+            text-align: left;
+            margin: 30px auto;
+            max-width: 700px;
+            padding: 30px;
+            background: #f0f4ff;
+            border-radius: 12px;
+            border-left: 5px solid var(--primary);
+        }
+        .partner-benefits h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        .partner-benefits ul {
+            list-style: none;
+            padding: 0;
+        }
+        .partner-benefits li {
+            font-size: 1.05rem;
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 30px;
+        }
+        .partner-benefits li i {
+            position: absolute;
+            left: 0;
+            top: 5px;
+            color: var(--success);
+            font-size: 1.2rem;
+        }
+        .founder-link-box {
+             margin-top: 25px;
+             padding: 15px;
+             border: 1px solid #e2e8f0;
+             border-radius: 8px;
+             display: inline-block;
+             background-color: var(--light);
         }
     </style>
 </head>
@@ -108,6 +167,7 @@
             </button>
         </div>
     </header>
+
     <main>
         <section class="hero" style="padding: 60px 0; text-align: center;">
             <div class="container">
@@ -122,31 +182,76 @@
                  <p style="text-align: center; color: var(--gray); max-width: 700px; margin: -20px auto 40px auto;">We partner with innovative startups and established companies offering exciting internship opportunities across various domains.</p>
 
                 <div class="partners-grid">
-                    <div class="partner-logo">
-                        <img src="../images/compan1.jpg" alt="BRIDGE4MEAL">
+                    
+                    <div class="partner-logo-container">
+                        <div class="partner-logo">
+                            <img src="../images/compan1.jpg" alt="BRIDGE4MEAL Logo">
+                        </div>
+                        <p style="font-weight: 600;">BRIDGE4MEAL</p>
+                        <div class="social-links-partner">
+                            <a href="https://www.instagram.com/bridge4meal/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.linkedin.com/company/bridge4meal/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
                     </div>
-                    <div class="partner-logo">
-                        <img src="../images/compan2.jpg" alt="IFL INSTITUTE">
+                    
+                    <div class="partner-logo-container">
+                        <div class="partner-logo">
+                            <img src="../images/compan2.jpg" alt="IFL INSTITUTE Logo">
+                        </div>
+                        <p style="font-weight: 600;">IFL INSTITUTE</p>
+                        <div class="social-links-partner">
+                            <a href="https://www.instagram.com/iflinstitute/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.linkedin.com/company/ifl-institute/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
                     </div>
-                    <div class="partner-logo">
-                        <img src="../images/compan3.jpg" alt="BRANDED BASE">
+                    
+                    <div class="partner-logo-container">
+                        <div class="partner-logo">
+                            <img src="../images/compan3.jpg" alt="BRANDED BASE Logo">
+                        </div>
+                        <p style="font-weight: 600;">BRANDED BASE</p>
+                        <div class="social-links-partner">
+                            <a href="https://www.instagram.com/brandedbase/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.linkedin.com/company/brandedbase/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
                     </div>
-                    <div class="partner-logo">
-                        <img src="../images/compan1.jpg" alt="BRIDGE4MEAL">
+                    
+                    <div class="partner-logo-container">
+                        <div class="partner-logo">
+                            <img src="../images/compan1.jpg" alt="BRIDGE4MEAL Logo">
+                        </div>
+                        <p style="font-weight: 600;">BRIDGE4MEAL</p>
+                        <div class="social-links-partner">
+                            <a href="https://www.instagram.com/bridge4meal/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.linkedin.com/company/bridge4meal/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
                     </div>
-                    <div class="partner-logo">
-                        <img src="../images/compan2.jpg" alt="IFL INSTITUTE">
-                    </div>
-                    <div class="partner-logo">
-                        <img src="../images/compan3.jpg" alt="BRANDED BASE">
-                    </div>
+                    
                 </div>
                 <p class="coming-soon">(More partners coming soon...)</p>
 
                 <div style="text-align: center; margin-top: 60px;">
-                    <h3 style="font-size: 1.5rem; margin-bottom: 15px;">Interested in Partnering?</h3>
-                    <p style="color: var(--gray); margin-bottom: 25px;">Help nurture talent and find your next great hire through our internship program.</p>
-                    <a href="../contact.html" class="btn btn-primary">Become a Partner</a>
+                    <h2 class="section-title" style="font-size: 2rem;">Interested in Partnering?</h2>
+                    
+                    <div class="partner-benefits">
+                        <h3 style="margin-top: 0;"><i class="fas fa-handshake"></i> Partner with Internadda: Key Benefits</h3>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> **Access Top Talent:** Hire pre-vetted interns who have passed rigorous, skill-based exams.</li>
+                            <li><i class="fas fa-check-circle"></i> **Free Recruitment:** Zero recruitment fees; we bridge the gap between education and your hiring needs.</li>
+                            <li><i class="fas fa-check-circle"></i> **Enhanced Brand Visibility:** Showcase your company to a large, engaged student audience.</li>
+                            <li><i class="fas fa-check-circle"></i> **Stipend Program:** Offer competitive, performance-based stipends to attract the best in class.</li>
+                        </ul>
+                    </div>
+                    
+                    <a href="mailto:official.internadda@gmail.com" class="btn btn-primary" style="margin-top: 20px;">
+                        <i class="fas fa-envelope" style="margin-right: 8px;"></i> Contact Our Partnership Team
+                    </a>
+                    
+                    <div class="founder-link-box">
+                         <i class="fab fa-linkedin-in" style="color: #0077B5; margin-right: 8px;"></i>
+                         Connect with our Founder:
+                         <a href="https://in.linkedin.com/in/luckytiwari" target="_blank" style="font-weight: 600; color: #0077B5;">Lucky Tiwari</a>
+                     </div>
                 </div>
             </div>
         </section>
@@ -363,5 +468,5 @@
             }
         });
     </script>
-    </body>
+</body>
 </html>
