@@ -109,6 +109,7 @@
       flex-direction: column;
       justify-content: center;
       margin: 10px 0;
+      text-align: center;
     }
 
     .statement {
@@ -123,15 +124,18 @@
       font-size: 4em;
       font-weight: 700;
       color: #212121;
+      /* Centering Fixes */
+      display: inline-block; 
       border-bottom: 3px solid #c2a16d;
       padding-bottom: 8px;
-      margin: 15px 0 25px;
+      margin: 15px auto 25px auto; /* Centers the block itself */
     }
 
     .description-text {
       font-size: 1.2em;
       color: #444;
       line-height: 1.6;
+      text-align: center;
     }
 
     .course-name {
