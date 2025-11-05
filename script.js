@@ -49,12 +49,7 @@ function getUserPath(collection) {
     return `artifacts/${appId}/users/${userId}/${collection}`;
 }
 
-// --- MOCK INITIALIZATION DATA (Replaces old mock data arrays) ---
-const INITIAL_MOCK_COURSES = [
-    { title: 'Essential Data Science Intern Course', progress: 0, completed: false, url: "/courses/courses/Essential Data Science Intern Course.html" },
-    { title: 'Generative AI & Prompt Engineering Masterclass', progress: 0, completed: false, url: "/courses/courses/Generative-AI-Prompt-Engineering-Masterclass.html" },
-    { title: 'Ethical Hacking Mastery', progress: 0, completed: false, url: "/courses/courses/Ethical-Hacking-Mastery.html" }
-];
+// --- MOCK INITIALIZATION DATA (Courses removed) ---
 const INITIAL_MOCK_INTERNSHIPS = [
     { title: 'Data Science & Analytics', status: 'Pending', score: 0, finalExamUrl: '/intern/payment_page_data_science.html' },
     { title: 'Artificial Intelligence & ML', status: 'Pending', score: 0, finalExamUrl: '/intern/payment_page_ai_ml.html' }
@@ -79,88 +74,25 @@ async function initializeUserData(user) {
         });
     }
 
-    // Initialize mock courses if none exist
-    const coursesPath = getUserPath('enrollments');
-    const coursesSnapshot = await db.collection(coursesPath).limit(1).get();
-    if (coursesSnapshot.empty) {
+    // Initialize mock internships if none exist
+    const internshipsPath = getUserPath('internships');
+    const internshipsSnapshot = await db.collection(internshipsPath).limit(1).get();
+    if (internshipsSnapshot.empty) {
         const batch = db.batch();
-        INITIAL_MOCK_COURSES.forEach(course => {
-            const docRef = db.collection(coursesPath).doc();
-            batch.set(docRef, { ...course, userId: user.uid });
-        });
+        // NOTE: INITIAL_MOCK_COURSES logic removed entirely
         INITIAL_MOCK_INTERNSHIPS.forEach(internship => {
-            const docRef = db.collection(getUserPath('internships')).doc();
+            const docRef = db.collection(internshipsPath).doc();
             batch.set(docRef, { ...internship, userId: user.uid });
         });
         await batch.commit();
     }
 }
 
-// --- UI Rendering Functions (Now uses Firestore real-time data) ---
+// --- UI Rendering Functions ---
 
-function renderCourseProgress(coursesData) {
-    const coursesListContainer = document.getElementById('coursesListContainer');
-    if (!coursesListContainer) return;
+// REMOVED: renderCourseProgress function
+/* function renderCourseProgress(coursesData) { ... } */
 
-    coursesListContainer.innerHTML = '';
-    
-    // Check if user is logged in
-    const user = auth.currentUser;
-    if (!user || user.isAnonymous) {
-         coursesListContainer.innerHTML = '<p class="text-center empty-state" style="padding: 20px 0;">Please log in to view your courses.</p>';
-         return;
-    }
-    
-    if (coursesData.length === 0) {
-        coursesListContainer.innerHTML = '<p class="text-center empty-state" style="padding: 20px 0;">You are not currently enrolled in any courses. <a href="/courses/course.html" class="text-primary font-semibold">Start learning now!</a></p>';
-        return;
-    }
-
-    coursesData.forEach(course => {
-        let buttonHtml;
-        let statusColor;
-        
-        // Hardcoded list for URL fallback
-        const allCourses = [
-            { title: 'Essential Data Science Intern Course', instructor: 'Lucky Kumar', image: '/images/Essential Data Science Intern Course.png', url: "/courses/courses/Essential Data Science Intern Course.html" },
-            { title: 'Generative AI & Prompt Engineering Masterclass', instructor: 'Lucky Kumar', image: '/images/Generative-AI-Prompt-Engineering-Masterclass.png', url: "/courses/courses/Generative-AI-Prompt-Engineering-Masterclass.html" },
-            { title: 'Ethical Hacking Mastery', instructor: 'Lucky Kumar', image: '/images/Ethical-Hacking-Mastery.png', url: "/courses/courses/Ethical-Hacking-Mastery.html" },
-            { title: 'Python Essentials for All', instructor: 'Lucky Kumar', image: '/images/Python-Essentials-for-All.png', url: "/courses/courses/Python-Essentials-for-All.html" },
-            { title: 'Cloud & DevOps Essentials', instructor: 'Lucky Kumar', image: '/images/Cloud-DevOps-Essentials.png', url: "/courses/courses/Cloud-DevOps-Essentials.html" }
-        ];
-        
-        const courseDetails = allCourses.find(c => course.title.includes(c.title.split(' - ')[0]) || c.title.includes(course.title.split(' ').slice(0, 3).join(' '))) || { url: '/courses/course.html' };
-        const courseUrl = course.url || courseDetails.url; // Prefer Firestore URL, fallback to local lookup
-
-        if (course.completed && course.progress >= 99) {
-            statusColor = 'var(--success)';
-            const nameEncoded = encodeURIComponent(user.displayName || user.email.split('@')[0]);
-            const courseNameEncoded = encodeURIComponent(course.title);
-            const certificateUrl = `/courses/courses/certificate.html?name=${nameEncoded}&course=${courseNameEncoded}`;
-            
-            buttonHtml = `<a href="${certificateUrl}" target="_blank" class="btn btn-primary animate-pulse" style="padding: 8px 15px; font-size: 14px; background-color: var(--success);"><i class="fas fa-download" style="margin-right: 5px;"></i> Certificate</a>`;
-        } else {
-            statusColor = course.progress > 0 ? 'var(--warning)' : 'var(--primary)';
-            buttonHtml = `<a href="${courseUrl}" class="btn btn-primary" style="padding: 8px 15px; font-size: 14px;">Continue Course</a>`;
-        }
-        
-        const itemHtml = `
-            <div class="data-item animated-item">
-                <div style="flex-grow: 1;">
-                    <h4 style="font-size: 16px; margin-bottom: 8px; color: var(--dark);">${escapeHTML(course.title)}</h4>
-                    <div style="font-size: 14px; color: var(--gray); display: flex; align-items: center; gap: 10px;">
-                        <span style="font-weight: 600; color: ${statusColor};">${course.progress}% Complete</span>
-                        <div style="flex-grow: 1; height: 8px; background-color: #e2e8f0; border-radius: 999px; max-width: 150px; overflow: hidden;">
-                             <div style="height: 100%; width: ${course.progress}%; background-color: ${statusColor}; border-radius: 999px; transition: width 0.8s ease-out;"></div>
-                        </div>
-                    </div>
-                </div>
-                ${buttonHtml}
-            </div>
-        `;
-        coursesListContainer.innerHTML += itemHtml;
-    });
-}
 
 function renderInternshipHistory(internshipsData) {
     const internshipsListContainer = document.getElementById('internshipsListContainer');
@@ -183,26 +115,31 @@ function renderInternshipHistory(internshipsData) {
         let statusColor;
         let actionLink;
         let statusText;
-        let finalExamUrl = internship.finalExamUrl || '/intern/internship.html'; // Fallback
+        
+        // Logic to determine the final exam page link
+        // Converts /intern/payment_page_DOMAIN.html to /intern/DOMAIN_final_exam.html
+        const finalExamUrlBase = internship.finalExamUrl ? internship.finalExamUrl.replace('/intern/payment_page_', '').replace('.html', '') : 'internship';
+        const finalExamPage = `/intern/${finalExamUrlBase}_final_exam.html`;
         
         // Logic to determine action button
         switch (internship.status) {
             case 'Passed':
                 statusColor = 'var(--success)';
                 statusText = `Qualified (${internship.score}%)`;
-                // Assumes finalExamUrl points to payment, but we redirect to the actual exam results page
-                const finalExamPage = finalExamUrl.replace('payment_page_', '').replace('.html', '_final_exam.html');
+                // Link to the results page using the derived finalExamPage structure
                 actionLink = `<a href="${finalExamPage}" class="btn btn-primary" style="padding: 8px 15px; font-size: 14px; background-color: var(--success);">View Results</a>`;
                 break;
             case 'Failed':
                 statusColor = '#c53030'; // Red
                 statusText = `Not Qualified (${internship.score}%)`;
-                actionLink = `<a href="${finalExamUrl}" class="btn btn-outline" style="padding: 8px 15px; font-size: 14px; border-color: #c53030; color: #c53030;">Re-attempt Exam</a>`;
+                // Link to the re-attempt (which links directly to the final exam page)
+                actionLink = `<a href="${finalExamPage}" class="btn btn-outline" style="padding: 8px 15px; font-size: 14px; border-color: #c53030; color: #c53030;">Re-attempt Exam</a>`;
                 break;
             default: // Pending
                 statusColor = 'var(--warning)';
-                statusText = 'Awaiting Payment/Exam';
-                actionLink = `<a href="${finalExamUrl}" class="btn btn-primary" style="padding: 8px 15px; font-size: 14px;">Take Exam</a>`;
+                statusText = 'Currently Open';
+                // Link directly to the final exam page, fulfilling the request.
+                actionLink = `<a href="${finalExamPage}" class="btn btn-primary" style="padding: 8px 15px; font-size: 14px;">Apply Now / Take Exam</a>`;
                 break;
         }
 
@@ -227,13 +164,17 @@ async function saveProfileData(user) {
     const profileName = document.getElementById('profileName');
     const profileGender = document.getElementById('profileGender');
     const interestedDomain = document.getElementById('interestedDomain');
+    const profileImageInput = document.getElementById('profileImageInput');
+    const userAvatarPreview = document.getElementById('userAvatarPreview');
 
     const name = profileName.value.trim();
     const gender = profileGender.value;
     const domain = interestedDomain.value;
     let photoUrl = user.photoURL || '/images/no_image.png';
 
-    // Image upload logic is complex and relies on Firebase Storage, so we will skip actual file upload.
+    // NOTE ON IMAGE UPLOAD: 
+    // Since Firebase Storage is disabled in this environment, 
+    // we only allow local preview and rely on the existing photoUrl or default.
 
     const profileUpdate = {
         name: name,
@@ -297,7 +238,6 @@ async function loadProfileData(user) {
 }
 
 // --- Auth State Observer (Handles profile updates and showing/hiding auth elements) ---
-let courseUnsubscribe;
 let internshipUnsubscribe;
 
 // --- onAuthStateChanged: Main entry point for UI updates ---
@@ -322,14 +262,10 @@ auth.onAuthStateChanged(async (user) => {
         await loadProfileData(user);
 
         // 2. Setup real-time listeners for dashboard data
-        if (courseUnsubscribe) courseUnsubscribe(); 
         if (internshipUnsubscribe) internshipUnsubscribe(); 
 
-        courseUnsubscribe = db.collection(getUserPath('enrollments'))
-            .onSnapshot(snapshot => {
-                const courses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                renderCourseProgress(courses);
-            }, err => console.error("Firestore Courses Error:", err));
+        // REMOVED: Courses listener
+        /* courseUnsubscribe = db.collection(getUserPath('enrollments')) ... */
 
         internshipUnsubscribe = db.collection(getUserPath('internships'))
             .onSnapshot(snapshot => {
@@ -350,7 +286,6 @@ auth.onAuthStateChanged(async (user) => {
         if(userProfileMobile) userProfileMobile.classList.add('hidden'); 
 
         // 3. Clear listeners when logged out
-        if (courseUnsubscribe) { courseUnsubscribe(); courseUnsubscribe = null; }
         if (internshipUnsubscribe) { internshipUnsubscribe(); internshipUnsubscribe = null; }
 
         // If modal is open, show login screen
@@ -359,9 +294,7 @@ auth.onAuthStateChanged(async (user) => {
         }
         
         // Hide/Reset profile content
-        const coursesListContainer = document.getElementById('coursesListContainer');
         const internshipsListContainer = document.getElementById('internshipsListContainer');
-        if(coursesListContainer) coursesListContainer.innerHTML = '<p class="text-center empty-state" style="padding: 20px 0;">Please log in to view your courses.</p>';
         if(internshipsListContainer) internshipsListContainer.innerHTML = '<p class="text-center empty-state" style="padding: 20px 0;">Please log in to view your internship history.</p>';
     }
 
@@ -452,13 +385,13 @@ const editProfileBtn = document.getElementById('editProfileBtn');
 const tabButtons = document.querySelectorAll('.tab-btn');
 const tabsContent = {
     profile: document.getElementById('profileTabContent'),
-    courses: document.getElementById('coursesTabContent'),
+    // REMOVED: courses: document.getElementById('coursesTabContent'),
     internships: document.getElementById('internshipsTabContent'),
 };
 const searchInput = document.getElementById('searchInput');
 
 
-// Hardcoded data (used only for search/listings and lookup for progress rendering)
+// Hardcoded data (used only for search/listings)
 const allCourses = [
     { title: 'Essential Data Science Intern Course', instructor: 'Lucky Kumar', image: '/images/Essential Data Science Intern Course.png', url: "/courses/courses/Essential Data Science Intern Course.html" },
     { title: 'Generative AI & Prompt Engineering Masterclass', instructor: 'Lucky Kumar', image: '/images/Generative-AI-Prompt-Engineering-Masterclass.png', url: "/courses/courses/Generative-AI-Prompt-Engineering-Masterclass.html" },
@@ -773,7 +706,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- Tab Switching Logic ---
+    // --- Tab Switching Logic (Simplified) ---
     if (tabButtons.length > 0) {
         tabButtons.forEach(button => {
             button.addEventListener('click', () => {
@@ -787,12 +720,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (tabsContent[tab]) tabsContent[tab].classList.remove('hidden');
 
                 // Re-render content upon tab switch
-                if (tab === 'courses') {
-                    db.collection(getUserPath('enrollments')).get().then(snapshot => {
-                        const courses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                        renderCourseProgress(courses);
-                    }).catch(err => console.error("Error fetching course data on tab switch:", err));
-                } else if (tab === 'internships') {
+                if (tab === 'internships') {
                      db.collection(getUserPath('internships')).get().then(snapshot => {
                         const internships = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                         renderInternshipHistory(internships);
