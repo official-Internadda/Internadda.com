@@ -58,7 +58,10 @@
                 
                 <div class="nav-actions-mobile">
                      <div class="user-profile hidden" id="userProfileMobile">
-                         <img src="../images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeaderMobile" style="display:inline-block; vertical-align:middle; width:40px; height:40px; border-radius:50%; margin-right:8px;">
+                         <button id="profileBtnHeaderMobile" style="border:none; background:none; color:var(--dark); font-weight:600; font-size:16px; cursor:pointer; padding: 10px 0; width:100%; text-align:center;" onclick="window.handleProfileClick()">
+                             <img src="../images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeaderMobile" style="display:inline-block; vertical-align:middle; width:30px; height:30px; border-radius:50%; margin-right:8px;">
+                             <span id="userNameHeaderMobile">My Profile</span> 
+                         </button>
                          <button id="logoutBtnHeaderMobile" class="btn btn-outline" style="width: 100%;">Sign Out</button>
                      </div>
                      <div id="authButtonsMobile" style="width: 100%; display: flex; gap: 10px; justify-content: center;">
@@ -410,108 +413,4 @@
 
                     <div id="coursesTabContent" class="tab-content hidden">
                         <h3 class="section-title-small">📚 Enrolled Courses & Certificates</h3>
-                        <p style="color: var(--gray); margin-bottom: 20px;">Track your progress and access completion certificates here.</p>
-                        <div id="coursesListContainer" class="user-data-list">
-                            <p style="text-align: center; padding: 20px;">Please log in to view your courses.</p>
-                        </div>
-                    </div>
-
-                    <div id="internshipsTabContent" class="tab-content hidden">
-                        <h3 class="section-title-small">💼 Internship Application History</h3>
-                        <p style="color: var(--gray); margin-bottom: 20px;">View your exam results and application status for different domains.</p>
-                        <div id="internshipsListContainer" class="user-data-list">
-                            <p style="text-align: center; padding: 20px;">Please log in to view your internship history.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="../script.js"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. Get Elements
-            const loginBtnHeader = document.getElementById('loginBtnHeader');
-            const signupBtnHeader = document.getElementById('signupBtnHeader');
-            const loginBtnMobile = document.getElementById('loginBtnHeaderMobile');
-            const signupBtnMobile = document.getElementById('signupBtnHeaderMobile');
-            const authModal = document.getElementById('authModal');
-            const closeModalBtn = document.getElementById('closeModal'); // Cross button
-            const loginSection = document.getElementById('loginSection');
-            const signupSection = document.getElementById('signupSection');
-            const navMenu = document.querySelector('.nav-menu');
-            const hamburgerMenu = document.getElementById('hamburgerMenu');
-
-            // Helper function to show correct modal section
-            const showSection = (sectionElement) => {
-                 if (!sectionElement || !authModal) return;
-                 authModal.querySelectorAll('.auth-section').forEach(sec => sec.classList.remove('active'));
-                 sectionElement.classList.add('active');
-            };
-            
-            const closeAuthModal = () => {
-                 if(authModal) authModal.classList.remove('active'); 
-                 document.body.style.overflow = '';
-            };
-
-            const closeHamburgerMenu = () => {
-                if (navMenu && hamburgerMenu) {
-                    navMenu.classList.remove('active');
-                    hamburgerMenu.classList.remove('active');
-                }
-            };
-            
-            // 2. Event Listeners for Login (Desktop and Mobile)
-            const handleLoginClick = (e) => {
-                e.preventDefault();
-                if (authModal && loginSection) {
-                    authModal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                    showSection(loginSection);
-                    closeHamburgerMenu();
-                }
-            };
-            
-            if (loginBtnHeader) loginBtnHeader.addEventListener('click', handleLoginClick);
-            if (loginBtnMobile) loginBtnMobile.addEventListener('click', handleLoginClick);
-
-            // 3. Event Listeners for Signup (Desktop and Mobile)
-            const handleSignupClick = (e) => {
-                e.preventDefault();
-                if (authModal && signupSection) {
-                    authModal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                    showSection(signupSection);
-                    closeHamburgerMenu();
-                }
-            };
-            
-            if (signupBtnHeader) signupBtnHeader.addEventListener('click', handleSignupClick);
-            if (signupBtnMobile) signupBtnMobile.addEventListener('click', handleSignupClick);
-            
-            // 4. Fix for Modal Close Button (Cross Button) and Backdrop
-            if (closeModalBtn) {
-                closeModalBtn.addEventListener('click', closeAuthModal);
-            }
-            
-            if (authModal) {
-                 window.addEventListener('click', (e) => {
-                     if (e.target === authModal) {
-                         closeAuthModal();
-                     }
-                 });
-            }
-
-
-            // 5. Fix for Hamburger Menu Toggle
-            if (hamburgerMenu && navMenu) {
-                hamburgerMenu.addEventListener('click', () => {
-                    hamburgerMenu.classList.toggle('active');
-                    navMenu.classList.toggle('active');
-                });
-            }
-        });
-    </script>
-</body>
-</html>
+                        <p style="color: var(--gray); margin-bottom: 20px;">
