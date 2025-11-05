@@ -272,7 +272,8 @@
       // --- PDF Generation ---
       const element = document.getElementById('certificate'); 
       const opt = {
-        margin: 0,
+        // FIX: Setting margin to [Top (10mm), Right (15mm), Bottom (10mm), Left (15mm)]
+        margin: [10, 15, 10, 15], 
         filename: `Certificate_${decodeURIComponent(name).replace(/\s+/g, '_')}_${decodeURIComponent(course).replace(/\s+/g, '_')}.pdf`,
         image: { type: 'jpeg', quality: 1.0 },
         html2canvas: { scale: 3, useCORS: true, letterRendering: true },
