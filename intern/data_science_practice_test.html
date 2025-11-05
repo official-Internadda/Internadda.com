@@ -1,421 +1,409 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Science Practice Test — Internadda</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science Practice Test — Internadda</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../style.css">
 
-    <style>
-        :root {
-            --primary: #4c51bf; /* Deeper Indigo/Violet */
-            --dark: #1a202c;
-            --gray: #4a5568;
-            --warning: #f6ad55; /* More vibrant orange */
-            --success: #38a169;
-            --light: #f7fafc;
-            --accent: #38a169;
-            --hover-light: #f0f4ff;
-            --shadow: 0 4px 12px rgba(0,0,0,0.08);
-            --transition: all 0.25s ease-in-out;
-        }
+    <style>
+        :root {
+            --primary: #4c51bf; /* Deeper Indigo/Violet */
+            --dark: #1a202c;
+            --gray: #4a5568;
+            --warning: #f6ad55; /* More vibrant orange */
+            --success: #38a169;
+            --light: #f7fafc;
+            --accent: #38a169;
+            --hover-light: #f0f4ff;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08); 
+            --transition: all 0.25s ease-in-out;
+            --fail-color: #e53e3e; /* Red for failure */
+        }
 
-        body { background-color: var(--light); } /* Ensure a background color since header is gone */
-        .exam-container { max-width: 900px; margin: 40px auto; position: relative; }
-        .exam-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            padding: 15px 30px; /* Reduced vertical padding */
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            border-left: 5px solid var(--primary);
-        }
+        /* --- Header Changes --- */
+        .page-top-bar { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 15px 30px; 
+            background: #fff; 
+            box-shadow: var(--shadow);
+        }
+        .page-top-bar .logo-container {
+            display: flex;
+            align-items: center;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .page-top-bar .logo-container i {
+            margin-right: 8px;
+            color: var(--warning); 
+        }
+        #timer-proof {
+            font-size: 1.4rem; 
+            font-weight: 700; 
+            color: var(--primary); 
+            background-color: #eef2f7; 
+            padding: 6px 12px; 
+            border-radius: 6px; 
+        }
+        /* End Header Changes */
 
-        /* New Logo/Title Style for Header Replacement */
-        .logo-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-        }
-        .logo-title i {
-            color: var(--primary);
-            margin-right: 8px;
-            font-size: 1.8rem;
-        }
+        .exam-container { max-width: 900px; margin: 40px auto; position: relative; }
+        .exam-header { display: none; } 
+        #timer { display: none; } 
+        .hidden { display: none !important; }
 
-        #timer { font-size: 1.8rem; font-weight: 700; color: var(--primary); background-color: #eef2f7; padding: 8px 16px; border-radius: 8px; }
-        .hidden { display: none !important; }
+        /* Quiz Container Styles */
+        #quiz-container { background: #fff; padding: 40px; border-radius: 12px; box-shadow: var(--shadow); }
+        .question-block { margin-bottom: 35px; border-bottom: 1px solid #e2e8f0; padding-bottom: 25px; }
+        .question-block:last-child { border-bottom: none; margin-bottom: 0; }
+        .question-block h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 20px; line-height: 1.6; }
+        .question-block h3 strong { display: inline-block; background: var(--primary); color: white; border-radius: 50%; width: 30px; height: 30px; line-height: 30px; text-align: center; margin-right: 12px; font-size: 1rem; }
+        .options .option { background-color: var(--light); padding: 16px 20px; border: 1px solid #e2e8f0; border-radius: 10px; cursor: pointer; transition: var(--transition); margin-bottom: 10px; font-weight: 500; display: flex; align-items: center; gap: 12px; }
+        .options .option::before { content: ''; display: inline-block; width: 18px; height: 18px; border: 2px solid var(--gray); border-radius: 50%; transition: all 0.2s ease; flex-shrink: 0; }
+        .options .option:hover { background-color: #eef2f7; border-color: #cbd5e0; }
+        .options .option:hover::before { border-color: var(--primary); }
+        .options .option.selected { background-color: #ebf8ff; color: var(--primary); border-color: var(--primary); box-shadow: 0 0 0 2px rgba(43, 108, 176, 0.2); }
+        .options .option.selected::before { background-color: var(--primary); border-color: var(--primary); box-shadow: inset 0 0 0 3px white; }
+        #submit-btn { margin-top: 30px; width: 100%; padding: 18px; font-size: 1.1rem; }
+        #results-container { display: none; margin-top: 30px; padding: 30px; background: #f0fff4; border: 1px solid var(--success); border-radius: 12px; text-align: center; animation: fadeIn 0.5s; }
+        #results-container h2 { color: var(--accent); margin-bottom: 15px; }
+        .result-message { font-size: 1.1rem; margin-bottom: 20px; }
 
-        /* Quiz Container Styles */
-        #quiz-container { background: #fff; padding: 40px; border-radius: 12px; box-shadow: var(--shadow); }
-        .question-block { margin-bottom: 35px; border-bottom: 1px solid #e2e8f0; padding-bottom: 25px; }
-        .question-block:last-child { border-bottom: none; margin-bottom: 0; }
-        .question-block h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 20px; line-height: 1.6; }
-        .question-block h3 strong { display: inline-block; background: var(--primary); color: white; border-radius: 50%; width: 30px; height: 30px; line-height: 30px; text-align: center; margin-right: 12px; font-size: 1rem; }
-        .options .option { background-color: var(--light); padding: 16px 20px; border: 1px solid #e2e8f0; border-radius: 10px; cursor: pointer; transition: var(--transition); margin-bottom: 10px; font-weight: 500; display: flex; align-items: center; gap: 12px; }
-        .options .option::before { content: ''; display: inline-block; width: 18px; height: 18px; border: 2px solid var(--gray); border-radius: 50%; transition: all 0.2s ease; flex-shrink: 0; }
-        .options .option:hover { background-color: #eef2f7; border-color: #cbd5e0; }
-        .options .option:hover::before { border-color: var(--primary); }
-        .options .option.selected { background-color: #ebf8ff; color: var(--primary); border-color: var(--primary); box-shadow: 0 0 0 2px rgba(43, 108, 176, 0.2); }
-        .options .option.selected::before { background-color: var(--primary); border-color: var(--primary); box-shadow: inset 0 0 0 3px white; }
-        #submit-btn { margin-top: 30px; width: 100%; padding: 18px; font-size: 1.1rem; }
-        #results-container { display: none; margin-top: 30px; padding: 30px; background: #f0fff4; border: 1px solid var(--success); border-radius: 12px; text-align: center; animation: fadeIn 0.5s; }
-        #results-container h2 { color: var(--accent); margin-bottom: 15px; }
-        .result-message { font-size: 1.1rem; margin-bottom: 20px; }
+        /* General Pop-up/Modal Styles */
+        .result-modal { 
+            display: none; 
+            position: fixed; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            background-color: white; 
+            padding: 30px 40px; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
+            z-index: 1010; 
+            text-align: center; 
+            max-width: 500px; 
+            width: 90%;
+            animation: popIn 0.3s forwards;
+        }
+        .result-modal-success { border-top: 5px solid var(--success); }
+        .result-modal-fail { border-top: 5px solid var(--fail-color); }
+        .result-modal h3 { margin-bottom: 15px; font-size: 1.6rem; font-weight: 700; }
+        .result-modal p { margin-bottom: 25px; color: var(--gray); font-size: 1.1rem;}
+        .result-modal .modal-icon { font-size: 4rem; margin-bottom: 20px; }
+        .result-modal-success .modal-icon { color: var(--success); }
+        .result-modal-fail .modal-icon { color: var(--fail-color); }
 
+        @keyframes popIn {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
 
-        /* New Result Popup Styles - Reusing message-box for consistency */
-        .result-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 40px 50px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            z-index: 1005;
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
-            animation: fadeIn 0.3s ease-out;
-        }
+        /* Message Box Styles (For Tab Switch Warnings) */
+        .message-box { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 30px 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); z-index: 1005; text-align: center; border-top: 5px solid var(--primary); max-width: 500px; width: 90%; }
+        .message-box h3 { margin-bottom: 15px; font-size: 1.4rem;}
+        .message-box p { margin-bottom: 25px; color: var(--gray); font-size: 1.1rem;}
+        .message-box button { margin: 0 10px; }
+        .message-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); z-index: 1004; }
 
-        .result-popup h3 {
-            font-size: 2rem;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
+        /* FOOTER CENTERING STYLE */
+        /* Only centering the final copyright line */
+        footer { padding: 20px 0; background-color: #f7fafc; }
+        footer .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        footer .footer-bottom p {
+             text-align: center;
+             margin: 0;
+             font-size: 0.9rem;
+             color: var(--gray);
+        }
 
-        .result-popup .score-display {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            color: var(--gray);
-        }
-
-        /* Pass (>=50%) Styles */
-        #finalExamPopup { border-top: 5px solid var(--success); }
-        #finalExamPopup h3 { color: var(--success); }
-
-        /* Fail (<50%) Styles */
-        #retryPopup { border-top: 5px solid #c53030; /* A strong red */ }
-        #retryPopup h3 { color: #c53030; }
-
-        .popup-buttons button, .popup-buttons a {
-            margin: 0 10px;
-            min-width: 150px;
-        }
-
-        /* Message Box Styles (For Tab Switch Warnings) - Keeping existing styles */
-        .message-box { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 30px 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); z-index: 1005; text-align: center; border-top: 5px solid var(--primary); max-width: 500px; width: 90%; }
-        .message-box h3 { margin-bottom: 15px; font-size: 1.4rem;}
-        .message-box p { margin-bottom: 25px; color: var(--gray); font-size: 1.1rem;}
-        .message-box button { margin: 0 10px; }
-        .message-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); z-index: 1004; }
-
-        /* FOOTER CENTERING STYLE */
-        footer .footer-bottom p {
-             text-align: center;
-        }
-    </style>
+        /* Mobile View - Ensure hamburger is absent */
+        @media (max-width: 768px) {
+            .page-top-bar .logo-container { font-size: 1.2rem; }
+            #timer-proof { font-size: 1.2rem; }
+        }
+    </style>
 </head>
 <body >
+    
+    <div class="page-top-bar">
+        <div class="logo-container">
+            <i class="fas fa-graduation-cap"></i> <span class="logo-text">Internadda</span>
+        </div>
+        <div id="timer-proof">20:00</div>
+    </div>
+    <main>
+        <section class="course-section">
+            <div class="exam-container">
+                <div class="exam-header" style="display: none;">
+                    <h1>Data Science Practice Test</h1>
+                    <div id="timer">20:00</div>
+                </div>
 
-            <main>
-        <section class="course-section">
-            <div class="exam-container">
-                <div class="exam-header">
-                                        <div class="logo-title">
-                        <i class="fas fa-graduation-cap"></i>
-                        <span>Internadda</span>
-                    </div>
-                    <div id="timer">20:00</div>
-                </div>
+                <div id="quiz-container">
+                    <div class="question-block" data-answer="b"><h3><strong>1</strong>Which Python library is most commonly used for data manipulation and analysis in a DataFrame structure?</h3><div class="options"><div class="option" data-value="a">NumPy</div><div class="option" data-value="b">Pandas</div><div class="option" data-value="c">Matplotlib</div><div class="option" data-value="d">Scikit-learn</div></div></div>
+                    <div class="question-block" data-answer="c"><h3><strong>2</strong>What is the primary purpose of a 'train-test split' in machine learning?</h3><div class="options"><div class="option" data-value="a">To make the model run faster during training.</div><div class="option" data-value="b">To artificially increase the size of the dataset.</div><div class="option" data-value="c">To evaluate the model's generalization performance on unseen data.</div><div class="option" data-value="d">To select the most important features for the model.</div></div></div>
+                    <div class="question-block" data-answer="a"><h3><strong>3</strong>In SQL, which clause is used to filter rows based on a specified condition?</h3><div class="options"><div class="option" data-value="a">WHERE</div><div class="option" data-value="b">FILTER</div><div class="option" data-value="c">HAVING</div><div class="option" data-value="d">CONDITION</div></div></div>
+                    <div class="question-block" data-answer="d"><h3><strong>4</strong>Which type of plot is best suited for visualizing the relationship between two continuous numerical variables?</h3><div class="options"><div class="option" data-value="a">Bar Chart</div><div class="option" data-value="b">Histogram</div><div class="option" data-value="c">Box Plot</div><div class="option" data-value="d">Scatter Plot</div></div></div>
+                    <div class="question-block" data-answer="b"><h3><strong>5</strong>What does the term 'NaN' typically represent in a Pandas DataFrame?</h3><div class="options"><div class="option" data-value="a">A string value 'NaN'.</div><div class="option" data-value="b">A missing or undefined numerical value.</div><div class="option" data-value="c">Zero.</div><div class="option" data-value="d">An outlier value.</div></div></div>
+                    <div class="question-block" data-answer="a"><h3><strong>6</strong>Which statistical measure represents the middle value in a sorted dataset?</h3><div class="options"><div class="option" data-value="a">Median</div><div class="option" data-value="b">Mean</div><div class="option" data-value="c">Mode</div><div class="option" data-value="d">Standard Deviation</div></div></div>
+                    <div class="question-block" data-answer="c"><h3><strong>7</strong>What is the main goal of 'Feature Engineering' in data science?</h3><div class="options"><div class="option" data-value="a">To reduce the number of rows in the dataset.</div><div class="option" data-value="b">To visualize the data more effectively.</div><div class="option" data-value="c">To create new, more informative features from existing data to improve model performance.</div><div class="option" data-value="d">To choose the best machine learning algorithm.</div></div></div>
+                    <div class="question-block" data-answer="d"><h3><strong>8</strong>Which machine learning task involves predicting a continuous numerical value (e.g., price, temperature)?</h3><div class="options"><div class="option" data-value="a">Classification</div><div class="option" data-value="b">Clustering</div><div class="option" data-value="c">Anomaly Detection</div><div class="option" data-value="d">Regression</div></div></div>
+                    <div class="question-block" data-answer="b"><h3><strong>9</strong>What Python function is used to display output to the console?</h3><div class="options"><div class="option" data-value="a">display()</div><div class="option" data-value="b">print()</div><div class="option" data-value="c">show()</div><div class="option" data-value="d">output()</div></div></div>
+                    <div class="question-block" data-answer="a"><h3><strong>10</strong>In Pandas, how would you typically select the first 5 rows of a DataFrame named `df`?</h3><div class="options"><div class="option" data-value="a">df.head()</div><div class="option" data-value="b">df.first(5)</div><div class="option" data-value="c">df.top(5)</div><div class="option" data-value="d">df[:5]</div></div></div>
 
-                <div id="quiz-container">
-                                        <div class="question-block" data-answer="b"><h3><strong>1</strong>Which Python library is most commonly used for data manipulation and analysis in a DataFrame structure?</h3><div class="options"><div class="option" data-value="a">NumPy</div><div class="option" data-value="b">Pandas</div><div class="option" data-value="c">Matplotlib</div><div class="option" data-value="d">Scikit-learn</div></div></div>
-                    <div class="question-block" data-answer="c"><h3><strong>2</strong>What is the primary purpose of a 'train-test split' in machine learning?</h3><div class="options"><div class="option" data-value="a">To make the model run faster during training.</div><div class="option" data-value="b">To artificially increase the size of the dataset.</div><div class="option" data-value="c">To evaluate the model's generalization performance on unseen data.</div><div class="option" data-value="d">To select the most important features for the model.</div></div></div>
-                    <div class="question-block" data-answer="a"><h3><strong>3</strong>In SQL, which clause is used to filter rows based on a specified condition?</h3><div class="options"><div class="option" data-value="a">WHERE</div><div class="option" data-value="b">FILTER</div><div class="option" data-value="c">HAVING</div><div class="option" data-value="d">CONDITION</div></div></div>
-                    <div class="question-block" data-answer="d"><h3><strong>4</strong>Which type of plot is best suited for visualizing the relationship between two continuous numerical variables?</h3><div class="options"><div class="option" data-value="a">Bar Chart</div><div class="option" data-value="b">Histogram</div><div class="option" data-value="c">Box Plot</div><div class="option" data-value="d">Scatter Plot</div></div></div>
-                    <div class="question-block" data-answer="b"><h3><strong>5</strong>What does the term 'NaN' typically represent in a Pandas DataFrame?</h3><div class="options"><div class="option" data-value="a">A string value 'NaN'.</div><div class="option" data-value="b">A missing or undefined numerical value.</div><div class="option" data-value="c">Zero.</div><div class="option" data-value="d">An outlier value.</div></div></div>
-                    <div class="question-block" data-answer="a"><h3><strong>6</strong>Which statistical measure represents the middle value in a sorted dataset?</h3><div class="options"><div class="option" data-value="a">Median</div><div class="option" data-value="b">Mean</div><div class="option" data-value="c">Mode</div><div class="option" data-value="d">Standard Deviation</div></div></div>
-                    <div class="question-block" data-answer="c"><h3><strong>7</strong>What is the main goal of 'Feature Engineering' in data science?</h3><div class="options"><div class="option" data-value="a">To reduce the number of rows in the dataset.</div><div class="option" data-value="b">To visualize the data more effectively.</div><div class="option" data-value="c">To create new, more informative features from existing data to improve model performance.</div><div class="option" data-value="d">To choose the best machine learning algorithm.</div></div></div>
-                    <div class="question-block" data-answer="d"><h3><strong>8</strong>Which machine learning task involves predicting a continuous numerical value (e.g., price, temperature)?</h3><div class="options"><div class="option" data-value="a">Classification</div><div class="option" data-value="b">Clustering</div><div class="option" data-value="c">Anomaly Detection</div><div class="option" data-value="d">Regression</div></div></div>
-                    <div class="question-block" data-answer="b"><h3><strong>9</strong>What Python function is used to display output to the console?</h3><div class="options"><div class="option" data-value="a">display()</div><div class="option" data-value="b">print()</div><div class="option" data-value="c">show()</div><div class="option" data-value="d">output()</div></div></div>
-                    <div class="question-block" data-answer="a"><h3><strong>10</strong>In Pandas, how would you typically select the first 5 rows of a DataFrame named `df`?</h3><div class="options"><div class="option" data-value="a">df.head()</div><div class="option" data-value="b">df.first(5)</div><div class="option" data-value="c">df.top(5)</div><div class="option" data-value="d">df[:5]</div></div></div>
+                    <button class="btn btn-primary" id="submit-btn">Submit Practice Test</button>
 
-                    <button class="btn btn-primary" id="submit-btn">Submit Practice Test</button>
+                    <div id="results-container" class="hidden"></div>
+                </div>
+            </div>
+        </section>
 
-                                        <div id="results-container" class="hidden"></div>
-                </div>
-            </div>
-        </section>
+        <div id="successModal" class="result-modal result-modal-success">
+            <div class="modal-icon"><i class="fas fa-medal"></i></div>
+            <h3 id="successTitle">Great Job! You're Ready!</h3>
+            <p id="successScoreText"></p>
+            <button id="takeFinalExamBtn" class="btn btn-success btn-lg">Take Final Exam</button>
+        </div>
 
-                <div id="messageOverlay" class="message-overlay"></div>
+        <div id="failModal" class="result-modal result-modal-fail">
+            <div class="modal-icon"><i class="fas fa-redo-alt"></i></div>
+            <h3 id="failTitle">Needs Improvement</h3>
+            <p id="failScoreText"></p>
+            <p>Don't worry! Try again after reviewing the course material.</p>
+            <button id="retryTestBtn" class="btn btn-primary">Retry Test</button>
+        </div>
 
-                <div id="finalExamPopup" class="result-popup">
-            <h3><i class="fas fa-medal" style="color: var(--success); margin-right: 10px;"></i> Great Job!</h3>
-            <p class="score-display" id="finalExamScore">You scored 0 out of 10.</p>
-            <p style="margin-bottom: 30px;">You are eligible for the **Final Exam** to receive your **Internship Certificate**.</p>
-            <div class="popup-buttons">
-                                <a href="https://internadda.com/intern/payment_page_data_science" class="btn btn-success btn-lg" id="takeFinalExamBtn">Take Final Exam</a>
-            </div>
-        </div>
+        <div id="messageOverlay" class="message-overlay"></div>
+        <div id="tabSwitchWarningBox" class="message-box">
+             <h3><i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i> Warning: Focus Lost</h3>
+             <p>You navigated away from the practice test tab. In a real exam, this could lead to disqualification. Click Resume to continue.</p>
+             <button id="resumeTestBtn" class="btn btn-primary">Resume Test</button>
+        </div>
+        <div id="testCancelledBox" class="message-box">
+             <h3><i class="fas fa-ban" style="color: #c53030;"></i> Practice Test Cancelled</h3>
+             <p>Multiple instances of navigating away from the test tab were detected. To maintain fairness simulation, this practice session has been cancelled.</p>
+             <button id="backToIntBtn" class="btn btn-outline">Back to Internships</button>
+        </div>
+    </main>
 
-                <div id="retryPopup" class="result-popup">
-            <h3><i class="fas fa-times-circle" style="color: #c53030; margin-right: 10px;"></i> Try Again!</h3>
-            <p class="score-display" id="retryScore">You scored 0 out of 10.</p>
-            <p style="margin-bottom: 30px;">Your score is less than 50%. Review the material and try again to unlock the final exam.</p>
-            <div class="popup-buttons">
-                <button class="btn btn-primary" id="retryPracticeBtn">Retry Test</button>
-                <button class="btn btn-outline" onclick="window.location.reload();">Refresh Page</button>
-            </div>
-        </div>
+    <footer>
+        <div class="container">
+           <div class="footer-bottom">
+               <p>© 2025 Internadda. All rights reserved.</p>
+           </div>
+        </div>
+    </footer>
 
-                <div id="tabSwitchWarningBox" class="message-box">
-            <h3><i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i> Warning: Focus Lost</h3>
-            <p>You navigated away from the practice test tab. In a real exam, this could lead to disqualification. Click Resume to continue.</p>
-            <button id="resumeTestBtn" class="btn btn-primary">Resume Test</button>
-        </div>
-        <div id="testCancelledBox" class="message-box">
-             <h3><i class="fas fa-ban" style="color: #c53030;"></i> Practice Test Cancelled</h3>
-             <p>Multiple instances of navigating away from the test tab were detected. To maintain fairness simulation, this practice session has been cancelled.</p>
-             <button id="backToIntBtn" class="btn btn-outline">Back to Internships</button>
-        </div>
-    </main>
+    <script src="../script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Get Elements ---
+            const timerEl = document.getElementById('timer-proof'); 
+            const submitBtn = document.getElementById('submit-btn');
+            const questions = document.querySelectorAll('.question-block');
+            const totalQuestions = questions.length;
+            const quizContainer = document.getElementById('quiz-container');
 
-    <footer>
-        <div class="container">
-           <div class="footer-grid">
-               <div class="footer-brand"><div class="footer-logo">Internadda</div><p class="footer-description">...</p></div>
-               <div class="footer-links-column"><h3 class="footer-links-title">Learn</h3><ul class="footer-links"><li><a href="../courses/course.html">Browse Courses</a></li></ul></div>
-               <div class="footer-links-column"><h3 class="footer-links-title">Intern</h3><ul class="footer-links"><li><a href="internship.html">Find Internships</a></li></ul></div>
-               <div class="footer-links-column"><h3 class="footer-links-title">Contact & Legal</h3><ul class="footer-links"><li><a href="../about.html">About Us</a></li><li><a href="../contact.html">Contact Us</a></li><li><a href="../privacy.html">Privacy Policy</a></li></ul></div>
-           </div>
-           <div class="footer-bottom"><p>© 2025 Internadda. All rights reserved.</p></div>
-        </div>
-    </footer>
+            // New Result Pop-up Elements
+            const successModal = document.getElementById('successModal');
+            const successScoreText = document.getElementById('successScoreText');
+            const takeFinalExamBtn = document.getElementById('takeFinalExamBtn');
+            const failModal = document.getElementById('failModal');
+            const failScoreText = document.getElementById('failScoreText');
+            const retryTestBtn = document.getElementById('retryTestBtn'); 
 
-    <script src="../script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- Get Elements ---
-            const timerEl = document.getElementById('timer');
-            const submitBtn = document.getElementById('submit-btn');
-            const questions = document.querySelectorAll('.question-block');
-            const totalQuestions = questions.length;
-            const quizContainer = document.getElementById('quiz-container');
+            // Proctoring Elements
+            const messageOverlay = document.getElementById('messageOverlay');
+            const tabSwitchWarningBox = document.getElementById('tabSwitchWarningBox');
+            const resumeTestBtn = document.getElementById('resumeTestBtn');
+            const testCancelledBox = document.getElementById('testCancelledBox');
+            const backToIntBtn = document.getElementById('backToIntBtn');
 
-            // New Result Popups
-            const finalExamPopup = document.getElementById('finalExamPopup');
-            const retryPopup = document.getElementById('retryPopup');
-            const retryPracticeBtn = document.getElementById('retryPracticeBtn');
+            // --- State Variables ---
+            let examTimerInterval;
+            let tabSwitchCount = 0;
+            const MAX_TAB_SWITCHES = 2; 
+            let testStartTime = 0; 
+            const TOTAL_DURATION_SECONDS = 1200; // 20 minutes
 
-            // Proctoring Elements
-            const messageOverlay = document.getElementById('messageOverlay');
-            const tabSwitchWarningBox = document.getElementById('tabSwitchWarningBox');
-            const resumeTestBtn = document.getElementById('resumeTestBtn');
-            const testCancelledBox = document.getElementById('testCancelledBox');
-            const backToIntBtn = document.getElementById('backToIntBtn');
+            // --- Helper: Format Time ---
+            function formatTime(seconds) {
+                const mins = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            }
 
-            // --- State Variables ---
-            let examTimerInterval;
-            let tabSwitchCount = 0;
-            const MAX_TAB_SWITCHES = 2;
-            let testStartTime = 0; 
-            const TOTAL_DURATION_SECONDS = 1200; // 20 minutes
+            // --- Timer Logic ---
+            function startExamTimer(startTimeInSeconds) {
+                let time = startTimeInSeconds;
+                if(timerEl) timerEl.textContent = formatTime(time);
+                if (examTimerInterval) clearInterval(examTimerInterval); 
 
-            // --- Helper: Format Time ---
-            function formatTime(seconds) {
-                const mins = Math.floor(seconds / 60);
-                const secs = seconds % 60;
-                return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
-            }
+                examTimerInterval = setInterval(() => {
+                    if (document.hidden) return; 
+                    time--;
+                    if(timerEl) timerEl.textContent = formatTime(time);
+                    if (time <= 0) {
+                        clearInterval(examTimerInterval);
+                        if (!quizContainer.classList.contains('hidden') && submitBtn.style.display !== 'none') {
+                            submitTest(true); 
+                        }
+                    }
+                }, 1000);
+            }
 
-            // --- Timer Logic ---
-            function startExamTimer(startTimeInSeconds) {
-                let time = startTimeInSeconds;
-                if(timerEl) timerEl.textContent = formatTime(time);
-                if (examTimerInterval) clearInterval(examTimerInterval); 
+            // --- Option Selection Logic ---
+            questions.forEach(question => {
+                const options = question.querySelectorAll('.options .option');
+                options.forEach(opt => {
+                    opt.addEventListener('click', () => {
+                        // Allow selection only if the test is active
+                        if (!quizContainer.classList.contains('hidden') && submitBtn.style.display !== 'none'){
+                            options.forEach(o => o.classList.remove('selected'));
+                            opt.classList.add('selected');
+                            question.dataset.selectedValue = opt.dataset.value;
+                        }
+                    });
+                });
+            });
 
-                examTimerInterval = setInterval(() => {
-                    if (document.hidden) return; // Pause if tab not focused
-                    time--;
-                    if(timerEl) timerEl.textContent = formatTime(time);
-                    if (time <= 0) {
-                        clearInterval(examTimerInterval);
-                        if (!quizContainer.classList.contains('hidden') && submitBtn.style.display !== 'none') {
-                            submitTest(true); // Auto-submit
-                        }
-                    }
-                }, 1000);
-            }
+            // --- Submission Logic ---
+            function submitTest(autoSubmitted = false) {
+                if (!autoSubmitted && !confirm("Submit your practice test?")) {
+                    return; 
+                }
+                clearInterval(examTimerInterval);
+                
+                let score = 0;
 
-            // --- Option Selection Logic (No Change) ---
-            questions.forEach(question => {
-                const options = question.querySelectorAll('.options .option');
-                options.forEach(opt => {
-                    opt.addEventListener('click', () => {
-                        // Allow selection only if the test is active
-                        if (!quizContainer.classList.contains('hidden') && submitBtn.style.display !== 'none'){
-                            options.forEach(o => o.classList.remove('selected'));
-                            opt.classList.add('selected');
-                            question.dataset.selectedValue = opt.dataset.value;
-                        }
-                    });
-                });
-            });
+                questions.forEach(question => {
+                    if (question.dataset.selectedValue === question.dataset.answer) {
+                        score++;
+                    }
+                    // Crucial: Disable further selection after submission
+                    question.querySelectorAll('.options .option').forEach(opt => opt.style.pointerEvents = 'none');
+                });
 
-            // --- NEW Submission Logic ---
-            function submitTest(autoSubmitted = false) {
-                if (!autoSubmitted && !confirm("Submit your practice test?")) {
-                    return;
-                }
-                clearInterval(examTimerInterval);
-                
-                let score = 0;
+                const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
+                
+                // Hide main quiz content
+                quizContainer.classList.add('hidden'); 
+                submitBtn.style.display = 'none'; 
+                if(timerEl) timerEl.textContent = "Finished";
 
-                questions.forEach(question => {
-                    if (question.dataset.selectedValue === question.dataset.answer) {
-                        score++;
-                    }
-                    // Disable options after submission
-                    question.querySelectorAll('.options .option').forEach(opt => opt.style.pointerEvents = 'none');
-                });
+                // Hide other potential popups
+                messageOverlay.style.display = 'none';
+                tabSwitchWarningBox.style.display = 'none';
+                testCancelledBox.style.display = 'none';
 
-                const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
-                const scoreMessage = `You scored ${score} out of ${totalQuestions} (${percentage}%).`;
+                // Handle results based on percentage (50% threshold)
+                if (percentage >= 50) {
+                    // Success: >= 50%
+                    successScoreText.textContent = `You scored ${score} out of ${totalQuestions} (${percentage}%).`;
+                    messageOverlay.style.display = 'block';
+                    successModal.style.display = 'block';
+                } else {
+                    // Fail: < 50% (Only Retry button available)
+                    failScoreText.textContent = `You scored ${score} out of ${totalQuestions} (${percentage}%).`;
+                    messageOverlay.style.display = 'block';
+                    failModal.style.display = 'block';
+                }
+            }
 
-                // Hide main quiz elements
-                quizContainer.classList.add('hidden');
-                submitBtn.style.display = 'none';
-                if(timerEl) timerEl.textContent = "Finished";
+            // --- Cancellation Logic ---
+            function cancelTest() {
+                clearInterval(examTimerInterval);
+                
+                quizContainer.classList.add('hidden'); 
+                submitBtn.style.display = 'none'; 
+                if(timerEl) timerEl.textContent = "Cancelled";
 
-                // Hide other potential popups
-                messageOverlay.style.display = 'block'; // Show overlay
-
-                if (percentage >= 50) {
-                    // 2. Pass Case: Show Final Exam Popup
-                    document.getElementById('finalExamScore').textContent = scoreMessage;
-                    finalExamPopup.style.display = 'block';
-                    
-
-                } else {
-                    // 2. Fail Case: Show Retry Popup
-                    document.getElementById('retryScore').textContent = scoreMessage;
-                    retryPopup.style.display = 'block';
-                    
-                }
-
-                // Hide proctoring popups if they were up
-                tabSwitchWarningBox.style.display = 'none';
-                testCancelledBox.style.display = 'none';
-            }
-
-            // --- Cancellation Logic (No Change) ---
-            function cancelTest() {
-                clearInterval(examTimerInterval);
-                
-                quizContainer.classList.add('hidden'); // Hide questions
-                document.getElementById('results-container').classList.add('hidden'); // Hide results if shown
-                submitBtn.style.display = 'none'; // Hide submit button
-                if(timerEl) timerEl.textContent = "Cancelled";
-
-                // Show cancellation message
-                messageOverlay.style.display = 'block';
-                testCancelledBox.style.display = 'block';
-                // Hide other popups
-                tabSwitchWarningBox.style.display = 'none';
-            }
+                // Show cancellation message
+                messageOverlay.style.display = 'block';
+                testCancelledBox.style.display = 'block';
+                // Hide other popups
+                tabSwitchWarningBox.style.display = 'none';
+                successModal.style.display = 'none'; 
+                failModal.style.display = 'none';
+            }
 
 
-            // --- Event Listeners ---
+            // --- Event Listeners ---
 
-            // Initial Test Start (Starts immediately on load)
-            const startInitialTest = () => {
-                 // Reset popups
-                 finalExamPopup.style.display = 'none';
-                 retryPopup.style.display = 'none';
-                 messageOverlay.style.display = 'none';
-                 quizContainer.classList.remove('hidden');
-
-                 startExamTimer(TOTAL_DURATION_SECONDS); // Start 20 minute timer
-                 testStartTime = Date.now(); // Record start time
-                 submitBtn.style.display = 'block';
-            };
-            startInitialTest();
+            // Initial Test Start
+            const startInitialTest = () => {
+                    startExamTimer(TOTAL_DURATION_SECONDS); 
+                    testStartTime = Date.now(); 
+                    submitBtn.style.display = 'block';
+                    successModal.style.display = 'none';
+                    failModal.style.display = 'none';
+            };
+            startInitialTest();
 
 
-            // Submit Button
-            submitBtn.addEventListener('click', () => submitTest(false)); // Manual submit
+            // Submit Button
+            submitBtn.addEventListener('click', () => submitTest(false)); 
 
-            // Retry Button (from Retry Popup) - Resets the test
-            retryPracticeBtn.addEventListener('click', () => {
-                // Reset selected answers
-                questions.forEach(question => {
-                    delete question.dataset.selectedValue;
-                    question.querySelectorAll('.options .option').forEach(opt => {
-                        opt.classList.remove('selected');
-                        opt.style.pointerEvents = 'auto'; // Re-enable clicking
-                    });
-                });
+            // Final Exam Button Redirection
+            takeFinalExamBtn.addEventListener('click', () => {
+                window.location.href = 'https://internadda.com/intern/payment_page_data_science';
+            });
 
-                // Reset anti-cheat
-                tabSwitchCount = 0;
-                
-                // Restart test elements
-                startInitialTest();
-            });
+            // Retry Test Button (For < 50% score) - AUTO REFRESH
+            retryTestBtn.addEventListener('click', () => {
+                // Hiding the pop-up before reload (optional)
+                messageOverlay.style.display = 'none';
+                failModal.style.display = 'none';
+                
+                // Reload the page to start the test fresh
+                window.location.reload(); 
+            });
 
 
-            // Resume Button (from warning) - No change
-            resumeTestBtn.addEventListener('click', () => {
-                tabSwitchWarningBox.style.display = 'none';
-                messageOverlay.style.display = 'none';
+            // Resume Button (from warning)
+            resumeTestBtn.addEventListener('click', () => {
+                tabSwitchWarningBox.style.display = 'none';
+                messageOverlay.style.display = 'none';
 
-                // Resume timers by calculating remaining time
-                const elapsedMillis = Date.now() - testStartTime;
-                const elapsedSeconds = Math.floor(elapsedMillis / 1000);
-                const remainingTime = (TOTAL_DURATION_SECONDS - elapsedSeconds > 0) ? TOTAL_DURATION_SECONDS - elapsedSeconds : 0;
+                // Resume timers by calculating remaining time
+                const elapsedMillis = Date.now() - testStartTime;
+                const elapsedSeconds = Math.floor(elapsedMillis / 1000);
+                const remainingTime = (TOTAL_DURATION_SECONDS - elapsedSeconds > 0) ? TOTAL_DURATION_SECONDS - elapsedSeconds : 0;
 
-                startExamTimer(remainingTime); // Resume exam timer
-            });
+                startExamTimer(remainingTime); 
+            });
 
-            // Back to Internships Button (from cancellation) - No change
-            backToIntBtn.addEventListener('click', () => {
-                window.location.href = 'internship.html'; // Or navigate back appropriately
-            });
+            // Back to Internships Button (from cancellation)
+            backToIntBtn.addEventListener('click', () => {
+                window.location.href = 'internship.html';
+            });
 
 
-            // Anti-Cheat: Tab Switch Detection (No Change to Logic)
-            document.addEventListener('visibilitychange', () => {
-                // Check if the exam is running (quiz container visible and not submitted/cancelled)
-                if (!quizContainer.classList.contains('hidden') && submitBtn.style.display !== 'none' && document.hidden) {
-                    tabSwitchCount++;
+            // Anti-Cheat: Tab Switch Detection
+            document.addEventListener('visibilitychange', () => {
+                if (!quizContainer.classList.contains('hidden') && submitBtn.style.display !== 'none' && document.hidden) {
+                    tabSwitchCount++;
 
-                    // Pause exam timer
-                    if (examTimerInterval) clearInterval(examTimerInterval);
-                    
-                    if (tabSwitchCount >= MAX_TAB_SWITCHES) {
-                        cancelTest();
-                    } else if (tabSwitchCount === 1) {
-                        // Show warning only on the first switch
-                        messageOverlay.style.display = 'block';
-                        tabSwitchWarningBox.style.display = 'block';
-                    }
-                }
-            });
+                    if (examTimerInterval) clearInterval(examTimerInterval);
+                    
+                    if (tabSwitchCount >= MAX_TAB_SWITCHES) {
+                        cancelTest();
+                    } else if (tabSwitchCount === 1) {
+                        messageOverlay.style.display = 'block';
+                        tabSwitchWarningBox.style.display = 'block';
+                    }
+                }
+            });
 
-        }); // End DOMContentLoaded
-    </script>
+        }); // End DOMContentLoaded
+    </script>
 </body>
 </html>
