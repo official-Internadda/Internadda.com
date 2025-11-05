@@ -58,7 +58,10 @@
 
                 <div class="nav-actions-mobile">
                      <div class="user-profile hidden" id="userProfileMobile">
-                         <img src="../images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeaderMobile" style="display:inline-block; vertical-align:middle; width:40px; height:40px; border-radius:50%; margin-right:8px;">
+                        <button id="profileBtnHeaderMobile" style="border:none; background:none; color:var(--dark); font-weight:600; font-size:16px; cursor:pointer; padding: 10px 0; width:100%; text-align:center;" onclick="window.handleProfileClick()">
+                             <img src="../images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeaderMobile" style="display:inline-block; vertical-align:middle; width:30px; height:30px; border-radius:50%; margin-right:8px;">
+                             <span id="userNameHeaderMobile">My Profile</span> 
+                         </button>
                          <button id="logoutBtnHeaderMobile" class="btn btn-outline" style="width: 100%;">Sign Out</button>
                      </div>
                      <div id="authButtonsMobile" style="width: 100%; display: flex; gap: 10px; justify-content: center;">
@@ -104,6 +107,9 @@
                 <div class="courses-header">
                     <h2 class="section-title">All Courses</h2>
                 </div>
+                
+                <div id="fullPageGate" class="hidden">
+                    </div>
 
                 <div class="courses-grid" id="coursesGrid">
 
@@ -508,6 +514,13 @@
             const navMenu = document.querySelector('.nav-menu');
             const hamburgerMenu = document.getElementById('hamburgerMenu');
 
+            // Helper function to show the correct section (local copy for modularity)
+            const showSection = (sectionElement) => {
+                 if (!sectionElement || !authModal) return;
+                 authModal.querySelectorAll('.auth-section').forEach(sec => sec.classList.remove('active'));
+                 sectionElement.classList.add('active');
+            };
+
             const closeHamburgerMenu = () => {
                 if (navMenu && hamburgerMenu) {
                     navMenu.classList.remove('active');
@@ -515,6 +528,7 @@
                 }
             };
 
+            // Mobile Login/Signup Buttons (Call local showSection as the modal logic is contained here)
             if (loginBtnMobile) {
                 loginBtnMobile.addEventListener('click', (e) => {
                     e.preventDefault();
