@@ -123,13 +123,22 @@
                         <a href="/community/academy.html" class="dropdown-link">Offline Academy</a>
                     </div>
                 </div>
-                <a href="/community/join.html" class="nav-link mobile-only-link">Join Community</a>
-                 <a href="/community/partners.html" class="nav-link mobile-only-link">Partners</a>
-                 <a href="/blog/index.html" class="nav-link mobile-only-link">Blog</a>
-                 <a href="/community/academy.html" class="nav-link mobile-only-link">Offline Academy</a>
+                <a href="/jobs.html" class="nav-link mobile-only-link">Jobs</a>
+                <a href="/contact.html" class="nav-link mobile-only-link">Contact</a>
+                <a href="/blog/index.html" class="nav-link mobile-only-link">Blog</a>
+                <a href="/community/join.html" class="nav-link mobile-only-link">Community</a>
+                <a href="/community/partners.html" class="nav-link mobile-only-link">Partners</a>
+                <a href="/community/academy.html" class="nav-link mobile-only-link">Offline Academy</a>
                 
                 <div class="nav-actions-mobile">
-                     <div id="authButtonsMobile">
+                     <div class="user-profile hidden" id="userProfileMobile">
+                         <button id="profileBtnHeaderMobile" style="border:none; background:none; color:var(--dark); font-weight:600; font-size:16px; cursor:pointer; padding: 10px 0; width:100%; text-align:center;" onclick="window.handleProfileClick()">
+                             <img src="images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeaderMobile" style="display:inline-block; vertical-align:middle; width:30px; height:30px; border-radius:50%; margin-right:8px;">
+                             <span id="userNameHeaderMobile">My Profile</span> 
+                         </button>
+                         <button id="logoutBtnHeaderMobile" class="btn btn-outline" style="width: 100%;">Sign Out</button>
+                     </div>
+                     <div id="authButtonsMobile" style="width: 100%; display: flex; gap: 10px; justify-content: center;">
                         <a href="#" class="btn btn-outline" id="loginBtnHeaderMobile">Log in</a>
                         <a href="#" class="btn btn-primary" id="signupBtnHeaderMobile">Sign up</a>
                     </div>
@@ -139,7 +148,7 @@
             <div class="header-actions">
                 <div class="search-container">
                     <i class="fas fa-search search-icon"></i>
-                     <input type="text" id="searchInput" class="search-input" placeholder="Search...">
+                     <input type="text" id="searchInput" class="search-input" placeholder="Search for jobs or keywords...">
                 </div>
 
                 <div id="authButtons">
