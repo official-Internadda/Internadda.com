@@ -10,76 +10,56 @@
     
     <link rel="stylesheet" href="../style.css">
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-app-compat.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-auth-compat.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-firestore-compat.min.js"></script>
-    
     <style>
-        /* Custom styles for the new blog layout (Dynamically rendered by script.js) */
-        .blog-post-card {
+        /* Base styles from parent style.css are applied */
+        .blog-section { padding: 40px 0 80px; }
+        .blog-header { text-align: center; padding-bottom: 20px; }
+        .article-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-top: 30px; }
+
+        .article-card {
             background: var(--white);
             border-radius: 14px;
-            margin-bottom: 30px;
             box-shadow: var(--shadow);
             overflow: hidden;
             transition: var(--transition);
-            display: flex; 
-            min-height: 200px;
-            border: 1px solid #eee; /* Added border for definition */
-        }
-        .blog-post-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-        }
-        .blog-card-image {
-            flex: 0 0 35%;
-            overflow: hidden;
-        }
-        .blog-card-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-        .blog-post-card:hover .blog-card-image img {
-            transform: scale(1.05);
-        }
-        .blog-card-content {
-            padding: 25px;
-            flex: 1; 
-        }
-        .blog-card-title {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--primary);
             text-decoration: none;
+            color: inherit;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
-        .blog-card-excerpt {
-            color: var(--gray);
-            margin-bottom: 15px;
-            line-height: 1.6;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
-        .blog-card-meta {
-            font-size: 0.9rem;
-            color: var(--gray);
+
+        .card-image { height: 200px; overflow: hidden; position: relative; }
+        .card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+        .article-card:hover .card-image img { transform: scale(1.08); }
+
+        .card-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 10px; color: var(--dark); line-height: 1.3; }
+        .card-excerpt { color: var(--gray); margin-bottom: 15px; flex-grow: 1; }
+        .card-meta { font-size: 0.9rem; color: var(--gray); margin-top: 10px; border-top: 1px dashed #eee; padding-top: 10px; }
+        .card-meta span { margin-right: 15px; }
+        .card-meta i { margin-right: 5px; color: var(--primary); }
+
+        .trending-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--warning);
+            color: var(--dark);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
         }
-         .blog-card-meta span { margin-right: 15px; }
-         .blog-card-meta i { margin-right: 5px; }
-        .blog-cta { margin-top: 30px; text-align: center; }
-        #loadingPosts { text-align: center; padding: 40px; color: var(--gray); font-size: 1.1rem;}
 
         @media (max-width: 768px) {
-            .blog-post-card { flex-direction: column; }
-            .blog-card-image { flex-basis: 200px; }
+            .article-grid { grid-template-columns: 1fr; }
         }
-        
-        /* Ensures course-card styling from parent CSS is correct for Trending section */
-        .courses-grid .course-card { margin-bottom: 30px; }
     </style>
 </head>
 <body>
@@ -164,16 +144,143 @@
             <div class="container">
                 <h1 class="hero-heading" style="font-size: 2.5rem;">Internadda Blog</h1>
                 <p class="hero-description" style="max-width: 800px; margin: 0 auto;">Insights on Internships, Career Growth, and Skill Development</p>
-                </div>
+            </div>
         </section>
 
-        <section class="courses" style="padding-top: 40px;">
+        <section class="blog-section">
             <div class="container">
-                 <div class="blog-cta">
-                     <a href="create.html" class="btn btn-primary hidden" id="createPostBtn" style="display: none !important;">Write a New Post</a>
-                 </div>
-                 <div id="blogPostList">
-                    <p id="loadingPosts">Loading posts...</p>
+                <h2 class="section-title" style="margin-bottom: 20px;">🔥 Trending Articles</h2>
+                
+                <div class="article-grid">
+                    
+                    <a href="nov25-dao-web3-future.html" class="article-card">
+                        <div class="card-image">
+                            <img src="../images/test_Blockchain & Web3.png" alt="DAO and Web3">
+                            <span class="trending-badge">New & Trending</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Decentralized Autonomous Organizations: The Operating System of Web3</h3>
+                            <p class="card-excerpt">Explore how DAOs use smart contracts and community governance to redefine organizational structure, trust, and transparency in the decentralized web.</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-user-edit"></i> Vikas Yadav</span>
+                                <span><i class="fas fa-calendar-alt"></i> 2025-11-06</span>
+                                <span><i class="fas fa-tag"></i> Web3 & Blockchain</span>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <a href="post.html?id=1" class="article-card">
+                        <div class="card-image">
+                            <img src="../images/Python-Essentials-for-All.png" alt="The Python Paradox">
+                            <span class="trending-badge">Trending</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">The Python Paradox: Why Your First Language Should Be Python</h3>
+                            <p class="card-excerpt">Python is simple yet versatile, making it the perfect choice for beginners in data science and web development. Explore its powerful ecosystem and community support.</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-user-edit"></i> Lucky Tiwari</span>
+                                <span><i class="fas fa-calendar-alt"></i> 2025-11-25</span>
+                                <span><i class="fas fa-tag"></i> Programming</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="post.html?id=2" class="article-card">
+                        <div class="card-image">
+                            <img src="../images/Generative-AI-Prompt-Engineering-Masterclass.png" alt="Mastering Prompt Engineering">
+                            <span class="trending-badge">Trending</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Mastering Prompt Engineering: 5 Tips for Better AI Results</h3>
+                            <p class="card-excerpt">Garbage in, garbage out. Learn the 5 core principles of context, clarity, constraints, iteration, and chaining to get precise, creative, and powerful outputs from Large Language Models (LLMs).</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-user-edit"></i> Abhay Sharma</span>
+                                <span><i class="fas fa-calendar-alt"></i> 2025-11-22</span>
+                                <span><i class="fas fa-tag"></i> AI & ML</span>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+                
+                <h2 class="section-title" style="margin-top: 60px; margin-bottom: 20px;">📚 All Articles</h2>
+
+                <div class="article-grid">
+                    
+                    <a href="nov25-dao-web3-future.html" class="article-card">
+                        <div class="card-image">
+                            <img src="../images/test_Blockchain & Web3.png" alt="DAO and Web3">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Decentralized Autonomous Organizations: The Operating System of Web3</h3>
+                            <p class="card-excerpt">Explore how DAOs use smart contracts and community governance to redefine organizational structure, trust, and transparency in the decentralized web.</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-user-edit"></i> Vikas Yadav</span>
+                                <span><i class="fas fa-calendar-alt"></i> 2025-11-06</span>
+                                <span><i class="fas fa-tag"></i> Web3 & Blockchain</span>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <a href="post.html?id=1" class="article-card">
+                        <div class="card-image">
+                            <img src="../images/Python-Essentials-for-All.png" alt="The Python Paradox">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">The Python Paradox: Why Your First Language Should Be Python</h3>
+                            <p class="card-excerpt">Python is simple yet versatile, making it the perfect choice for beginners in data science and web development. Explore its powerful ecosystem and community support.</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-user-edit"></i> Lucky Tiwari</span>
+                                <span><i class="fas fa-calendar-alt"></i> 2025-11-25</span>
+                                <span><i class="fas fa-tag"></i> Programming</span>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <a href="post.html?id=2" class="article-card">
+                        <div class="card-image">
+                            <img src="../images/Generative-AI-Prompt-Engineering-Masterclass.png" alt="Mastering Prompt Engineering">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Mastering Prompt Engineering: 5 Tips for Better AI Results</h3>
+                            <p class="card-excerpt">Garbage in, garbage out. Learn the 5 core principles of context, clarity, constraints, iteration, and chaining to get precise, creative, and powerful outputs from Large Language Models (LLMs).</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-user-edit"></i> Abhay Sharma</span>
+                                <span><i class="fas fa-calendar-alt"></i> 2025-11-22</span>
+                                <span><i class="fas fa-tag"></i> AI & ML</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="post.html?id=3" class="article-card">
+                        <div class="card-image">
+                            <img src="../images/test_data Science.png" alt="SQL vs. NoSQL">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">SQL vs. NoSQL: Choosing the Right Database for Your Project</h3>
+                            <p class="card-excerpt">Should you use a relational SQL database or a flexible NoSQL database? We break down the key differences for developers and data scientists.</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-user-edit"></i> Pranjal Singh</span>
+                                <span><i class="fas fa-calendar-alt"></i> 2025-11-18</span>
+                                <span><i class="fas fa-tag"></i> Databases</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="post.html?id=4" class="article-card">
+                        <div class="card-image">
+                            <img src="../images/test_Cybersecurity & Ethical Hacking.png" alt="Cybersecurity Fundamentals">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Cybersecurity Fundamentals: Protecting Yourself from Phishing</h3>
+                            <p class="card-excerpt">Phishing attacks remain the most common entry point for cyber threats. Learn how to spot malicious emails and secure your digital identity.</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-user-edit"></i> Sumit Pandey</span>
+                                <span><i class="fas fa-calendar-alt"></i> 2025-11-15</span>
+                                <span><i class="fas fa-tag"></i> Cybersecurity</span>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -255,7 +362,7 @@
             </div>
         </div>
     </footer>
-
+    
     <div id="authModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" id="closeModal">&times;</span>
@@ -407,69 +514,5 @@
     </div>
 
 <script src="../script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Function to trigger content loading from script.js
-            if (typeof renderBlogPosts === 'function') {
-                renderBlogPosts();
-            } else {
-                console.error("renderBlogPosts function not found. Check if ../script.js loaded correctly.");
-            }
-            
-            // Re-adding the basic modal open logic as a fallback/for consistency
-            const loginBtnMobile = document.getElementById('loginBtnHeaderMobile');
-            const signupBtnMobile = document.getElementById('signupBtnHeaderMobile');
-            const authModal = document.getElementById('authModal');
-            const loginSection = document.getElementById('loginSection');
-            const signupSection = document.getElementById('signupSection');
-            const navMenu = document.querySelector('.nav-menu');
-            const hamburgerMenu = document.getElementById('hamburgerMenu');
-
-            const showSection = (sectionElement) => {
-                 if (!sectionElement || !authModal) return;
-                 authModal.querySelectorAll('.auth-section').forEach(sec => sec.classList.remove('active'));
-                 sectionElement.classList.add('active');
-            };
-
-            const closeHamburgerMenu = () => {
-                if (navMenu && hamburgerMenu) {
-                    navMenu.classList.remove('active');
-                    hamburgerMenu.classList.remove('active');
-                }
-            };
-
-            if (loginBtnMobile) {
-                loginBtnMobile.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (authModal && loginSection && signupSection) {
-                        authModal.classList.add('active');
-                        document.body.style.overflow = 'hidden';
-                        showSection(loginSection);
-                        closeHamburgerMenu();
-                    }
-                });
-            }
-
-            if (signupBtnMobile) {
-                signupBtnMobile.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (authModal && loginSection && signupSection) {
-                        authModal.classList.add('active');
-                        document.body.style.overflow = 'hidden';
-                        showSection(signupSection);
-                        closeHamburgerMenu();
-                    }
-                });
-            }
-            
-            if (hamburgerMenu && navMenu) {
-                hamburgerMenu.addEventListener('click', () => {
-                    hamburgerMenu.classList.toggle('active');
-                    navMenu.classList.toggle('active');
-                });
-            }
-
-        });
-    </script>
 </body>
 </html>
