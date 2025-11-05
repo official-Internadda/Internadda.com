@@ -536,48 +536,6 @@ const allBlogPosts = [
         isTrending: false
     }
 
-    {
-    id: 5, 
-    title: "The Next Internship Frontier: How to Master Generative AI and Land a Role in a World Driven by Prompts",
-    excerpt: "The AI wave isn't coming—it's here. Learn why mastering Prompt Engineering is the single most critical skill for landing a high-paying Data Science, Development, or Design internship in 2026.",
-    author: "Lucky Kumar", 
-    date: "2025-11-06",
-    category: "AI & Career Growth",
-    image: "/images/Generative-AI-Prompt-Engineering-Masterclass.png", 
-    content: `
-        <p>The job market is undergoing a seismic shift. Just a year ago, "Prompt Engineering" was a niche term; today, it’s the unspoken minimum requirement for entry-level tech roles. If you want a competitive edge in securing a paid internship with top companies like Internadda’s partners, you must pivot your mindset from "using AI" to <strong>"directing AI."</strong></p>
-        
-        <h2>Why AI Mastery is Non-Negotiable for Interns</h2>
-        
-        <p>Companies are no longer looking for interns who can perform manual, repetitive tasks. They are looking for efficiency multipliers. A single intern armed with prompt expertise can produce the output of three without it. This is why **AI competency is now tied directly to earning potential** (stipends up to ₹50,000 per month).</p>
-
-        <div style="text-align: center; margin: 30px 0;">
-            <img src="../images/intern.png" alt="Human hand writing next to a robot hand typing on a laptop" style="max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-            <p style="font-size: 0.9em; color: #718096; margin-top: 10px;">The shift: from manual execution to AI direction.</p>
-        </div>
-        
-        <h3>The 3 Core AI Skills Every 2026 Intern Needs:</h3>
-        
-        <ol>
-            <li><strong>Precision Prompting (The 'GPS' Skill):</strong> Stop using vague queries. Learn to structure your input using the **3 Cs: Context, Clarity, and Constraints**. For example, instead of 'write an SQL query,' specify: 'Act as a Senior Data Analyst. Write a PostgreSQL query that calculates month-over-month revenue growth, assuming the 'transactions' table schema is {date, amount}.'</li>
-            <li><strong>AI Debugging (The 'Auditor' Skill):</strong> Never trust the first output. You must be able to spot subtle AI 'hallucinations' or biased data reflections. A great intern corrects AI; a mediocre one simply submits its errors.</li>
-            <li><strong>Tool Chaining (The 'Workflow' Skill):</strong> This involves connecting multiple AI tools. For a Data Science internship, this means generating data cleaning scripts with ChatGPT, feeding the output to a Python notebook, and then using AI to interpret the final Tableau visualization.</li>
-        </ol>
-
-        <h2>Your Roadmap to a Paid Internship</h2>
-
-        <p>At Internadda, we specifically test these skills in our qualification exams. The goal is not memorization; it's **practical application**. We recommend diving deep into our free courses on Generative AI and Data Science to get hands-on experience.</p>
-
-        <div style="background-color: #f0f4ff; padding: 25px; border-radius: 10px; border-left: 5px solid var(--primary); margin: 30px 0;">
-            <h4 style="color: var(--dark); margin-top: 0; font-size: 1.2rem;"><i class="fas fa-rocket" style="margin-right: 8px;"></i> Next Action Point:</h4>
-            <p style="margin-bottom: 0;">Ready to prove your prompt mastery? You can take a specialized test in Prompt Engineering or AI/ML right now!</p>
-            <a href="../intern/payment_page_ai_ml.html" class="btn btn-primary" style="margin-top: 15px;">Take AI & ML Final Exam</a>
-        </div>
-        
-        <p>The time to upskill is now. Don't just follow the AI trend; lead it, and command the best internships available.</p>
-    `,
-    isTrending: true
-}
 ];
 
 function renderBlogPosts() {
