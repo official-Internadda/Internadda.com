@@ -272,20 +272,37 @@ header.scrolled {
     transform: translateY(-50%) scale(1.1);
 }
 
-/* Search results container */
+/* Search results container (UPDATED FOR FIXES) */
 .search-results-container {
     padding: 10px;
     background-color: var(--white);
     border-radius: 14px;
     box-shadow: var(--shadow);
     position: absolute;
-    width: 100%;
+    /* Spans the full width of the header container */
+    width: calc(100% - 64px); 
+    left: 32px;
     z-index: 101;
     max-height: 400px;
     overflow-y: auto;
     top: calc(100% + 8px);
-    left: 0;
 }
+@media (max-width: 1024px) {
+    /* Correct position on mobile where the container width matches the screen */
+     .search-results-container {
+         width: 100%;
+         left: 0;
+         padding: 10px 32px;
+         max-width: 100%;
+     }
+}
+@media (max-width: 768px) {
+     .search-results-container {
+         padding: 10px 24px;
+     }
+}
+
+
 .search-result-item {
     margin-bottom: 8px;
     border-radius: 8px;
@@ -325,6 +342,12 @@ header.scrolled {
     object-fit: cover;
     border-radius: 4px;
     flex-shrink: 0;
+}
+.search-result-item.internship-result img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 8px;
 }
 .search-result-item div { flex-grow: 1; }
 .search-result-item h4 { margin: 0; font-size: 1em; font-weight: 600; color: var(--dark); }
@@ -814,6 +837,64 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
 }
 /* --- End New Partner/Trust Section CSS --- */
 
+/* --- Blog Page Specific Card Styling (FOR blog/index.html) --- */
+.blog-post-card {
+    background: var(--white);
+    border-radius: 14px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: var(--transition);
+    display: flex; 
+    min-height: 200px;
+    border: 1px solid #eee; 
+}
+.blog-post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+.blog-card-image {
+    flex: 0 0 35%;
+    overflow: hidden;
+}
+.blog-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+.blog-post-card:hover .blog-card-image img {
+    transform: scale(1.05);
+}
+.blog-card-content {
+    padding: 25px;
+    flex: 1; 
+}
+.blog-card-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--primary);
+    text-decoration: none;
+}
+.blog-card-excerpt {
+    color: var(--gray);
+    margin-bottom: 15px;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.blog-card-meta {
+    font-size: 0.9rem;
+    color: var(--gray);
+}
+.blog-card-meta span { margin-right: 15px; }
+.blog-card-meta i { margin-right: 5px; }
+
+/* --- End Blog Page Specific Card Styling --- */
+
 
 /* Responsive Design (Point 4 - Mobile Layout Fixes) */
 @media (max-width: 1024px) {
@@ -847,7 +928,7 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
         z-index: 99;
     }
     
-    /* Show ONLY the requested mobile links (Point 1) */
+     /* Show ONLY the requested mobile links (Point 1) */
      /* Hide all desktop links except the ones we want to explicitly show via block display */
      .nav-menu.active > a,
      .nav-menu.active .nav-item.dropdown {
@@ -859,7 +940,12 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
      .nav-menu.active > a[href="/courses/course.html"],
      .nav-menu.active > a[href="/intern/internship.html"],
      .nav-menu.active > a[href="/about.html"],
-     .nav-menu.active > a[href="/blog/index.html"] {
+     .nav-menu.active > a[href="/jobs.html"],
+     .nav-menu.active > a[href="/contact.html"],
+     .nav-menu.active > a[href="/blog/index.html"],
+     .nav-menu.active > a[href="/community/join.html"],
+     .nav-menu.active > a[href="/community/partners.html"],
+     .nav-menu.active > a[href="/community/academy.html"] {
          display: block !important; 
          width: 80%;
          text-align: center;
@@ -879,8 +965,8 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
     }
     
     .nav-menu.active .nav-actions-mobile > .user-profile {
-        /* Request 4: Ensure mobile profile button shows only icon/signout, hides 'My Profile' text */
-        display: flex; /* Show the profile when active */
+        /* Ensure mobile profile button shows */
+        display: flex; 
         justify-content: center;
         align-items: center;
         padding: 10px 0;
@@ -939,7 +1025,7 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
         text-align: center;
     }
     .hero-stats > .stat-item {
-        /* FIX: Center align hero stats for mobile view (Requested by User) */
+        /* FIX: Center align hero stats for mobile view */
         align-items: center; 
         text-align: center;
         width: 100%;
@@ -1051,5 +1137,8 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
     .hero {
         padding: 60px 0;
     }
+    
+    .blog-post-card { flex-direction: column; }
+    .blog-card-image { flex-basis: 200px; }
 
 }
