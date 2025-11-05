@@ -49,7 +49,7 @@ function getUserPath(collection) {
     return `artifacts/${appId}/users/${userId}/${collection}`;
 }
 
-// --- MOCK INITIALIZATION DATA (Courses removed) ---
+// --- MOCK INITIALIZATION DATA ---
 const INITIAL_MOCK_INTERNSHIPS = [
     { title: 'Data Science & Analytics', status: 'Pending', score: 0, finalExamUrl: '/intern/payment_page_data_science.html' },
     { title: 'Artificial Intelligence & ML', status: 'Pending', score: 0, finalExamUrl: '/intern/payment_page_ai_ml.html' }
@@ -89,10 +89,6 @@ async function initializeUserData(user) {
 }
 
 // --- UI Rendering Functions ---
-
-// REMOVED: renderCourseProgress function
-/* function renderCourseProgress(coursesData) { ... } */
-
 
 function renderInternshipHistory(internshipsData) {
     const internshipsListContainer = document.getElementById('internshipsListContainer');
@@ -264,9 +260,6 @@ auth.onAuthStateChanged(async (user) => {
         // 2. Setup real-time listeners for dashboard data
         if (internshipUnsubscribe) internshipUnsubscribe(); 
 
-        // REMOVED: Courses listener
-        /* courseUnsubscribe = db.collection(getUserPath('enrollments')) ... */
-
         internshipUnsubscribe = db.collection(getUserPath('internships'))
             .onSnapshot(snapshot => {
                 const internships = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -385,21 +378,272 @@ const editProfileBtn = document.getElementById('editProfileBtn');
 const tabButtons = document.querySelectorAll('.tab-btn');
 const tabsContent = {
     profile: document.getElementById('profileTabContent'),
-    // REMOVED: courses: document.getElementById('coursesTabContent'),
     internships: document.getElementById('internshipsTabContent'),
 };
 const searchInput = document.getElementById('searchInput');
+const searchResultsContainer = document.getElementById('searchResults');
 
 
-// Hardcoded data (used only for search/listings)
+// --- GLOBAL SEARCH DATA AND LOGIC ---
+
+// Utility function to get the correct path prefix (Handles nested directories like /courses/courses/FILE)
+function getRelativePath(targetPath) {
+    const currentPath = window.location.pathname;
+    const segments = currentPath.split('/').filter(p => p.length > 0);
+
+    // Simple check: if we are in a subdirectory (like /courses or /intern), prepend '../'
+    if (segments.length >= 2 && !currentPath.includes('.html')) {
+        // Assume depth of 1 (e.g. /courses/course.html -> ../images/file.png)
+        // If the current path is /courses/course.html, depth is 1
+        return '../' + targetPath.replace(/^\//, '');
+    } else if (segments.length >= 3) {
+         // Assume depth of 2 (e.g. /courses/courses/file.html -> ../../images/file.png)
+         return '../../' + targetPath.replace(/^\//, '');
+    }
+    // If we are at the root or already handling relative path correctly
+    return targetPath;
+}
+
+// Hardcoded data (used for search/listings)
 const allCourses = [
-    { title: 'Essential Data Science Intern Course', instructor: 'Lucky Kumar', image: '/images/Essential Data Science Intern Course.png', url: "/courses/courses/Essential Data Science Intern Course.html" },
-    { title: 'Generative AI & Prompt Engineering Masterclass', instructor: 'Lucky Kumar', image: '/images/Generative-AI-Prompt-Engineering-Masterclass.png', url: "/courses/courses/Generative-AI-Prompt-Engineering-Masterclass.html" },
-    { title: 'Ethical Hacking Mastery', instructor: 'Lucky Kumar', image: '/images/Ethical-Hacking-Mastery.png', url: "/courses/courses/Ethical-Hacking-Mastery.html" },
-    { title: 'Python Essentials for All', instructor: 'Lucky Kumar', image: '/images/Python-Essentials-for-All.png', url: "/courses/courses/Python-Essentials-for-All.html" },
-    { title: 'Cloud & DevOps Essentials', instructor: 'Lucky Kumar', image: '/images/Cloud-DevOps-Essentials.png', url: "/courses/courses/Cloud-DevOps-Essentials.html" }
+    { type: 'course', title: 'Essential Data Science Intern Course', instructor: 'Lucky Kumar', image: '/images/Essential Data Science Intern Course.png', url: "/courses/courses/Essential%20Data%20Science%20Intern%20Course.html" },
+    { type: 'course', title: 'Generative AI & Prompt Engineering Masterclass', instructor: 'Lucky Kumar', image: '/images/Generative-AI-Prompt-Engineering-Masterclass.png', url: "/courses/courses/Generative-AI-Prompt-Engineering-Masterclass.html" },
+    { type: 'course', title: 'Ethical Hacking Mastery', instructor: 'Lucky Kumar', image: '/images/Ethical-Hacking-Mastery.png', url: "/courses/courses/Ethical-Hacking-Mastery.html" },
+    { type: 'course', title: 'Python Essentials for All', instructor: 'Lucky Kumar', image: '/images/Python-Essentials-for-All.png', url: "/courses/courses/Python-Essentials-for-All.html" },
+    { type: 'course', title: 'Cloud & DevOps Essentials', instructor: 'Lucky Kumar', image: '/images/Cloud-DevOps-Essentials.png', url: "/courses/courses/Cloud-DevOps-Essentials.html" }
 ];
 
+const allInternships = [
+    { type: 'internship', title: 'Data Science & Analytics', roles: 'Data Analyst, Data Scientist Intern', url: '/intern/internship.html#tests', image: '/images/test_data Science.png', practiceUrl: '/intern/data_science_practice_test.html', finalExamUrl: '/intern/payment_page_data_science.html' },
+    { type: 'internship', title: 'Artificial Intelligence & ML', roles: 'AI Intern, Machine Learning Intern', url: '/intern/internship.html#tests', image: '/images/test_Artificial Intelligence.png', practiceUrl: '/intern/ai_ml_practice_test.html', finalExamUrl: '/intern/payment_page_ai_ml.html' },
+    { type: 'internship', title: 'Python Dev & Software Eng', roles: 'Python Developer, Backend Developer', url: '/intern/internship.html#tests', image: '/images/test_Python Development.png', practiceUrl: '/intern/python_dev_practice_test.html', finalExamUrl: '/intern/payment_page_python.html' }
+    // Add other 8 internship domains here for completeness (using mock image paths)
+    , { type: 'internship', title: 'Cloud Computing & DevOps', roles: 'Cloud Engineer, DevOps Intern', url: '/intern/internship.html#tests', image: '/images/test_Cloud Computing.png', practiceUrl: '/intern/cloud_devops_practice_test.html', finalExamUrl: '/intern/cloud_devops_final_exam.html' }
+    , { type: 'internship', title: 'Cybersecurity & Ethical Hacking', roles: 'Security Analyst, Pentester', url: '/intern/internship.html#tests', image: '/images/test_Cybersecurity & Ethical Hacking.png', practiceUrl: '/intern/cybersecurity_practice_test.html', finalExamUrl: '/intern/cybersecurity_final_exam.html' }
+    , { type: 'internship', title: 'Web & Mobile Development', roles: 'Frontend, React/Angular Dev', url: '/intern/internship.html#tests', image: '/images/test_Web & Mobile Development.png', practiceUrl: '/intern/web_mobile_practice_test.html', finalExamUrl: '/intern/web_mobile_final_exam.html' }
+    , { type: 'internship', title: 'UI/UX Design & Product Design', roles: 'UI/UX Designer, Product Intern', url: '/intern/internship.html#tests', image: '/images/test_UIUX Design & Product Design.png', practiceUrl: '/intern/uiux_practice_test.html', finalExamUrl: '/intern/uiux_final_exam.html' }
+    , { type: 'internship', title: 'Digital Marketing & Growth Hacking', roles: 'SEO, SEM, Social Media Intern', url: '/intern/internship.html#tests', image: '/images/test_Digital Marketing & Growth Hacking.png', practiceUrl: '/intern/digital_marketing_practice_test.html', finalExamUrl: '/intern/digital_marketing_final_exam.html' }
+    , { type: 'internship', title: 'Prompt Engineering & AI Innovation', roles: 'Prompt Engineer, AI Strategist', url: '/intern/internship.html#tests', image: '/images/test_Prompt Engineering.png', practiceUrl: '/intern/prompt_engineering_practice_test.html', finalExamUrl: '/intern/prompt_engineering_final_exam.html' }
+    , { type: 'internship', title: 'Game Development Internship', roles: 'Unity/Unreal Developer Intern', url: '/intern/internship.html#tests', image: '/images/test_Game Development.png', practiceUrl: '/intern/game_dev_practice_test.html', finalExamUrl: '/intern/game_dev_final_exam.html' }
+    , { type: 'internship', title: 'Blockchain & Web3 Dev / Fintech', roles: 'Solidity Developer, Fintech Analyst', url: '/intern/internship.html#tests', image: '/images/test_Blockchain & Web3.png', practiceUrl: '/intern/blockchain_practice_test.html', finalExamUrl: '/intern/blockchain_final_exam.html' }
+];
+
+const allSearchableItems = [...allCourses, ...allInternships];
+
+function renderSearchResults(query) {
+    if (!searchResultsContainer) return;
+    const q = query.toLowerCase().trim();
+    searchResultsContainer.classList.add('hidden');
+    searchResultsContainer.innerHTML = '';
+
+    if (q.length < 2) return;
+
+    const results = allSearchableItems.filter(item => 
+        item.title.toLowerCase().includes(q) || 
+        (item.roles && item.roles.toLowerCase().includes(q))
+    ).slice(0, 8); // Limit to top 8 results
+
+    if (results.length === 0) {
+        searchResultsContainer.innerHTML = `<p style="padding: 10px 15px; color: var(--gray);">No courses or internships found for "${query}".</p>`;
+        searchResultsContainer.classList.remove('hidden');
+        return;
+    }
+
+    results.forEach(item => {
+        let itemHtml = '';
+        if (item.type === 'course') {
+            const imgSrc = getRelativePath(item.image);
+            itemHtml = `
+                <a href="${item.url}" class="search-result-item course-result">
+                    <img src="${imgSrc}" alt="${item.title}" onerror="this.onerror=null;this.src='${getRelativePath('/images/logo.jpg')}'">
+                    <div>
+                        <h4>${item.title}</h4>
+                        <p>Course by ${item.instructor}</p>
+                    </div>
+                    <span class="badge free" style="flex-shrink: 0;">FREE</span>
+                </a>
+            `;
+        } else if (item.type === 'internship') {
+            const imgSrc = getRelativePath(item.image);
+            itemHtml = `
+                <div class="search-result-item internship-result">
+                    <div>
+                        <img src="${imgSrc}" alt="${item.title}" style="height: 60px; width: 60px; object-fit: contain;" onerror="this.onerror=null;this.src='${getRelativePath('/images/logo.jpg')}'">
+                        <div>
+                            <h4><i class="fas fa-briefcase" style="margin-right: 5px; color: var(--primary);"></i> ${item.title} Internship</h4>
+                            <p>Roles: ${item.roles}</p>
+                        </div>
+                    </div>
+                    <div class="search-result-actions">
+                         <a href="${item.practiceUrl}" class="search-action-link btn btn-outline">Practice Test</a>
+                         <a href="${item.finalExamUrl}" class="search-action-link btn btn-primary">Final Exam</a>
+                    </div>
+                </div>
+            `;
+        }
+        searchResultsContainer.innerHTML += itemHtml;
+    });
+
+    searchResultsContainer.classList.remove('hidden');
+}
+
+
+// --- BLOG POST DATA AND RENDERING ---
+// Mock Blog Data (Only one folder as requested: Nov 2025)
+const allBlogPosts = [
+    {
+        id: 1,
+        title: "The Python Paradox: Why Your First Language Should Be Python",
+        excerpt: "Python is simple yet versatile, making it the perfect choice for beginners in data science and web development. Explore its powerful ecosystem and community support.",
+        author: "Lucky Tiwari",
+        date: "2025-11-25",
+        category: "Programming",
+        image: "/images/Python-Essentials-for-All.png",
+        content: "<p>Python's readability and vast library support truly make it a paradoxical language: easy to learn, but incredibly powerful. We delve into how it dominates fields from AI to web backend.</p><h2>The Readability Factor</h2><p>Python’s syntax mirrors English, greatly reducing the barrier to entry for new programmers. This clarity is a direct result of design philosophy. <a href='/about.html'>Learn more about Python’s philosophy.</a></p><h3>Key Libraries</h3><ul><li><strong>Pandas:</strong> For data analysis.</li><li><strong>NumPy:</strong> For numerical computing.</li></ul><p>Start your Python journey today!</p>",
+        isTrending: true
+    },
+    {
+        id: 2,
+        title: "Mastering Prompt Engineering: 5 Tips for Better AI Results",
+        excerpt: "Garbage in, garbage out. Learn the 5 core principles of context, clarity, constraints, iteration, and chaining to get precise, creative, and powerful outputs from Large Language Models (LLMs).",
+        author: "Abhay Sharma",
+        date: "2025-11-22",
+        category: "AI & ML",
+        image: "/images/Generative-AI-Prompt-Engineering-Masterclass.png",
+        content: "<p>Prompt Engineering is the new lingua franca of AI. By carefully designing your prompts, you move from vague results to actionable insights.</p><h2>The Core Principle: Constraints</h2><p>Always tell the AI what you DON'T want, not just what you do. Limiting the output length, tone, and format dramatically improves quality.</p><h3>Use Cases</h3><p>Prompt engineering is crucial in marketing copy generation, coding assistance, and creating synthetic data for ML training.</p>",
+        isTrending: true
+    },
+    {
+        id: 3,
+        title: "SQL vs. NoSQL: Choosing the Right Database for Your Project",
+        excerpt: "Should you use a relational SQL database or a flexible NoSQL database? We break down the key differences for developers and data scientists.",
+        author: "Pranjal Singh",
+        date: "2025-11-18",
+        category: "Databases",
+        image: "/images/test_data Science.png",
+        content: "<p>The choice between SQL and NoSQL comes down to structure. SQL excels with fixed, complex relationships, while NoSQL offers scalability and flexibility for rapidly changing data models.</p><h2>When to choose SQL</h2><p>If you need ACID compliance (Atomicity, Consistency, Isolation, Durability) and complex JOIN operations, SQL is your friend.</p>",
+        isTrending: false
+    },
+    {
+        id: 4,
+        title: "Cybersecurity Fundamentals: Protecting Yourself from Phishing",
+        excerpt: "Phishing attacks remain the most common entry point for cyber threats. Learn how to spot malicious emails and secure your digital identity.",
+        author: "Sumit Pandey",
+        date: "2025-11-15",
+        category: "Cybersecurity",
+        image: "/images/test_Cybersecurity & Ethical Hacking.png",
+        content: "<p>Never click suspicious links! That's the golden rule. We explore the tell-tale signs of a phishing email, including generic greetings and urgent demands.</p><h2>Two-Factor Authentication is a Must</h2><p>Even if phishers steal your password, 2FA ensures they can't access your account.</p>",
+        isTrending: false
+    }
+];
+
+function renderBlogPosts() {
+    const blogPostList = document.getElementById('blogPostList');
+    const createPostBtn = document.getElementById('createPostBtn');
+
+    if (!blogPostList) return;
+
+    // Remove loading indicator
+    const loadingPosts = document.getElementById('loadingPosts');
+    if (loadingPosts) loadingPosts.remove();
+
+    // The 'Write a New Post' button remains hidden as requested.
+    if (createPostBtn) createPostBtn.classList.add('hidden');
+    
+    // Split into trending (top 2) and others
+    const trendingPosts = allBlogPosts.filter(p => p.isTrending).slice(0, 2);
+    const regularPosts = allBlogPosts.filter(p => !p.isTrending);
+
+    let trendingHtml = '';
+    if (trendingPosts.length > 0) {
+        trendingHtml = `
+            <h2 class="section-title" style="margin-top: 20px; margin-bottom: 30px;">🔥 Trending Articles</h2>
+            <div class="courses-grid" style="grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); margin-bottom: 60px;">
+        `;
+        trendingPosts.forEach(post => {
+            const imgSrc = getRelativePath(post.image);
+            trendingHtml += `
+                <a href="post.html?id=${post.id}" class="course-card" style="text-decoration:none; color:inherit;">
+                    <div class="course-image">
+                        <img src="${imgSrc}" alt="${post.title}" onerror="this.onerror=null;this.src='${getRelativePath('/images/logo.jpg')}'">
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title" style="color: var(--dark);">${post.title}</h3>
+                        <p class="course-author">${post.excerpt}</p>
+                        <div class="course-duration" style="color: var(--primary); font-weight: 600;">
+                            <i class="fas fa-calendar-alt"></i> ${post.date}
+                        </div>
+                        <div class="course-price">
+                             <span class="badge free" style="background-color: var(--warning); color: var(--dark);">TRENDING</span>
+                        </div>
+                    </div>
+                </a>
+            `;
+        });
+        trendingHtml += `</div>`;
+    }
+
+    let regularHtml = '';
+    if (allBlogPosts.length > 0) {
+        regularHtml = `<h2 class="section-title" style="margin-top: 20px; margin-bottom: 30px;">📚 All Articles</h2>`;
+        
+        allBlogPosts.forEach(post => {
+            const imgSrc = getRelativePath(post.image);
+            regularHtml += `
+                <a href="post.html?id=${post.id}" class="blog-post-card" style="text-decoration:none; color:inherit;">
+                    <div class="blog-card-image">
+                        <img src="${imgSrc}" alt="${post.title}" onerror="this.onerror=null;this.src='${getRelativePath('/images/logo.jpg')}'">
+                    </div>
+                    <div class="blog-card-content">
+                        <h3 class="blog-card-title">${post.title}</h3>
+                        <p class="blog-card-excerpt">${post.excerpt}</p>
+                        <div class="blog-card-meta">
+                            <span><i class="fas fa-user-edit"></i> ${post.author}</span>
+                            <span><i class="fas fa-calendar-alt"></i> ${post.date}</span>
+                            <span><i class="fas fa-tag"></i> ${post.category}</span>
+                        </div>
+                    </div>
+                </a>
+            `;
+        });
+    }
+
+    blogPostList.innerHTML = trendingHtml + regularHtml;
+    
+    // Render single post content if on post.html
+    if (window.location.pathname.includes('/blog/post.html')) {
+        renderSingleBlogPost();
+    }
+}
+
+function renderSingleBlogPost() {
+    const params = new URLSearchParams(window.location.search);
+    const postId = parseInt(params.get('id'));
+    const post = allBlogPosts.find(p => p.id === postId);
+    const blogPostFull = document.getElementById('blogPostFull');
+    
+    if (!blogPostFull) return;
+    
+    if (post) {
+        const imgSrc = getRelativePath(post.image);
+        blogPostFull.innerHTML = `
+            <h1 class="blog-post-title">${post.title}</h1>
+            <div class="blog-post-meta">
+                <span><i class="fas fa-user-edit"></i> ${post.author}</span>
+                <span><i class="fas fa-calendar-alt"></i> ${post.date}</span>
+                <span><i class="fas fa-tag"></i> ${post.category}</span>
+            </div>
+            <div class="blog-post-image">
+                <img src="${imgSrc}" alt="${post.title}" onerror="this.onerror=null;this.src='${getRelativePath('/images/logo.jpg')}'">
+            </div>
+            <div class="blog-post-content">
+                ${post.content}
+            </div>
+        `;
+    } else {
+        blogPostFull.innerHTML = `<h1 class="blog-post-title" style="color: #c53030;">Post Not Found</h1><p style="text-align: center;">The requested blog post could not be located.</p>`;
+    }
+}
 
 // --- Helper Functions (Defined after global elements for scoping) ---
 function showSection(sectionElement) {
@@ -470,9 +714,27 @@ function updateProfileUI(profileData) {
 }
 
 
-// --- Auth & Profile Logic ---
+// --- AUTH & PROFILE LOGIC ---
 
-// Global function to show modal (used by course pages)
+// FIX 1: Global function to show modal/dashboard for mobile hamburger
+window.handleProfileClick = function() {
+    if(authModal) authModal.classList.add('active');
+    if(dashboardSection) showSection(dashboardSection);
+    document.body.style.overflow = 'hidden'; 
+    
+    const hamburgerMenu = document.getElementById('hamburgerMenu');
+    const navMenu = document.querySelector('.nav-menu');
+    if (hamburgerMenu && navMenu) { 
+        hamburgerMenu.classList.remove('active'); 
+        navMenu.classList.remove('active'); 
+    }
+    
+    // Ensure profile tab is the active tab when opening the dashboard
+    const profileTabBtn = document.querySelector('.tab-btn[data-tab="profile"]'); 
+    if (profileTabBtn) profileTabBtn.click();
+}
+
+// Global function to show login modal (used by course pages)
 window.showLoginModal = function() {
     if(authModal) authModal.classList.add('active');
     if(loginSection) showSection(loginSection);
@@ -590,14 +852,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginBtnMobile = document.getElementById('loginBtnHeaderMobile');
     const signupBtnMobile = document.getElementById('signupBtnHeaderMobile');
     const profileBtnHeaderMobile = document.getElementById('profileBtnHeaderMobile');
-    const logoutBtnHeaderMobile = document.getElementById('logoutBtnHeaderMobile');
     
     // Mobile Login Button
     if (loginBtnMobile) loginBtnMobile.addEventListener('click', (e) => { e.preventDefault(); if(authModal) window.showLoginModal(); if (hamburgerMenu && navMenu) { hamburgerMenu.classList.remove('active'); navMenu.classList.remove('active'); } });
     // Mobile Signup Button
     if (signupBtnMobile) signupBtnMobile.addEventListener('click', (e) => { e.preventDefault(); if(authModal) authModal.classList.add('active'); if(signupSection) showSection(signupSection); document.body.style.overflow = 'hidden'; if (hamburgerMenu && navMenu) { hamburgerMenu.classList.remove('active'); navMenu.classList.remove('active'); } });
     // Mobile Profile Button (open dashboard)
-    if (profileBtnHeaderMobile) profileBtnHeaderMobile.addEventListener('click', () => { if(authModal) authModal.classList.add('active'); if(dashboardSection) showSection(dashboardSection); if (hamburgerMenu && navMenu) { hamburgerMenu.classList.remove('active'); navMenu.classList.remove('active'); } document.body.style.overflow = 'hidden'; const profileTabBtn = document.querySelector('.tab-btn[data-tab="profile"]'); if (profileTabBtn) profileTabBtn.click(); });
+    if (profileBtnHeaderMobile) profileBtnHeaderMobile.addEventListener('click', window.handleProfileClick); // Use the global function
     
     const handleLogout = async () => { 
         try { 
@@ -612,6 +873,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Desktop and Mobile Logout Buttons
     if (document.getElementById('logoutBtnHeader')) document.getElementById('logoutBtnHeader').addEventListener('click', handleLogout);
+    const logoutBtnHeaderMobile = document.getElementById('logoutBtnHeaderMobile');
     if (logoutBtnHeaderMobile) logoutBtnHeaderMobile.addEventListener('click', handleLogout);
     
     // --- Auth Actions (FIXED) ---
@@ -626,9 +888,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- User Dropdown & Navigation ---
     if (userProfile) userProfile.addEventListener('click', () => { if(userDropdown) userDropdown.classList.toggle('active'); });
     document.addEventListener('click', (e) => { if (userProfile && userDropdown && !userProfile.contains(e.target) && userDropdown.classList.contains('active')) userDropdown.classList.remove('active'); });
-    if (profileBtnHeader) profileBtnHeader.addEventListener('click', () => { if(authModal) authModal.classList.add('active'); if(dashboardSection) showSection(dashboardSection); if(userDropdown) userDropdown.classList.remove('active'); document.body.style.overflow = 'hidden'; const profileTabBtn = document.querySelector('.tab-btn[data-tab="profile"]'); if (profileTabBtn) profileTabBtn.click(); });
+    if (profileBtnHeader) profileBtnHeader.addEventListener('click', window.handleProfileClick); // Use the global function
     
-    // --- FIX: Universal Dropdown Click Handler (Problem 2 Fix) ---
+    // --- FIX: Universal Dropdown Click Handler ---
     const allDropdownContainers = document.querySelectorAll('.nav-item.dropdown');
     
     allDropdownContainers.forEach(dropdownContainer => {
@@ -638,7 +900,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (toggle && content) {
             toggle.addEventListener('click', function(event) {
-                // Only act on desktop view, as mobile is handled by CSS/mobile menu toggle
+                // Only act on desktop view (window width check here prevents mobile double-click issues)
                 if (window.innerWidth > 1024) { 
                     event.preventDefault(); 
                     const isVisible = content.style.display === 'block';
@@ -744,6 +1006,25 @@ document.addEventListener('DOMContentLoaded', function() {
              }
          });
      }
+     
+    // --- FIX 2: Desktop Search Implementation ---
+     if (searchInput && searchResultsContainer) {
+         searchInput.addEventListener('input', (e) => {
+             renderSearchResults(e.target.value);
+         });
+
+         // Close search results when clicking anywhere outside
+         document.addEventListener('click', (e) => {
+             if (!searchInput.contains(e.target) && !searchResultsContainer.contains(e.target)) {
+                 searchResultsContainer.classList.add('hidden');
+             }
+         });
+     }
+     
+     // --- FIX 3: Blog Rendering ---
+     if (window.location.pathname.includes('/blog/')) {
+         renderBlogPosts();
+     }
 });
 
-console.log('🚀 Internadda Script Loaded! (Firestore Real-Time Tracking Implemented)');
+console.log('🚀 Internadda Script Loaded! (Firestore Real-Time Tracking, Search, and Mobile Fixes Implemented)');
