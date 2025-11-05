@@ -230,7 +230,6 @@
                  <div class="dashboard-content">
                     <div class="profile-tabs">
                          <button class="tab-btn active" data-tab="profile">Profile</button>
-                         <button class="tab-btn" data-tab="courses">Courses</button>
                          <button class="tab-btn" data-tab="internships">Internships</button>
                     </div>
 
@@ -254,16 +253,19 @@
                                      <strong>Interested Domain:</strong> <span id="profileDomainDisplay">Not specified</span>
                                  </div>
                              </div>
+                             <button class="btn btn-primary" id="shareProfileBtn" style="width: 100%; margin-top: 20px;"><i class="fas fa-share-alt" style="margin-right: 8px;"></i> Share My Profile</button>
                              <button class="btn btn-outline" id="editProfileBtn">Edit Profile</button>
                          </div>
 
                          <div id="profileEditSection" class="hidden">
+                            <div id="profileEditError" class="error" style="display: none;"></div>
                              <div class="profile-avatar-display">
                                  <img id="userAvatarPreview" class="user-avatar" src="images/no_image.png" alt="User Avatar Preview">
                                  <label for="profileImageInput" class="file-upload-label">
                                      <i class="fas fa-upload"></i> Upload Image
                                  </label>
                                  <input type="file" id="profileImageInput" accept="image/*">
+                                 <p class="profile-avatar-hint" style="margin-top: 5px; font-size: 0.85rem; color: #f56565;">*Image upload is for demo only; file storage is not active.</p>
                              </div>
                              <div class="form-group">
                                  <label for="profileName">Full Name</label>
@@ -291,7 +293,7 @@
                              <button class="btn btn-primary" id="saveProfileBtn">Save Profile</button>
                          </div>
                     </div>
-
+                    
                     <div id="coursesTabContent" class="tab-content hidden">
                         <h3 class="section-title-small">📚 Enrolled Courses & Certificates</h3>
                         <p style="color: var(--gray); margin-bottom: 20px;">Track your progress and access completion certificates here.</p>
@@ -299,6 +301,7 @@
                             <p style="text-align: center; padding: 20px;">Please log in to view your courses.</p>
                         </div>
                     </div>
+
 
                     <div id="internshipsTabContent" class="tab-content hidden">
                         <h3 class="section-title-small">💼 Internship Application History</h3>
@@ -352,6 +355,14 @@
                         signupSection.classList.add('active');
                         closeHamburgerMenu();
                     }
+                });
+            }
+            
+            // FIX: Re-adding the core hamburger toggle logic for this page
+            if (hamburgerMenu && navMenu) {
+                hamburgerMenu.addEventListener('click', () => {
+                    hamburgerMenu.classList.toggle('active');
+                    navMenu.classList.toggle('active');
                 });
             }
         });
