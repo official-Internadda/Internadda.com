@@ -450,7 +450,7 @@
         }
 
         /* =================================
-           POINT 3: LMS Layout (Coursera/edX Style)
+           LMS Layout (Coursera/edX Style)
            ================================= */
         .lms-wrapper {
             display: grid;
@@ -855,7 +855,10 @@ plt.show()</pre>
     
                                     
 
+
+
 [Image of Supervised vs Unsupervised Machine Learning]
+
 
                                     </h3>
                                     <p>Supervised learning involves training a model on <strong>labeled data</strong> (input features $X$ and known output labels $y$). The goal is to predict the output based on new input data.</p>
@@ -1012,6 +1015,7 @@ predictions = model.predict(X_test)</pre>
         </div>
     </footer>
 
+    <script src="../../script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const coursePages = document.querySelectorAll('.course-page');
@@ -1053,11 +1057,12 @@ predictions = model.predict(X_test)</pre>
                 5: { correct: 4, feedback: "✅ Perfect! Scikit-learn (sklearn) is the standard, high-level library in Python for implementing traditional Machine Learning models." }
             };
 
-            // Animation observer
+            // Animation observer (Modified to remove smooth scroll conflicts)
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
+                        // FIX: Only add 'visible' class, relying on pure CSS transition
+                        entry.target.classList.add('visible'); 
                     }
                 });
             }, {
@@ -1065,6 +1070,8 @@ predictions = model.predict(X_test)</pre>
             });
 
             document.querySelectorAll('.fade-in').forEach(el => {
+                // Ensure initial state is applied before observing
+                el.classList.remove('visible'); 
                 observer.observe(el);
             });
 
@@ -1099,8 +1106,10 @@ predictions = model.predict(X_test)</pre>
 
                 // Rebuild the video container with the new thumbnail/logic
                 if (videoContainer) {
+                    // FIX: Ensure the fade-in class is on the container, not the content inside, 
+                    // which prevents content from disappearing on navigation
                     videoContainer.innerHTML = `
-                        <div class="video-wrapper fade-in" id="video-thumbnail-${pageNumber}">
+                        <div class="video-wrapper" id="video-thumbnail-${pageNumber}">
                             <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" alt="Course Thumbnail">
                             <div class="play-button"><i class="fas fa-play-circle"></i></div>
                         </div>
@@ -1136,8 +1145,11 @@ predictions = model.predict(X_test)</pre>
                     // Reset animation for the new page content
                     const newContent = newPage.querySelector('.fade-in');
                     if (newContent) {
+                        // Manual removal/re-observation to force re-entry animation
                         newContent.classList.remove('visible');
-                        setTimeout(() => observer.observe(newContent), 10);
+                        setTimeout(() => {
+                           newContent.classList.add('visible');
+                        }, 50);
                     }
                 }
                 updateVideoPlayer(pageNumber);
