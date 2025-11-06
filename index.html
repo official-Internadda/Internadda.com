@@ -3,12 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Internadda — India’s Adda for Internships</title>
+    
+    <title>Internadda — India’s Adda for Free Courses & Paid Internships</title>
+    <meta name="description" content="Access free, industry-focused courses. Land paid internships (up to ₹50K/month) through our proven test-based selection process. Learn, Intern, & Earn with Internadda.">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <link rel="stylesheet" href="style.css">
 
+    <meta property="og:title" content="Internadda — India’s Adda for Free Courses & Paid Internships" />
+    <meta property="og:description" content="Access free, industry-focused courses. Land paid internships (up to ₹50K/month) through our proven test-based selection process." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://internadda.com/index.html" />
+    <meta property="og:image" content="https://internadda.com/images/slide1.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Internadda: Learn, Intern, Earn - Paid Internships Await" />
+    <meta name="twitter:description" content="India's fastest-growing platform connecting talent with top companies via skill tests. Start your career journey today!" />
+    <meta name="twitter:image" content="https://internadda.com/images/slide1.png" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-app-compat.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-auth-compat.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-firestore-compat.min.js"></script>
@@ -82,13 +94,6 @@
                         <a href="/community/academy.html" class="dropdown-link">Offline Academy</a>
                     </div>
                 </div>
-                
-                <a href="/jobs.html" class="nav-link mobile-only-link">Jobs</a>
-                <a href="/contact.html" class="nav-link mobile-only-link">Contact</a>
-                <a href="/blog/index.html" class="nav-link mobile-only-link">Blog</a>
-                <a href="/community/join.html" class="nav-link mobile-only-link">Community</a>
-                <a href="/community/partners.html" class="nav-link mobile-only-link">Partners</a>
-                <a href="/community/academy.html" class="nav-link mobile-only-link">Offline Academy</a>
                 
                 <div class="nav-actions-mobile">
                      <div class="user-profile hidden" id="userProfileMobile">
@@ -727,12 +732,9 @@
             // 2. Event Listeners for Login/Signup (Desktop and Mobile)
             const handleLoginClick = (e) => {
                 e.preventDefault();
-                if (authModal && loginSection) {
-                    authModal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                    showSection(loginSection);
-                    closeHamburgerMenu();
-                }
+                // Use the global function defined in script.js (Point 2 logic)
+                window.showLoginModal(); 
+                closeHamburgerMenu();
             };
             
             const handleSignupClick = (e) => {
