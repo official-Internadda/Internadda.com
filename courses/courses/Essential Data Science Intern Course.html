@@ -202,7 +202,7 @@
         }
 
         .course-section {
-            padding: 60px 0;
+            padding: 0; /* Removed vertical padding from section wrapper */
         }
 
         .course-title-main {
@@ -251,6 +251,7 @@
             box-shadow: var(--shadow);
             transition: opacity 0.5s ease-in-out;
             position: relative;
+            min-height: 500px;
         }
 
         .course-page.hidden {
@@ -373,9 +374,6 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        .quiz-feedback.hidden {
-            display: none;
-        }
         .btn.hidden {
             display: none !important;
         }
@@ -403,7 +401,7 @@
         
         /* Video Section */
         .video-wrapper {
-            margin: 30px 0;
+            margin: 30px 0 0; /* Adjusted margin to fit new layout */
             position: relative;
             cursor: pointer;
             border-radius: 16px;
@@ -451,6 +449,102 @@
             border-radius: 16px;
         }
 
+        /* =================================
+           POINT 3: LMS Layout (Coursera/edX Style)
+           ================================= */
+        .lms-wrapper {
+            display: grid;
+            grid-template-columns: 320px 1fr; /* Fixed sidebar, flexible content */
+            gap: 25px;
+            min-height: 100vh;
+            padding-top: 25px;
+        }
+
+        /* --- Left Sidebar (Course Navigation) --- */
+        .course-sidebar {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            position: sticky;
+            top: 100px; /* Below the fixed header */
+            height: calc(100vh - 120px); /* Fill vertical space, leaving room for header/footer */
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        
+        .progress-bar-small { /* Sidebar Progress Bar */
+            margin-bottom: 20px;
+        }
+        .progress-bar-small .progress-bar-bg {
+             height: 8px;
+        }
+        .progress-bar-small .progress-text {
+            font-size: 0.9rem;
+            text-align: left;
+            margin-bottom: 5px;
+            min-width: unset;
+            font-weight: 600;
+        }
+        
+
+        .module-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        .module-item {
+            margin-bottom: 5px;
+            cursor: pointer;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: var(--transition);
+            font-size: 1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .module-item:hover {
+            background-color: var(--light);
+            color: var(--primary);
+        }
+
+        .module-item.active {
+            background-color: var(--primary);
+            color: var(--white);
+            font-weight: 600;
+        }
+        .module-item.active:hover {
+             background-color: var(--primary);
+             color: var(--white);
+        }
+        .module-item i {
+            color: var(--success);
+            font-size: 0.9em;
+        }
+        .module-item.active i {
+            color: var(--white);
+        }
+
+        /* --- Right Content Area --- */
+        .course-main-content {
+            padding: 25px 0;
+        }
+        
+        .video-wrapper, .course-page {
+            box-shadow: none; /* Remove redundant shadow from content pages */
+        }
 
         footer {
             background-color: var(--dark);
@@ -466,55 +560,7 @@
         .footer-brand {
             grid-column: span 1;
         }
-        .footer-logo {
-            font-size: 30px;
-            font-weight: 700;
-            margin-bottom: 24px;
-            color: var(--white);
-        }
-        .footer-description {
-            color: #e2e8f0;
-            margin-bottom: 36px;
-        }
-        .social-links {
-            display: flex;
-            gap: 24px;
-        }
-        .social-link {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            transition: all 0.3s ease;
-        }
-        .social-link:hover {
-            background: var(--gradient);
-            transform: scale(1.15);
-        }
-        .footer-links-title {
-            font-size: 19px;
-            font-weight: 600;
-            margin-bottom: 28px;
-        }
-        .footer-links {
-            list-style: none;
-        }
-        .footer-links li {
-            margin-bottom: 18px;
-        }
-        .footer-links a {
-            color: #e2e8f0;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        .footer-links a:hover {
-            color: var(--white);
-            transform: translateX(6px);
-        }
+        /* ... [Footer link styles] ... */
         .footer-bottom {
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding-top: 48px;
@@ -522,6 +568,8 @@
             color: #e2e8f0;
             font-size: 15px;
         }
+        
+        /* Mobile Overrides */
         @media (max-width: 1024px) {
             .nav-menu {
                 display: none;
@@ -530,17 +578,26 @@
                 display: flex;
             }
             .nav-menu.active {
-                display: flex;
-                flex-direction: column;
-                position: absolute;
-                top: 80px;
-                left: 0;
-                width: 100%;
-                background-color: var(--white);
-                padding: 28px;
-                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+                /* Inherited from updated style.css */
+            }
+
+            .lms-wrapper {
+                grid-template-columns: 1fr; /* Stack columns on mobile */
+                gap: 0;
+            }
+            .course-sidebar {
+                position: static; /* Remove sticky behavior */
+                height: auto;
+                max-height: fit-content; 
+                border-radius: 0;
+                top: 0;
+                padding: 20px 24px; /* Adjust padding for smaller screen */
+            }
+            .course-main-content {
+                 padding: 20px 24px; /* Ensure main content has horizontal padding */
             }
         }
+
         @media (max-width: 768px) {
             .header-container {
                 flex-direction: column;
@@ -588,301 +645,316 @@
 
     <main>
         <section class="course-section">
-            <div class="main-content-container">
-                <h1 class="course-title-main fade-in">Essential Data Science Intern Course</h1>
-                
-                <div id="video-container" class="fade-in">
-                    <div class="video-wrapper" id="video-thumbnail">
-                        <img src="" alt="Essential Data Science Course Thumbnail">
-                        <div class="play-button"><i class="fas fa-play-circle"></i></div>
-                    </div>
-                </div>
+            <div class="container lms-wrapper"> 
+            
+                <div class="course-sidebar fade-in" style="animation-delay: 0.1s;">
+                    <a href="../course.html" class="sidebar-header" style="text-decoration: none;">
+                        <i class="fas fa-arrow-left"></i> Back to Courses
+                    </a>
 
-                <div class="progress-container fade-in">
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" id="progressBar"></div>
-                    </div>
-                    <span class="progress-text" id="progressText">0% Complete</span>
-                </div>
-
-                <div class="course-content-wrapper">
-                    <div class="course-page active" data-page="1">
-                        <div class="fade-in">
-                            <h2 class="course-page-title">Page 1: Foundations & The Data Science Ecosystem</h2>
-                            <div class="course-page-body">
-                                <h3>1️⃣ <strong>What is Data Science?</strong></h3>
-                                <p>Data Science is an <strong>interdisciplinary field</strong> that uses scientific methods, processes, algorithms, and systems to extract <strong>knowledge and insights</strong> from structured and unstructured data. It is the core of modern decision-making.</p>
-                                <ul>
-                                    <li><strong>Interdisciplinary</strong> – It sits at the intersection of <strong>Statistics</strong>, <strong>Computer Science</strong>, and <strong>Domain Expertise</strong> (Business Knowledge).</li>
-                                    <li><strong>Goal</strong> – To turn raw data into actionable insights and predictions.</li>
-                                </ul>
-                                <h3>2️⃣ <strong>Key Roles in a Data Team</strong></h3>
-                                <p>Understanding the roles helps you choose your career path:</p>
-                                <div class="table-container">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Role</th>
-                                                <th>Primary Focus</th>
-                                                <th>Key Toolset</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><strong>Data Analyst</strong></td>
-                                                <td>Business Insights, Reporting, Visualization (The "What")</td>
-                                                <td>SQL, Excel, Tableau/PowerBI</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Data Engineer</strong></td>
-                                                <td>Building & Maintaining Data Pipelines (ETL)</td>
-                                                <td>Cloud (AWS/GCP), SQL, Python, Spark</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Data Scientist</strong></td>
-                                                <td>Predictive Modeling, Machine Learning (The "Why" & "Future")</td>
-                                                <td>Python (Scikit-learn/TensorFlow), R, Advanced Stats</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <h3>3️⃣ <strong>Data Science Lifecycle Overview</strong></h3>
-                                <p>The process follows a loop: Ask <strong>Business Question</strong> → <strong>Acquire</strong> Data → <strong>Clean/Prepare</strong> Data → <strong>Explore</strong> Data (EDA) → <strong>Model</strong> Data (ML) → <strong>Communicate</strong> Results.</p>
-                                <p>💡 <strong>Intern Tip</strong><br>
-                                Start by mastering <strong>Python</strong> and <strong>SQL</strong>. These are the most demanded foundational skills for any Data Science or Analytics internship.</p>
-                            </div>
-                            <div class="quiz-section">
-                                <h3 class="quiz-question">❓ Check Your Understanding</h3>
-                                <p>Which core area is NOT typically considered one of the three foundational pillars of Data Science (excluding Domain Expertise)?</p>
-                                <div class="quiz-options">
-                                    <div class="option" data-answer="1">A) Statistics/Mathematics</div>
-                                    <div class="option" data-answer="2">B) Visual Art</div>
-                                    <div class="option" data-answer="3">C) Computer Science (Programming)</div>
-                                    <div class="option" data-answer="4">D) Machine Learning</div>
-                                </div>
-                                <div class="quiz-feedback hidden" id="feedback1"></div>
-                                <button class="btn btn-primary hidden" id="nextButton1">Next Page</button>
-                            </div>
+                    <div class="progress-bar-small">
+                        <span class="progress-text" id="sidebarProgressText">0% Complete</span>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="sidebarProgressBar"></div>
                         </div>
                     </div>
-
-                    <div class="course-page hidden" data-page="2">
-                        <div class="fade-in">
-                            <h2 class="course-page-title">Page 2: Data Acquisition & Preparation (ETL)</h2>
-                            <div class="course-page-body">
-                                <h3>1️⃣ <strong>The 80/20 Rule in Data Science</strong></h3>
-                                <p>Data scientists typically spend <strong>80% of their time</strong> simply finding, cleaning, and organizing data, and only 20% on the actual analysis or modeling. This is the hardest part of the job!</p>
-                                <pre># Bad data in = Bad results out (Garbage In, Garbage Out)</pre>
-                                <h3>2️⃣ <strong>Data Cleaning Checklist</strong></h3>
-                                <p>Cleaning involves making sure the data is accurate, consistent, and complete.</p>
-                                <ul>
-                                    <li><strong>Handle Missing Values:</strong> Decide whether to <strong>impute</strong> (fill with mean/median/mode) or <strong>drop</strong> rows/columns with missing data.</li>
-                                    <li><strong>Outlier Management:</strong> Identify extreme values (outliers) that could skew your model and decide whether to remove or transform them.</li>
-                                    <li><strong>Data Type Conversion:</strong> Ensure columns are the correct type (e.g., numbers aren't stored as strings).</li>
-                                    <li><strong>Deduplication:</strong> Remove duplicate rows that might inflate your dataset size artificially.</li>
-                                </ul>
-                                <h3>3️⃣ <strong>Data Wrangling with Pandas</strong></h3>
-                                <p><strong>Pandas</strong> is the essential Python library for structured data manipulation. It introduces the `DataFrame` object, which acts like a powerful spreadsheet.</p>
-                                <p>Basic Pandas operations:</p>
-                                <pre>import pandas as pd
-
+                    
+                    <h3 class="sidebar-header" style="border-bottom: none; margin-bottom: 5px;">Course Content</h3>
+                    <ul class="module-list" id="moduleList">
+                        </ul>
+                </div>
+                
+                <div class="course-main-content">
+                    <h1 class="course-title-main fade-in" style="text-align: left; font-size: 2.2rem; margin-top: 0; margin-bottom: 25px;">Essential Data Science Intern Course</h1>
+                    
+                    <div id="video-container" class="fade-in">
+                        <div class="video-wrapper" id="video-thumbnail">
+                             </div>
+                    </div>
+                    
+                    <div class="course-content-wrapper" id="courseContentWrapper">
+                        <div class="course-page active" data-page="1">
+                            <div class="fade-in">
+                                <h2 class="course-page-title">Page 1: Foundations & The Data Science Ecosystem</h2>
+                                <div class="course-page-body">
+                                    <h3>1️⃣ <strong>What is Data Science?</strong></h3>
+                                    <p>Data Science is an <strong>interdisciplinary field</strong> that uses scientific methods, processes, algorithms, and systems to extract <strong>knowledge and insights</strong> from structured and unstructured data. It is the core of modern decision-making.</p>
+                                    <ul>
+                                        <li><strong>Interdisciplinary</strong> – It sits at the intersection of <strong>Statistics</strong>, <strong>Computer Science</strong>, and <strong>Domain Expertise</strong> (Business Knowledge).</li>
+                                        <li><strong>Goal</strong> – To turn raw data into actionable insights and predictions.</li>
+                                    </ul>
+                                    <h3>2️⃣ <strong>Key Roles in a Data Team</strong></h3>
+                                    <p>Understanding the roles helps you choose your career path:</p>
+                                    <div class="table-container">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Role</th>
+                                                    <th>Primary Focus</th>
+                                                    <th>Key Toolset</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><strong>Data Analyst</strong></td>
+                                                    <td>Business Insights, Reporting, Visualization (The "What")</td>
+                                                    <td>SQL, Excel, Tableau/PowerBI</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Data Engineer</strong></td>
+                                                    <td>Building & Maintaining Data Pipelines (ETL)</td>
+                                                    <td>Cloud (AWS/GCP), SQL, Python, Spark</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Data Scientist</strong></td>
+                                                    <td>Predictive Modeling, Machine Learning (The "Why" & "Future")</td>
+                                                    <td>Python (Scikit-learn/TensorFlow), R, Advanced Stats</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <h3>3️⃣ <strong>Data Science Lifecycle Overview</strong></h3>
+                                    <p>The process follows a loop: Ask <strong>Business Question</strong> → <strong>Acquire</strong> Data → <strong>Clean/Prepare</strong> Data → <strong>Explore</strong> Data (EDA) → <strong>Model</strong> Data (ML) → <strong>Communicate</strong> Results.</p>
+                                    <p>💡 <strong>Intern Tip</strong><br>
+                                    Start by mastering <strong>Python</strong> and <strong>SQL</strong>. These are the most demanded foundational skills for any Data Science or Analytics internship.</p>
+                                </div>
+                                <div class="quiz-section">
+                                    <h3 class="quiz-question">❓ Check Your Understanding</h3>
+                                    <p>Which core area is NOT typically considered one of the three foundational pillars of Data Science (excluding Domain Expertise)?</p>
+                                    <div class="quiz-options">
+                                        <div class="option" data-answer="1">A) Statistics/Mathematics</div>
+                                        <div class="option" data-answer="2">B) Visual Art</div>
+                                        <div class="option" data-answer="3">C) Computer Science (Programming)</div>
+                                        <div class="option" data-answer="4">D) Machine Learning</div>
+                                    </div>
+                                    <div class="quiz-feedback hidden" id="feedback1"></div>
+                                    <button class="btn btn-primary hidden" id="nextButton1">Next Page</button>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="course-page hidden" data-page="2">
+                            <div class="fade-in">
+                                <h2 class="course-page-title">Page 2: Data Acquisition & Preparation (ETL)</h2>
+                                <div class="course-page-body">
+                                    <h3>1️⃣ <strong>The 80/20 Rule in Data Science</strong></h3>
+                                    <p>Data scientists typically spend <strong>80% of their time</strong> simply finding, cleaning, and organizing data, and only 20% on the actual analysis or modeling. This is the hardest part of the job!</p>
+                                    <pre># Bad data in = Bad results out (Garbage In, Garbage Out)</pre>
+                                    <h3>2️⃣ <strong>Data Cleaning Checklist</strong></h3>
+                                    <p>Cleaning involves making sure the data is accurate, consistent, and complete.</p>
+                                    <ul>
+                                        <li><strong>Handle Missing Values:</strong> Decide whether to <strong>impute</strong> (fill with mean/median/mode) or <strong>drop</strong> rows/columns with missing data.</li>
+                                        <li><strong>Outlier Management:</strong> Identify extreme values (outliers) that could skew your model and decide whether to remove or transform them.</li>
+                                        <li><strong>Data Type Conversion:</strong> Ensure columns are the correct type (e.g., numbers aren't stored as strings).</li>
+                                        <li><strong>Deduplication:</strong> Remove duplicate rows that might inflate your dataset size artificially.</li>
+                                    </ul>
+                                    <h3>3️⃣ <strong>Data Wrangling with Pandas</strong></h3>
+                                    <p><strong>Pandas</strong> is the essential Python library for structured data manipulation. It introduces the `DataFrame` object, which acts like a powerful spreadsheet.</p>
+                                    <p>Basic Pandas operations:</p>
+                                    <pre>import pandas as pd
+    
 # 1. Read Data
 df = pd.read_csv('intern_data.csv')
-
+    
 # 2. Check info
 print(df.info())
-
+    
 # 3. Handle Missing Values (Impute with Mean)
 df['Age'].fillna(df['Age'].mean(), inplace=True)</pre>
-                            </div>
-                            <div class="quiz-section">
-                                <h3 class="quiz-question">❓ Check Your Understanding</h3>
-                                <p>In the Data Science process, which crucial step is considered to take up the majority (around 80%) of a Data Scientist's time?</p>
-                                <div class="quiz-options">
-                                    <div class="option" data-answer="1">A) Model Deployment</div>
-                                    <div class="option" data-answer="2">B) Machine Learning Model Training</div>
-                                    <div class="option" data-answer="3">C) Data Cleaning and Preparation (Wrangling)</div>
-                                    <div class="option" data-answer="4">D) Creating final Powerpoint presentations</div>
                                 </div>
-                                <div class="quiz-feedback hidden" id="feedback2"></div>
-                                <button class="btn btn-primary hidden" id="nextButton2">Next Page</button>
+                                <div class="quiz-section">
+                                    <h3 class="quiz-question">❓ Check Your Understanding</h3>
+                                    <p>In the Data Science process, which crucial step is considered to take up the majority (around 80%) of a Data Scientist's time?</p>
+                                    <div class="quiz-options">
+                                        <div class="option" data-answer="1">A) Model Deployment</div>
+                                        <div class="option" data-answer="2">B) Machine Learning Model Training</div>
+                                        <div class="option" data-answer="3">C) Data Cleaning and Preparation (Wrangling)</div>
+                                        <div class="option" data-answer="4">D) Creating final Powerpoint presentations</div>
+                                    </div>
+                                    <div class="quiz-feedback hidden" id="feedback2"></div>
+                                    <button class="btn btn-primary hidden" id="nextButton2">Next Page</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="course-page hidden" data-page="3">
-                        <div class="fade-in">
-                            <h2 class="course-page-title">Page 3: Exploratory Data Analysis (EDA) & Visualization</h2>
-                            <div class="course-page-body">
-                                <h3>1️⃣ <strong>What is EDA?</strong></h3>
-                                <p>Exploratory Data Analysis (EDA) is the initial investigation of data to discover patterns, detect anomalies, test hypotheses, and check assumptions, often with the help of statistical graphics and visualization. It guides your entire modeling strategy.</p>
-                                <h3>2️⃣ <strong>Key Python Visualization Tools</strong></h3>
-                                <p>We use Python libraries for plotting:</p>
-                                <ul>
-                                    <li><strong>Matplotlib:</strong> The fundamental plotting library in Python. It's powerful but often verbose.</li>
-                                    <li><strong>Seaborn:</strong> Built on top of Matplotlib, it provides a high-level interface for drawing attractive and informative statistical graphics.</li>
-                                </ul>
-                                <h3>3️⃣ <strong>Essential Plot Types</strong></h3>
-                                <div class="table-container">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Plot Type</th>
-                                                <th>Purpose</th>
-                                                <th>Primary Insight</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><strong>Histogram</strong></td>
-                                                <td>Shows the distribution of a single numerical variable.</td>
-                                                <td>Checking for normality, skewness.</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Box Plot</strong></td>
-                                                <td>Displays spread (quartiles) and identifies outliers.</td>
-                                                <td>Finding extreme values and distribution range.</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Scatter Plot</strong></td>
-                                                <td>Shows the relationship between two variables.</td>
-                                                <td>Checking for correlation (positive, negative, none).</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Heatmap</strong></td>
-                                                <td>Visualizes matrices, often correlation matrices.</td>
-                                                <td>Quickly seeing which features are correlated with each other.</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <h3>4️⃣ <strong>A Simple Scatter Plot Example</strong></h3>
-                                <pre>import seaborn as sns
+    
+                        <div class="course-page hidden" data-page="3">
+                            <div class="fade-in">
+                                <h2 class="course-page-title">Page 3: Exploratory Data Analysis (EDA) & Visualization</h2>
+                                <div class="course-page-body">
+                                    <h3>1️⃣ <strong>What is EDA?</strong></h3>
+                                    <p>Exploratory Data Analysis (EDA) is the initial investigation of data to discover patterns, detect anomalies, test hypotheses, and check assumptions, often with the help of statistical graphics and visualization. It guides your entire modeling strategy.</p>
+                                    <h3>2️⃣ <strong>Key Python Visualization Tools</strong></h3>
+                                    <p>We use Python libraries for plotting:</p>
+                                    <ul>
+                                        <li><strong>Matplotlib:</strong> The fundamental plotting library in Python. It's powerful but often verbose.</li>
+                                        <li><strong>Seaborn:</strong> Built on top of Matplotlib, it provides a high-level interface for drawing attractive and informative statistical graphics.</li>
+                                    </ul>
+                                    <h3>3️⃣ <strong>Essential Plot Types</strong></h3>
+                                    <div class="table-container">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Plot Type</th>
+                                                    <th>Purpose</th>
+                                                    <th>Primary Insight</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><strong>Histogram</strong></td>
+                                                    <td>Shows the distribution of a single numerical variable.</td>
+                                                    <td>Checking for normality, skewness.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Box Plot</strong></td>
+                                                    <td>Displays spread (quartiles) and identifies outliers.</td>
+                                                    <td>Finding extreme values and distribution range.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Scatter Plot</strong></td>
+                                                    <td>Shows the relationship between two variables.</td>
+                                                    <td>Checking for correlation (positive, negative, none).</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Heatmap</strong></td>
+                                                    <td>Visualizes matrices, often correlation matrices.</td>
+                                                    <td>Quickly seeing which features are correlated with each other.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <h3>4️⃣ <strong>A Simple Scatter Plot Example</strong></h3>
+                                    <pre>import seaborn as sns
 import matplotlib.pyplot as plt
-
+    
 # Check relationship between two numerical columns
 sns.scatterplot(x='Experience', y='Salary', data=df)
 plt.title('Experience vs. Salary')
 plt.show()</pre>
-                            </div>
-                            <div class="quiz-section">
-                                <h3 class="quiz-question">❓ Check Your Understanding</h3>
-                                <p>Which type of plot is most effective for visualizing the relationship between two continuous numerical variables, like Age and Income?</p>
-                                <div class="quiz-options">
-                                    <div class="option" data-answer="1">A) Histogram</div>
-                                    <div class="option" data-answer="2">B) Box Plot</div>
-                                    <div class="option" data-answer="3">C) Bar Chart</div>
-                                    <div class="option" data-answer="4">D) Scatter Plot</div>
                                 </div>
-                                <div class="quiz-feedback hidden" id="feedback3"></div>
-                                <button class="btn btn-primary hidden" id="nextButton3">Next Page</button>
+                                <div class="quiz-section">
+                                    <h3 class="quiz-question">❓ Check Your Understanding</h3>
+                                    <p>Which type of plot is most effective for visualizing the relationship between two continuous numerical variables, like Age and Income?</p>
+                                    <div class="quiz-options">
+                                        <div class="option" data-answer="1">A) Histogram</div>
+                                        <div class="option" data-answer="2">B) Box Plot</div>
+                                        <div class="option" data-answer="3">C) Bar Chart</div>
+                                        <div class="option" data-answer="4">D) Scatter Plot</div>
+                                    </div>
+                                    <div class="quiz-feedback hidden" id="feedback3"></div>
+                                    <button class="btn btn-primary hidden" id="nextButton3">Next Page</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="course-page hidden" data-page="4">
-                        <div class="fade-in">
-                            <h2 class="course-page-title">Page 4: Introduction to Machine Learning Modeling</h2>
-                            <div class="course-page-body">
-                                <h3>1️⃣ <strong>Supervised Learning</strong> 
+    
+                        <div class="course-page hidden" data-page="4">
+                            <div class="fade-in">
+                                <h2 class="course-page-title">Page 4: Introduction to Machine Learning Modeling</h2>
+                                <div class="course-page-body">
+                                    <h3>1️⃣ <strong>Supervised Learning</strong> 
+    
+                                    
 
 [Image of Supervised vs Unsupervised Machine Learning]
-</h3>
-                                <p>Supervised learning involves training a model on <strong>labeled data</strong> (input features $X$ and known output labels $y$). The goal is to predict the output based on new input data.</p>
-                                <ul>
-                                    <li><strong>Classification:</strong> Predicts a <strong>category</strong> (e.g., Spam or Not Spam, Yes or No, Dog or Cat).</li>
-                                    <li><strong>Regression:</strong> Predicts a <strong>continuous numerical value</strong> (e.g., House Price, Stock Value, Temperature).</li>
-                                </ul>
-                                <h3>2️⃣ <strong>The Machine Learning Workflow (Scikit-learn)</strong></h3>
-                                <p>Scikit-learn is the most popular library for classical ML in Python. The universal workflow involves these steps:</p>
-                                <pre>from sklearn.model_selection import train_test_split
+
+                                    </h3>
+                                    <p>Supervised learning involves training a model on <strong>labeled data</strong> (input features $X$ and known output labels $y$). The goal is to predict the output based on new input data.</p>
+                                    <ul>
+                                        <li><strong>Classification:</strong> Predicts a <strong>category</strong> (e.g., Spam or Not Spam, Yes or No, Dog or Cat).</li>
+                                        <li><strong>Regression:</strong> Predicts a <strong>continuous numerical value</strong> (e.g., House Price, Stock Value, Temperature).</li>
+                                    </ul>
+                                    <h3>2️⃣ <strong>The Machine Learning Workflow (Scikit-learn)</strong></h3>
+                                    <p>Scikit-learn is the most popular library for classical ML in Python. The universal workflow involves these steps:</p>
+                                    <pre>from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
-
+    
 # 1. Separate Features (X) and Target (y)
-
+    
 # 2. Split Data (Most critical step!)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-
+    
 # 3. Choose and Train Model
 model = LogisticRegression()
 model.fit(X_train, y_train)
-
+    
 # 4. Predict
 predictions = model.predict(X_test)</pre>
-                                <h3>3️⃣ <strong>Key Learning Concepts</strong></h3>
-                                <p>Before fitting a model, you must split your data to ensure the model isn't tested on data it was trained on. This prevents a common problem known as <strong>Overfitting</strong>.</p>
-                                <ul>
-                                    <li><strong>Training Set:</strong> Used to build the model. (e.g., 70% of data)</li>
-                                    <li><strong>Test Set:</strong> Used to evaluate the model's performance on unseen data. (e.g., 30% of data)</li>
-                                </ul>
-                            </div>
-                            <div class="quiz-section">
-                                <h3 class="quiz-question">❓ Check Your Understanding</h3>
-                                <p>If you build an ML model to predict the *exact number* of rainfall (in mm) next month, which type of supervised learning task are you performing?</p>
-                                <div class="quiz-options">
-                                    <div class="option" data-answer="1">A) Classification</div>
-                                    <div class="option" data-answer="2">B) Clustering</div>
-                                    <div class="option" data-answer="3">C) Regression</div>
-                                    <div class="option" data-answer="4">D) Feature Engineering</div>
-                                </div>
-                                <div class="quiz-feedback hidden" id="feedback4"></div>
-                                <button class="btn btn-primary hidden" id="nextButton4">Next Page</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="course-page hidden" data-page="5">
-                        <div class="fade-in">
-                            <h2 class="course-page-title">Page 5: Model Evaluation & Practical Takeaways</h2>
-                            <div class="course-page-body">
-                                <h3>1️⃣ <strong>Classification Evaluation Metrics</strong></h3>
-                                <p>Accuracy isn't enough! We use several metrics for Classification models:</p>
-                                <ul>
-                                    <li><strong>Accuracy:</strong> Overall number of correct predictions / Total predictions. (Simplest measure)</li>
-                                    <li><strong>Precision:</strong> Of all the cases predicted as positive, how many were actually positive? (Important when False Positives are costly)</li>
-                                    <li><strong>Recall (Sensitivity):</strong> Of all the cases that were actually positive, how many did the model correctly identify? (Important when False Negatives are costly, e.g., disease detection)</li>
-                                </ul>
-                                <h3>2️⃣ <strong>Dealing with Model Flaws</strong></h3>
-                                <p>Two common problems:</p>
-                                <ul>
-                                    <li><strong>Overfitting:</strong> Model learns the training data and noise too well. It fails completely on new data. (Solution: Use simpler models, get more data, or use regularization.)</li>
-                                    <li><strong>Underfitting:</strong> Model is too simple and cannot capture the underlying pattern of the data, performing poorly everywhere. (Solution: Use a more complex model or add more relevant features.)</li>
-                                </ul>
-                                <h3>3️⃣ <strong>Your Next Steps as a Data Science Intern</strong></h3>
-                                <p>To succeed in your internship and career:</p>
-                                <ul>
-                                    <li><strong>Build a Portfolio:</strong> Showcase your skills with projects on Kaggle or GitHub.</li>
-                                    <li><strong>Deepen Math Skills:</strong> Understand the statistics behind the ML algorithms.</li>
-                                    <li><strong>Learn Cloud Tools:</strong> Familiarize yourself with AWS, Azure, or GCP for data storage and scalable ML deployment.</li>
-                                </ul>
-                                   <div class="takeaways">
-                                    <h3>Key Takeaways from This Course</h3>
+                                    <h3>3️⃣ <strong>Key Learning Concepts</strong></h3>
+                                    <p>Before fitting a model, you must split your data to ensure the model isn't tested on data it was trained on. This prevents a common problem known as <strong>Overfitting</strong>.</p>
                                     <ul>
-                                        <li>Data Science combines <strong>Stats, Computer Science, and Domain Knowledge</strong> to extract value.</li>
-                                        <li>You will spend <strong>80% of your time on Data Cleaning</strong> using tools like <strong>Pandas</strong>.</li>
-                                        <li><strong>EDA</strong> and <strong>Visualization</strong> (Matplotlib/Seaborn) are necessary to guide your modeling decisions.</li>
-                                        <li>Machine Learning tasks are either <strong>Regression</strong> (predicting a number) or <strong>Classification</strong> (predicting a category).</li>
-                                        <li>Model evaluation must go beyond accuracy, focusing on <strong>Precision</strong> and <strong>Recall</strong> based on the business problem.</li>
+                                        <li><strong>Training Set:</strong> Used to build the model. (e.g., 70% of data)</li>
+                                        <li><strong>Test Set:</strong> Used to evaluate the model's performance on unseen data. (e.g., 30% of data)</li>
                                     </ul>
                                 </div>
-                            </div>
-                            <div class="quiz-section">
-                                <h3 class="quiz-question">❓ Check Your Understanding</h3>
-                                <p>Which Python library is specifically designed to provide high-level functionality for building and evaluating classic Machine Learning models like Linear Regression and Support Vector Machines?</p>
-                                <div class="quiz-options">
-                                    <div class="option" data-answer="1">A) Pandas</div>
-                                    <div class="option" data-answer="2">B) Seaborn</div>
-                                    <div class="option" data-answer="3">C) NumPy</div>
-                                    <div class="option" data-answer="4">D) Scikit-learn</div>
+                                <div class="quiz-section">
+                                    <h3 class="quiz-question">❓ Check Your Understanding</h3>
+                                    <p>If you build an ML model to predict the *exact number* of rainfall (in mm) next month, which type of supervised learning task are you performing?</p>
+                                    <div class="quiz-options">
+                                        <div class="option" data-answer="1">A) Classification</div>
+                                        <div class="option" data-answer="2">B) Clustering</div>
+                                        <div class="option" data-answer="3">C) Regression</div>
+                                        <div class="option" data-answer="4">D) Feature Engineering</div>
+                                    </div>
+                                    <div class="quiz-feedback hidden" id="feedback4"></div>
+                                    <button class="btn btn-primary hidden" id="nextButton4">Next Page</button>
                                 </div>
-                                <div class="quiz-feedback hidden" id="feedback5"></div>
-                                <a href="javascript:void(0);" class="btn btn-primary hidden" id="finishButton">Get Certificate of Completion</a>
+                            </div>
+                        </div>
+    
+                        <div class="course-page hidden" data-page="5">
+                            <div class="fade-in">
+                                <h2 class="course-page-title">Page 5: Model Evaluation & Practical Takeaways</h2>
+                                <div class="course-page-body">
+                                    <h3>1️⃣ <strong>Classification Evaluation Metrics</strong></h3>
+                                    <p>Accuracy isn't enough! We use several metrics for Classification models:</p>
+                                    <ul>
+                                        <li><strong>Accuracy:</strong> Overall number of correct predictions / Total predictions. (Simplest measure)</li>
+                                        <li><strong>Precision:</strong> Of all the cases predicted as positive, how many were actually positive? (Important when False Positives are costly)</li>
+                                        <li><strong>Recall (Sensitivity):</strong> Of all the cases that were actually positive, how many did the model correctly identify? (Important when False Negatives are costly, e.g., disease detection)</li>
+                                    </ul>
+                                    <h3>2️⃣ <strong>Dealing with Model Flaws</strong></h3>
+                                    <p>Two common problems:</p>
+                                    <ul>
+                                        <li><strong>Overfitting:</strong> Model learns the training data and noise too well. It fails completely on new data. (Solution: Use simpler models, get more data, or use regularization.)</li>
+                                        <li><strong>Underfitting:</strong> Model is too simple and cannot capture the underlying pattern of the data, performing poorly everywhere. (Solution: Use a more complex model or add more relevant features.)</li>
+                                    </ul>
+                                    <h3>3️⃣ <strong>Your Next Steps as a Data Science Intern</strong></h3>
+                                    <p>To succeed in your internship and career:</p>
+                                    <ul>
+                                        <li><strong>Build a Portfolio:</strong> Showcase your skills with projects on Kaggle or GitHub.</li>
+                                        <li><strong>Deepen Math Skills:</strong> Understand the statistics behind the ML algorithms.</li>
+                                        <li><strong>Learn Cloud Tools:</strong> Familiarize yourself with AWS, Azure, or GCP for data storage and scalable ML deployment.</li>
+                                    </ul>
+                                       <div class="takeaways">
+                                        <h3>Key Takeaways from This Course</h3>
+                                        <ul>
+                                            <li>Data Science combines <strong>Stats, Computer Science, and Domain Knowledge</strong> to extract value.</li>
+                                            <li>You will spend <strong>80% of your time on Data Cleaning</strong> using tools like <strong>Pandas</strong>.</li>
+                                            <li><strong>EDA</strong> and <strong>Visualization</strong> (Matplotlib/Seaborn) are necessary to guide your modeling decisions.</li>
+                                            <li>Machine Learning tasks are either <strong>Regression</strong> (predicting a number) or <strong>Classification</strong> (predicting a category).</li>
+                                            <li>Model evaluation must go beyond accuracy, focusing on <strong>Precision</strong> and <strong>Recall</strong> based on the business problem.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="quiz-section">
+                                    <h3 class="quiz-question">❓ Check Your Understanding</h3>
+                                    <p>Which Python library is specifically designed to provide high-level functionality for building and evaluating classic Machine Learning models like Linear Regression and Support Vector Machines?</p>
+                                    <div class="quiz-options">
+                                        <div class="option" data-answer="1">A) Pandas</div>
+                                        <div class="option" data-answer="2">B) Seaborn</div>
+                                        <div class="option" data-answer="3">C) NumPy</div>
+                                        <div class="option" data-answer="4">D) Scikit-learn</div>
+                                    </div>
+                                    <div class="quiz-feedback hidden" id="feedback5"></div>
+                                    <a href="javascript:void(0);" class="btn btn-primary hidden" id="finishButton">Get Certificate of Completion</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
-        </section>
+            </section>
     </main>
 
     <footer>
@@ -943,23 +1015,36 @@ predictions = model.predict(X_test)</pre>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const coursePages = document.querySelectorAll('.course-page');
-            const progressFill = document.getElementById('progressBar');
-            const progressText = document.getElementById('progressText');
             const finishButton = document.getElementById('finishButton');
             const userNameHeader = document.getElementById('userNameHeader');
             const userAvatarHeader = document.getElementById('userAvatarHeader');
             let currentPage = 1;
 
-            // Updated Video IDs for each page
+            // NEW LMS ELEMENTS
+            const sidebarProgressFill = document.getElementById('sidebarProgressBar');
+            const sidebarProgressText = document.getElementById('sidebarProgressText');
+            const moduleList = document.getElementById('moduleList');
+
+            // Module Titles for Sidebar Generation
+            const moduleTitles = {
+                1: "1. Foundations & Ecosystem",
+                2: "2. Data Preparation (ETL)",
+                3: "3. EDA & Visualization",
+                4: "4. ML Modeling Intro",
+                5: "5. Evaluation & Takeaways"
+            };
+
+            // Video IDs for each page
             const videoIds = {
                 1: "x-G-dSSUNQE", // Data Science Life Cycle & Foundations
                 2: "JOlruyTytz8", // Data Cleaning and Preprocessing with Pandas
                 3: "Cc-RKfvITzo", // Exploratory Data Analysis (EDA) & Visualization
                 4: "4tYY6NFRfws", // Introduction to Supervised Machine Learning
-                5: ""  // Model Evaluation Metrics (Accuracy, Precision, Recall)
+                5: "4tYY6NFRfws"  // Placeholder video for final page
             };
 
-            // Updated Quiz Data for Data Science Course
+
+            // Updated Quiz Data
             const quizData = {
                 1: { correct: 2, feedback: "✅ Correct! While ML is a huge part of DS, Visual Art is not a foundational pillar. The core is Math/Stats, CS/Programming, and Domain Expertise." },
                 2: { correct: 3, feedback: "✅ Exactly! Data cleaning and wrangling often consume the majority (around 80%) of a Data Scientist's project time." },
@@ -983,47 +1068,62 @@ predictions = model.predict(X_test)</pre>
                 observer.observe(el);
             });
 
+            // Function to update *both* progress bar elements and active link state
             const updateProgress = () => {
                 const totalPages = coursePages.length;
                 const progressPercentage = Math.floor(((currentPage - 1) / totalPages) * 100);
-                progressFill.style.width = `${progressPercentage}%`;
-                progressText.textContent = `${progressPercentage}% Complete`;
+                
+                // Update sidebar progress
+                if(sidebarProgressFill) sidebarProgressFill.style.width = `${progressPercentage}%`;
+                if(sidebarProgressText) sidebarProgressText.textContent = `${progressPercentage}% Complete`;
+
                 if (currentPage > totalPages) {
-                    progressFill.style.width = `100%`;
-                    progressText.textContent = `100% Complete`;
+                    if(sidebarProgressFill) sidebarProgressFill.style.width = `100%`;
+                    if(sidebarProgressText) sidebarProgressText.textContent = `100% Complete`;
+                }
+                
+                // Update the active state of sidebar links
+                if(moduleList) {
+                    moduleList.querySelectorAll('.module-item').forEach(item => {
+                        item.classList.remove('active');
+                        if (parseInt(item.dataset.page) === currentPage) {
+                            item.classList.add('active');
+                        }
+                    });
                 }
             };
 
             const updateVideoPlayer = (pageNumber) => {
                 const videoId = videoIds[pageNumber];
-                const videoThumbnail = document.getElementById('video-thumbnail');
                 const videoContainer = document.getElementById('video-container');
 
-                // Reset video container to thumbnail state
-                videoContainer.innerHTML = `
-                    <div class="video-wrapper" id="video-thumbnail-${pageNumber}">
-                        <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" alt="Data Science Course Thumbnail">
-                        <div class="play-button"><i class="fas fa-play-circle"></i></div>
-                    </div>
-                `;
+                // Rebuild the video container with the new thumbnail/logic
+                if (videoContainer) {
+                    videoContainer.innerHTML = `
+                        <div class="video-wrapper fade-in" id="video-thumbnail-${pageNumber}">
+                            <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" alt="Course Thumbnail">
+                            <div class="play-button"><i class="fas fa-play-circle"></i></div>
+                        </div>
+                    `;
 
-                const newThumbnail = document.getElementById(`video-thumbnail-${pageNumber}`);
-                if (newThumbnail) {
-                    newThumbnail.addEventListener('click', () => {
-                        const iframeContainer = document.createElement('div');
-                        iframeContainer.classList.add('video-embed-container');
-                        
-                        const iframe = document.createElement('iframe');
-                        iframe.setAttribute('src', `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`);
-                        iframe.setAttribute('title', 'YouTube video player');
-                        iframe.setAttribute('frameborder', '0');
-                        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-in; gyroscope; picture-in-picture; web-share');
-                        iframe.setAttribute('allowfullscreen', '');
-                        
-                        iframeContainer.appendChild(iframe);
-                        videoContainer.innerHTML = '';
-                        videoContainer.appendChild(iframeContainer);
-                    });
+                    const newThumbnail = document.getElementById(`video-thumbnail-${pageNumber}`);
+                    if (newThumbnail) {
+                        newThumbnail.addEventListener('click', () => {
+                            const iframeContainer = document.createElement('div');
+                            iframeContainer.classList.add('video-embed-container');
+                            
+                            const iframe = document.createElement('iframe');
+                            iframe.setAttribute('src', `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`);
+                            iframe.setAttribute('title', 'YouTube video player');
+                            iframe.setAttribute('frameborder', '0');
+                            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-in; gyroscope; picture-in-picture; web-share');
+                            iframe.setAttribute('allowfullscreen', '');
+                            
+                            iframeContainer.appendChild(iframe);
+                            videoContainer.innerHTML = '';
+                            videoContainer.appendChild(iframeContainer);
+                        });
+                    }
                 }
             };
 
@@ -1033,11 +1133,15 @@ predictions = model.predict(X_test)</pre>
                 const newPage = document.querySelector(`[data-page="${pageNumber}"]`);
                 if (newPage) {
                     newPage.classList.remove('hidden');
+                    // Reset animation for the new page content
                     const newContent = newPage.querySelector('.fade-in');
-                    newContent.classList.remove('visible');
-                    setTimeout(() => observer.observe(newContent), 10);
+                    if (newContent) {
+                        newContent.classList.remove('visible');
+                        setTimeout(() => observer.observe(newContent), 10);
+                    }
                 }
-                updateVideoPlayer(pageNumber); // Update video player for the new page
+                updateVideoPlayer(pageNumber);
+                updateProgress(); // Re-run progress update for active link color
             };
 
             const handleQuiz = (pageNumber) => {
@@ -1088,17 +1192,44 @@ predictions = model.predict(X_test)</pre>
                     nextButton.addEventListener('click', () => {
                         currentPage++;
                         showPage(currentPage);
-                        updateProgress();
                     });
                 }
             };
-
+            
+            // NEW: Function to build the sidebar module list
+            const buildModuleList = () => {
+                if(!moduleList) return;
+                moduleList.innerHTML = '';
+                for (let i = 1; i <= coursePages.length; i++) {
+                    const title = moduleTitles[i] || `Page ${i}`;
+                    const listItem = document.createElement('li');
+                    listItem.classList.add('module-item');
+                    listItem.dataset.page = i;
+                    
+                    if (i === coursePages.length) { // Last page is summary
+                        listItem.innerHTML = `<i class="fas fa-scroll"></i> Final Summary & Certificate`;
+                    } else {
+                         listItem.innerHTML = `<i class="fas fa-play-circle"></i> ${title}`;
+                    }
+                    
+                    // Add click listener for navigation
+                    listItem.addEventListener('click', () => {
+                        currentPage = i;
+                        showPage(currentPage);
+                    });
+                    
+                    moduleList.appendChild(listItem);
+                }
+            };
+            
+            // --- Initialization ---
+            buildModuleList(); // Build the sidebar menu
             for (let i = 1; i <= coursePages.length; i++) {
                 handleQuiz(i);
             }
 
             updateProgress();
-            showPage(1);
+            showPage(1); // Start at Page 1
 
             // Placeholder user data
             if (userNameHeader) {
