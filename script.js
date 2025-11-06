@@ -291,41 +291,58 @@ auth.onAuthStateChanged(async (user) => {
         if(internshipsListContainer) internshipsListContainer.innerHTML = '<p class="text-center empty-state" style="padding: 20px 0;">Please log in to view your internship history.</p>';
     }
 
-    // 4. Handle full page access gate
-    const isProtectedPage = window.location.pathname.includes('/courses/course.html') || window.location.pathname.includes('/intern/internship.html');
+    // 4. Handle full page access gate (MODIFIED FOR POINT 2)
+    const isInternshipListingPage = window.location.pathname.includes('/intern/internship.html');
+    const isProtectedPage = window.location.pathname.includes('/courses/course.html') || isInternshipListingPage;
+    
     const fullPageGate = document.getElementById('fullPageGate');
-    const mainContentArea = document.querySelector('.courses-grid') || document.querySelector('.courses-list') || document.querySelector('.courses');
+    // Targeting the main grid or relevant content wrapper
+    const mainContentArea = document.querySelector('.courses-grid') || document.querySelector('.courses-list') || document.querySelector('.courses') || document.querySelector('#tests .container .courses-grid');
 
     if (isProtectedPage) {
         if (user && !user.isAnonymous) {
             if (fullPageGate) fullPageGate.classList.add('hidden');
+            // If it's the internship page, ensure the grid/content displays
             if (mainContentArea) mainContentArea.style.display = 'grid'; 
         } else {
+            // Logic to create and show the login gate for unauthenticated users
             if (!fullPageGate) {
-                // This logic block handles creating the gate if the main page didn't define it
-                const container = document.querySelector('main .courses .container') || document.querySelector('main .value-prop .container');
-                if (container) {
+                // Target the appropriate container (e.g., the main courses/tests container)
+                const courseContainer = document.querySelector('main .courses .container') || document.querySelector('main .value-prop .container');
+                const internshipTestsContainer = document.querySelector('#tests .container');
+                // Use the more specific target if on the internship page
+                const targetContainer = isInternshipListingPage ? internshipTestsContainer : courseContainer;
+
+                if (targetContainer) {
                     const gate = document.createElement('div');
                     gate.id = 'fullPageGate';
+                    gate.classList.add('hidden'); // Start hidden, will be shown below
+                    // Dynamic message based on page context (Point 2)
+                    const title = isInternshipListingPage ? 'Unlock Your Internship Journey: Login Required' : 'Login Required to Access Content';
+                    const message = isInternshipListingPage ? 
+                        'Log in or sign up to view all domains, access practice tests, and take the final internship exam. Your progress will be saved to your professional profile.' : 
+                        'Please sign in or create an account to view and access our free course content.';
+                    
                     gate.innerHTML = `
-                         <div class="login-gate" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--light); z-index: 10; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 40px; text-align: center; border-radius: 14px; min-height: 500px;">
-                           <i class="fas fa-lock" style="font-size: 4rem; color: var(--primary); margin-bottom: 30px;"></i>
-                            <h2 style="font-size: 2.2rem; color: var(--dark); margin-bottom: 20px;">Login Required to View This Content</h2>
-                           <p style="font-size: 1.2rem; color: var(--gray); max-width: 600px; margin-bottom: 30px;">Please sign in or create an account to view courses and apply for internships.</p>
-                           <button class="btn btn-primary" id="fullPageLoginButton">Sign In Now</button>
+                         <div class="login-gate" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--light); z-index: 10; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 40px; text-align: center; border-radius: 14px; min-height: 500px; border: 2px dashed var(--primary); box-shadow: 0 0 20px rgba(43, 108, 176, 0.2);">
+                           <i class="fas fa-lock" style="font-size: 4rem; color: var(--primary); margin-bottom: 30px; animation: pulse 1.5s infinite;"></i>
+                           <h2 style="font-size: 2.2rem; color: var(--dark); margin-bottom: 20px;">${title}</h2>
+                           <p style="font-size: 1.2rem; color: var(--gray); max-width: 600px; margin-bottom: 30px;">${message}</p>
+                           <button class="btn btn-primary btn-lg" id="fullPageLoginButton" style="padding: 15px 30px; font-size: 1.2rem;">Sign In / Create Profile</button>
                           </div>
                       `;
-                    container.style.position = 'relative';
-                    container.appendChild(gate);
+                    // Ensure the container is relatively positioned for the absolute gate
+                    targetContainer.style.position = 'relative';
+                    targetContainer.appendChild(gate);
                     
                     document.getElementById('fullPageLoginButton').addEventListener('click', () => {
-                         const loginBtnHeader = document.getElementById('loginBtnHeader');
-                         if(loginBtnHeader) loginBtnHeader.click();
+                         window.showLoginModal();
+                         // Force modal open to login tab
+                         if(authModal) { authModal.classList.add('active'); showSection(loginSection); document.body.style.overflow = 'hidden'; }
                     });
                 }
-            } else {
-                fullPageGate.classList.remove('hidden');
             }
+            if (fullPageGate) fullPageGate.classList.remove('hidden');
             if (mainContentArea) mainContentArea.style.display = 'none';
         }
     }
@@ -849,15 +866,22 @@ document.addEventListener('DOMContentLoaded', function() {
     if (showSignupLink) showSignupLink.addEventListener('click', (e) => { e.preventDefault(); if(signupSection) showSection(signupSection); });
     if (showLoginLink) showLoginLink.addEventListener('click', (e) => { e.preventDefault(); if(loginSection) showSection(loginSection); });
     
-    // --- Mobile Auth Button Logic
+    // --- Mobile Auth Button Logic (FIXED)
     const loginBtnMobile = document.getElementById('loginBtnHeaderMobile');
     const signupBtnMobile = document.getElementById('signupBtnHeaderMobile');
     const profileBtnHeaderMobile = document.getElementById('profileBtnHeaderMobile');
     
+    const closeHamburgerMenu = () => {
+        if (navMenu && hamburgerMenu) {
+            navMenu.classList.remove('active');
+            hamburgerMenu.classList.remove('active');
+        }
+    };
+
     // Mobile Login Button
-    if (loginBtnMobile) loginBtnMobile.addEventListener('click', (e) => { e.preventDefault(); if(authModal) window.showLoginModal(); if (hamburgerMenu && navMenu) { hamburgerMenu.classList.remove('active'); navMenu.classList.remove('active'); } });
+    if (loginBtnMobile) loginBtnMobile.addEventListener('click', (e) => { e.preventDefault(); if(authModal) window.showLoginModal(); closeHamburgerMenu(); });
     // Mobile Signup Button
-    if (signupBtnMobile) signupBtnMobile.addEventListener('click', (e) => { e.preventDefault(); if(authModal) authModal.classList.add('active'); if(signupSection) showSection(signupSection); document.body.style.overflow = 'hidden'; if (hamburgerMenu && navMenu) { hamburgerMenu.classList.remove('active'); navMenu.classList.remove('active'); } });
+    if (signupBtnMobile) signupBtnMobile.addEventListener('click', (e) => { e.preventDefault(); if(authModal) authModal.classList.add('active'); if(signupSection) showSection(signupSection); document.body.style.overflow = 'hidden'; closeHamburgerMenu(); });
     // Mobile Profile Button (open dashboard)
     if (profileBtnHeaderMobile) profileBtnHeaderMobile.addEventListener('click', window.handleProfileClick); // Use the global function
     
