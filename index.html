@@ -50,6 +50,15 @@
             /* Enhanced card border on hover */
             border: 1px solid var(--primary);
         }
+        /* Mobile specific style adjustment for the internship section for Request 3 */
+        @media (max-width: 768px) {
+             .internship-content p {
+                 /* Apply improved Hindi/Hinglish text on mobile only */
+                 font-size: 1.15rem;
+                 font-weight: 500;
+                 color: var(--dark);
+             }
+        }
     </style>
     
     <link rel="icon" type="image/png" href="images/favicon.png">
@@ -94,6 +103,10 @@
                         <a href="/community/academy.html" class="dropdown-link">Offline Academy</a>
                     </div>
                 </div>
+                
+                <!-- MOBILE MENU LINKS - Duplicated for mobile display control (Point 2) -->
+                <a href="/blog/index.html" class="nav-link mobile-only-link">Blog</a>
+                <a href="/contact.html" class="nav-link mobile-only-link">Contact</a>
                 
                 <div class="nav-actions-mobile">
                      <div class="user-profile hidden" id="userProfileMobile">
@@ -360,7 +373,8 @@
             <div class="container internship-container">
                 <div class="internship-content">
                     <h2 class="section-title">Get Real-World Experience with Our Internship Program</h2>
-                    <p>Our internship program connects you with top companies where you can apply your skills, gain valuable experience, and build your professional network.</p>
+                    <!-- REQUEST 3: UPDATED HINGLISH DESCRIPTION FOR MOBILE -->
+                    <p>हमारा इंटर्नशिप प्रोग्राम आपको टॉप कंपनियों से जोड़ता है जहाँ आप अपनी स्किल्स को लागू कर सकते हैं, मूल्यवान अनुभव प्राप्त कर सकते हैं, और अपना प्रोफेशनल नेटवर्क बना सकते हैं।** (Our internship program connects you with top companies where you can apply your skills, gain valuable experience, and build your professional network.)</p>
 
                     <div class="features-list">
                         <div class="feature-item">
