@@ -34,12 +34,9 @@
                         <a href="community/academy.html" class="dropdown-link">Offline Academy</a>
                     </div>
                 </div>
-                <a href="jobs.html" class="nav-link mobile-only-link">Jobs</a>
-                <a href="contact.html" class="nav-link mobile-only-link">Contact</a>
-                <a href="blog/index.html" class="nav-link mobile-only-link">Blog</a>
-                <a href="community/join.html" class="nav-link mobile-only-link">Community</a>
-                <a href="community/partners.html" class="nav-link mobile-only-link">Partners</a>
-                <a href="community/academy.html" class="nav-link mobile-only-link">Offline Academy</a>
+                <!-- MOBILE MENU LINKS (Only explicitly requested links plus Mobile Actions) -->
+                <a href="/blog/index.html" class="nav-link mobile-only-link">Blog</a>
+                <a href="/contact.html" class="nav-link mobile-only-link">Contact</a>
                 
                 <div class="nav-actions-mobile">
                      <div class="user-profile hidden" id="userProfileMobile">
@@ -307,7 +304,7 @@
                              <button class="btn btn-primary" id="saveProfileBtn">Save Profile</button>
                          </div>
                     </div>
-                    
+
                     <div id="coursesTabContent" class="tab-content hidden">
                         <h3 class="section-title-small">📚 Enrolled Courses & Certificates</h3>
                         <p style="color: var(--gray); margin-bottom: 20px;">Track your progress and access completion certificates here.</p>
@@ -315,7 +312,6 @@
                             <p style="text-align: center; padding: 20px;">Please log in to view your courses.</p>
                         </div>
                     </div>
-
 
                     <div id="internshipsTabContent" class="tab-content hidden">
                         <h3 class="section-title-small">💼 Internship Application History</h3>
@@ -329,6 +325,7 @@
         </div>
     </div>
     <script src="script.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // 1. Get Elements
