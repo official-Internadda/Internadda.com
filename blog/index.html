@@ -57,7 +57,7 @@
 
         @keyframes content-slide-up {
             from { opacity: 0; transform: translateY(15px); }
-            to { transform: translateY(0); opacity: 1; }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* ============================
@@ -334,8 +334,8 @@
                             Latest & Trending <i class="fas fa-angle-right"></i>
                         </summary>
                         <ul class="sidebar-list">
-                            <li><a href="nov25/python-paradox-first-language.html">The Python Paradox: Why It Should Be Your First Language <i class="fas fa-star" style="color: gold; font-size: 0.8em;"></i></a></li>
-                            <li><a href="nov25/dao-web3-future.html">DAOs: The OS of Web3 <i class="fas fa-star" style="color: gold; font-size: 0.8em;"></i></a></li>
+                            <li><a href="blog/nov25/dao-web3-future.html">DAOs: The OS of Web3 <i class="fas fa-star" style="color: gold; font-size: 0.8em;"></i></a></li>
+                            <li><a href="post.html?id=1">Python Paradox: Why it should be your first language</a></li>
                             <li><a href="post.html?id=2">Mastering Prompt Engineering: 5 Tips for Better AI Results</a></li>
                         </ul>
                     </details>
@@ -345,7 +345,7 @@
                             Programming & Tech <i class="fas fa-angle-right"></i>
                         </summary>
                         <ul class="sidebar-list">
-                            <li><a href="nov25/python-paradox-first-language.html">The Python Paradox: Why Your First Language Should Be Python</a></li>
+                            <li><a href="post.html?id=1">The Python Paradox: Why Your First Language Should Be Python</a></li>
                             <li><a href="post.html?id=3">SQL vs. NoSQL: Choosing the Right Database for Your Project</a></li>
                         </ul>
                     </details>
@@ -373,7 +373,7 @@
                             Web3 & Blockchain <i class="fas fa-angle-right"></i>
                         </summary>
                         <ul class="sidebar-list">
-                            <li><a href="nov25/dao-web3-future.html">Decentralized Autonomous Organizations: The OS of Web3</a></li>
+                            <li><a href="blog/nov25/dao-web3-future.html">Decentralized Autonomous Organizations: The OS of Web3</a></li>
                         </ul>
                     </details>
 
@@ -390,10 +390,51 @@
                 
                 <h1 class="section-title" style="margin-bottom: 30px; text-align: left; font-size: 2.5rem;">Internadda Career Insights</h1>
                 
-                <div id="blogPostList">
-                    <p id="loadingPosts">Loading latest articles...</p>
-                </div>
+                <a href="blog/nov25/dao-web3-future.html" class="featured-post-card" style="text-decoration: none;">
+                    <div class="featured-header">
+                        <div class="label"><i class="fas fa-rocket"></i> FEATURED POST (Latest)</div>
+                        <h2 class="featured-title">Decentralized Autonomous Organizations: The Operating System of Web3</h2>
+                        <div class="featured-meta">
+                            <span><i class="fas fa-calendar-alt"></i> 2025-11-06</span>
+                            <span><i class="fas fa-user-edit"></i> Vikash Yadav (Head of Partnerships)</span>
+                        </div>
+                    </div>
+                    <div class="featured-body">
+                        <div class="featured-image">
+                            <img src="../images/test_Blockchain & Web3.png" alt="Decentralized Autonomous Organizations: The OS of Web3">
+                        </div>
+                        <div class="featured-text">
+                            <p class="featured-excerpt">DAOs represent a paradigm shift from traditional corporate structures. They are organizations governed by <strong>code</strong>, specifically smart contracts, eliminating the need for central authority. Explore how this structure redefines <strong>organizational trust and transparency</strong> in the decentralized web.</p>
+                            <span class="btn btn-primary" style="display: inline-flex;">Read Full Article</span>
+                        </div>
+                    </div>
+                </a>
 
+                <h2 class="section-title" style="margin-top: 20px; margin-bottom: 20px; text-align: left; font-size: 2rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;">More Must-Read Articles</h2>
+                
+                <div class="article-list-small">
+                    
+                    <a href="post.html?id=2" class="small-article-card">
+                         <h4>Mastering Prompt Engineering</h4>
+                         <p>Learn the 5 core principles of context, clarity, and chaining to get precise outputs from Large Language Models (LLMs).</p>
+                    </a>
+                    
+                    <a href="post.html?id=1" class="small-article-card">
+                         <h4>The Python Paradox: Why Your First Language Should Be Python</h4>
+                         <p>Explore Python's ecosystem, simplicity, and vast community support that make it ideal for beginners.</p>
+                    </a>
+                    
+                    <a href="post.html?id=3" class="small-article-card">
+                         <h4>SQL vs. NoSQL: Choosing the Right Database for Your Project</h4>
+                         <p>We break down the key differences between relational SQL and flexible NoSQL databases for modern projects.</p>
+                    </a>
+
+                    <a href="post.html?id=4" class="small-article-card">
+                         <h4>Cybersecurity Fundamentals: Protecting Yourself from Phishing</h4>
+                         <p>Learn how to spot malicious emails and secure your digital identity with essential cybersecurity best practices.</p>
+                    </a>
+
+                </div>
             </div>
         </div>
     </main>
@@ -410,10 +451,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.content-area').classList.add('animate');
             document.querySelector('.sidebar').classList.add('animate');
-             // Explicitly call the renderer after script loads to ensure dynamic content appears
-            if (window.renderBlogPosts) {
-                 window.renderBlogPosts();
-            }
         });
     </script>
 </body>
