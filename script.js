@@ -112,32 +112,34 @@ function renderInternshipHistory(internshipsData) {
         let actionLink;
         let statusText;
         
-        // Logic to determine the final exam page link
-        // Converts /intern/payment_page_DOMAIN.html to /intern/DOMAIN_final_exam.html
-        const finalExamUrlBase = internship.finalExamUrl ? internship.finalExamUrl.replace('/intern/payment_page_', '').replace('.html', '') : 'internship';
-        const finalExamPage = `/intern/${finalExamUrlBase}_final_exam.html`;
+        // --- START OF REQUEST 1 IMPLEMENTATION ---
+        // Use the stored finalExamUrl which points to the payment page by default.
+        const paymentPageUrl = internship.finalExamUrl;
         
         // Logic to determine action button
         switch (internship.status) {
             case 'Passed':
                 statusColor = 'var(--success)';
                 statusText = `Qualified (${internship.score}%)`;
-                // Link to the results page using the derived finalExamPage structure
+                // Link to the results page (which is the Final Exam Page HTML)
+                const finalExamUrlBase = paymentPageUrl ? paymentPageUrl.replace('/intern/payment_page_', '').replace('.html', '') : 'internship';
+                const finalExamPage = `/intern/${finalExamUrlBase}_final_exam.html`;
                 actionLink = `<a href="${finalExamPage}" class="btn btn-primary" style="padding: 8px 15px; font-size: 14px; background-color: var(--success);">View Results</a>`;
                 break;
             case 'Failed':
                 statusColor = '#c53030'; // Red
                 statusText = `Not Qualified (${internship.score}%)`;
-                // Link to the re-attempt (which links directly to the final exam page)
-                actionLink = `<a href="${finalExamPage}" class="btn btn-outline" style="padding: 8px 15px; font-size: 14px; border-color: #c53030; color: #c53030;">Re-attempt Exam</a>`;
+                // Link directly to the payment/re-attempt page
+                actionLink = `<a href="${paymentPageUrl}" class="btn btn-primary" style="padding: 8px 15px; font-size: 14px; border-color: #c53030; background-color: #c53030; color: white;">Re-attempt Exam</a>`;
                 break;
             default: // Pending
                 statusColor = 'var(--warning)';
                 statusText = 'Currently Open';
-                // Link directly to the final exam page, fulfilling the request.
-                actionLink = `<a href="${finalExamPage}" class="btn btn-primary" style="padding: 8px 15px; font-size: 14px;">Apply Now / Take Exam</a>`;
+                // Link directly to the payment page
+                actionLink = `<a href="${paymentPageUrl}" class="btn btn-primary" style="padding: 8px 15px; font-size: 14px;">Take Exam (Fee Required)</a>`;
                 break;
         }
+        // --- END OF REQUEST 1 IMPLEMENTATION ---
 
         const itemHtml = `
             <div class="data-item animated-item">
@@ -901,7 +903,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (toggle && content) {
             toggle.addEventListener('click', function(event) {
-                // Only act on desktop view (window width check here prevents mobile double-click issues)
+                // Only run for desktop view (prevent mobile interference)
                 if (window.innerWidth > 1024) { 
                     event.preventDefault(); 
                     const isVisible = content.style.display === 'block';
