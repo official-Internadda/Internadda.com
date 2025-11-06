@@ -3,27 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join the Internadda Community</title>
-    <meta name="description" content="Connect with fellow learners, mentors, and partners. Join the Internadda community today! (Coming Soon)">
+    <title>The Internadda Adda is Open! Join the Fun Community! 🎉</title>
+    <meta name="description" content="Tired of solo-studying? Dive into Internadda's lively community on WhatsApp! Get instant updates, exclusive job tips, and connect with thousands of future leaders.">
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .placeholder-content { text-align: center; padding: 80px 20px; min-height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center;}
-        .placeholder-content i { font-size: 4rem; color: var(--primary); margin-bottom: 20px; }
+        /* Base styles from style.css are inherited */
+        .community-hero { 
+            text-align: center; 
+            padding: 100px 20px; 
+            min-height: 80vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* --- Animations & Fun Elements --- */
+        
+        /* 1. Floating Icons Animation */
+        .icon-float {
+            position: absolute;
+            font-size: 2.5rem;
+            opacity: 0.2;
+            animation: float-around 15s infinite ease-in-out;
+            color: var(--white);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Define unique positions and delays for icons */
+        #icon-a { top: 10%; left: 5%; animation-delay: 0s; font-size: 3rem; }
+        #icon-b { bottom: 15%; right: 10%; animation-delay: 3s; font-size: 2.2rem; }
+        #icon-c { top: 30%; right: 25%; animation-delay: 6s; }
+        #icon-d { bottom: 5%; left: 30%; animation-delay: 9s; font-size: 3.5rem; }
+
+        @keyframes float-around {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(20px, 30px) rotate(10deg) scale(1.1); }
+            66% { transform: translate(-20px, -30px) rotate(-10deg) scale(0.9); }
+        }
+
+        /* 2. Headline Animation */
+        .community-hero h1 { 
+            font-size: 3.5rem; 
+            font-weight: 800; 
+            margin-bottom: 25px; 
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            animation: zoom-in 1s ease-out;
+        }
+        @keyframes zoom-in {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* 3. WhatsApp Button Styling & Pulse Animation */
+        .btn-whatsapp {
+            background-color: #25d366; /* WhatsApp Green */
+            color: var(--white);
+            font-size: 1.4rem;
+            padding: 18px 40px;
+            border-radius: 50px; /* Pill shape */
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 40px;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+            animation: pulse-whatsapp 2s infinite ease-in-out;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 10;
+        }
+        .btn-whatsapp:hover {
+            background-color: #128c7e;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.6);
+            transform: scale(1.05) translateY(-3px);
+            animation: none; /* Stop pulsing on hover */
+        }
+        .btn-whatsapp i {
+            font-size: 1.8rem;
+        }
+        
+        @keyframes pulse-whatsapp {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .community-hero h1 { font-size: 2.5rem; }
+            .btn-whatsapp { font-size: 1.2rem; padding: 15px 30px; }
+            .icon-float { font-size: 1.5rem !important; }
+        }
     </style>
 </head>
 <body>
-
     <main>
-         <section class="placeholder-content">
-             <i class="fas fa-users"></i>
-            <h1 style="font-size: 2.5rem; margin-bottom: 20px;">Join Our Community</h1>
-            <p style="font-size: 1.2rem; color: var(--gray); max-width: 600px;">
-                Exciting things are coming! This space will soon host forums, discussion groups, and ways to connect with peers, mentors, and partner companies. Stay tuned!
+         <section class="community-hero">
+             
+             <i class="fab fa-whatsapp icon-float" id="icon-a"></i>
+             <i class="fas fa-laugh icon-float" id="icon-b"></i>
+             <i class="fas fa-lightbulb icon-float" id="icon-c"></i>
+             <i class="fas fa-code icon-float" id="icon-d"></i>
+             
+            <h1>Welcome to the Internadda Adda!</h1>
+            <p style="font-size: 1.4rem; max-width: 700px; margin: 0 auto; line-height: 1.6;">
+                Forget boring study sessions! Jump into the most energetic community of future engineers, data scientists, and marketers. This is where the magic happens: instant updates, top tips, and zero lecture vibes!
             </p>
-            <a href="/index.html" class="btn btn-primary" style="margin-top: 30px;">Back to Home</a>
+
+            <a href="https://whatsapp.com/channel/0029VbBkfHo2975DOvnuGz0e" 
+               class="btn btn-whatsapp" 
+               target="_blank">
+                <i class="fab fa-whatsapp"></i> Join the WhatsApp Channel Now!
+            </a>
+
+            <div style="margin-top: 20px; color: rgba(255, 255, 255, 0.8);">
+                <p>Over 10,000+ Students Already Inside! Don't Miss Out. 🚀</p>
+            </div>
          </section>
     </main>
-
 
     <script src="../script.js"></script>
 </body>
