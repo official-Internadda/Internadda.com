@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us — Internadda</title>
+    <meta name="description" content="We're here to help you start your career. Reach out to Internadda's support team via email or phone for course, internship, or technical queries.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
@@ -11,6 +12,129 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-app-compat.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-auth-compat.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-firestore-compat.min.js"></script>
+
+    <style>
+        /* Custom Styles for Modern Contact Page */
+        
+        .contact-grid { 
+            display: flex; 
+            gap: 50px; 
+            margin-top: 40px; 
+        }
+        
+        .info-panel {
+            flex: 1;
+            padding: 30px;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            height: fit-content;
+        }
+
+        .info-item {
+            margin-bottom: 30px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .info-icon-box {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-right: 20px;
+            width: 40px;
+            flex-shrink: 0;
+        }
+
+        .info-details strong {
+            font-size: 1.15rem;
+            display: block;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+
+        .info-details a, .info-details span {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+
+        .info-details a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        .form-panel {
+            flex: 1.5;
+            padding: 40px;
+            background-color: #eef2f7; /* Light background for the form area */
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            position: relative;
+        }
+        
+        .form-panel::before {
+            content: "\f0e0"; /* Envelope icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: -20px;
+            right: 20px;
+            font-size: 4rem;
+            color: rgba(43, 108, 176, 0.1); /* Very light, subtle icon */
+            z-index: 0;
+        }
+        
+        .form-panel h2 {
+             font-size: 2rem;
+             margin-bottom: 30px;
+             color: var(--primary);
+             position: relative;
+             z-index: 1;
+        }
+        
+        /* Form group overrides for better look */
+        .form-panel .form-group { margin-bottom: 24px; position: relative; z-index: 1;}
+        .form-panel .form-group label { font-weight: 700; color: var(--primary); }
+        .form-panel input[type="text"],
+        .form-panel input[type="email"],
+        .form-panel textarea {
+            padding: 14px 18px;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            transition: all 0.3s;
+            background: var(--white);
+        }
+        .form-panel input:focus,
+        .form-panel textarea:focus {
+            box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.15);
+        }
+        
+        .form-panel textarea {
+            min-height: 120px;
+            resize: vertical;
+            font-family: 'Inter', sans-serif;
+            font-size: 17px;
+        }
+
+        .form-panel button[type="submit"] {
+            padding: 16px 28px;
+            font-size: 1.05rem;
+        }
+
+        @media (max-width: 900px) {
+            .contact-grid {
+                flex-direction: column;
+                gap: 30px;
+            }
+            .info-panel {
+                padding: 20px;
+            }
+            .form-panel {
+                padding: 30px;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -34,7 +158,6 @@
                         <a href="community/academy.html" class="dropdown-link">Offline Academy</a>
                     </div>
                 </div>
-                <!-- MOBILE MENU LINKS (Only explicitly requested links plus Mobile Actions) -->
                 <a href="/blog/index.html" class="nav-link mobile-only-link">Blog</a>
                 <a href="/contact.html" class="nav-link mobile-only-link">Contact</a>
                 
@@ -82,45 +205,68 @@
     <main>
         <section class="hero" style="padding: 60px 0; text-align: center;">
             <div class="container">
-                <h1 class="hero-heading" style="font-size: 2.5rem;">Get in Touch</h1>
-                <p class="hero-description" style="max-width: 800px; margin: 0 auto;">We're here to help. If you have any questions, please don't hesitate to reach out.</p>
+                <h1 class="hero-heading" style="font-size: 2.5rem;">Let's Connect</h1>
+                <p class="hero-description" style="max-width: 800px; margin: 0 auto;">Whether you have a quick question or a detailed inquiry, we are here to support your career journey.</p>
             </div>
         </section>
 
         <section style="padding: 60px 0;">
-            <div class="container" style="max-width: 800px; margin: 0 auto; display: flex; gap: 40px;">
-                <div style="flex: 1;">
-                    <h2 style="font-size: 2rem; margin-bottom: 20px;">Contact Information</h2>
-                    <div style="margin-bottom: 20px;">
-                        <strong>Address:</strong><br>
-                        Karawal Nagar<br>
-                        New Delhi, 110090, India
+            <div class="container contact-grid">
+                
+                <div class="info-panel">
+                     <h2 style="font-size: 2rem; margin-bottom: 30px; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px;">Contact Channels</h2>
+
+                    <div class="info-item">
+                        <div class="info-icon-box"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="info-details">
+                            <strong>Official Address</strong>
+                            <span>Karawal Nagar</span>
+                            <span>New Delhi, 110090, India</span>
+                        </div>
                     </div>
-                    <div style="margin-bottom: 20px;">
-                        <strong>Email:</strong><br>
-                        <a href="mailto:support@internadda.com">support@internadda.com</a>
+
+                    <div class="info-item">
+                        <div class="info-icon-box"><i class="fas fa-envelope"></i></div>
+                        <div class="info-details">
+                            <strong>Email Support</strong>
+                            <a href="mailto:official.internadda@gmail.com">official.internadda@gmail.com</a>
+                            <span>(General Inquiries & Support)</span>
+                        </div>
                     </div>
-                    <div>
-                        <strong>Phone:</strong><br>
-                        <a href="tel:+918287742390">+91 82877 42390</a>
+
+                    <div class="info-item">
+                        <div class="info-icon-box"><i class="fas fa-phone-alt"></i></div>
+                        <div class="info-details">
+                            <strong>Phone Number</strong>
+                            <a href="tel:+918287742390">+91 82877 42390</a>
+                            <span>(Mon - Fri, 10:00 AM - 6:00 PM IST)</span>
+                        </div>
                     </div>
                 </div>
-                <div style="flex: 1.5;">
-                     <h2 style="font-size: 2rem; margin-bottom: 20px;">Send Us a Message</h2>
+                
+                <div class="form-panel">
+                     <h2 style="font-size: 2rem; margin-bottom: 20px;">Drop Us a Line</h2>
+                     <p style="margin-bottom: 30px; color: var(--dark); font-size: 1.1rem; line-height: 1.6;">
+                        Describe your query below. Our team will get back to you within 24-48 business hours via the provided email address.
+                    </p>
                      <form>
                         <div class="form-group">
                             <label for="name">Full Name</label>
-                            <input type="text" id="name" required>
+                            <input type="text" id="name" required placeholder="Enter your full name">
                         </div>
                          <div class="form-group">
                             <label for="email">Email Address</label>
-                            <input type="email" id="email" required>
+                            <input type="email" id="email" required placeholder="name@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject / Inquiry Type</label>
+                            <input type="text" id="subject" required placeholder="E.g., Internship Test Query, Course Access Issue, Partnership">
                         </div>
                          <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" rows="5" style="width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #e2e8f0;"></textarea>
+                            <label for="message">Your Message</label>
+                            <textarea id="message" rows="5" required placeholder="Tell us how we can help you..."></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Send Inquiry</button>
                      </form>
                 </div>
             </div>
@@ -150,7 +296,7 @@
                     <ul class="footer-links">
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="contact.html">Contact Us</a></li>
-                        <li><a href="#">Careers</a></li>
+                        <li><a href="jobs.html">Careers</a></li>
                     </ul>
                 </div>
                 <div class="footer-links-column">
@@ -164,7 +310,7 @@
                  <div class="footer-links-column">
                     <h3 class="footer-links-title">Contact</h3>
                      <ul class="footer-links">
-                        <li><a href="mailto:support@internadda.com">support@internadda.com</a></li>
+                        <li><a href="mailto:official.internadda@gmail.com">official.internadda@gmail.com</a></li>
                         <li><a href="tel:+918287742390">+91 82877 42390</a></li>
                         <li>New Delhi, India</li>
                     </ul>
