@@ -82,7 +82,8 @@
             box-shadow: 0 8px 16px rgba(0, 119, 181, 0.2);
         }
         .btn-instagram {
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            /* Completed CSS gradient */
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
             color: var(--white);
         }
         .btn-instagram:hover {
@@ -103,32 +104,28 @@
 <body>
     <header>
         <div class="container header-container">
-             <a href="/" class="logo">
-                 <img src="images/logo.jpg" alt="InternAdda Logo" class="logo-img">
-                <span class="logo-text">InternAdda</span>
-            </a>
-
+        <a href="index.html" class="logo">
+          <img src="images/logo.jpg" alt="InternAdda Logo" class="logo-img">
+          <span class="logo-text">InternAdda</span>
+        </a>
             <nav class="nav-menu">
-                 <a href="/" class="nav-link">Home</a>
-                <a href="/courses/course.html" class="nav-link">Courses</a>
-                <a href="/intern/internship.html" class="nav-link">Internships</a>
-                <a href="/jobs.html" class="nav-link">Jobs</a>
-                <a href="/about.html" class="nav-link">About</a>
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="courses/course.html" class="nav-link">Courses</a>
+                <a href="intern/internship.html" class="nav-link">Internships</a>
+                <a href="jobs.html" class="nav-link">Jobs</a>
+                <a href="about.html" class="nav-link">About</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle">Community <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
-                        <a href="/community/join.html" class="dropdown-link">Join Community</a>
-                        <a href="/community/partners.html" class="dropdown-link">Partners</a>
-                        <a href="/blog/index.html" class="dropdown-link">Blog</a>
-                        <a href="/community/academy.html" class="dropdown-link">Offline Academy</a>
+                        <a href="community/join.html" class="dropdown-link">Join Community</a>
+                        <a href="community/partners.html" class="dropdown-link">Partners</a>
+                        <a href="blog/index.html" class="dropdown-link">Blog</a>
+                        <a href="community/academy.html" class="dropdown-link">Offline Academy</a>
                     </div>
                 </div>
-                <a href="/jobs.html" class="nav-link mobile-only-link">Jobs</a>
-                <a href="/contact.html" class="nav-link mobile-only-link">Contact</a>
+                <!-- MOBILE MENU LINKS (Fixed Menu Structure from Request 2) -->
                 <a href="/blog/index.html" class="nav-link mobile-only-link">Blog</a>
-                <a href="/community/join.html" class="nav-link mobile-only-link">Community</a>
-                <a href="/community/partners.html" class="nav-link mobile-only-link">Partners</a>
-                <a href="/community/academy.html" class="nav-link mobile-only-link">Offline Academy</a>
+                <a href="/contact.html" class="nav-link mobile-only-link">Contact</a>
                 
                 <div class="nav-actions-mobile">
                      <div class="user-profile hidden" id="userProfileMobile">
@@ -144,19 +141,16 @@
                     </div>
                 </div>
             </nav>
-
             <div class="header-actions">
                 <div class="search-container">
                     <i class="fas fa-search search-icon"></i>
-                     <input type="text" id="searchInput" class="search-input" placeholder="Search for jobs or keywords...">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search courses & domains...">
                 </div>
-
-                <div id="authButtons">
+                 <div id="authButtons">
                     <a href="#" class="btn btn-outline" id="loginBtnHeader">Log in</a>
                     <a href="#" class="btn btn-primary" id="signupBtnHeader">Sign up</a>
                 </div>
-
-                <div class="user-profile hidden" id="userProfile">
+                 <div class="user-profile hidden" id="userProfile">
                     <img src="images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeader">
                     <span id="userNameHeader"></span>
                     <div class="dropdown-menu" id="userDropdown">
@@ -165,7 +159,6 @@
                     </div>
                 </div>
             </div>
-
             <button class="hamburger-menu" id="hamburgerMenu">
                 <span></span>
                 <span></span>
@@ -176,29 +169,58 @@
     </header>
 
     <main>
-        <section class="jobs-hero"> <div class="container">
+        <section class="jobs-hero">
+            <div class="container">
                 <div class="jobs-content">
                     <div class="animation-container">
-                        <svg width="120" height="120" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="url(#grad)">
-                            <defs>
-                                <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:var(--primary);stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:var(--secondary);stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                            <path d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"/>
-                            <path d="M11,6a1,1,0,0,0-1,1V9a1,1,0,0,0,2,0V7A1,1,0,0,0,11,6Z"/>
-                            <path d="M11,13a1,1,0,0,0-1,1v2a1,1,0,0,0,2,0V14A1,1,0,0,0,11,13Z"/>
-                        </svg>
+                        <i class="fas fa-rocket" style="font-size: 5rem; color: var(--primary);"></i>
                     </div>
-                    <h1 class="jobs-heading">Our Next Chapter Awaits</h1>
-                    <p class="jobs-description">We're hard at work building the future of career development and currently aren't hiring for full-time roles. New opportunities are on the horizon, so please check back soon. The best way to stay updated is by following us!</p>
+                    <h1 class="jobs-heading">Join the Internadda Team</h1>
+                    <p class="jobs-description">
+                        We are currently growing rapidly! While we are finalizing our formal job portal, we welcome passionate individuals who share our vision of transforming careers. 
+                        Follow our journey on social media to be the first to know about new career openings.
+                    </p>
                     <div class="social-follow">
-                        <a href="https://www.linkedin.com/company/internadda-india/?viewAsMember=true" target="_blank" class="social-btn btn-linkedin">
+                        <a href="https://www.linkedin.com/company/internadda-india" target="_blank" class="social-btn btn-linkedin">
                             <i class="fab fa-linkedin"></i> Follow on LinkedIn
                         </a>
-                        <a href="https://www.instagram.com/internadda.india" target="_blank" class="social-btn btn-instagram"> <i class="fab fa-instagram"></i> Follow on Instagram
+                        <a href="https://www.instagram.com/internadda.india" target="_blank" class="social-btn btn-instagram">
+                            <i class="fab fa-instagram"></i> Follow on Instagram
                         </a>
+                    </div>
+                    <a href="contact.html" class="btn btn-outline" style="margin-top: 30px;">Contact HR Directly</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Optional Section for Mission/Values -->
+        <section class="value-prop" style="padding: 60px 0;">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Why Work With Us?</h2>
+                    <p class="section-subtitle">We are building the future of practical education and career placement in India.</p>
+                </div>
+                <div class="value-cards" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+                    <div class="value-card" style="padding: 30px;">
+                        <div class="value-icon" style="width: 70px; height: 70px; font-size: 30px; margin-bottom: 15px;">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3 class="value-title" style="font-size: 20px;">Innovative Culture</h3>
+                        <p class="value-description" style="font-size: 15px;">Be part of a team that challenges the status quo in EdTech and career services.</p>
+                    </div>
+                    <div class="value-card" style="padding: 30px;">
+                        <div class="value-icon" style="width: 70px; height: 70px; font-size: 30px; margin-bottom: 15px;">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3 class="value-title" style="font-size: 20px;">Impact Focused</h3>
+                        <p class="value-description" style="font-size: 15px;">Your work directly helps thousands of students launch their professional lives.</p>
+                    </div>
+                    <div class="value-card" style="padding: 30px;">
+                        <div class="value-icon" style="width: 70px; height: 70px; font-size: 30px; margin-bottom: 15px;">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="value-title" style="font-size: 20px;">Career Growth</h3>
+                        <p class="value-description" style="font-size: 15px;">We offer competitive growth paths in a rapidly expanding, funded startup environment.</p>
                     </div>
                 </div>
             </div>
@@ -207,7 +229,7 @@
 
     <footer>
         <div class="container">
-             <div class="footer-grid">
+            <div class="footer-grid">
                 <div class="footer-brand">
                     <div class="footer-logo">Internadda</div>
                     <p class="footer-description">Transforming careers through learning, interning, and earning opportunities.</p>
@@ -227,8 +249,8 @@
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Learn</h3>
                     <ul class="footer-links">
-                        <li><a href="/courses/course.html">Browse Courses</a></li>
-                        <li><a href="/courses/course.html">Free Courses</a></li>
+                        <li><a href="courses/course.html">Browse Courses</a></li>
+                        <li><a href="courses/course.html">Free Courses</a></li>
                         <li><a href="#">Paid Courses</a></li>
                         <li><a href="#">Become an Instructor</a></li>
                     </ul>
@@ -237,7 +259,7 @@
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Intern</h3>
                     <ul class="footer-links">
-                        <li><a href="/intern/internship.html">Find Internships</a></li>
+                        <li><a href="intern/internship.html">Find Internships</a></li>
                         <li><a href="#">For Companies</a></li>
                         <li><a href="#">Success Stories</a></li>
                         <li><a href="#">Career Coaching</a></li>
@@ -247,31 +269,10 @@
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Community</h3>
                     <ul class="footer-links">
-                        <li><a href="/community/join.html">Join Community</a></li>
-                        <li><a href="/community/partners.html">Partners</a></li>
-                        <li><a href="/blog/index.html">Blog</a></li>
-                        <li><a href="/community/academy.html">Offline Academy</a></li>
-                    </ul>
-                </div>
-
-
-                     <div class="footer-links-column">
-                    <h3 class="footer-links-title">InternAdda</h3>
-                    <ul class="footer-links">
-                        <li><a href="/about.html">About Us</a></li>
-                        <li><a href="/contact.html">Contact Us</a></li>
-                        <li><a href="/terms.html">Terms & Conditions</a></li>
-                        <li><a href="/refund.html">Refund Policy</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">More</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Affiliate Program</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">QnA</a></li>
-                        <li><a href="#">Daily Challenges</a></li>
+                        <li><a href="community/join.html">Join Community</a></li>
+                        <li><a href="community/partners.html">Partners</a></li>
+                        <li><a href="blog/index.html">Blog</a></li>
+                        <li><a href="community/academy.html">Offline Academy</a></li>
                     </ul>
                 </div>
             </div>
@@ -287,7 +288,7 @@
             <span class="close-btn" id="closeModal">&times;</span>
 
             <div id="loginSection" class="auth-section">
-                <div class="auth-notification">
+                 <div class="auth-notification">
                     <i class="fas fa-lock"></i> <strong>Log in Required:</strong> Log in to take courses, track progress, and apply for internships.
                  </div>
                 <h2 class="auth-title">Welcome Back</h2>
@@ -345,72 +346,73 @@
 
             <div id="dashboardSection" class="auth-section">
                  <div class="dashboard-content">
-                    <div class="profile-tabs">
+                    
+                     <div class="profile-tabs">
                          <button class="tab-btn active" data-tab="profile">Profile</button>
                          <button class="tab-btn" data-tab="internships">Internships</button>
-                    </div>
+                     </div>
 
                     <div id="profileTabContent" class="tab-content">
-                         <div id="profileDisplaySection">
-                             <div class="user-info-profile">
-                                 <div class="profile-avatar-display">
-                                     <img id="userAvatarDashboard" class="user-avatar" src="images/no_image.png" alt="User Avatar">
-                                 </div>
-                                 <div class="user-profile-details">
-                                     <h2 id="userNameDashboard"></h2>
-                                     <p id="userEmailDashboard"></p>
-                                 </div>
-                             </div>
-                             <div class="profile-details">
-                                 <h3 class="section-title-small">Profile Information</h3>
-                                 <div class="profile-info-item">
-                                     <strong>Gender:</strong> <span id="profileGenderDisplay">Not specified</span>
-                                 </div>
-                                 <div class="profile-info-item">
-                                     <strong>Interested Domain:</strong> <span id="profileDomainDisplay">Not specified</span>
-                                 </div>
-                             </div>
-                             <button class="btn btn-primary" id="shareProfileBtn" style="width: 100%; margin-top: 20px;"><i class="fas fa-share-alt" style="margin-right: 8px;"></i> Share My Profile</button>
-                             <button class="btn btn-outline" id="editProfileBtn">Edit Profile</button>
-                         </div>
+                        <div id="profileDisplaySection">
+                            <div class="user-info-profile">
+                                <div class="profile-avatar-display">
+                                    <img id="userAvatarDashboard" class="user-avatar" src="images/no_image.png" alt="User Avatar">
+                                </div>
+                                <div class="user-profile-details">
+                                    <h2 id="userNameDashboard"></h2>
+                                    <p id="userEmailDashboard"></p>
+                                </div>
+                            </div>
+                            <div class="profile-details">
+                                <h3 class="section-title-small">Profile Information</h3>
+                                <div class="profile-info-item">
+                                    <strong>Gender:</strong> <span id="profileGenderDisplay">Not specified</span>
+                                </div>
+                                <div class="profile-info-item">
+                                    <strong>Interested Domain:</strong> <span id="profileDomainDisplay">Not specified</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" id="shareProfileBtn" style="width: 100%; margin-top: 20px;"><i class="fas fa-share-alt" style="margin-right: 8px;"></i> Share My Profile</button>
+                            <button class="btn btn-outline" id="editProfileBtn">Edit Profile</button>
+                        </div>
 
-                         <div id="profileEditSection" class="hidden">
+                        <div id="profileEditSection" class="hidden">
                             <div id="profileEditError" class="error" style="display: none;"></div>
-                             <div class="profile-avatar-display">
-                                 <img id="userAvatarPreview" class="user-avatar" src="images/no_image.png" alt="User Avatar Preview">
-                                 <label for="profileImageInput" class="file-upload-label">
-                                     <i class="fas fa-upload"></i> Upload Image
-                                 </label>
-                                 <input type="file" id="profileImageInput" accept="image/*">
-                                 <p class="profile-avatar-hint" style="margin-top: 5px; font-size: 0.85rem; color: #f56565;">*Image upload is for demo only; file storage is not active.</p>
-                             </div>
-                             <div class="form-group">
-                                 <label for="profileName">Full Name</label>
-                                 <input type="text" id="profileName" placeholder="Enter your full name">
-                             </div>
-                             <div class="form-group">
-                                 <label for="profileGender">Gender</label>
-                                 <select id="profileGender">
-                                     <option value="">Select Gender</option>
-                                     <option value="Male">Male</option>
-                                     <option value="Female">Female</option>
-                                     <option value="Other">Other</option>
-                                 </select>
-                             </div>
-                             <div class="form-group">
-                                 <label for="interestedDomain">Interested Domain</label>
-                                 <select id="interestedDomain">
-                                     <option value="">Select Domain</option>
-                                     <option value="Web Development">Web Development</option>
-                                     <option value="Data Science & AI">Data Science & AI</option>
-                                     <option value="Digital Marketing">Digital Marketing</option>
-                                     <option value="UI/UX Design">UI/UX Design</option>
-                                 </select>
-                             </div>
-                             <button class="btn btn-primary" id="saveProfileBtn">Save Profile</button>
-                         </div>
+                            <div class="profile-avatar-display">
+                                <img id="userAvatarPreview" class="user-avatar" src="images/no_image.png" alt="User Avatar Preview">
+                                <label for="profileImageInput" class="file-upload-label">
+                                    <i class="fas fa-upload"></i> Upload Image
+                                </label>
+                                <input type="file" id="profileImageInput" accept="image/*">
+                                <p class="profile-avatar-hint" style="margin-top: 5px; font-size: 0.85rem; color: #f56565;">*Image upload is for demo only; file storage is not active.</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="profileName">Full Name</label>
+                                <input type="text" id="profileName" placeholder="Enter your full name">
+                            </div>
+                            <div class="form-group">
+                                <label for="profileGender">Gender</label>
+                                <select id="profileGender">
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="interestedDomain">Interested Domain</label>
+                                <select id="interestedDomain">
+                                    <option value="">Select Domain</option>
+                                    <option value="Web Development">Web Development</option>
+                                    <option value="Data Science & AI">Data Science & AI</option>
+                                    <option value="Digital Marketing">Digital Marketing</option>
+                                    <option value="UI/UX Design">UI/UX Design</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary" id="saveProfileBtn">Save Profile</button>
+                        </div>
                     </div>
-
+                     
                     <div id="coursesTabContent" class="tab-content hidden">
                         <h3 class="section-title-small">📚 Enrolled Courses & Certificates</h3>
                         <p style="color: var(--gray); margin-bottom: 20px;">Track your progress and access completion certificates here.</p>
@@ -445,7 +447,7 @@
             const signupSection = document.getElementById('signupSection');
             const navMenu = document.querySelector('.nav-menu');
             const hamburgerMenu = document.getElementById('hamburgerMenu');
-            
+
             // Special elements for navigation inside modal
             const showSignupInModal = document.getElementById('showSignup');
             const showLoginInModal = document.getElementById('showLogin');
