@@ -40,7 +40,7 @@
             -moz-osx-font-smoothing: grayscale;
         }
         
-        /* Animation */
+        /* Animation - Retaining the fade-in but ensuring content is visible */
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
@@ -200,9 +200,18 @@
             background: var(--gradient);
             color: var(--white);
         }
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        .btn-outline:hover {
+             background-color: rgba(43, 108, 176, 0.1);
+             transform: translateY(-2px);
+        }
 
         .course-section {
-            padding: 0; /* Removed vertical padding from section wrapper */
+            padding: 0;
         }
 
         .course-title-main {
@@ -215,33 +224,13 @@
             -webkit-text-fill-color: transparent;
         }
 
+        /* Progress Bar (Global View) - Hide since using Sidebar */
         .progress-container {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin: 40px auto;
-        }
-        .progress-bar-bg {
-            flex-grow: 1;
-            height: 12px;
-            background-color: #e2e8f0;
-            border-radius: 999px;
-            overflow: hidden;
-        }
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            transition: width 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-        .progress-text {
-            font-weight: 600;
-            color: var(--dark);
-            min-width: 120px;
-            text-align: right;
+            display: none;
         }
 
         .course-content-wrapper {
-            margin-top: 50px;
+            margin-top: 20px;
         }
 
         .course-page {
@@ -249,7 +238,6 @@
             padding: 40px;
             border-radius: 16px;
             box-shadow: var(--shadow);
-            transition: opacity 0.5s ease-in-out;
             position: relative;
             min-height: 500px;
         }
@@ -300,28 +288,12 @@
             line-height: 1.5;
         }
 
-        .course-page-body table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-        }
-        .course-page-body th, .course-page-body td {
-            border: 1px solid #e2e8f0;
-            padding: 12px 16px;
-            text-align: left;
-        }
         .course-page-body th {
             background-color: var(--dark);
             color: var(--light);
             font-weight: 600;
         }
-        .course-page-body tr:nth-child(even) {
-            background-color: #f7fafc;
-        }
-
+        
         .quiz-section {
             border-top: 2px solid #e2e8f0;
             padding-top: 30px;
@@ -330,12 +302,10 @@
             flex-direction: column;
             gap: 20px;
         }
-
         .quiz-question {
             font-size: 1.3rem;
             font-weight: 600;
         }
-
         .quiz-options {
             display: flex;
             flex-direction: column;
@@ -370,38 +340,20 @@
             font-weight: 600;
             animation: fadeIn 0.5s;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .btn.hidden {
-            display: none !important;
-        }
-        #finishButton {
-            width: 100%;
-            text-align: center;
-        }
         
-        .takeaways {
-            margin-top: 40px;
-            padding: 30px;
-            background: #eef2f7;
-            border-left: 5px solid var(--primary);
-            border-radius: 8px;
-        }
-        .takeaways h3 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: var(--primary);
-        }
-        .takeaways ul {
-            list-style-type: '✅ ';
-            padding-left: 20px;
+        /* Navigation Buttons */
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
         }
         
         /* Video Section */
         .video-wrapper {
-            margin: 30px 0 0; /* Adjusted margin to fit new layout */
+            margin: 30px 0 0; 
             position: relative;
             cursor: pointer;
             border-radius: 16px;
@@ -412,33 +364,13 @@
         .video-wrapper:hover {
             transform: scale(1.02);
         }
-        .video-wrapper img {
-            width: 100%;
-            display: block;
-            border-radius: 16px;
-            aspect-ratio: 16/9;
-            object-fit: cover;
-        }
-        .video-wrapper .play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 4.5rem;
-            color: rgba(255, 255, 255, 0.9);
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-            transition: transform 0.2s ease, color 0.2s ease;
-            pointer-events: none;
-        }
-        .video-wrapper:hover .play-button {
-            transform: translate(-50%, -50%) scale(1.1);
-            color: #fff;
-        }
         .video-embed-container {
             position: relative;
             width: 100%;
             padding-bottom: 56.25%; /* 16:9 aspect ratio */
             height: 0;
+            border-radius: 16px;
+            overflow: hidden;
         }
         .video-embed-container iframe {
             position: absolute;
@@ -450,25 +382,24 @@
         }
 
         /* =================================
-           LMS Layout (Coursera/edX Style)
+           LMS Layout
            ================================= */
         .lms-wrapper {
             display: grid;
-            grid-template-columns: 320px 1fr; /* Fixed sidebar, flexible content */
+            grid-template-columns: 320px 1fr;
             gap: 25px;
             min-height: 100vh;
             padding-top: 25px;
         }
 
-        /* --- Left Sidebar (Course Navigation) --- */
         .course-sidebar {
             background-color: var(--white);
             border-radius: 12px;
             box-shadow: var(--shadow);
             padding: 20px;
             position: sticky;
-            top: 100px; /* Below the fixed header */
-            height: calc(100vh - 120px); /* Fill vertical space, leaving room for header/footer */
+            top: 100px;
+            height: calc(100vh - 120px);
             overflow-y: auto;
         }
 
@@ -481,12 +412,6 @@
             padding-bottom: 10px;
         }
         
-        .progress-bar-small { /* Sidebar Progress Bar */
-            margin-bottom: 20px;
-        }
-        .progress-bar-small .progress-bar-bg {
-             height: 8px;
-        }
         .progress-bar-small .progress-text {
             font-size: 0.9rem;
             text-align: left;
@@ -495,7 +420,6 @@
             font-weight: 600;
         }
         
-
         .module-list {
             list-style: none;
             padding: 0;
@@ -507,68 +431,26 @@
             cursor: pointer;
             padding: 10px 15px;
             border-radius: 8px;
-            transition: var(--transition);
+            transition: all 0.2s ease;
             font-size: 1rem;
             font-weight: 500;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
         .module-item:hover {
             background-color: var(--light);
             color: var(--primary);
         }
-
         .module-item.active {
             background-color: var(--primary);
             color: var(--white);
             font-weight: 600;
         }
-        .module-item.active:hover {
-             background-color: var(--primary);
-             color: var(--white);
-        }
-        .module-item i {
-            color: var(--success);
-            font-size: 0.9em;
-        }
         .module-item.active i {
             color: var(--white);
         }
 
-        /* --- Right Content Area --- */
-        .course-main-content {
-            padding: 25px 0;
-        }
-        
-        .video-wrapper, .course-page {
-            box-shadow: none; /* Remove redundant shadow from content pages */
-        }
-
-        footer {
-            background-color: var(--dark);
-            color: var(--white);
-            padding: 80px 0 48px;
-        }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 56px;
-            margin-bottom: 56px;
-        }
-        .footer-brand {
-            grid-column: span 1;
-        }
-        /* ... [Footer link styles] ... */
-        .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 48px;
-            text-align: center;
-            color: #e2e8f0;
-            font-size: 15px;
-        }
-        
         /* Mobile Overrides */
         @media (max-width: 1024px) {
             .nav-menu {
@@ -577,39 +459,21 @@
             .hamburger-menu {
                 display: flex;
             }
-            .nav-menu.active {
-                /* Inherited from updated style.css */
-            }
 
             .lms-wrapper {
-                grid-template-columns: 1fr; /* Stack columns on mobile */
+                grid-template-columns: 1fr; 
                 gap: 0;
             }
             .course-sidebar {
-                position: static; /* Remove sticky behavior */
+                position: static; 
                 height: auto;
                 max-height: fit-content; 
                 border-radius: 0;
                 top: 0;
-                padding: 20px 24px; /* Adjust padding for smaller screen */
+                padding: 20px 24px;
             }
             .course-main-content {
-                 padding: 20px 24px; /* Ensure main content has horizontal padding */
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 24px;
-            }
-            .logo {
-                width: 100%;
-                justify-content: center;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr;
+                 padding: 20px 24px;
             }
         }
     </style>
@@ -626,7 +490,7 @@
                 <a href="../../index.html" class="nav-link">Home</a>
                 <a href="../course.html" class="nav-link">Courses</a>
                 <a href="../../intern/internship.html" class="nav-link">Internships</a>
-                <a href="#" class="nav-link">Jobs</a>
+                <a href="../../blog/index.html" class="nav-link mobile-only-link">Blog</a>
                 <a href="../../about.html" class="nav-link">About</a>
             </nav>
             <div class="header-actions">
@@ -647,7 +511,7 @@
         <section class="course-section">
             <div class="container lms-wrapper"> 
             
-                <div class="course-sidebar fade-in" style="animation-delay: 0.1s;">
+                <div class="course-sidebar">
                     <a href="../course.html" class="sidebar-header" style="text-decoration: none;">
                         <i class="fas fa-arrow-left"></i> Back to Courses
                     </a>
@@ -661,20 +525,20 @@
                     
                     <h3 class="sidebar-header" style="border-bottom: none; margin-bottom: 5px;">Course Content</h3>
                     <ul class="module-list" id="moduleList">
-                        </ul>
+                    </ul>
                 </div>
                 
                 <div class="course-main-content">
-                    <h1 class="course-title-main fade-in" style="text-align: left; font-size: 2.2rem; margin-top: 0; margin-bottom: 25px;">Essential Data Science Intern Course</h1>
+                    <h1 class="course-title-main" style="text-align: left; font-size: 2.2rem; margin-top: 0; margin-bottom: 25px;">Essential Data Science Intern Course</h1>
                     
-                    <div id="video-container" class="fade-in">
-                        <div class="video-wrapper" id="video-thumbnail">
-                             </div>
+                    <div id="video-container">
+                         <!-- Video content will be dynamically loaded here -->
                     </div>
                     
                     <div class="course-content-wrapper" id="courseContentWrapper">
+                        <!-- Page 1 Content -->
                         <div class="course-page active" data-page="1">
-                            <div class="fade-in">
+                            <div class="fade-in visible">
                                 <h2 class="course-page-title">Page 1: Foundations & The Data Science Ecosystem</h2>
                                 <div class="course-page-body">
                                     <h3>1️⃣ <strong>What is Data Science?</strong></h3>
@@ -683,6 +547,7 @@
                                         <li><strong>Interdisciplinary</strong> – It sits at the intersection of <strong>Statistics</strong>, <strong>Computer Science</strong>, and <strong>Domain Expertise</strong> (Business Knowledge).</li>
                                         <li><strong>Goal</strong> – To turn raw data into actionable insights and predictions.</li>
                                     </ul>
+                                    [Image of data science Venn diagram showing the intersection of Math/Stats, Computer Science, and Domain Expertise]
                                     <h3>2️⃣ <strong>Key Roles in a Data Team</strong></h3>
                                     <p>Understanding the roles helps you choose your career path:</p>
                                     <div class="table-container">
@@ -721,18 +586,22 @@
                                 <div class="quiz-section">
                                     <h3 class="quiz-question">❓ Check Your Understanding</h3>
                                     <p>Which core area is NOT typically considered one of the three foundational pillars of Data Science (excluding Domain Expertise)?</p>
-                                    <div class="quiz-options">
+                                    <div class="quiz-options" data-quiz-id="1">
                                         <div class="option" data-answer="1">A) Statistics/Mathematics</div>
                                         <div class="option" data-answer="2">B) Visual Art</div>
                                         <div class="option" data-answer="3">C) Computer Science (Programming)</div>
                                         <div class="option" data-answer="4">D) Machine Learning</div>
                                     </div>
                                     <div class="quiz-feedback hidden" id="feedback1"></div>
-                                    <button class="btn btn-primary hidden" id="nextButton1">Next Page</button>
+                                </div>
+                                <div class="navigation-buttons">
+                                    <button class="btn btn-outline" disabled style="visibility: hidden;">Previous</button>
+                                    <button class="btn btn-primary hidden" id="nextButton1">Next Page <i class="fas fa-arrow-right"></i></button>
                                 </div>
                             </div>
                         </div>
     
+                        <!-- Page 2 Content -->
                         <div class="course-page hidden" data-page="2">
                             <div class="fade-in">
                                 <h2 class="course-page-title">Page 2: Data Acquisition & Preparation (ETL)</h2>
@@ -765,18 +634,22 @@ df['Age'].fillna(df['Age'].mean(), inplace=True)</pre>
                                 <div class="quiz-section">
                                     <h3 class="quiz-question">❓ Check Your Understanding</h3>
                                     <p>In the Data Science process, which crucial step is considered to take up the majority (around 80%) of a Data Scientist's time?</p>
-                                    <div class="quiz-options">
+                                    <div class="quiz-options" data-quiz-id="2">
                                         <div class="option" data-answer="1">A) Model Deployment</div>
                                         <div class="option" data-answer="2">B) Machine Learning Model Training</div>
                                         <div class="option" data-answer="3">C) Data Cleaning and Preparation (Wrangling)</div>
                                         <div class="option" data-answer="4">D) Creating final Powerpoint presentations</div>
                                     </div>
                                     <div class="quiz-feedback hidden" id="feedback2"></div>
-                                    <button class="btn btn-primary hidden" id="nextButton2">Next Page</button>
+                                </div>
+                                <div class="navigation-buttons">
+                                    <button class="btn btn-outline" id="prevButton2"><i class="fas fa-arrow-left"></i> Previous Page</button>
+                                    <button class="btn btn-primary hidden" id="nextButton2">Next Page <i class="fas fa-arrow-right"></i></button>
                                 </div>
                             </div>
                         </div>
     
+                        <!-- Page 3 Content -->
                         <div class="course-page hidden" data-page="3">
                             <div class="fade-in">
                                 <h2 class="course-page-title">Page 3: Exploratory Data Analysis (EDA) & Visualization</h2>
@@ -823,6 +696,7 @@ df['Age'].fillna(df['Age'].mean(), inplace=True)</pre>
                                             </tbody>
                                         </table>
                                     </div>
+                                    [Image of a scatter plot showing correlation between two variables]
                                     <h3>4️⃣ <strong>A Simple Scatter Plot Example</strong></h3>
                                     <pre>import seaborn as sns
 import matplotlib.pyplot as plt
@@ -835,37 +709,33 @@ plt.show()</pre>
                                 <div class="quiz-section">
                                     <h3 class="quiz-question">❓ Check Your Understanding</h3>
                                     <p>Which type of plot is most effective for visualizing the relationship between two continuous numerical variables, like Age and Income?</p>
-                                    <div class="quiz-options">
+                                    <div class="quiz-options" data-quiz-id="3">
                                         <div class="option" data-answer="1">A) Histogram</div>
                                         <div class="option" data-answer="2">B) Box Plot</div>
                                         <div class="option" data-answer="3">C) Bar Chart</div>
                                         <div class="option" data-answer="4">D) Scatter Plot</div>
                                     </div>
                                     <div class="quiz-feedback hidden" id="feedback3"></div>
-                                    <button class="btn btn-primary hidden" id="nextButton3">Next Page</button>
+                                </div>
+                                <div class="navigation-buttons">
+                                    <button class="btn btn-outline" id="prevButton3"><i class="fas fa-arrow-left"></i> Previous Page</button>
+                                    <button class="btn btn-primary hidden" id="nextButton3">Next Page <i class="fas fa-arrow-right"></i></button>
                                 </div>
                             </div>
                         </div>
     
+                        <!-- Page 4 Content -->
                         <div class="course-page hidden" data-page="4">
                             <div class="fade-in">
                                 <h2 class="course-page-title">Page 4: Introduction to Machine Learning Modeling</h2>
                                 <div class="course-page-body">
-                                    <h3>1️⃣ <strong>Supervised Learning</strong> 
-    
-                                    
-
-
-
-[Image of Supervised vs Unsupervised Machine Learning]
-
-
-                                    </h3>
+                                    <h3>1️⃣ <strong>Supervised Learning</strong></h3>
                                     <p>Supervised learning involves training a model on <strong>labeled data</strong> (input features $X$ and known output labels $y$). The goal is to predict the output based on new input data.</p>
                                     <ul>
                                         <li><strong>Classification:</strong> Predicts a <strong>category</strong> (e.g., Spam or Not Spam, Yes or No, Dog or Cat).</li>
                                         <li><strong>Regression:</strong> Predicts a <strong>continuous numerical value</strong> (e.g., House Price, Stock Value, Temperature).</li>
                                     </ul>
+                                    [Image of supervised machine learning workflow]
                                     <h3>2️⃣ <strong>The Machine Learning Workflow (Scikit-learn)</strong></h3>
                                     <p>Scikit-learn is the most popular library for classical ML in Python. The universal workflow involves these steps:</p>
                                     <pre>from sklearn.model_selection import train_test_split
@@ -892,18 +762,22 @@ predictions = model.predict(X_test)</pre>
                                 <div class="quiz-section">
                                     <h3 class="quiz-question">❓ Check Your Understanding</h3>
                                     <p>If you build an ML model to predict the *exact number* of rainfall (in mm) next month, which type of supervised learning task are you performing?</p>
-                                    <div class="quiz-options">
+                                    <div class="quiz-options" data-quiz-id="4">
                                         <div class="option" data-answer="1">A) Classification</div>
                                         <div class="option" data-answer="2">B) Clustering</div>
                                         <div class="option" data-answer="3">C) Regression</div>
                                         <div class="option" data-answer="4">D) Feature Engineering</div>
                                     </div>
                                     <div class="quiz-feedback hidden" id="feedback4"></div>
-                                    <button class="btn btn-primary hidden" id="nextButton4">Next Page</button>
+                                </div>
+                                <div class="navigation-buttons">
+                                    <button class="btn btn-outline" id="prevButton4"><i class="fas fa-arrow-left"></i> Previous Page</button>
+                                    <button class="btn btn-primary hidden" id="nextButton4">Next Page <i class="fas fa-arrow-right"></i></button>
                                 </div>
                             </div>
                         </div>
     
+                        <!-- Page 5 Content -->
                         <div class="course-page hidden" data-page="5">
                             <div class="fade-in">
                                 <h2 class="course-page-title">Page 5: Model Evaluation & Practical Takeaways</h2>
@@ -915,6 +789,7 @@ predictions = model.predict(X_test)</pre>
                                         <li><strong>Precision:</strong> Of all the cases predicted as positive, how many were actually positive? (Important when False Positives are costly)</li>
                                         <li><strong>Recall (Sensitivity):</strong> Of all the cases that were actually positive, how many did the model correctly identify? (Important when False Negatives are costly, e.g., disease detection)</li>
                                     </ul>
+                                    
                                     <h3>2️⃣ <strong>Dealing with Model Flaws</strong></h3>
                                     <p>Two common problems:</p>
                                     <ul>
@@ -942,13 +817,16 @@ predictions = model.predict(X_test)</pre>
                                 <div class="quiz-section">
                                     <h3 class="quiz-question">❓ Check Your Understanding</h3>
                                     <p>Which Python library is specifically designed to provide high-level functionality for building and evaluating classic Machine Learning models like Linear Regression and Support Vector Machines?</p>
-                                    <div class="quiz-options">
+                                    <div class="quiz-options" data-quiz-id="5">
                                         <div class="option" data-answer="1">A) Pandas</div>
                                         <div class="option" data-answer="2">B) Seaborn</div>
                                         <div class="option" data-answer="3">C) NumPy</div>
                                         <div class="option" data-answer="4">D) Scikit-learn</div>
                                     </div>
                                     <div class="quiz-feedback hidden" id="feedback5"></div>
+                                </div>
+                                <div class="navigation-buttons">
+                                    <button class="btn btn-outline" id="prevButton5"><i class="fas fa-arrow-left"></i> Previous Page</button>
                                     <a href="javascript:void(0);" class="btn btn-primary hidden" id="finishButton">Get Certificate of Completion</a>
                                 </div>
                             </div>
@@ -1015,19 +893,22 @@ predictions = model.predict(X_test)</pre>
         </div>
     </footer>
 
+    <!-- Note: script.js is loaded from the parent directory -->
     <script src="../../script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const coursePages = document.querySelectorAll('.course-page');
             const finishButton = document.getElementById('finishButton');
-            const userNameHeader = document.getElementById('userNameHeader');
-            const userAvatarHeader = document.getElementById('userAvatarHeader');
             let currentPage = 1;
+            let quizCorrectStatus = {}; // Tracks if the quiz on a page has been answered correctly
 
             // NEW LMS ELEMENTS
             const sidebarProgressFill = document.getElementById('sidebarProgressBar');
             const sidebarProgressText = document.getElementById('sidebarProgressText');
             const moduleList = document.getElementById('moduleList');
+            const nextButtons = document.querySelectorAll('[id^="nextButton"]');
+            const prevButtons = document.querySelectorAll('[id^="prevButton"]');
+
 
             // Module Titles for Sidebar Generation
             const moduleTitles = {
@@ -1061,7 +942,6 @@ predictions = model.predict(X_test)</pre>
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        // FIX: Only add 'visible' class, relying on pure CSS transition
                         entry.target.classList.add('visible'); 
                     }
                 });
@@ -1078,16 +958,20 @@ predictions = model.predict(X_test)</pre>
             // Function to update *both* progress bar elements and active link state
             const updateProgress = () => {
                 const totalPages = coursePages.length;
-                const progressPercentage = Math.floor(((currentPage - 1) / totalPages) * 100);
+                
+                // Calculate total completed pages (pages with correct quiz attempts)
+                let completedPages = 0;
+                for (let i = 1; i <= totalPages; i++) {
+                    if (quizCorrectStatus[i]) {
+                        completedPages++;
+                    }
+                }
+                
+                const progressPercentage = Math.floor((completedPages / totalPages) * 100);
                 
                 // Update sidebar progress
                 if(sidebarProgressFill) sidebarProgressFill.style.width = `${progressPercentage}%`;
                 if(sidebarProgressText) sidebarProgressText.textContent = `${progressPercentage}% Complete`;
-
-                if (currentPage > totalPages) {
-                    if(sidebarProgressFill) sidebarProgressFill.style.width = `100%`;
-                    if(sidebarProgressText) sidebarProgressText.textContent = `100% Complete`;
-                }
                 
                 // Update the active state of sidebar links
                 if(moduleList) {
@@ -1106,8 +990,6 @@ predictions = model.predict(X_test)</pre>
 
                 // Rebuild the video container with the new thumbnail/logic
                 if (videoContainer) {
-                    // FIX: Ensure the fade-in class is on the container, not the content inside, 
-                    // which prevents content from disappearing on navigation
                     videoContainer.innerHTML = `
                         <div class="video-wrapper" id="video-thumbnail-${pageNumber}">
                             <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" alt="Course Thumbnail">
@@ -1142,53 +1024,98 @@ predictions = model.predict(X_test)</pre>
                 const newPage = document.querySelector(`[data-page="${pageNumber}"]`);
                 if (newPage) {
                     newPage.classList.remove('hidden');
+                    
                     // Reset animation for the new page content
                     const newContent = newPage.querySelector('.fade-in');
                     if (newContent) {
-                        // Manual removal/re-observation to force re-entry animation
                         newContent.classList.remove('visible');
                         setTimeout(() => {
                            newContent.classList.add('visible');
                         }, 50);
                     }
+                    
+                    // Update buttons visibility based on quiz status
+                    const nextBtn = document.getElementById(`nextButton${pageNumber}`);
+                    const prevBtn = document.getElementById(`prevButton${pageNumber}`);
+                    
+                    // Control Next Button Lock: Only show if quiz is correct
+                    if (nextBtn) {
+                         if (quizCorrectStatus[pageNumber]) {
+                             nextBtn.classList.remove('hidden');
+                         } else {
+                             nextBtn.classList.add('hidden');
+                         }
+                    }
+                    // Control Finish Button Lock
+                    if (finishButton) {
+                        if (pageNumber === coursePages.length && quizCorrectStatus[pageNumber]) {
+                            finishButton.classList.remove('hidden');
+                        } else {
+                            finishButton.classList.add('hidden');
+                        }
+                    }
                 }
                 updateVideoPlayer(pageNumber);
                 updateProgress(); // Re-run progress update for active link color
+                
+                // Scroll to top of the content area
+                const mainContent = document.querySelector('.course-main-content');
+                if (mainContent) mainContent.scrollTop = 0;
             };
 
             const handleQuiz = (pageNumber) => {
                 const page = document.querySelector(`[data-page="${pageNumber}"]`);
-                const options = page.querySelectorAll('.option');
-                const feedbackDiv = page.querySelector('.quiz-feedback');
+                const optionsContainer = page.querySelector(`.quiz-options[data-quiz-id="${pageNumber}"]`);
+                const options = optionsContainer.querySelectorAll('.option');
+                const feedbackDiv = page.querySelector(`#feedback${pageNumber}`);
                 const nextButton = page.querySelector(`#nextButton${pageNumber}`);
+                const finishBtn = page.querySelector('#finishButton');
+
+                // If quiz already passed, immediately enable next button/certificate
+                if (quizCorrectStatus[pageNumber]) {
+                    if (nextButton) nextButton.classList.remove('hidden');
+                    if (pageNumber === coursePages.length && finishBtn) finishBtn.classList.remove('hidden');
+                }
 
                 options.forEach(option => {
                     option.addEventListener('click', () => {
                         const selected = parseInt(option.dataset.answer);
                         const isCorrect = selected === quizData[pageNumber].correct;
 
-                        options.forEach(opt => opt.style.pointerEvents = 'none');
-                        option.classList.remove('incorrect');
-                        option.classList.remove('correct');
+                        // Only allow interaction once per load if correct, otherwise allow reattempt
+                        if (quizCorrectStatus[pageNumber]) return;
+
+                        // Reset all options to neutral state and disable further clicks temporarily
+                        options.forEach(opt => {
+                            opt.classList.remove('incorrect', 'correct');
+                            opt.style.pointerEvents = 'none';
+                        });
 
                         if (isCorrect) {
+                            quizCorrectStatus[pageNumber] = true;
                             option.classList.add('correct');
                             feedbackDiv.textContent = quizData[pageNumber].feedback;
-                            feedbackDiv.style.color = 'var(--success)';
-                            if (nextButton) {
-                                nextButton.classList.remove('hidden');
-                            } else if (finishButton) {
-                                finishButton.classList.remove('hidden');
-                            }
+                            feedbackDiv.style.backgroundColor = '#d1f7e0';
+                            feedbackDiv.style.borderColor = 'var(--success)';
+                            feedbackDiv.style.color = 'var(--dark)';
+
+                            // Unlock navigation
+                            if (nextButton) nextButton.classList.remove('hidden');
+                            if (pageNumber === coursePages.length && finishBtn) finishBtn.classList.remove('hidden');
+                            
+                            updateProgress(); // Update progress bar after success
+                            
                         } else {
                             option.classList.add('incorrect');
-                            feedbackDiv.textContent = "❌ Incorrect. Please review the content on this page and try again. You can reattempt in 2 seconds.";
-                            feedbackDiv.style.color = 'var(--warning)';
-                            if (nextButton) {
-                                nextButton.classList.add('hidden');
-                            }
+                            feedbackDiv.textContent = "❌ Incorrect. Please review the content on this page and try again. Re-attempt enabled in 2 seconds.";
+                            feedbackDiv.style.backgroundColor = '#fcebeb';
+                            feedbackDiv.style.borderColor = '#f56565';
+                            feedbackDiv.style.color = '#c53030';
+                            
+                            if (nextButton) nextButton.classList.add('hidden');
 
                             setTimeout(() => {
+                                // Re-enable interaction after delay
                                 options.forEach(opt => {
                                     opt.classList.remove('incorrect');
                                     opt.style.pointerEvents = 'auto';
@@ -1199,16 +1126,9 @@ predictions = model.predict(X_test)</pre>
                         feedbackDiv.classList.remove('hidden');
                     });
                 });
-
-                if (nextButton) {
-                    nextButton.addEventListener('click', () => {
-                        currentPage++;
-                        showPage(currentPage);
-                    });
-                }
             };
             
-            // NEW: Function to build the sidebar module list
+            // Function to build the sidebar module list
             const buildModuleList = () => {
                 if(!moduleList) return;
                 moduleList.innerHTML = '';
@@ -1234,23 +1154,37 @@ predictions = model.predict(X_test)</pre>
                 }
             };
             
+            // --- Navigation Logic ---
+            nextButtons.forEach(button => {
+                const pageNumber = parseInt(button.id.replace('nextButton', ''));
+                button.addEventListener('click', () => {
+                    if (quizCorrectStatus[pageNumber]) {
+                        currentPage++;
+                        showPage(currentPage);
+                    }
+                });
+            });
+
+            prevButtons.forEach(button => {
+                const pageNumber = parseInt(button.id.replace('prevButton', ''));
+                button.addEventListener('click', () => {
+                    currentPage--;
+                    showPage(currentPage);
+                });
+            });
+
             // --- Initialization ---
             buildModuleList(); // Build the sidebar menu
             for (let i = 1; i <= coursePages.length; i++) {
+                // Initialize quiz status to false (locked)
+                quizCorrectStatus[i] = false; 
                 handleQuiz(i);
             }
 
             updateProgress();
             showPage(1); // Start at Page 1
 
-            // Placeholder user data
-            if (userNameHeader) {
-                userNameHeader.textContent = "Intern";
-            }
-            if (userAvatarHeader) {
-                userAvatarHeader.src = "../../images/no_image.png";
-            }
-
+            // Hamburger menu logic
             const hamburgerMenu = document.getElementById('hamburgerMenu');
             const navMenu = document.querySelector('.nav-menu');
             if (hamburgerMenu) {
