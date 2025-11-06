@@ -391,7 +391,7 @@ header.scrolled {
 .btn-transparent:hover { background-color: var(--white); color: var(--primary); transform: translateY(-3px); }
 
 
-/* Hamburger menu for mobile (FIX 1: Added padding here) */
+/* Hamburger menu for mobile */
 .hamburger-menu { 
     display: none; 
     flex-direction: column; 
@@ -401,8 +401,7 @@ header.scrolled {
     background: transparent; 
     border: none; 
     cursor: pointer; 
-    padding: 5px; /* FIX 1: Added padding for easier tapping */
-    box-sizing: content-box; /* Ensure padding doesn't affect overall size too much */
+    padding: 0; 
     z-index: 9999; 
 }
 .hamburger-menu span { display: block; width: 100%; height: 3px; background-color: var(--dark); border-radius: 4px; transition: var(--transition); }
@@ -531,30 +530,9 @@ header.scrolled {
 .internship-img { max-width: 100%; border-radius: 14px; box-shadow: var(--shadow); transition: var(--transition); }
 .internship-img:hover { transform: scale(1.06); }
 .features-list { margin: 36px 0; }
-.feature-item { 
-    display: flex; 
-    align-items: center; 
-    gap: 18px; 
-    margin-bottom: 24px; 
-    transition: none; /* FIX 4: Removed animation/transition */
-    transform: none; /* FIX 4: Removed animation/transform */
-} 
-.feature-item:hover { 
-    transform: none; /* Ensure no unwanted movement on hover */
-    transition: none;
-}
-.feature-icon { 
-    width: 32px; 
-    height: 32px; 
-    background: var(--gradient); 
-    border-radius: 50%; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    color: var(--white); 
-    font-size: 16px; 
-    transition: none; /* Removed transition for professional look */
-}
+.feature-item { display: flex; align-items: center; gap: 18px; margin-bottom: 24px; transition: var(--transition); }
+.feature-item:hover { transform: translateX(12px); }
+.feature-icon { width: 32px; height: 32px; background: var(--gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 16px; }
 
 /* Testimonials */
 .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 36px; }
@@ -853,10 +831,9 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
     box-shadow: 0 0 0 4px var(--primary), 0 8px 20px rgba(0, 0, 0, 0.2); 
 }
 
-/* FIX 5: Corrected Marquee Keyframes for seamless loop */
 @keyframes scroll-left {
     from { transform: translateX(0%); }
-    to { transform: translateX(-50%); } 
+    to { transform: translateX(-100%); }
 }
 /* --- End New Partner/Trust Section CSS --- */
 
@@ -934,35 +911,78 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
         z-index: 9999;     
     }
 
-    /* Style the opened mobile navigation menu (FIX 1: Centering and Padding) */
+    /* When mobile menu is active, restore the container and apply mobile-specific display */
     .nav-menu.active {
         display: flex;
         flex-direction: column;
-        align-items: center; /* FIX 1: Center-align links in the menu block */
+        align-items: center;
         gap: 0;
         position: absolute;
         top: 100%;
         left: 0;
         width: 100%;
         background-color: var(--white);
-        padding: 16px 0; 
+        padding: 16px 0;
         box-shadow: var(--shadow);
         animation: slideDown 0.4s ease-out;
         z-index: 99;
     }
     
-     /* FIX 1: Explicitly show core links and add separators for professional look */
-     .nav-menu.active > a {
-         display: block !important; 
-         width: 90%; 
-         text-align: center; /* FIX 1: Center align text */
-         padding: 12px 0;
-         border-bottom: 1px solid #f0f0f0; 
-         margin: 0 auto;
-         text-decoration: none;
-         color: var(--dark);
+     /* Show ONLY the requested mobile links (Point 1) */
+     /* Hide all desktop links except the ones we want to explicitly show via block display */
+     .nav-menu.active > a,
+     .nav-menu.active .nav-item.dropdown {
+         display: none !important; 
      }
      
+     /* Explicitly show core mobile links */
+     .nav-menu.active > a[href="/index.html"],
+     .nav-menu.active > a[href="/courses/course.html"],
+     .nav-menu.active > a[href="/intern/internship.html"],
+     .nav-menu.active > a[href="/about.html"],
+     .nav-menu.active > a[href="/jobs.html"],
+     .nav-menu.active > a[href="/contact.html"],
+     .nav-menu.active > a[href="/blog/index.html"],
+     .nav-menu.active > a[href="/community/join.html"],
+     .nav-menu.active > a[href="/community/partners.html"],
+     .nav-menu.active > a[href="/community/academy.html"] {
+         display: block !important; 
+         width: 80%;
+         text-align: center;
+         padding: 12px 0;
+     }
+
+     /* Mobile Auth/Profile block visibility (POINT 1) */
+    .nav-actions-mobile {
+         display: flex !important; 
+         flex-direction: column;
+         gap: 16px;
+         width: 100%;
+         max-width: 300px;
+         margin: 16px auto 0;
+         padding: 16px 20px 24px;
+         border-top: 1px solid #eee;
+    }
+    
+    .nav-menu.active .nav-actions-mobile > .user-profile {
+        /* Ensure mobile profile button shows */
+        display: flex; 
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0;
+        margin-bottom: 10px;
+        color: var(--dark); 
+        cursor: default; 
+        transform: none; 
+        background: none;
+    }
+
+    .nav-menu.active .nav-actions-mobile #authButtonsMobile {
+         display: flex; 
+         gap: 10px;
+         justify-content: center;
+    }
+
     /* Hide desktop nav elements that are redundantly displayed/not needed on mobile */
     .search-container,
     .header-actions #authButtons,
@@ -972,7 +992,7 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
 }
 
 @media (max-width: 768px) {
-    .container { padding: 0 16px; } /* FIX 6: Add margin for mobile to look better */
+    .container { padding: 0 24px; }
     .header-container { padding: 16px 0; }
     .logo { flex-shrink: 0; }
     .logo-img { height: 40px; }
@@ -1011,10 +1031,10 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
         width: 100%;
     }
     
-    /* [FIXED & UPGRADED] Internship Section Mobile Styling for Professional Look (Point 5) */
+    /* [FIXED & UPGRADED] Internship Section Mobile Styling for Premium Look (Refined for alignment) */
     .internship-container {
-        flex-direction: column; 
-        gap: 20px; 
+        flex-direction: column; /* Stack vertically */
+        gap: 30px; 
         align-items: center;
         text-align: center; 
     }
@@ -1023,35 +1043,33 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
         text-align: center;
     }
     .internship-content .features-list {
-        margin: 20px auto; 
-        display: flex; 
+        /* FIX: Center the list block */
+        margin: 30px auto; 
+        display: flex; /* Use flex on the list container to align items */
         flex-direction: column;
         padding-left: 0;
         list-style: none;
-        width: 100%; 
-        max-width: 400px; 
+        width: 90%; 
+        max-width: 380px; /* Constrain max width for better centering */
     }
     .internship-content .features-list .feature-item {
-        /* FIX 4: Ensure items are aligned left and animations are removed */
-        transform: none;
-        transition: none;
+        /* FIX: Ensure item's icon and text are aligned to the left of the list container */
         width: 100%;
-        justify-content: flex-start; /* Align contents to the start */
+        justify-content: flex-start; 
         margin: 0;
         padding-left: 0;
-        text-align: left; 
     }
 
     .internship-image {
-        display: block !important;
+        display: block !important; /* Force image visibility on mobile */
         flex: none; 
         width: 85%; 
         max-width: 400px;
         margin: 20px auto;
     }
-    /* Add a subtle professional touch to the image on mobile */
     .internship-img {
-         border: 4px solid rgba(43, 108, 176, 0.5); 
+         /* Add premium, subtle border and lift effect */
+         border: 4px solid rgba(43, 108, 176, 0.5); /* Semi-transparent Primary Border */
          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); 
          border-radius: 18px; 
     }
@@ -1114,10 +1132,10 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
     .cta-section,
     .team-section,
     .jobs-hero {
-        padding: 40px 0;
+        padding: 60px 0;
     }
     .hero {
-        padding: 40px 0;
+        padding: 60px 0;
     }
     
     .blog-post-card { flex-direction: column; }
