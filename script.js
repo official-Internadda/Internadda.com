@@ -291,7 +291,7 @@ auth.onAuthStateChanged(async (user) => {
         if(internshipsListContainer) internshipsListContainer.innerHTML = '<p class="text-center empty-state" style="padding: 20px 0;">Please log in to view your internship history.</p>';
     }
 
-    // 4. Handle full page access gate (MODIFIED FOR POINT 2)
+    // 4. Handle full page access gate (FIX 2: Enforce Login on Internship Page)
     const isInternshipListingPage = window.location.pathname.includes('/intern/internship.html');
     const isProtectedPage = window.location.pathname.includes('/courses/course.html') || isInternshipListingPage;
     
@@ -696,7 +696,6 @@ function handleImagePreview(event) {
 }
 function updateProfileUI(profileData) {
     // FIX 3: Ensure correct path is used for user image. 
-    // getRelativePath is vital here as the script is used across multiple directory depths.
     const avatarUrl = profileData.photoUrl ? getRelativePath(profileData.photoUrl) : getRelativePath('/images/no_image.png');
     const userName = profileData.name || 'User';
 
