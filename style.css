@@ -661,7 +661,7 @@ input:focus, select:focus { outline: none; border-color: var(--primary); box-sha
 .toggle-auth a:hover { text-decoration: underline; color: var(--secondary); }
 .error { color: #f56565; text-align: center; margin: 14px 0; padding: 16px; background: rgba(245, 101, 101, 0.1); border-radius: 12px; border: 1px solid rgba(245, 101, 101, 0.2); display: none; font-size: 15px; }
 .loading { text-align: center; color: var(--primary); margin: 28px 0; display: none; font-weight: 500; }
-.spinner { border: 4px solid #f7fafc; border-top: 4px solid var(--primary); border-radius: 50%; w`id`th: 40px; height: 40px; animation: spin 0.9s linear infinite; margin: 0 auto 14px; }
+.spinner { border: 4px solid #f7fafc; border-top: 4px solid var(--primary); border-radius: 50%; width: 40px; height: 40px; animation: spin 0.9s linear infinite; margin: 0 auto 14px; }
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
 /* Dashboard styles */
@@ -935,29 +935,28 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
          display: none !important; 
      }
      
-     /* Explicitly show core mobile links (Point 2) */
-     .nav-menu.active > a[href="/index.html"],
-     .nav-menu.active > a[href="/courses/course.html"],
-     .nav-menu.active > a[href="/intern/internship.html"],
-     /* Show Blog link */
-     .nav-menu.active > a[href="/blog/index.html"],
-     /* Show About link */
-     .nav-menu.active > a[href="/about.html"] {
-         display: block !important; 
-         width: 80%;
-         text-align: center;
-         padding: 12px 0;
-         /* Mobile Menu Specific Styling */
-         border-bottom: 1px solid #eee;
-         margin: 0 auto;
-     }
+    /* Explicitly show all mobile navigation links */
+    .nav-menu.active > a {
+        display: block !important; 
+        width: 80%;
+        text-align: center;
+        padding: 12px 0;
+        border-bottom: 1px solid #eee; /* Apply border to all links */
+        margin: 0 auto;
+    }
+    
+    /* FIX: Mobile Menu - Remove border from the last visible nav link before .nav-actions-mobile */
+    /* This targets the last <a> element directly inside .nav-menu.active */
+    .nav-menu.active > a:last-of-type {
+        border-bottom: none !important;
+    }
 
-     /* Remove border from last item before auth actions */
-     .nav-menu.active > a[href="/about.html"] {
-         border-bottom: none;
-     }
+    /* FIX: Ensure Mobile Avatar is visible */
+    .nav-menu.active .nav-actions-mobile > .user-profile img {
+        display: inline-block !important; /* Forces image visibility */
+    }
 
-     /* Mobile Auth/Profile block visibility (POINT 2) */
+    /* Mobile Auth/Profile block visibility (POINT 2) */
     .nav-actions-mobile {
          display: flex !important; 
          flex-direction: column;
