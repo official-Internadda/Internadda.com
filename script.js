@@ -112,30 +112,30 @@ function renderInternshipHistory(internshipsData) {
         let actionLink;
         let statusText;
         
-        // Logic to determine the final exam page link
-        // Converts /intern/payment_page_DOMAIN.html to /intern/DOMAIN_final_exam.html
-        const finalExamUrlBase = internship.finalExamUrl ? internship.finalExamUrl.replace('/intern/payment_page_', '').replace('.html', '') : 'internship';
-        const finalExamPage = `/intern/${finalExamUrlBase}_final_exam.html`;
+        // FIX 1: Use the finalExamUrl (which holds the payment page URL from mock data) as the payment link.
+        const paymentPageUrl = internship.finalExamUrl;
+        // Derive the link to the final exam *results* page for qualified users.
+        const finalExamPage = paymentPageUrl ? paymentPageUrl.replace('/intern/payment_page_', '/intern/').replace('.html', '_final_exam.html') : '/intern/internship.html';
         
         // Logic to determine action button
         switch (internship.status) {
             case 'Passed':
                 statusColor = 'var(--success)';
                 statusText = `Qualified (${internship.score}%)`;
-                // Link to the results page using the derived finalExamPage structure
+                // Link to the final exam *results* page for viewing.
                 actionLink = `<a href="${finalExamPage}" class="btn btn-primary" style="padding: 8px 15px; font-size: 14px; background-color: var(--success);">View Results</a>`;
                 break;
             case 'Failed':
                 statusColor = '#c53030'; // Red
                 statusText = `Not Qualified (${internship.score}%)`;
-                // Link to the re-attempt (which links directly to the final exam page)
-                actionLink = `<a href="${finalExamPage}" class="btn btn-outline" style="padding: 8px 15px; font-size: 14px; border-color: #c53030; color: #c53030;">Re-attempt Exam</a>`;
+                // Link to the payment page to re-attempt.
+                actionLink = `<a href="${paymentPageUrl}" class="btn btn-outline" style="padding: 8px 15px; font-size: 14px; border-color: #c53030; color: #c53030;">Re-attempt Exam</a>`;
                 break;
             default: // Pending
                 statusColor = 'var(--warning)';
                 statusText = 'Currently Open';
-                // Link directly to the final exam page, fulfilling the request.
-                actionLink = `<a href="${finalExamPage}" class="btn btn-primary" style="padding: 8px 15px; font-size: 14px;">Apply Now / Take Exam</a>`;
+                // Link directly to the payment page.
+                actionLink = `<a href="${paymentPageUrl}" class="btn btn-primary" style="padding: 8px 15px; font-size: 14px;">Apply Now / Take Exam</a>`;
                 break;
         }
 
@@ -406,19 +406,18 @@ const searchResultsContainer = document.getElementById('searchResults');
 // Utility function to get the correct path prefix (Handles nested directories like /courses/courses/FILE)
 function getRelativePath(targetPath) {
     const currentPath = window.location.pathname;
-    const segments = currentPath.split('/').filter(p => p.length > 0);
-
-    // Simple check: if we are in a subdirectory (like /courses or /intern), prepend '../'
-    if (segments.length >= 2 && !currentPath.includes('.html')) {
-        // Assume depth of 1 (e.g. /courses/course.html -> ../images/file.png)
-        // If the current path is /courses/course.html, depth is 1
-        return '../' + targetPath.replace(/^\//, '');
-    } else if (segments.length >= 3) {
-         // Assume depth of 2 (e.g. /courses/courses/file.html -> ../../images/file.png)
-         return '../../' + targetPath.replace(/^\//, '');
+    // Count the depth of the current path, excluding the filename itself
+    const depth = (currentPath.match(/\//g) || []).length - (currentPath.endsWith('.html') ? 1 : 0);
+    
+    let prefix = '';
+    // If current path is more than just '/', add '../' for each level
+    if (depth > 0) {
+        for (let i = 0; i < depth; i++) {
+             prefix += '../';
+        }
     }
-    // If we are at the root or already handling relative path correctly
-    return targetPath;
+    // Remove the leading '/' from targetPath and prepend the prefix
+    return prefix + targetPath.replace(/^\//, '');
 }
 
 // Hardcoded data (used for search/listings)
@@ -696,18 +695,19 @@ function handleImagePreview(event) {
     }
 }
 function updateProfileUI(profileData) {
-    const avatarUrl = profileData.photoUrl || '/images/no_image.png';
+    // FIX 3: Ensure correct path is used for user image. 
+    // getRelativePath is vital here as the script is used across multiple directory depths.
+    const avatarUrl = profileData.photoUrl ? getRelativePath(profileData.photoUrl) : getRelativePath('/images/no_image.png');
     const userName = profileData.name || 'User';
 
     // Desktop Header
     if (userAvatarHeader) userAvatarHeader.src = avatarUrl;
     if (userNameHeader) userNameHeader.textContent = userName.split(' ')[0];
 
-    // Mobile Header (Hide text in the active menu view)
+    // Mobile Header
     const userAvatarHeaderMobile = document.getElementById('userAvatarHeaderMobile');
     const userNameHeaderMobile = document.getElementById('userNameHeaderMobile');
     if (userAvatarHeaderMobile) userAvatarHeaderMobile.src = avatarUrl;
-    // Show 'My Profile' only when the user is logged in
     if (userNameHeaderMobile) userNameHeaderMobile.textContent = userName; 
 
     // Dashboard
@@ -734,7 +734,7 @@ function updateProfileUI(profileData) {
 
 // --- AUTH & PROFILE LOGIC ---
 
-// FIX 1: Global function to show modal/dashboard for mobile hamburger
+// FIX 2 & 3: Global function to show modal/dashboard for mobile hamburger & user image fix
 window.handleProfileClick = function() {
     if(authModal) authModal.classList.add('active');
     if(dashboardSection) showSection(dashboardSection);
