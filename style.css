@@ -391,7 +391,7 @@ header.scrolled {
 .btn-transparent:hover { background-color: var(--white); color: var(--primary); transform: translateY(-3px); }
 
 
-/* Hamburger menu for mobile */
+/* Hamburger menu for mobile (FIX 1: Added padding here) */
 .hamburger-menu { 
     display: none; 
     flex-direction: column; 
@@ -401,7 +401,8 @@ header.scrolled {
     background: transparent; 
     border: none; 
     cursor: pointer; 
-    padding: 0; 
+    padding: 5px; /* FIX 1: Added padding for easier tapping */
+    box-sizing: content-box; /* Ensure padding doesn't affect overall size too much */
     z-index: 9999; 
 }
 .hamburger-menu span { display: block; width: 100%; height: 3px; background-color: var(--dark); border-radius: 4px; transition: var(--transition); }
@@ -530,9 +531,30 @@ header.scrolled {
 .internship-img { max-width: 100%; border-radius: 14px; box-shadow: var(--shadow); transition: var(--transition); }
 .internship-img:hover { transform: scale(1.06); }
 .features-list { margin: 36px 0; }
-.feature-item { display: flex; align-items: center; gap: 18px; margin-bottom: 24px; transition: var(--transition); }
-.feature-item:hover { transform: translateX(12px); }
-.feature-icon { width: 32px; height: 32px; background: var(--gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 16px; }
+.feature-item { 
+    display: flex; 
+    align-items: center; 
+    gap: 18px; 
+    margin-bottom: 24px; 
+    transition: none; /* FIX 4: Removed animation/transition */
+    transform: none; /* FIX 4: Removed animation/transform */
+} 
+.feature-item:hover { 
+    transform: none; /* Ensure no unwanted movement on hover */
+    transition: none;
+}
+.feature-icon { 
+    width: 32px; 
+    height: 32px; 
+    background: var(--gradient); 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    color: var(--white); 
+    font-size: 16px; 
+    transition: none; /* Removed transition for professional look */
+}
 
 /* Testimonials */
 .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 36px; }
@@ -831,9 +853,10 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
     box-shadow: 0 0 0 4px var(--primary), 0 8px 20px rgba(0, 0, 0, 0.2); 
 }
 
+/* FIX 5: Corrected Marquee Keyframes for seamless loop */
 @keyframes scroll-left {
     from { transform: translateX(0%); }
-    to { transform: translateX(-100%); }
+    to { transform: translateX(-50%); } 
 }
 /* --- End New Partner/Trust Section CSS --- */
 
@@ -911,93 +934,35 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
         z-index: 9999;     
     }
 
-    /* Style the opened mobile navigation menu (Points 1, 6) */
+    /* Style the opened mobile navigation menu (FIX 1: Centering and Padding) */
     .nav-menu.active {
         display: flex;
         flex-direction: column;
-        align-items: center; /* Center-align container for menu links */
+        align-items: center; /* FIX 1: Center-align links in the menu block */
         gap: 0;
         position: absolute;
         top: 100%;
         left: 0;
         width: 100%;
         background-color: var(--white);
-        /* 6. Keep Padding for Hamburger for Mobile View */
-        padding: 16px 0; /* Vertical padding kept for aesthetics */
+        padding: 16px 0; 
         box-shadow: var(--shadow);
         animation: slideDown 0.4s ease-out;
         z-index: 99;
     }
     
-     /* Mobile Menu Cleanup & Separation: Hide all links first */
-     .nav-menu.active > a,
-     .nav-menu.active .nav-item.dropdown,
-     .nav-menu.active .nav-link.mobile-only-link {
-         display: none !important; 
-     }
-     
-     /* Explicitly show core links AND links inside the desktop 'More' dropdown
-        and add separators (Point 1) */
-     .nav-menu.active > a, /* Targets primary links */
-     .nav-menu.active .dropdown-content a { /* Targets nested links */
+     /* FIX 1: Explicitly show core links and add separators for professional look */
+     .nav-menu.active > a {
          display: block !important; 
-         width: 85%; 
-         text-align: left;
-         padding: 12px 20px;
+         width: 90%; 
+         text-align: center; /* FIX 1: Center align text */
+         padding: 12px 0;
          border-bottom: 1px solid #f0f0f0; 
          margin: 0 auto;
          text-decoration: none;
          color: var(--dark);
      }
      
-     /* Remove top/bottom borders on first/last menu items (optional cleanup) */
-     .nav-menu.active > a:first-child { border-top: none; }
-
-     /* Ensure nested links look secondary */
-     .nav-menu.active .dropdown-content {
-         position: static; 
-         box-shadow: none;
-         border-radius: 0;
-         padding: 0;
-         width: 100%;
-     }
-     .nav-menu.active .dropdown-link {
-          padding-left: 40px !important; /* Indent for clarity */
-          background-color: #fcfcfc !important; /* Subtle background for secondary group */
-     }
-     
-
-     /* Mobile Auth/Profile block visibility (POINT 1 & 6) */
-    .nav-actions-mobile {
-         display: flex !important; 
-         flex-direction: column;
-         gap: 16px;
-         width: 100%;
-         max-width: 300px;
-         margin: 16px auto 0;
-         padding: 16px 20px 24px;
-         border-top: 1px solid #e2e8f0 !important;
-    }
-    
-    .nav-menu.active .nav-actions-mobile > .user-profile {
-        /* Ensure mobile profile button shows */
-        display: flex; 
-        justify-content: center;
-        align-items: center;
-        padding: 10px 0;
-        margin-bottom: 10px;
-        color: var(--dark); 
-        cursor: default; 
-        transform: none; 
-        background: none;
-    }
-
-    .nav-menu.active .nav-actions-mobile #authButtonsMobile {
-         display: flex; 
-         gap: 10px;
-         justify-content: center;
-    }
-
     /* Hide desktop nav elements that are redundantly displayed/not needed on mobile */
     .search-container,
     .header-actions #authButtons,
@@ -1007,7 +972,7 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
 }
 
 @media (max-width: 768px) {
-    .container { padding: 0 24px; }
+    .container { padding: 0 16px; } /* FIX 6: Add margin for mobile to look better */
     .header-container { padding: 16px 0; }
     .logo { flex-shrink: 0; }
     .logo-img { height: 40px; }
@@ -1048,8 +1013,8 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
     
     /* [FIXED & UPGRADED] Internship Section Mobile Styling for Professional Look (Point 5) */
     .internship-container {
-        flex-direction: column; /* Stack vertically (already present) */
-        gap: 30px; 
+        flex-direction: column; 
+        gap: 20px; 
         align-items: center;
         text-align: center; 
     }
@@ -1058,22 +1023,23 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
         text-align: center;
     }
     .internship-content .features-list {
-        /* FIX: Center the list block */
-        margin: 30px auto; 
+        margin: 20px auto; 
         display: flex; 
         flex-direction: column;
         padding-left: 0;
         list-style: none;
-        width: 90%; 
-        max-width: 380px; 
+        width: 100%; 
+        max-width: 400px; 
     }
     .internship-content .features-list .feature-item {
-        /* FIX: Ensure item's icon and text are aligned to the left of the list container */
+        /* FIX 4: Ensure items are aligned left and animations are removed */
+        transform: none;
+        transition: none;
         width: 100%;
         justify-content: flex-start; /* Align contents to the start */
         margin: 0;
         padding-left: 0;
-        text-align: left; /* Ensure text is left-aligned within the item */
+        text-align: left; 
     }
 
     .internship-image {
@@ -1148,10 +1114,10 @@ select#profileGender, select#interestedDomain { padding: 18px; border: 1px solid
     .cta-section,
     .team-section,
     .jobs-hero {
-        padding: 60px 0;
+        padding: 40px 0;
     }
     .hero {
-        padding: 60px 0;
+        padding: 40px 0;
     }
     
     .blog-post-card { flex-direction: column; }
