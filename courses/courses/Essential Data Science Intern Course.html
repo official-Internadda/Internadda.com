@@ -19,11 +19,16 @@
         /* Custom Styles for Course Page */
         :root {
             --data-science-color: #0077b6; /* A professional blue for Data Science */
+            --data-science-rgb: 0, 119, 182;
+            --primary-rgb: 255, 69, 0; /* Assuming primary is a reddish-orange from the general style */
         }
+        
+        /* 3D and Animation Enhancements */
         .course-header-section {
             background: linear-gradient(135deg, #e6f7ff, #cceeff); 
             padding: 80px 0;
             color: var(--dark);
+            transform: translateZ(0); /* Enable 3D rendering context */
         }
         .course-page-grid {
             display: grid;
@@ -38,7 +43,7 @@
             font-size: 2rem;
             color: var(--data-science-color);
             margin-bottom: 20px;
-            border-left: 4px solid var(--data-science-color);
+            border-left: 5px solid var(--data-science-color); /* Slightly thicker border */
             padding-left: 15px;
         }
         .course-details-box {
@@ -47,7 +52,14 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             padding: 30px;
             margin-bottom: 30px;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
+        /* Subtle 3D hover on main content boxes */
+        .course-details-box:hover {
+            transform: translateY(-5px) perspective(1000px) rotateX(1deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
         .key-topic-list li, .prereq-list li {
             font-size: 1rem;
             line-height: 1.6;
@@ -55,10 +67,17 @@
             display: flex;
             align-items: flex-start;
             gap: 10px;
+            transition: transform 0.2s ease;
+        }
+        /* Animation on list item hover */
+        .key-topic-list li:hover {
+            transform: translateX(5px);
+            color: var(--data-science-color);
         }
         .key-topic-list li i {
             color: var(--data-science-color);
             margin-top: 5px;
+            animation: bounceIn 1s forwards;
         }
         .prereq-list li i {
             color: var(--secondary);
@@ -68,30 +87,42 @@
         /* Sidebar (Sticky Card) Styling */
         .course-sidebar {
             position: sticky;
-            top: 100px; /* Offset from header */
+            top: 100px;
             background-color: var(--white);
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            /* Enhanced 3D shadow for professionalism */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 0 3px rgba(var(--data-science-rgb), 0.2); 
             padding: 30px;
             text-align: center;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         .course-sidebar:hover {
-             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+             transform: perspective(1000px) rotateY(2deg) scale(1.01);
+             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
         }
         .course-sidebar img.course-main-img {
             width: 100%;
             height: auto;
             border-radius: 10px;
             margin-bottom: 20px;
+            transition: transform 0.3s ease;
         }
+        .course-sidebar:hover img.course-main-img {
+             transform: scale(1.05) rotate(1deg);
+        }
+        
         .sidebar-price {
             font-size: 2.5rem;
             color: var(--data-science-color);
             font-weight: 700;
             margin-bottom: 10px;
+            transition: color 0.3s ease;
         }
+        .course-sidebar:hover .sidebar-price {
+            color: var(--primary); /* Color change on hover for emphasis */
+        }
+
         .sidebar-price small {
             font-size: 1.2rem;
             color: var(--gray);
@@ -99,19 +130,17 @@
             font-weight: 400;
         }
         .sidebar-cta-btn {
-            width: 100%;
-            padding: 15px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            background-color: var(--primary);
-            border: none;
-            border-radius: 8px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            /* Button press animation */
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s;
+            box-shadow: 0 5px 0 0 rgba(var(--primary-rgb), 0.7);
         }
         .sidebar-cta-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 15px rgba(var(--primary-rgb), 0.4);
+            box-shadow: 0 8px 0 0 rgba(var(--primary-rgb), 0.8);
+        }
+        .sidebar-cta-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 0 rgba(var(--primary-rgb), 0.8);
         }
         
         /* Instructor Details */
@@ -128,7 +157,11 @@
             height: 80px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--secondary);
+            border: 4px solid var(--data-science-color); /* Updated border color */
+            transition: transform 0.3s ease;
+        }
+        .instructor-card:hover .avatar {
+            transform: scale(1.05) rotate(-3deg);
         }
         .instructor-details h4 {
             font-size: 1.2rem;
@@ -140,19 +173,29 @@
             color: var(--gray);
             font-size: 0.9rem;
         }
+        
+        /* Keyframe for small animation */
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            80% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
 
         /* Responsive Adjustments */
         @media (max-width: 992px) {
             .course-page-grid {
-                grid-template-columns: 1fr; /* Single column layout on tablets/mobiles */
+                grid-template-columns: 1fr; 
                 gap: 20px;
             }
             .course-sidebar {
-                position: static; /* Remove sticky on mobile */
-                order: -1; /* Place sidebar (card) above main content on mobile */
+                position: static; 
+                order: -1; 
             }
             .course-header-section {
                  padding: 50px 0 30px;
+            }
+            .main-content h2 {
+                font-size: 1.8rem;
             }
         }
     </style>
@@ -168,7 +211,7 @@
     </script>
 
     <!-- ==============================================
-         HEADER: Replicated from updated index.html, adjusted paths
+         HEADER: Adjusted paths
          ============================================== -->
     <header>
         <div class="container header-container">
@@ -266,19 +309,19 @@
                     <div class="course-details-box">
                         <h2>Course Overview</h2>
                         <p style="font-size: 1.1rem; line-height: 1.7;">
-                            This concise and intensive course is designed to provide you with the essential foundation required to excel in a **Data Science internship**. We cut through the noise, focusing only on the practical skills and conceptual knowledge tested in the Internadda Final Exam. From data wrangling to visualization and basic modeling, you'll gain practical expertise fast.
+                            This concise and intensive course is designed to provide you with the essential foundation required to excel in a <strong>Data Science internship</strong>. We cut through the noise, focusing only on the practical skills and conceptual knowledge tested in the Internadda Final Exam. From data wrangling to visualization and basic modeling, you'll gain practical expertise fast.
                         </p>
                     </div>
 
                     <div class="course-details-box">
                         <h2>What You Will Learn (Key Topics)</h2>
                         <ul class="key-topic-list">
-                            <li><i class="fas fa-check-circle"></i> **Data Wrangling:** Techniques using Pandas for cleaning, merging, and preparing real-world datasets.</li>
-                            <li><i class="fas fa-chart-line"></i> **Exploratory Data Analysis (EDA):** Visualizing data using Matplotlib and Seaborn to uncover patterns and anomalies.</li>
-                            <li><i class="fas fa-calculator"></i> **Statistical Foundations:** Understanding key statistical measures (mean, median, standard deviation) and probability concepts.</li>
-                            <li><i class="fas fa-brain"></i> **Introduction to Scikit-learn:** Building and evaluating basic Linear Regression and Classification models.</li>
-                            <li><i class="fas fa-database"></i> **SQL Basics:** Writing fundamental queries for data extraction and manipulation from relational databases.</li>
-                            <li><i class="fas fa-code-branch"></i> **Version Control for Data:** Basic Git commands for tracking data science project changes.</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Data Wrangling:</strong> Techniques using Pandas for cleaning, merging, and preparing real-world datasets.</li>
+                            <li><i class="fas fa-chart-line"></i> <strong>Exploratory Data Analysis (EDA):</strong> Visualizing data using Matplotlib and Seaborn to uncover patterns and anomalies.</li>
+                            <li><i class="fas fa-calculator"></i> <strong>Statistical Foundations:</strong> Understanding key statistical measures (mean, median, standard deviation) and probability concepts.</li>
+                            <li><i class="fas fa-brain"></i> <strong>Introduction to Scikit-learn:</strong> Building and evaluating basic Linear Regression and Classification models.</li>
+                            <li><i class="fas fa-database"></i> <strong>SQL Basics:</strong> Writing fundamental queries for data extraction and manipulation from relational databases.</li>
+                            <li><i class="fas fa-code-branch"></i> <strong>Version Control for Data:</strong> Basic Git commands for tracking data science project changes.</li>
                         </ul>
                     </div>
 
@@ -286,17 +329,19 @@
                         <h2>Prerequisites Before Starting</h2>
                         <p>To get the most out of this intensive module, we recommend you have:</p>
                         <ul class="prereq-list">
-                            <li><i class="fas fa-info-circle"></i> Familiarity with **Basic Python syntax** (variables, loops, functions).</li>
+                            <li><i class="fas fa-info-circle"></i> Familiarity with <strong>Basic Python syntax</strong> (variables, loops, functions).</li>
                             <li><i class="fas fa-info-circle"></i> Access to a working environment (Jupyter Notebook or VS Code).</li>
-                            <li><i class="fas fa-info-circle"></i> A strong desire to apply concepts immediately to **real-world datasets**.</li>
+                            <li><i class="fas fa-info-circle"></i> A strong desire to apply concepts immediately to <strong>real-world datasets</strong>.</li>
                             <li><i class="fas fa-info-circle"></i> No prior Data Science experience is strictly required, but basic coding logic helps greatly.</li>
                         </ul>
                     </div>
                     
                     <div class="course-details-box">
                          <h2>Your Instructor: Lucky Kumar</h2>
+                         <!-- Updated image path to lucky.jpg as requested -->
                          <div class="instructor-card">
-                             <img src="https://placehold.co/80x80/2980b9/ffffff?text=L.K" alt="Lucky Kumar Instructor" class="avatar">
+                             <img src="../../images/lucky.jpg" alt="Lucky Kumar Instructor" class="avatar" 
+                                  onerror="this.onerror=null;this.src='https://placehold.co/80x80/2980b9/ffffff?text=L.K'">
                              <div class="instructor-details">
                                  <h4>Lucky Kumar</h4>
                                  <p>Lead Data Scientist & Head of Curriculum at Internadda</p>
@@ -321,6 +366,7 @@
                         <small>₹1,999</small> FREE
                     </div>
                     
+                    <!-- Button redirecting to maintenance.html as requested -->
                     <a href="../../maintenance.html" class="btn btn-primary sidebar-cta-btn">
                         <i class="fas fa-play-circle" style="margin-right: 10px;"></i> Start for FREE Now
                     </a>
