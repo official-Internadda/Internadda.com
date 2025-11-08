@@ -3,30 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Under Maintenance - Visit Later</title>
+    <title>InternAdda - Under Maintenance</title>
     <style>
-        /* CSS for the 3D Flip Effect */
+        /* CSS for the 3D Flip Effect and Styling */
+        :root {
+            --primary-blue: #007bff; /* Deep Blue for InternAdda */
+            --secondary-color: #3f51b5; /* Slightly different blue/indigo */
+            --warning-orange: #ffc107;
+            --text-color: #ffffff;
+            --bg-color: #e9ecef;
+        }
+
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            background-color: #f4f4f9; /* Light background */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            perspective: 1000px; /* Essential for 3D effect */
-            overflow: hidden; /* Prevent scrollbars */
+            /* Subtle Background Texture/Color */
+            background-color: var(--bg-color);
+            background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 75%, transparent 75%, transparent);
+            background-size: 40px 40px;
+            font-family: 'Roboto', sans-serif; /* Using a modern, clean font */
+            perspective: 1200px; /* Enhanced 3D perspective */
+            overflow: hidden; 
         }
 
+        /* --- 3D Card Container --- */
         .flip-container {
-            width: 400px;
-            height: 250px;
+            width: 450px;
+            height: 300px;
             position: relative;
-            transform-style: preserve-3d; /* Allows children to be positioned in 3D space */
-            transition: transform 1.5s; /* Smooth flip animation */
+            transform-style: preserve-3d;
+            transition: transform 1.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Bouncy, engaging transition */
             cursor: pointer;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-radius: 18px;
         }
 
         .flipper {
@@ -40,42 +52,61 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            -webkit-backface-visibility: hidden; /* Hide the back of the element when facing away */
+            -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            border-radius: 15px;
+            padding: 30px;
+            border-radius: 18px;
             text-align: center;
+            color: var(--text-color);
         }
 
         .front {
-            background: linear-gradient(135deg, #4caf50, #8bc34a); /* Green gradient */
-            color: white;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-color));
             z-index: 2;
         }
 
         .back {
-            background: linear-gradient(135deg, #ff9800, #ff5722); /* Orange/Red gradient */
-            color: white;
-            transform: rotateY(180deg); /* Start with the back side rotated */
+            background: linear-gradient(135deg, var(--warning-orange), #ff7a00); /* Orange/Warning color for maintenance */
+            transform: rotateY(180deg);
         }
         
-        /* The animation class applied by JavaScript */
+        /* Apply the flip animation */
         .flip-container.is-flipped {
             transform: rotateY(180deg);
         }
 
+        /* --- Text and Typography --- */
         h1 {
-            font-size: 2.5em;
-            margin-bottom: 0.2em;
+            font-size: 3em;
+            margin-bottom: 0.1em;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         p {
-            font-size: 1.2em;
-            opacity: 0.9;
+            font-size: 1.4em;
+            opacity: 0.95;
+            line-height: 1.4;
+        }
+
+        strong {
+            font-weight: 700;
+        }
+
+        /* --- Spinning Gear Icon (CSS Only) --- */
+        .gear-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
     </style>
@@ -85,13 +116,14 @@
     <div class="flip-container" id="maintenanceCard">
         <div class="flipper">
             <div class="front">
-                <h1>Welcome to Bard Academy</h1>
-                <p>We are currently **improving our platform**. Please check back shortly!</p>
+                <h1>InternAdda</h1>
+                <p>The platform for <strong>future leaders</strong> and opportunity seekers.</p>
+                <p>We are currently undergoing scheduled maintenance.</p>
             </div>
             
             <div class="back">
-                <h1>🚧 Under Maintenance 🚧</h1>
-                <p>Our educational resources are being updated. **Visit later** for a better experience.</p>
+                <div class="gear-icon">⚙️</div> <h1>Maintenance in Progress</h1>
+                <p>Our team is working hard to improve your experience. Please <strong>visit later</strong> or follow our social media for updates.</p>
             </div>
         </div>
     </div>
@@ -101,12 +133,12 @@
         document.addEventListener('DOMContentLoaded', () => {
             const card = document.getElementById('maintenanceCard');
 
-            // Set a timeout to apply the 'is-flipped' class after a delay (e.g., 1 second)
+            // Automatically flip after 1.5 seconds to show the maintenance message
             setTimeout(() => {
                 card.classList.add('is-flipped');
-            }, 1000);
+            }, 1500);
             
-            // Optional: Add an event listener to flip it back and forth on click/tap
+            // Optional: Allow the user to click to flip it back and forth
             card.addEventListener('click', () => {
                 card.classList.toggle('is-flipped');
             });
