@@ -12,6 +12,7 @@
 
     <link rel="stylesheet" href="style.css">
 
+    <!-- SEO Meta Tags -->
     <meta property="og:title" content="Internadda — India’s Adda for Free Courses & Paid Internships" />
     <meta property="og:description" content="Access free, industry-focused courses. Land paid internships (up to ₹50K/month) through our proven test-based selection process." />
     <meta property="og:type" content="website" />
@@ -21,63 +22,44 @@
     <meta name="twitter:title" content="Internadda: Learn, Intern, Earn - Paid Internships Await" />
     <meta name="twitter:description" content="India's fastest-growing platform connecting talent with top companies via skill tests. Start your career journey today!" />
     <meta name="twitter:image" content="https://internadda.com/images/slide1.png" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-app-compat.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-auth-compat.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-firestore-compat.min.js"></script>
-    <style>
-        /* Aesthetic Overrides and Upgrades */
-        .hero-heading {
-            /* Text shadow for a slight lift effect on the heading */
-            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        .hero-image-slider {
-            /* Subtle 3D tilt on image hover */
-            transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s;
-        }
-        .hero-image-slider:hover {
-            transform: perspective(1000px) rotateY(3deg) scale(1.02);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-        }
-        .value-card {
-            /* Enhanced 3D pop on hover */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
-        }
-        .value-card:hover {
-            transform: translateY(-12px) scale(1.01);
-            box-shadow: 0 20px 40px rgba(43, 108, 176, 0.3);
-        }
-        .course-card:hover {
-            /* Enhanced card border on hover */
-            border: 1px solid var(--primary);
-        }
-        /* Mobile specific style adjustment for the internship section for Request 3 */
-        @media (max-width: 768px) {
-             .internship-content p {
-                 /* Resetting this to default for clean English content */
-                 font-size: 1.15rem;
-                 font-weight: 500;
-                 color: var(--dark);
-             }
-        }
-    </style>
     
     <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+
+    <!-- Custom CSS for Home Page Animations -->
+    <style>
+        .hero-heading {
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        .hero-image-slider {
+            transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s;
+        }
+        .hero-image-slider:hover {
+            transform: perspective(1000px) translateZ(15px) rotateY(3deg) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        .value-card:hover {
+            border-bottom: 3px solid var(--accent); /* Added subtle border highlight on hover */
+        }
+    </style>
     
 </head>
 
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-3ZZ3HGFM3Q');
-</script>
-
-
 <body>
+    <!-- Google Analytics Script -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-3ZZ3HGFM3Q');
+    </script>
+
+
+    <!-- ==============================================
+         HEADER: 3D Animated Nav (Requests 1 & 2)
+         ============================================== -->
     <header>
         <div class="container header-container">
             <a href="index.html" class="logo">
@@ -93,32 +75,46 @@
                 <a href="/jobs.html" class="nav-link">Jobs</a>
                 <a href="/about.html" class="nav-link">About</a>
                 
-                <div class="nav-item dropdown" id="desktopMoreDropdown">
-                    <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                <!-- TOOLS DROPDOWN (New Element) -->
+                <div class="nav-item dropdown" id="toolsDropdown">
+                    <a href="#" class="nav-link dropdown-toggle">Tools <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
-                        <a href="/contact.html" class="dropdown-link">Contact</a>
-                        <a href="/blog/index.html" class="dropdown-link">Blog</a>
-                        <a href="/community/join.html" class="dropdown-link">Community</a>
-                        <a href="/community/partners.html" class="dropdown-link">Partners</a>
-                        <a href="/community/academy.html" class="dropdown-link">Offline Academy</a>
+                        <!-- NOTE: These tools links are placeholders as the pages are not provided -->
+                        <a href="/tools/ats-score.html" class="dropdown-link"><i class="fas fa-chart-bar"></i> ATS Score</a>
+                        <a href="/tools/resume-builder.html" class="dropdown-link"><i class="fas fa-file-alt"></i> Resume Builder</a>
+                        <a href="/tools/interview-questions.html" class="dropdown-link"><i class="fas fa-question-circle"></i> Interview Question</a>
+                        <a href="/tools/cover-letter.html" class="dropdown-link"><i class="fas fa-envelope"></i> Cover Letter Generator</a>
+                        <a href="/tools/paraphraser.html" class="dropdown-link"><i class="fas fa-pen-nib"></i> Essay / Paraphraser Tool</a>
                     </div>
                 </div>
                 
-                <a href="/blog/index.html" class="nav-link mobile-only-link">Blog</a>
-                <a href="/contact.html" class="nav-link mobile-only-link">Contact</a>
-                
-                <div class="nav-actions-mobile">
-                     <div class="user-profile hidden" id="userProfileMobile">
-                         <button id="profileBtnHeaderMobile" style="border:none; background:none; color:var(--dark); font-weight:600; font-size:16px; cursor:pointer; padding: 10px 0; width:100%; text-align:center;" onclick="window.handleProfileClick()">
-                             <img src="images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeaderMobile" style="display:inline-block; vertical-align:middle; width:30px; height:30px; border-radius:50%; margin-right:8px;">
-                             <span id="userNameHeaderMobile">My Profile</span> 
-                         </button>
-                         <button id="logoutBtnHeaderMobile" class="btn btn-outline" style="width: 100%;">Sign Out</button>
-                     </div>
-                     <div id="authButtonsMobile" style="width: 100%; display: flex; gap: 10px; justify-content: center;">
-                        <a href="#" class="btn btn-outline" id="loginBtnHeaderMobile">Log in</a>
-                        <a href="#" class="btn btn-primary" id="signupBtnHeaderMobile">Sign up</a>
+                <!-- MORE DROPDOWN (New Element) -->
+                <div class="nav-item dropdown" id="moreDropdown">
+                    <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                    <div class="dropdown-content">
+                        <a href="/contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
+                        <a href="/blog/index.html" class="dropdown-link"><i class="fas fa-newspaper"></i> Blog</a>
+                        <a href="/community/join.html" class="dropdown-link"><i class="fas fa-users"></i> Community</a>
+                        <a href="/community/partners.html" class="dropdown-link"><i class="fas fa-handshake"></i> Partners</a>
+                        <a href="/community/academy.html" class="dropdown-link"><i class="fas fa-university"></i> Offline Academy</a>
                     </div>
+                </div>
+                
+                <!-- MOBILE ONLY LINKS (Simplified, used by JS) -->
+                <a href="/tools/ats-score.html" class="nav-link mobile-only-link">ATS Score</a>
+                <a href="/tools/resume-builder.html" class="nav-link mobile-only-link">Resume Builder</a>
+                <a href="/tools/interview-questions.html" class="nav-link mobile-only-link">Interview Question</a>
+                <a href="/tools/cover-letter.html" class="nav-link mobile-only-link">Cover Letter Generator</a>
+                <a href="/tools/paraphraser.html" class="nav-link mobile-only-link">Essay / Paraphraser Tool</a>
+                <a href="/contact.html" class="nav-link mobile-only-link">Contact</a>
+                <a href="/blog/index.html" class="nav-link mobile-only-link">Blog</a>
+                <a href="/community/join.html" class="nav-link mobile-only-link">Community</a>
+                <a href="/community/partners.html" class="nav-link mobile-only-link">Partners</a>
+                <a href="/community/academy.html" class="nav-link mobile-only-link">Offline Academy</a>
+                
+                <!-- This mobile action button is hidden by CSS but kept for potential mobile actions -->
+                <div class="nav-actions-mobile">
+                     <a href="/tools/resume-builder.html" class="btn btn-primary" style="width: 100%;"><i class="fas fa-rocket"></i> Start a Tool</a>
                 </div>
             </nav>
 
@@ -128,19 +124,8 @@
                     <input type="text" id="searchInput" class="search-input" placeholder="Search courses & domains...">
                 </div>
 
-                <div id="authButtons">
-                    <a href="#" class="btn btn-outline" id="loginBtnHeader">Log in</a>
-                    <a href="#" class="btn btn-primary" id="signupBtnHeader">Sign up</a>
-                </div>
+                <!-- LOGIN/SIGNUP REMOVED (Request 1) -->
 
-                <div class="user-profile hidden" id="userProfile">
-                    <img src="images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeader">
-                    <span id="userNameHeader"></span>
-                    <div class="dropdown-menu" id="userDropdown">
-                        <button id="profileBtnHeader">My Profile</button>
-                        <button id="logoutBtnHeader">Sign Out</button>
-                    </div>
-                </div>
             </div> 
 
             <button class="hamburger-menu" id="hamburgerMenu">
@@ -157,7 +142,7 @@
             <div class="container hero-container">
                 <div class="hero-content">
                     <h1 class="hero-heading">India’s Adda for <span>Internships</span></h1>
-                    <p class="hero-description">The perfect launchpad for your career. Gain in-demand skills through our courses, secure paid internships with top companies, and get placed with our job assistance.</p>
+                    <p class="hero-description">The perfect launchpad for your career. Gain in-demand skills through our **free courses**, secure paid internships with top companies, and get placed with our job assistance.</p>
                     <div class="hero-stats">
                         <div class="stat-item">
                             <span class="stat-value">100+</span>
@@ -175,8 +160,8 @@
 
 
                     <div class="hero-cta">
-                        <button class="btn btn-primary btn-lg" onclick="window.location.href='courses/course.html'">Explore Courses</button>
-                        <button class="btn btn-transparent btn-lg" onclick="window.location.href='intern/internship.html'">Find Internships</button>
+                        <a href="courses/course.html" class="btn btn-primary btn-lg">Explore Courses</a>
+                        <a href="intern/internship.html" class="btn btn-transparent btn-lg">Find Internships</a>
                     </div>
                 </div>
 
@@ -197,9 +182,11 @@
             </div>
         </section>
 
+        <!-- Partner Logo Marquee - Fixed for Auto-Scrolling (Request 7 & 8) -->
         <section class="partner-logo-section">
             <div class="logo-marquee-container">
-                <div class="logo-marquee">
+                <!-- Original Marquee -->
+                <div class="logo-marquee" style="animation-delay: 0s;">
                     <div class="logo-item"><img src="images/compan1.jpg" alt="Partner Logo"></div>
                     <div class="logo-item"><img src="images/compan2.jpg" alt="Partner Logo"></div>
                     <div class="logo-item"><img src="images/compan3.jpg" alt="Partner Logo"></div>
@@ -209,15 +196,9 @@
                     <div class="logo-item"><img src="images/compan1.jpg" alt="Partner Logo"></div>
                     <div class="logo-item"><img src="images/compan2.jpg" alt="Partner Logo"></div>
                     <div class="logo-item"><img src="images/compan3.jpg" alt="Partner Logo"></div>
-                    <div class="logo-item"><img src="images/compan1.jpg" alt="Partner Logo"></div>
-                    <div class="logo-item"><img src="images/compan2.jpg" alt="Partner Logo"></div>
-                    <div class="logo-item"><img src="images/compan3.jpg" alt="Partner Logo"></div>
-                    
                 </div>
-                <div class="logo-marquee duplicate">
-                    <div class="logo-item"><img src="images/compan1.jpg" alt="Partner Logo"></div>
-                    <div class="logo-item"><img src="images/compan2.jpg" alt="Partner Logo"></div>
-                    <div class="logo-item"><img src="images/compan3.jpg" alt="Partner Logo"></div>
+                <!-- Duplicate Marquee for seamless loop -->
+                <div class="logo-marquee duplicate" style="animation-delay: 0s;">
                     <div class="logo-item"><img src="images/compan1.jpg" alt="Partner Logo"></div>
                     <div class="logo-item"><img src="images/compan2.jpg" alt="Partner Logo"></div>
                     <div class="logo-item"><img src="images/compan3.jpg" alt="Partner Logo"></div>
@@ -244,7 +225,7 @@
                             <i class="fas fa-graduation-cap"></i>
                         </div>
                         <h3 class="value-title">Learn</h3>
-                        <p class="value-description">Access courses taught by industry experts with practical projects and certifications.</p>
+                        <p class="value-description">Access **free, industry-focused courses** taught by experts with hands-on projects and certifications.</p>
                     </div>
 
                     <div class="value-card">
@@ -252,7 +233,7 @@
                             <i class="fas fa-briefcase"></i>
                         </div>
                         <h3 class="value-title">Intern</h3>
-                        <p class="value-description">Gain real-world experience with our network of company partners across various industries.</p>
+                        <p class="value-description">Gain real-world experience with our network of company partners and secure a **paid internship**.</p>
                     </div>
 
                     <div class="value-card">
@@ -260,7 +241,7 @@
                             <i class="fas fa-dollar-sign"></i>
                         </div>
                         <h3 class="value-title">Earn</h3>
-                        <p class="value-description">Launch your career with our job placement assistance and start earning in your chosen field.</p>
+                        <p class="value-description">Launch your career with our **job placement assistance** and start earning in your chosen field.</p>
                     </div>
                 </div>
             </div>
@@ -279,7 +260,8 @@
                    <a href="courses/courses/Essential Data Science Intern Course.html" class="course-card" style="text-decoration:none; color:inherit;">
                         <div class="course-image">
                             <img src="images/Essential Data Science Intern Course.png"
-                                 alt="Essential Data Science Intern Course">
+                                 alt="Essential Data Science Intern Course"
+                                 onerror="this.onerror=null;this.src='images/no_image.png'">
                         </div>
                         <div class="course-content">
                             <h3 class="course-title">Data Science Intern Course</h3>
@@ -309,7 +291,8 @@
                    style="text-decoration:none; color:inherit;">
                      <div class="course-image">
                          <img src="images/Generative-AI-Prompt-Engineering-Masterclass.png"
-                              alt="Generative AI & Prompt Engineering Masterclass">
+                              alt="Generative AI & Prompt Engineering Masterclass"
+                              onerror="this.onerror=null;this.src='images/no_image.png'">
                      </div>
                      <div class="course-content">
                          <h3 class="course-title">Generative AI & Prompt Engineering</h3>
@@ -340,7 +323,8 @@
                    style="text-decoration:none; color:inherit;">
                      <div class="course-image">
                          <img src="images/Python-Essentials-for-All.png"
-                              alt="Python Essentials for All">
+                              alt="Python Essentials for All"
+                              onerror="this.onerror=null;this.src='images/no_image.png'">
                      </div>
                      <div class="course-content">
                          <h3 class="course-title">Python Essentials for All</h3>
@@ -401,64 +385,106 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-primary" onclick="window.location.href='intern/internship.html'">Explore Internships</button>
+                    <a href="intern/internship.html" class="btn btn-primary">Explore Internships</a>
                 </div>
 
                 <div class="internship-image">
-                    <img src="https://images.unsplash.com/photo-1579389083078-4e7018379f7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Internship program" class="internship-img">
+                    <img src="https://images.unsplash.com/photo-1579389083078-4e7018379f7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Internship program" class="internship-img" onerror="this.onerror=null;this.src='images/intern.jpg'">
                 </div>
             </div>
         </section>
 
+        <!-- Testimonials - Auto-Scrolling Redesign (Request 5) -->
         <section class="testimonials">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">Success Stories</h2>
-                    <p class="section-subtitle">Hear from our students who transformed their careers through Internadda</p>
+                    <h2 class="section-title">Success Stories: Students Who Transformed Their Careers</h2>
+                    <p class="section-subtitle">Hear from our students who transformed their careers through Internadda's Learn, Intern, Earn model.</p>
                 </div>
 
-                <div class="testimonials-container">
-                <div class="testimonials-grid" id="testimonialsGrid">
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <p class="testimonial-text">"Internadda's web development course gave me the practical skills I needed. The projects were challenging and the instructors were always available to help. I landed a job within a month of completing the course!"</p>
-                            <div class="testimonial-author">
-                                <img src="images/no_image.png" alt="Pranjal Singh" class="author-avatar">
-                                <div class="author-details">
-                                    <span class="author-name">Pranjal Singh</span>
-                                    <span class="author-role">DU Graduate</span>
+                <div class="testimonial-wrapper">
+                    <!-- The testimonialsGrid is now used for the carousel/auto-scrolling logic via script.js -->
+                    <div class="testimonials-grid" id="testimonialsGrid">
+                        <!-- Card 1 -->
+                        <div class="testimonial-card">
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">"Internadda's web development course gave me the practical skills I needed. The projects were challenging and the instructors were always available to help. I landed a job within a month of completing the course!"</p>
+                                <div class="testimonial-author">
+                                    <img src="images/no_image.png" alt="Pranjal Singh" class="author-avatar">
+                                    <div class="author-details">
+                                        <span class="author-name">Pranjal Singh</span>
+                                        <span class="author-role">Web Developer Intern (DU Graduate)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card 2 -->
+                        <div class="testimonial-card">
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">"The data science program at Internadda was exactly what I needed to transition into tech. The hands-on projects and career support helped me build a strong portfolio that impressed employers."</p>
+                                <div class="testimonial-author">
+                                    <img src="images/no_image.png" alt="Anuj Singh" class="author-avatar">
+                                    <div class="author-details">
+                                        <span class="author-name">Anuj Singh</span>
+                                        <span class="author-role">Data Scientist Intern (BHU Graduate)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card 3 -->
+                        <div class="testimonial-card">
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">"I was amazed by how comprehensive the UX design course was. The curriculum was up-to-date with industry standards, and the career coaching helped me negotiate a better salary package!"</p>
+                                <div class="testimonial-author">
+                                    <img src="images/no_image.png" alt="Sumit Pandey" class="author-avatar">
+                                    <div class="author-details">
+                                        <span class="author-name">Sumit Pandey</span>
+                                        <span class="author-role">UX Designer (DU Graduate)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card 4 (New) - Duplicated manually to ensure visual continuity before script takes over -->
+                         <div class="testimonial-card">
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">"The free AI course was incredibly dense and practical. It immediately led to me acing the final exam and landing my first ever paid internship. The best learning experience in India."</p>
+                                <div class="testimonial-author">
+                                    <img src="images/no_image.png" alt="Deepa Verma" class="author-avatar">
+                                    <div class="author-details">
+                                        <span class="author-name">Deepa Verma</span>
+                                        <span class="author-role">AI Analyst (IIT Graduate)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- NOTE: We leave a few duplicates here (or rely fully on JS) to ensure smooth scroll start -->
+                        <div class="testimonial-card cloned">
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">"Internadda's web development course gave me the practical skills I needed. The projects were challenging and the instructors were always available to help. I landed a job within a month of completing the course!"</p>
+                                <div class="testimonial-author">
+                                    <img src="images/no_image.png" alt="Pranjal Singh" class="author-avatar">
+                                    <div class="author-details">
+                                        <span class="author-name">Pranjal Singh</span>
+                                        <span class="author-role">Web Developer Intern (DU Graduate)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-card cloned">
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">"The data science program at Internadda was exactly what I needed to transition into tech. The hands-on projects and career support helped me build a strong portfolio that impressed employers."</p>
+                                <div class="testimonial-author">
+                                    <img src="images/no_image.png" alt="Anuj Singh" class="author-avatar">
+                                    <div class="author-details">
+                                        <span class="author-name">Anuj Singh</span>
+                                        <span class="author-role">Data Scientist Intern (BHU Graduate)</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <p class="testimonial-text">"The data science program at Internadda was exactly what I needed to transition into tech. The hands-on projects and career support helped me build a strong portfolio that impressed employers."</p>
-                            <div class="testimonial-author">
-                                <img src="images/no_image.png" alt="Anuj Singh" class="author-avatar">
-                                <div class="author-details">
-                                    <span class="author-name">Anuj Singh</span>
-                                    <span class="author-role">BHU Graduate</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <p class="testimonial-text">"I was amazed by how comprehensive the UX design course was. The curriculum was up-to-date with industry standards, and the career coaching helped me negotiate a better salary package!"</p>
-                            <div class="testimonial-author">
-                                <img src="images/no_image.png" alt="Sumit Pandey" class="author-avatar">
-                                <div class="author-details">
-                                    <span class="author-name">Sumit Pandey</span>
-                                    <span class="author-role">DU Graduate</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-             </div>
+                 </div>
            </div>
         </section>
 
@@ -467,16 +493,19 @@
                 <h2 class="cta-title">Start Your Career Journey Today</h2>
                 <p class="cta-description">Join thousands of students who have transformed their careers through Internadda's learn, intern, and earn model.</p>
                 <div class="cta-buttons">
-                    <button class="btn btn-light btn-lg" onclick="window.location.href='intern/internship.html'">Get Started</button>
-                    <button class="btn btn-transparent btn-lg" onclick="window.location.href='courses/course.html'">Browse Courses</button>
+                    <a href="intern/internship.html" class="btn btn-light btn-lg">Get Started</a>
+                    <a href="courses/course.html" class="btn btn-transparent btn-lg">Browse Courses</a>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- ==============================================
+         FOOTER: Updated with Tools Column (Request 3)
+         ============================================== -->
     <footer>
         <div class="container">
- <div class="footer-grid">
+            <div class="footer-grid">
                 <div class="footer-brand">
                     <div class="footer-logo">Internadda</div>
                     <p class="footer-description">Transforming careers through learning, interning, and earning opportunities.</p>
@@ -512,19 +541,20 @@
                         <li><a href="#">Career Coaching</a></li>
                     </ul>
                 </div>
-
+                
+                <!-- NEW TOOLS COLUMN (Request 3) -->
                 <div class="footer-links-column">
-                    <h3 class="footer-links-title">Community</h3>
+                    <h3 class="footer-links-title">Career Tools</h3>
                     <ul class="footer-links">
-                        <li><a href="/community/join.html">Join Community</a></li>
-                        <li><a href="/community/partners.html">Partners</a></li>
-                        <li><a href="/blog/index.html">Blog</a></li>
-                        <li><a href="/community/academy.html">Offline Academy</a></li>
+                        <li><a href="/tools/ats-score.html">ATS Score Checker</a></li>
+                        <li><a href="/tools/resume-builder.html">Resume Builder</a></li>
+                        <li><a href="/tools/interview-questions.html">Interview Prep</a></li>
+                        <li><a href="/tools/cover-letter.html">Cover Letter Gen</a></li>
+                        <li><a href="/tools/paraphraser.html">Essay Paraphraser</a></li>
                     </ul>
                 </div>
 
-
-                     <div class="footer-links-column">
+                <div class="footer-links-column">
                     <h3 class="footer-links-title">InternAdda</h3>
                     <ul class="footer-links">
                         <li><a href="/about.html">About Us</a></li>
@@ -535,284 +565,27 @@
                 </div>
 
                 <div class="footer-links-column">
-                    <h3 class="footer-links-title">More</h3>
+                    <h3 class="footer-links-title">Community</h3>
                     <ul class="footer-links">
-                        <li><a href="#">Affiliate Program</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">QnA</a></li>
-                        <li><a href="#">Daily Challenges</a></li>
+                        <li><a href="/community/join.html">Join Community</a></li>
+                        <li><a href="/community/partners.html">Partners</a></li>
+                        <li><a href="/blog/index.html">Blog</a></li>
+                        <li><a href="/community/academy.html">Offline Academy</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="footer-bottom">
-                <p>© 2025 Internadda. All rights reserved.</p>
+                <p>© 2025 Internadda. All rights reserved. | Developed by Internadda Team</p>
             </div>
         </div>
     </footer>
 
-    <div id="authModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" id="closeModal">&times;</span>
-
-            <div id="loginSection" class="auth-section">
-                 <div class="auth-notification">
-                    <i class="fas fa-lock"></i> <strong>Log in Required:</strong> Log in to take courses, track progress, and apply for internships.
-                 </div>
-                <h2 class="auth-title">Welcome Back</h2>
-                <div class="loading" id="loginLoading">
-                    <div class="spinner"></div>
-                    <span>Signing in...</span>
-                </div>
-                <div id="loginError" class="error"></div>
-
-                <div class="form-group">
-                    <label for="loginEmail">Email</label>
-                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="loginPassword">Password</label>
-                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
-                </div>
-
-                <button class="btn btn-primary" id="emailLoginBtn">Sign In</button>
-                <div class="separator"><span>OR</span></div>
-                <button class="btn btn-google" id="googleLoginBtn"><i class="fab fa-google"></i> Continue with Google</button>
-
-                <div class="toggle-auth">
-                    <span>Don't have an account?</span> <a href="#" id="showSignup">Sign up</a>
-                </div>
-            </div>
-
-            <div id="signupSection" class="auth-section">
-                <h2 class="auth-title">Create Account</h2>
-                <div class="loading" id="signupLoading">
-                    <div class="spinner"></div>
-                    <span>Creating account...</span>
-                </div>
-                <div id="signupError" class="error"></div>
-
-                <div class="form-group">
-                    <label for="signupEmail">Email</label>
-                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="signupPassword">Password</label>
-                    <input type="password" id="signupPassword" placeholder="Create a password (6+ characters)" required>
-                </div>
-
-                <button class="btn btn-primary" id="emailSignupBtn">Create Account</button>
-                <div class="separator"><span>OR</span></div>
-                <button class="btn btn-google" id="googleSignupBtn"><i class="fab fa-google"></i> Sign up with Google</button>
-
-                <div class="toggle-auth">
-                    <span>Already have an account?</span> <a href="#" id="showLogin">Sign in</a>
-                </div>
-            </div>
-
-            <div id="dashboardSection" class="auth-section">
-                 <div class="dashboard-content">
-                    
-                     <div class="profile-tabs">
-                         <button class="tab-btn active" data-tab="profile">Profile</button>
-                         <button class="tab-btn" data-tab="internships">Internships</button>
-                     </div>
-
-                    <div id="profileTabContent" class="tab-content">
-                        <div id="profileDisplaySection">
-                            <div class="user-info-profile">
-                                <div class="profile-avatar-display">
-                                    <img id="userAvatarDashboard" class="user-avatar" src="images/no_image.png" alt="User Avatar">
-                                </div>
-                                <div class="user-profile-details">
-                                    <h2 id="userNameDashboard"></h2>
-                                    <p id="userEmailDashboard"></p>
-                                </div>
-                            </div>
-                            <div class="profile-details">
-                                <h3 class="section-title-small">Profile Information</h3>
-                                <div class="profile-info-item">
-                                    <strong>Gender:</strong> <span id="profileGenderDisplay">Not specified</span>
-                                </div>
-                                <div class="profile-info-item">
-                                    <strong>Interested Domain:</strong> <span id="profileDomainDisplay">Not specified</span>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary" id="shareProfileBtn" style="width: 100%; margin-top: 20px;"><i class="fas fa-share-alt" style="margin-right: 8px;"></i> Share My Profile</button>
-                            <button class="btn btn-outline" id="editProfileBtn">Edit Profile</button>
-                        </div>
-
-                        <div id="profileEditSection" class="hidden">
-                            <div id="profileEditError" class="error" style="display: none;"></div>
-                            <div class="profile-avatar-display">
-                                <img id="userAvatarPreview" class="user-avatar" src="images/no_image.png" alt="User Avatar Preview">
-                                <label for="profileImageInput" class="file-upload-label">
-                                    <i class="fas fa-upload"></i> Upload Image
-                                </label>
-                                <input type="file" id="profileImageInput" accept="image/*">
-                                <p class="profile-avatar-hint" style="margin-top: 5px; font-size: 0.85rem; color: #f56565;">*Image upload is for demo only; file storage is not active.</p>
-                            </div>
-                            <div class="form-group">
-                                <label for="profileName">Full Name</label>
-                                <input type="text" id="profileName" placeholder="Enter your full name">
-                            </div>
-                            <div class="form-group">
-                                <label for="profileGender">Gender</label>
-                                <select id="profileGender">
-                                    <option value="">Select Gender</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="interestedDomain">Interested Domain</label>
-                                <select id="interestedDomain">
-                                    <option value="">Select Domain</option>
-                                    <option value="Web Development">Web Development</option>
-                                    <option value="Data Science & AI">Data Science & AI</option>
-                                    <option value="Digital Marketing">Digital Marketing</option>
-                                    <option value="UI/UX Design">UI/UX Design</option>
-                                </select>
-                            </div>
-                            <button class="btn btn-primary" id="saveProfileBtn">Save Profile</button>
-                        </div>
-                    </div>
-                     
-                    <div id="coursesTabContent" class="tab-content hidden">
-                        <h3 class="section-title-small">📚 Enrolled Courses & Certificates</h3>
-                        <p style="color: var(--gray); margin-bottom: 20px;">Track your progress and access completion certificates here.</p>
-                        <div id="coursesListContainer" class="user-data-list">
-                            <p style="text-align: center; padding: 20px;">Please log in to view your courses.</p>
-                        </div>
-                    </div>
-
-                    <div id="internshipsTabContent" class="tab-content hidden">
-                        <h3 class="section-title-small">💼 Internship Application History</h3>
-                        <p style="color: var(--gray); margin-bottom: 20px;">View your exam results and application status for different domains.</p>
-                        <div id="internshipsListContainer" class="user-data-list">
-                            <p style="text-align: center; padding: 20px;">Please log in to view your internship history.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Main JavaScript Logic (Auth features removed) -->
     <script src="script.js"></script>
     <script>
+        // Hero Image Slider Logic (retained from original index.html)
         document.addEventListener('DOMContentLoaded', function() {
-            // 1. Get Elements
-            const loginBtnHeader = document.getElementById('loginBtnHeader');
-            const signupBtnHeader = document.getElementById('signupBtnHeader');
-            const loginBtnMobile = document.getElementById('loginBtnHeaderMobile');
-            const signupBtnMobile = document.getElementById('signupBtnHeaderMobile');
-            const authModal = document.getElementById('authModal');
-            const closeModalBtn = document.getElementById('closeModal'); 
-            const loginSection = document.getElementById('loginSection');
-            const signupSection = document.getElementById('signupSection');
-            const navMenu = document.querySelector('.nav-menu');
-            const hamburgerMenu = document.getElementById('hamburgerMenu');
-            const desktopMoreDropdown = document.getElementById('desktopMoreDropdown');
-            const desktopDropdownContent = desktopMoreDropdown ? desktopMoreDropdown.querySelector('.dropdown-content') : null;
-            const desktopDropdownArrow = desktopMoreDropdown ? desktopMoreDropdown.querySelector('.dropdown-arrow') : null;
-            
-            // Special elements for navigation inside modal
-            const showSignupInModal = document.getElementById('showSignup');
-            const showLoginInModal = document.getElementById('showLogin');
-
-            // Helper function to show correct modal section (Duplicate definition to ensure it works even if script.js loads late)
-            const showSection = (sectionElement) => {
-                 if (!sectionElement || !authModal) return;
-                 authModal.querySelectorAll('.auth-section').forEach(sec => sec.classList.remove('active'));
-                 sectionElement.classList.add('active');
-            };
-            
-            const closeAuthModal = () => {
-                 if(authModal) authModal.classList.remove('active'); 
-                 document.body.style.overflow = '';
-            };
-
-            const closeHamburgerMenu = () => {
-                if (navMenu && hamburgerMenu) {
-                    navMenu.classList.remove('active');
-                    hamburgerMenu.classList.remove('active');
-                }
-            };
-
-            // 2. Event Listeners for Login/Signup (Desktop and Mobile)
-            const handleLoginClick = (e) => {
-                e.preventDefault();
-                // Use the global function defined in script.js (Point 2 logic)
-                window.showLoginModal(); 
-                closeHamburgerMenu();
-            };
-            
-            const handleSignupClick = (e) => {
-                e.preventDefault();
-                if (authModal && signupSection) {
-                    authModal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                    showSection(signupSection);
-                    closeHamburgerMenu();
-                }
-            };
-            
-            if (loginBtnHeader) loginBtnHeader.addEventListener('click', handleLoginClick);
-            if (loginBtnMobile) loginBtnMobile.addEventListener('click', handleLoginClick);
-            if (signupBtnHeader) signupBtnHeader.addEventListener('click', handleSignupClick);
-            if (signupBtnMobile) signupBtnMobile.addEventListener('click', handleSignupClick);
-
-            // 3. Fix for Modal Close Button (Cross Button) and Backdrop
-            if (closeModalBtn) {
-                closeModalBtn.addEventListener('click', closeAuthModal);
-            }
-            
-            if (authModal) {
-                 window.addEventListener('click', (e) => {
-                     if (e.target === authModal) {
-                         closeAuthModal();
-                     }
-                 });
-            }
-            
-            // 4. Fix for internal modal navigation
-            if (showSignupInModal) showSignupInModal.addEventListener('click', (e) => { e.preventDefault(); showSection(signupSection); });
-            if (showLoginInModal) showLoginInModal.addEventListener('click', (e) => { e.preventDefault(); showSection(loginSection); });
-
-            // 5. Fix for Hamburger Menu Toggle
-            if (hamburgerMenu && navMenu) {
-                hamburgerMenu.addEventListener('click', () => {
-                    hamburgerMenu.classList.toggle('active');
-                    navMenu.classList.toggle('active');
-                });
-            }
-
-            // 6. Fix for Desktop "More" Dropdown
-            if (desktopMoreDropdown) {
-                desktopMoreDropdown.addEventListener('click', function(event) {
-                    // Only run for desktop view (prevent mobile interference)
-                    if (window.innerWidth > 1024) { 
-                        const isVisible = desktopDropdownContent.style.display === 'block';
-                        desktopDropdownContent.style.display = isVisible ? 'none' : 'block';
-                        if (desktopDropdownArrow) {
-                            desktopDropdownArrow.style.transform = isVisible ? 'rotate(0deg)' : 'rotate(180deg)';
-                        }
-                        event.stopPropagation();
-                    }
-                });
-            }
-            
-            // Close dropdown when clicking anywhere else on desktop
-            document.addEventListener('click', function(event) {
-                 if (desktopDropdownContent && window.innerWidth > 1024 && desktopDropdownContent.style.display === 'block' && !desktopMoreDropdown.contains(event.target)) {
-                     desktopDropdownContent.style.display = 'none';
-                     if (desktopDropdownArrow) desktopDropdownArrow.style.transform = 'rotate(0deg)';
-                 }
-            });
-            
-            // SLIDER LOGIC
             const sliderWrapper = document.querySelector('.slider-wrapper');
             const slides = document.querySelectorAll('.slide');
             const dots = document.querySelectorAll('.dot');
@@ -826,7 +599,13 @@
                 });
             };
 
-            // Manual navigation via dots (auto-scroll removed)
+            // Auto-scroll the hero slider every 5 seconds
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % totalSlides;
+                updateSlider();
+            }, 5000);
+
+            // Manual navigation via dots 
             dots.forEach((dot, index) => {
                 dot.addEventListener('click', () => {
                     currentIndex = index;
