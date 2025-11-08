@@ -3,91 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Courses | Skill Up for Internships with Internadda</title>
-    <meta name="description" content="Browse Internadda's free courses in Data Science, AI, Web Dev, Cybersecurity, and more. Gain practical skills needed for top internships.">
+    <title>Essential Data Science Intern Course | Internadda - Free Certification</title>
+    <meta name="description" content="Master the fundamentals of Data Science with our free course, instructed by Lucky Kumar. Perfect preparation for securing your first paid internship. Estimated completion: 1.5 hours.">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Adjust path for nested file structure -->
+    <link rel="stylesheet" href="../../style.css">
 
-    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/png" href="../../images/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../images/favicon.ico">
+    
+    <style>
+        /* Custom Styles for Course Page */
+        :root {
+            --data-science-color: #0077b6; /* A professional blue for Data Science */
+        }
+        .course-header-section {
+            background: linear-gradient(135deg, #e6f7ff, #cceeff); 
+            padding: 80px 0;
+            color: var(--dark);
+        }
+        .course-page-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr; /* Main content | Sidebar */
+            gap: 40px;
+            align-items: flex-start;
+            padding: 40px 0;
+        }
+        
+        /* Main Content Styling */
+        .main-content h2 {
+            font-size: 2rem;
+            color: var(--data-science-color);
+            margin-bottom: 20px;
+            border-left: 4px solid var(--data-science-color);
+            padding-left: 15px;
+        }
+        .course-details-box {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .key-topic-list li, .prereq-list li {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .key-topic-list li i {
+            color: var(--data-science-color);
+            margin-top: 5px;
+        }
+        .prereq-list li i {
+            color: var(--secondary);
+            margin-top: 5px;
+        }
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-app-compat.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-auth-compat.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-firestore-compat.min.js"></script>
+        /* Sidebar (Sticky Card) Styling */
+        .course-sidebar {
+            position: sticky;
+            top: 100px; /* Offset from header */
+            background-color: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            padding: 30px;
+            text-align: center;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .course-sidebar:hover {
+             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+        .course-sidebar img.course-main-img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .sidebar-price {
+            font-size: 2.5rem;
+            color: var(--data-science-color);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .sidebar-price small {
+            font-size: 1.2rem;
+            color: var(--gray);
+            text-decoration: line-through;
+            font-weight: 400;
+        }
+        .sidebar-cta-btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            background-color: var(--primary);
+            border: none;
+            border-radius: 8px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .sidebar-cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(var(--primary-rgb), 0.4);
+        }
+        
+        /* Instructor Details */
+        .instructor-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            border-top: 1px solid #eee;
+            margin-top: 20px;
+        }
+        .instructor-card .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--secondary);
+        }
+        .instructor-details h4 {
+            font-size: 1.2rem;
+            margin: 0;
+            color: var(--dark);
+        }
+        .instructor-details p {
+            margin: 0;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .course-page-grid {
+                grid-template-columns: 1fr; /* Single column layout on tablets/mobiles */
+                gap: 20px;
+            }
+            .course-sidebar {
+                position: static; /* Remove sticky on mobile */
+                order: -1; /* Place sidebar (card) above main content on mobile */
+            }
+            .course-header-section {
+                 padding: 50px 0 30px;
+            }
+        }
+    </style>
 </head>
-
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-3ZZ3HGFM3Q');
-</script>
-
-
 <body>
+    <!-- Google Analytics Script (Retained) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-3ZZ3HGFM3Q');
+    </script>
+
+    <!-- ==============================================
+         HEADER: Replicated from updated index.html, adjusted paths
+         ============================================== -->
     <header>
         <div class="container header-container">
-            <a href="/" class="logo">
-                 <img src="../images/logo.jpg" alt="InternAdda Logo" class="logo-img">
+            <a href="../../index.html" class="logo">
+                <img src="../../images/logo.jpg" alt="InternAdda Logo" class="logo-img">
                 <span class="logo-text">InternAdda</span>
             </a>
 
             <nav class="nav-menu">
-                 <a href="/index.html" class="nav-link">Home</a>
-                <a href="/courses/course.html" class="nav-link">Courses</a>
-                <a href="/intern/internship.html" class="nav-link">Internships</a>
-                <a href="/jobs.html" class="nav-link">Jobs</a>
-                <a href="/about.html" class="nav-link">About</a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle">Community <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                <a href="../../index.html" class="nav-link">Home</a>
+                <a href="../../courses/course.html" class="nav-link">Courses</a>
+                <a href="../../intern/internship.html" class="nav-link">Internships</a>
+                <a href="../../jobs.html" class="nav-link">Jobs</a>
+                <a href="../../about.html" class="nav-link">About</a>
+                
+                <!-- TOOLS DROPDOWN -->
+                <div class="nav-item dropdown" id="toolsDropdown">
+                    <a href="#" class="nav-link dropdown-toggle">Tools <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
-                        <a href="/community/join.html" class="dropdown-link">Join Community</a>
-                        <a href="/community/partners.html" class="dropdown-link">Partners</a>
-                        <a href="/blog/index.html" class="dropdown-link">Blog</a>
-                        <a href="/community/academy.html" class="dropdown-link">Offline Academy</a>
+                        <a href="../../tools/ats-score.html" class="dropdown-link"><i class="fas fa-chart-bar"></i> ATS Score</a>
+                        <a href="../../tools/resume-builder.html" class="dropdown-link"><i class="fas fa-file-alt"></i> Resume Builder</a>
+                        <a href="../../tools/interview-questions.html" class="dropdown-link"><i class="fas fa-question-circle"></i> Interview Question</a>
+                        <a href="../../tools/cover-letter.html" class="dropdown-link"><i class="fas fa-envelope"></i> Cover Letter Generator</a>
+                        <a href="../../tools/paraphraser.html" class="dropdown-link"><i class="fas fa-pen-nib"></i> Essay / Paraphraser Tool</a>
                     </div>
                 </div>
-                <!-- MOBILE MENU LINKS (Only explicitly requested links plus Mobile Actions) -->
-                <a href="/blog/index.html" class="nav-link mobile-only-link">Blog</a>
-                <a href="/contact.html" class="nav-link mobile-only-link">Contact</a>
-
-                <div class="nav-actions-mobile">
-                     <div class="user-profile hidden" id="userProfileMobile">
-                        <button id="profileBtnHeaderMobile" style="border:none; background:none; color:var(--dark); font-weight:600; font-size:16px; cursor:pointer; padding: 10px 0; width:100%; text-align:center;" onclick="window.handleProfileClick()">
-                             <img src="../images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeaderMobile" style="display:inline-block; vertical-align:middle; width:30px; height:30px; border-radius:50%; margin-right:8px;">
-                             <span id="userNameHeaderMobile">My Profile</span> 
-                         </button>
-                         <button id="logoutBtnHeaderMobile" class="btn btn-outline" style="width: 100%;">Sign Out</button>
-                     </div>
-                     <div id="authButtonsMobile" style="width: 100%; display: flex; gap: 10px; justify-content: center;">
-                        <a href="#" class="btn btn-outline" id="loginBtnHeaderMobile">Log in</a>
-                        <a href="#" class="btn btn-primary" id="signupBtnHeaderMobile">Sign up</a>
+                
+                <!-- MORE DROPDOWN -->
+                <div class="nav-item dropdown" id="moreDropdown">
+                    <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                    <div class="dropdown-content">
+                        <a href="../../contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
+                        <a href="../../blog/index.html" class="dropdown-link"><i class="fas fa-newspaper"></i> Blog</a>
+                        <a href="../../community/join.html" class="dropdown-link"><i class="fas fa-users"></i> Community</a>
+                        <a href="../../community/partners.html" class="dropdown-link"><i class="fas fa-handshake"></i> Partners</a>
+                        <a href="../../community/academy.html" class="dropdown-link"><i class="fas fa-university"></i> Offline Academy</a>
                     </div>
                 </div>
+                
+                <!-- MOBILE ONLY LINKS -->
+                <a href="../../tools/ats-score.html" class="nav-link mobile-only-link">ATS Score</a>
+                <a href="../../tools/resume-builder.html" class="nav-link mobile-only-link">Resume Builder</a>
+                <a href="../../tools/interview-questions.html" class="nav-link mobile-only-link">Interview Question</a>
+                <a href="../../tools/cover-letter.html" class="nav-link mobile-only-link">Cover Letter Generator</a>
+                <a href="../../tools/paraphraser.html" class="nav-link mobile-only-link">Essay / Paraphraser Tool</a>
+                <a href="../../contact.html" class="nav-link mobile-only-link">Contact</a>
+                <a href="../../blog/index.html" class="nav-link mobile-only-link">Blog</a>
+                <a href="../../community/join.html" class="nav-link mobile-only-link">Community</a>
+                <a href="../../community/partners.html" class="nav-link mobile-only-link">Partners</a>
+                <a href="../../community/academy.html" class="nav-link mobile-only-link">Offline Academy</a>
             </nav>
 
             <div class="header-actions">
                 <div class="search-container">
                     <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="searchInput" class="search-input" placeholder="Search for courses...">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search courses & domains...">
                 </div>
-
-                <div id="authButtons">
-                    <a href="#" class="btn btn-outline" id="loginBtnHeader">Log in</a>
-                    <a href="#" class="btn btn-primary" id="signupBtnHeader">Sign up</a>
-                </div>
-
-                <div class="user-profile hidden" id="userProfile">
-                    <img src="../images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeader">
-                    <span id="userNameHeader"></span>
-                    <div class="dropdown-menu" id="userDropdown">
-                        <button id="profileBtnHeader">My Profile</button>
-                        <button id="logoutBtnHeader">Sign Out</button>
-                    </div>
-                </div>
-            </div>
+            </div> 
 
             <button class="hamburger-menu" id="hamburgerMenu">
                 <span></span>
@@ -99,184 +238,122 @@
     </header>
 
     <main>
-        <section class="courses">
+        <!-- Course Hero Section -->
+        <section class="course-header-section">
             <div class="container">
-                <div class="courses-header">
-                    <h2 class="section-title">All Courses</h2>
+                <p style="color: var(--secondary); font-weight: 600; margin-bottom: 10px;">FREE COURSE & INTERNSHIP PREP</p>
+                <h1 class="section-title" style="font-size: 3rem; margin-bottom: 15px; color: var(--data-science-color);">
+                    Essential Data Science Intern Course
+                </h1>
+                <p class="section-subtitle" style="font-size: 1.2rem; max-width: 800px; margin-bottom: 25px; color: var(--dark-light);">
+                    Launch your career in Data Science! Master the core concepts and tools needed to pass the Internadda certification exam and secure a high-stipend internship.
+                </p>
+                <div style="display: flex; gap: 25px; align-items: center; flex-wrap: wrap; margin-bottom: 20px;">
+                    <span style="font-weight: 600; color: var(--secondary);"><i class="fas fa-star" style="margin-right: 5px;"></i> 4.9 Rating (3K+ Enrollments)</span>
+                    <span style="font-weight: 600; color: var(--dark);"><i class="fas fa-clock" style="margin-right: 5px;"></i> Est. Time: 1 to 1.5 Hours</span>
+                    <span style="font-weight: 600; color: #28a745;"><i class="fas fa-certificate" style="margin-right: 5px;"></i> Certificate Included</span>
                 </div>
-                
-                <div id="fullPageGate" class="hidden">
-                    </div>
-
-                <div class="courses-grid" id="coursesGrid">
-
-                    <a href="courses/Essential Data Science Intern Course.html"
-                       class="course-card"
-                       style="text-decoration:none; color:inherit;">
-                        <div class="course-image">
-                            <img src="../images/Essential Data Science Intern Course.png"
-                                 alt="Essential Data Science Intern Course">
-                        </div>
-                        <div class="course-content">
-                            <h3 class="course-title">Data Science Intern Course</h3>
-                            <p class="course-author">Instructed by Lucky Kumar</p>
-                            <div class="course-rating">
-                                <div class="rating-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="rating-value">4.9</span>
-                            </div>
-                            <div class="course-duration">
-                                <i class="far fa-clock"></i> Average Duration: 27 mins
-                            </div>
-                            <div class="course-price">
-                                <span class="original-price">₹1,999</span>
-                                <span class="badge free">FREE</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="courses/Generative-AI-Prompt-Engineering-Masterclass.html"
-                       class="course-card"
-                       style="text-decoration:none; color:inherit;">
-                        <div class="course-image">
-                             <img src="../images/Generative-AI-Prompt-Engineering-Masterclass.png"
-                                 alt="Generative AI & Prompt Engineering Masterclass">
-                        </div>
-                        <div class="course-content">
-                            <h3 class="course-title">Generative AI & Prompt Engineering</h3>
-                            <p class="course-author">Instructed by Lucky Kumar</p>
-                            <div class="course-rating">
-                                <div class="rating-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="rating-value">4.7</span>
-                            </div>
-                             <div class="course-duration">
-                                <i class="far fa-clock"></i> Average Duration: 30 mins
-                            </div>
-                            <div class="course-price">
-                                <span class="original-price">₹2,999</span>
-                                <span class="badge free">FREE</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="courses/Ethical-Hacking-Mastery.html"
-                       class="course-card"
-                       style="text-decoration:none; color:inherit;">
-                        <div class="course-image">
-                             <img src="../images/Ethical-Hacking-Mastery.png"
-                                 alt="Ethical Hacking Mastery">
-                        </div>
-                        <div class="course-content">
-                            <h3 class="course-title">Ethical Hacking Mastery</h3>
-                            <p class="course-author">Instructed by Lucky Kumar</p>
-                            <div class="course-rating">
-                                <div class="rating-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="rating-value">4.8</span>
-                            </div>
-                             <div class="course-duration">
-                                <i class="far fa-clock"></i> Average Duration: 29 mins
-                            </div>
-                            <div class="course-price">
-                                <span class="original-price">₹4,999</span>
-                                <span class="badge free">FREE</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="courses/Python-Essentials-for-All.html"
-                       class="course-card"
-                       style="text-decoration:none; color:inherit;">
-                        <div class="course-image">
-                             <img src="../images/Python-Essentials-for-All.png"
-                                 alt="Python Essentials for All">
-                        </div>
-                        <div class="course-content">
-                            <h3 class="course-title">Python Essentials for All</h3>
-                            <p class="course-author">Instructed by Lucky Kumar</p>
-                            <div class="course-rating">
-                                <div class="rating-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="rating-value">4.8</span>
-                            </div>
-                            <div class="course-duration">
-                                <i class="far fa-clock"></i> Average Duration: 28 mins
-                            </div>
-                            <div class="course-price">
-                                <span class="original-price">₹1,999</span>
-                                <span class="badge free">FREE</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="courses/Cloud-DevOps-Essentials.html"
-                       class="course-card"
-                       style="text-decoration:none; color:inherit;">
-                        <div class="course-image">
-                             <img src="../images/Cloud-DevOps-Essentials.png"
-                                 alt="Cloud & DevOps Essentials">
-                        </div>
-                        <div class="course-content">
-                            <h3 class="course-title">Cloud & DevOps Essentials</h3>
-                            <p class="course-author">Instructed by Lucky Kumar</p>
-                            <div class="course-rating">
-                                <div class="rating-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="rating-value">4.8</span>
-                            </div>
-                             <div class="course-duration">
-                                <i class="far fa-clock"></i> Average Duration: 26 mins
-                            </div>
-                            <div class="course-price">
-                                <span class="original-price">₹2,999</span>
-                                <span class="badge free">FREE</span>
-                            </div>
-                        </div>
-                    </a>
-                    </div> </div>
+            </div>
         </section>
 
-        <section class="cta-section">
+        <!-- Course Content Grid -->
+        <section class="content-section">
+            <div class="container course-page-grid">
+                
+                <!-- Main Content Area -->
+                <div class="main-content">
+                    
+                    <div class="course-details-box">
+                        <h2>Course Overview</h2>
+                        <p style="font-size: 1.1rem; line-height: 1.7;">
+                            This concise and intensive course is designed to provide you with the essential foundation required to excel in a **Data Science internship**. We cut through the noise, focusing only on the practical skills and conceptual knowledge tested in the Internadda Final Exam. From data wrangling to visualization and basic modeling, you'll gain practical expertise fast.
+                        </p>
+                    </div>
+
+                    <div class="course-details-box">
+                        <h2>What You Will Learn (Key Topics)</h2>
+                        <ul class="key-topic-list">
+                            <li><i class="fas fa-check-circle"></i> **Data Wrangling:** Techniques using Pandas for cleaning, merging, and preparing real-world datasets.</li>
+                            <li><i class="fas fa-chart-line"></i> **Exploratory Data Analysis (EDA):** Visualizing data using Matplotlib and Seaborn to uncover patterns and anomalies.</li>
+                            <li><i class="fas fa-calculator"></i> **Statistical Foundations:** Understanding key statistical measures (mean, median, standard deviation) and probability concepts.</li>
+                            <li><i class="fas fa-brain"></i> **Introduction to Scikit-learn:** Building and evaluating basic Linear Regression and Classification models.</li>
+                            <li><i class="fas fa-database"></i> **SQL Basics:** Writing fundamental queries for data extraction and manipulation from relational databases.</li>
+                            <li><i class="fas fa-code-branch"></i> **Version Control for Data:** Basic Git commands for tracking data science project changes.</li>
+                        </ul>
+                    </div>
+
+                    <div class="course-details-box">
+                        <h2>Prerequisites Before Starting</h2>
+                        <p>To get the most out of this intensive module, we recommend you have:</p>
+                        <ul class="prereq-list">
+                            <li><i class="fas fa-info-circle"></i> Familiarity with **Basic Python syntax** (variables, loops, functions).</li>
+                            <li><i class="fas fa-info-circle"></i> Access to a working environment (Jupyter Notebook or VS Code).</li>
+                            <li><i class="fas fa-info-circle"></i> A strong desire to apply concepts immediately to **real-world datasets**.</li>
+                            <li><i class="fas fa-info-circle"></i> No prior Data Science experience is strictly required, but basic coding logic helps greatly.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="course-details-box">
+                         <h2>Your Instructor: Lucky Kumar</h2>
+                         <div class="instructor-card">
+                             <img src="https://placehold.co/80x80/2980b9/ffffff?text=L.K" alt="Lucky Kumar Instructor" class="avatar">
+                             <div class="instructor-details">
+                                 <h4>Lucky Kumar</h4>
+                                 <p>Lead Data Scientist & Head of Curriculum at Internadda</p>
+                                 <p style="margin-top: 5px; font-size: 0.95rem; color: var(--dark);">Lucky has mentored over 5,000 students and specializes in crafting high-impact, practical data science training modules that secure placements.</p>
+                             </div>
+                         </div>
+                    </div>
+
+                </div>
+
+                <!-- Sidebar/Course Card -->
+                <div class="course-sidebar">
+                    <img src="../../images/Essential Data Science Intern Course.png" 
+                         alt="Essential Data Science Course Thumbnail" 
+                         class="course-main-img" 
+                         onerror="this.onerror=null;this.src='../../images/no_image.png'">
+                         
+                    <h3 style="color: var(--dark); font-size: 1.5rem; margin-bottom: 5px;">This Course Is:</h3>
+                    <p style="color: #28a745; font-size: 1.1rem; font-weight: 600; margin-bottom: 20px;"><i class="fas fa-trophy"></i> Internship Placement Focused</p>
+
+                    <div class="sidebar-price">
+                        <small>₹1,999</small> FREE
+                    </div>
+                    
+                    <a href="../../maintenance.html" class="btn btn-primary sidebar-cta-btn">
+                        <i class="fas fa-play-circle" style="margin-right: 10px;"></i> Start for FREE Now
+                    </a>
+
+                    <ul style="list-style: none; padding: 0; margin-top: 20px; font-size: 0.95rem; color: var(--gray);">
+                        <li style="margin-bottom: 10px;"><i class="fas fa-file-pdf" style="margin-right: 8px; color: var(--data-science-color);"></i> Access to All Videos</li>
+                        <li style="margin-bottom: 10px;"><i class="fas fa-code" style="margin-right: 8px; color: var(--data-science-color);"></i> Downloadable Code & Data</li>
+                        <li style="margin-bottom: 10px;"><i class="fas fa-user-friends" style="margin-right: 8px; color: var(--data-science-color);"></i> Community Support</li>
+                        <li><i class="fas fa-flask" style="margin-right: 8px; color: var(--data-science-color);"></i> Internship Final Exam Access</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Related Courses CTA -->
+        <section class="cta-section" style="background-color: #f8f9fa;">
             <div class="container">
-                <h2 class="cta-title">Start Your Career Journey Today</h2>
-                <p class="cta-description">Join thousands of students who have transformed their careers through Internadda's learn, intern, and earn model.</p>
+                <h2 class="cta-title" style="color: var(--dark);">Ready to Test Your Skills?</h2>
+                <p class="cta-description" style="color: var(--gray);">After completing this free course, prove your expertise in our final exam to qualify for a paid internship opportunity.</p>
                 <div class="cta-buttons">
-                     <button class="btn btn-light btn-lg" onclick="window.location.href='/intern/internship.html'">Get Started</button>
-                    <button class="btn btn-transparent btn-lg" onclick="window.location.href='/courses/course.html'">Browse Courses</button>
+                    <a href="../../intern/internship.html" class="btn btn-primary btn-lg">View Final Exam & Internship</a>
                 </div>
             </div>
         </section>
     </main>
 
-     <footer>
+    <!-- ==============================================
+         FOOTER: Replicated from updated index.html, adjusted paths
+         ============================================== -->
+    <footer>
         <div class="container">
-             <div class="footer-grid">
+            <div class="footer-grid">
                 <div class="footer-brand">
                     <div class="footer-logo">Internadda</div>
                     <p class="footer-description">Transforming careers through learning, interning, and earning opportunities.</p>
@@ -296,8 +373,8 @@
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Learn</h3>
                     <ul class="footer-links">
-                        <li><a href="/courses/course.html">Browse Courses</a></li>
-                        <li><a href="/courses/course.html">Free Courses</a></li>
+                        <li><a href="../course.html">Browse Courses</a></li>
+                        <li><a href="../course.html">Free Courses</a></li>
                         <li><a href="#">Paid Courses</a></li>
                         <li><a href="#">Become an Instructor</a></li>
                     </ul>
@@ -306,260 +383,53 @@
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Intern</h3>
                     <ul class="footer-links">
-                        <li><a href="/intern/internship.html">Find Internships</a></li>
+                        <li><a href="../../intern/internship.html">Find Internships</a></li>
                         <li><a href="#">For Companies</a></li>
                         <li><a href="#">Success Stories</a></li>
                         <li><a href="#">Career Coaching</a></li>
+                    </ul>
+                </div>
+                
+                <!-- CAREER TOOLS COLUMN -->
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">Career Tools</h3>
+                    <ul class="footer-links">
+                        <li><a href="../../tools/ats-score.html">ATS Score Checker</a></li>
+                        <li><a href="../../tools/resume-builder.html">Resume Builder</a></li>
+                        <li><a href="../../tools/interview-questions.html">Interview Prep</a></li>
+                        <li><a href="../../tools/cover-letter.html">Cover Letter Gen</a></li>
+                        <li><a href="../../tools/paraphraser.html">Essay Paraphraser</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">InternAdda</h3>
+                    <ul class="footer-links">
+                        <li><a href="../../about.html">About Us</a></li>
+                        <li><a href="../../contact.html">Contact Us</a></li>
+                        <li><a href="../../terms.html">Terms & Conditions</a></li>
+                        <li><a href="../../refund.html">Refund Policy</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Community</h3>
                     <ul class="footer-links">
-                        <li><a href="/community/join.html">Join Community</a></li>
-                        <li><a href="/community/partners.html">Partners</a></li>
-                        <li><a href="/blog/index.html">Blog</a></li>
-                        <li><a href="/community/academy.html">Offline Academy</a></li>
-                    </ul>
-                </div>
-
-
-                     <div class="footer-links-column">
-                    <h3 class="footer-links-title">InternAdda</h3>
-                    <ul class="footer-links">
-                        <li><a href="/about.html">About Us</a></li>
-                        <li><a href="/contact.html">Contact Us</a></li>
-                        <li><a href="/terms.html">Terms & Conditions</a></li>
-                        <li><a href="/refund.html">Refund Policy</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">More</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Affiliate Program</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">QnA</a></li>
-                        <li><a href="#">Daily Challenges</a></li>
+                        <li><a href="../../community/join.html">Join Community</a></li>
+                        <li><a href="../../community/partners.html">Partners</a></li>
+                        <li><a href="../../blog/index.html">Blog</a></li>
+                        <li><a href="../../community/academy.html">Offline Academy</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="footer-bottom">
-                <p>© 2025 Internadda. All rights reserved.</p>
+                <p>© 2025 Internadda. All rights reserved. | Developed by Internadda Team</p>
             </div>
         </div>
     </footer>
 
-    <div id="authModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" id="closeModal">&times;</span>
-
-            <div id="loginSection" class="auth-section">
-                <div class="auth-notification">
-                    <i class="fas fa-lock"></i> <strong>Log in Required:</strong> Log in to take courses, track progress, and apply for internships.
-                 </div>
-                <h2 class="auth-title">Welcome Back</h2>
-                <div class="loading" id="loginLoading">
-                    <div class="spinner"></div>
-                    <span>Signing in...</span>
-                </div>
-                <div id="loginError" class="error"></div>
-
-                <div class="form-group">
-                    <label for="loginEmail">Email</label>
-                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="loginPassword">Password</label>
-                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
-                </div>
-
-                <button class="btn btn-primary" id="emailLoginBtn">Sign In</button>
-                <div class="separator"><span>OR</span></div>
-                <button class="btn btn-google" id="googleLoginBtn"><i class="fab fa-google"></i> Continue with Google</button>
-
-                <div class="toggle-auth">
-                    <span>Don't have an account?</span> <a href="#" id="showSignup">Sign up</a>
-                </div>
-            </div>
-
-            <div id="signupSection" class="auth-section">
-                <h2 class="auth-title">Create Account</h2>
-                <div class="loading" id="signupLoading">
-                    <div class="spinner"></div>
-                    <span>Creating account...</span>
-                </div>
-                <div id="signupError" class="error"></div>
-
-                <div class="form-group">
-                    <label for="signupEmail">Email</label>
-                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="signupPassword">Password</label>
-                    <input type="password" id="signupPassword" placeholder="Create a password (6+ characters)" required>
-                </div>
-
-                <button class="btn btn-primary" id="emailSignupBtn">Create Account</button>
-                <div class="separator"><span>OR</span></div>
-                <button class="btn btn-google" id="googleSignupBtn"><i class="fab fa-google"></i> Sign up with Google</button>
-
-                <div class="toggle-auth">
-                    <span>Already have an account?</span> <a href="#" id="showLogin">Sign in</a>
-                </div>
-            </div>
-
-            <div id="dashboardSection" class="auth-section">
-                 <div class="dashboard-content">
-                    <div class="profile-tabs">
-                         <button class="tab-btn active" data-tab="profile">Profile</button>
-                         <button class="tab-btn" data-tab="internships">Internships</button>
-                    </div>
-
-                    <div id="profileTabContent" class="tab-content">
-                         <div id="profileDisplaySection">
-                             <div class="user-info-profile">
-                                 <div class="profile-avatar-display">
-                                     <img id="userAvatarDashboard" class="user-avatar" src="../images/no_image.png" alt="User Avatar">
-                                 </div>
-                                 <div class="user-profile-details">
-                                     <h2 id="userNameDashboard"></h2>
-                                     <p id="userEmailDashboard"></p>
-                                 </div>
-                             </div>
-                             <div class="profile-details">
-                                 <h3 class="section-title-small">Profile Information</h3>
-                                 <div class="profile-info-item">
-                                     <strong>Gender:</strong> <span id="profileGenderDisplay">Not specified</span>
-                                 </div>
-                                 <div class="profile-info-item">
-                                     <strong>Interested Domain:</strong> <span id="profileDomainDisplay">Not specified</span>
-                                 </div>
-                             </div>
-                            <button class="btn btn-primary" id="shareProfileBtn" style="width: 100%; margin-top: 20px;"><i class="fas fa-share-alt" style="margin-right: 8px;"></i> Share My Profile</button>
-                             <button class="btn btn-outline" id="editProfileBtn">Edit Profile</button>
-                         </div>
-
-                         <div id="profileEditSection" class="hidden">
-                             <div id="profileEditError" class="error" style="display: none;"></div>
-                             <div class="profile-avatar-display">
-                                 <img id="userAvatarPreview" class="user-avatar" src="../images/no_image.png" alt="User Avatar Preview">
-                                 <label for="profileImageInput" class="file-upload-label">
-                                     <i class="fas fa-upload"></i> Upload Image
-                                 </label>
-                                 <input type="file" id="profileImageInput" accept="image/*">
-                                 <p class="profile-avatar-hint" style="margin-top: 5px; font-size: 0.85rem; color: #f56565;">*Image upload is for demo only; file storage is not active.</p>
-                             </div>
-                             <div class="form-group">
-                                 <label for="profileName">Full Name</label>
-                                 <input type="text" id="profileName" placeholder="Enter your full name">
-                             </div>
-                             <div class="form-group">
-                                 <label for="profileGender">Gender</label>
-                                 <select id="profileGender">
-                                     <option value="">Select Gender</option>
-                                     <option value="Male">Male</option>
-                                     <option value="Female">Female</option>
-                                     <option value="Other">Other</option>
-                                 </select>
-                             </div>
-                             <div class="form-group">
-                                 <label for="interestedDomain">Interested Domain</label>
-                                 <select id="interestedDomain">
-                                     <option value="">Select Domain</option>
-                                     <option value="Web Development">Web Development</option>
-                                     <option value="Data Science & AI">Data Science & AI</option>
-                                     <option value="Digital Marketing">Digital Marketing</option>
-                                     <option value="UI/UX Design">UI/UX Design</option>
-                                 </select>
-                             </div>
-                             <button class="btn btn-primary" id="saveProfileBtn">Save Profile</button>
-                         </div>
-                    </div>
-
-                    <div id="coursesTabContent" class="tab-content hidden">
-                        <h3 class="section-title-small">📚 Enrolled Courses & Certificates</h3>
-                        <p style="color: var(--gray); margin-bottom: 20px;">Track your progress and access completion certificates here.</p>
-                        <div id="coursesListContainer" class="user-data-list">
-                            <p style="text-align: center; padding: 20px;">Please log in to view your courses.</p>
-                        </div>
-                    </div>
-
-                    <div id="internshipsTabContent" class="tab-content hidden">
-                        <h3 class="section-title-small">💼 Internship Application History</h3>
-                        <p style="color: var(--gray); margin-bottom: 20px;">View your exam results and application status for different domains.</p>
-                        <div id="internshipsListContainer" class="user-data-list">
-                            <p style="text-align: center; padding: 20px;">Please log in to view your internship history.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="../script.js"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const loginBtnMobile = document.getElementById('loginBtnHeaderMobile');
-            const signupBtnMobile = document.getElementById('signupBtnHeaderMobile');
-            const authModal = document.getElementById('authModal');
-            const loginSection = document.getElementById('loginSection');
-            const signupSection = document.getElementById('signupSection');
-            const navMenu = document.querySelector('.nav-menu');
-            const hamburgerMenu = document.getElementById('hamburgerMenu');
-
-            // Helper function to show the correct section (local copy for modularity)
-            const showSection = (sectionElement) => {
-                 if (!sectionElement || !authModal) return;
-                 authModal.querySelectorAll('.auth-section').forEach(sec => sec.classList.remove('active'));
-                 sectionElement.classList.add('active');
-            };
-
-            const closeHamburgerMenu = () => {
-                if (navMenu && hamburgerMenu) {
-                    navMenu.classList.remove('active');
-                    hamburgerMenu.classList.remove('active');
-                }
-            };
-
-            // Mobile Login/Signup Buttons (Call local showSection as the modal logic is contained here)
-            if (loginBtnMobile) {
-                loginBtnMobile.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (authModal && loginSection && signupSection) {
-                        authModal.classList.add('active');
-                        document.body.style.overflow = 'hidden';
-                        signupSection.classList.remove('active');
-                        loginSection.classList.add('active');
-                        closeHamburgerMenu();
-                    }
-                });
-            }
-
-            if (signupBtnMobile) {
-                signupBtnMobile.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (authModal && loginSection && signupSection) {
-                        authModal.classList.add('active');
-                        document.body.style.overflow = 'hidden';
-                        loginSection.classList.remove('active');
-                        signupSection.classList.add('active');
-                        closeHamburgerMenu();
-                    }
-                });
-            }
-            
-            // FIX: Re-adding the core hamburger toggle logic for this page
-            if (hamburgerMenu && navMenu) {
-                hamburgerMenu.addEventListener('click', () => {
-                    hamburgerMenu.classList.toggle('active');
-                    navMenu.classList.toggle('active');
-                });
-            }
-        });
-    </script>
+    <!-- Main JavaScript Logic (Adjusted path) -->
+    <script src="../../script.js"></script>
 </body>
 </html>
