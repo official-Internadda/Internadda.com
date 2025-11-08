@@ -3,250 +3,293 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Refund & Cancellation Policy — Internadda</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Refund Policy | Internadda</title>
+    <meta name="description" content="Read Internadda's Refund Policy regarding paid services, including Final Exam fees and any premium courses offered.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <link rel="stylesheet" href="style.css">
+
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+    
+    <style>
+        .page-header {
+            background-color: #fcebeb; /* Soft red/pink for important policy notices */
+        }
+        .policy-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+        .policy-content h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 5px;
+        }
+        .policy-content h3 {
+            font-size: 1.6rem;
+            color: var(--secondary);
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+        .policy-content p {
+            margin-bottom: 20px;
+            color: var(--dark);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+        .policy-content ul {
+            padding-left: 25px;
+            list-style-type: disc;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        .policy-content li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .policy-content strong {
+            font-weight: 700;
+            color: var(--dark);
+        }
+    </style>
 </head>
 <body>
+    <!-- Google Analytics Script (Retained) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-3ZZ3HGFM3Q');
+    </script>
+
+    <!-- ==============================================
+         HEADER: 3D Animated Nav (Requests 1 & 2)
+         ============================================== -->
     <header>
         <div class="container header-container">
-        <a href="index.html" class="logo">
-          <img src="images/logo.jpg" alt="InternAdda Logo" class="logo-img">
-          <span class="logo-text">InternAdda</span>
-        </a>
+            <a href="index.html" class="logo">
+                <img src="images/logo.jpg" alt="InternAdda Logo" class="logo-img">
+                <span class="logo-text">InternAdda</span>
+            </a>
+
             <nav class="nav-menu">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="courses/course.html" class="nav-link">Courses</a>
-                <a href="intern/internship.html" class="nav-link">Internships</a>
-                <a href="#" class="nav-link">Jobs</a>
-                <a href="about.html" class="nav-link">About</a>
-            </nav>
-            <div class="header-actions">
-                 <div id="authButtons">
-                    <a href="#" class="btn btn-outline" id="loginBtnHeader">Log in</a>
-                    <a href="#" class="btn btn-primary" id="signupBtnHeader">Sign up</a>
-                </div>
-                 <div class="user-profile hidden" id="userProfile">
-                    <img src="images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeader">
-                    <span id="userNameHeader"></span>
-                    <div class="dropdown-menu" id="userDropdown">
-                        <button id="profileBtnHeader">My Profile</button>
-                        <button id="logoutBtnHeader">Sign Out</button>
+                <a href="/index.html" class="nav-link">Home</a>
+                <a href="/courses/course.html" class="nav-link">Courses</a>
+                <a href="/intern/internship.html" class="nav-link">Internships</a>
+                <a href="/jobs.html" class="nav-link">Jobs</a>
+                <a href="/about.html" class="nav-link">About</a>
+                
+                <!-- TOOLS DROPDOWN -->
+                <div class="nav-item dropdown" id="toolsDropdown">
+                    <a href="#" class="nav-link dropdown-toggle">Tools <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                    <div class="dropdown-content">
+                        <a href="/tools/ats-score.html" class="dropdown-link"><i class="fas fa-chart-bar"></i> ATS Score</a>
+                        <a href="/tools/resume-builder.html" class="dropdown-link"><i class="fas fa-file-alt"></i> Resume Builder</a>
+                        <a href="/tools/interview-questions.html" class="dropdown-link"><i class="fas fa-question-circle"></i> Interview Question</a>
+                        <a href="/tools/cover-letter.html" class="dropdown-link"><i class="fas fa-envelope"></i> Cover Letter Generator</a>
+                        <a href="/tools/paraphraser.html" class="dropdown-link"><i class="fas fa-pen-nib"></i> Essay / Paraphraser Tool</a>
                     </div>
                 </div>
-            </div>
+                
+                <!-- MORE DROPDOWN -->
+                <div class="nav-item dropdown" id="moreDropdown">
+                    <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                    <div class="dropdown-content">
+                        <a href="/contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
+                        <a href="/blog/index.html" class="dropdown-link"><i class="fas fa-newspaper"></i> Blog</a>
+                        <a href="/community/join.html" class="dropdown-link"><i class="fas fa-users"></i> Community</a>
+                        <a href="/community/partners.html" class="dropdown-link"><i class="fas fa-handshake"></i> Partners</a>
+                        <a href="/community/academy.html" class="dropdown-link"><i class="fas fa-university"></i> Offline Academy</a>
+                    </div>
+                </div>
+                
+                <!-- MOBILE ONLY LINKS -->
+                <a href="/tools/ats-score.html" class="nav-link mobile-only-link">ATS Score</a>
+                <a href="/tools/resume-builder.html" class="nav-link mobile-only-link">Resume Builder</a>
+                <a href="/tools/interview-questions.html" class="nav-link mobile-only-link">Interview Question</a>
+                <a href="/tools/cover-letter.html" class="nav-link mobile-only-link">Cover Letter Generator</a>
+                <a href="/tools/paraphraser.html" class="nav-link mobile-only-link">Essay / Paraphraser Tool</a>
+                <a href="/contact.html" class="nav-link mobile-only-link">Contact</a>
+                <a href="/blog/index.html" class="nav-link mobile-only-link">Blog</a>
+                <a href="/community/join.html" class="nav-link mobile-only-link">Community</a>
+                <a href="/community/partners.html" class="nav-link mobile-only-link">Partners</a>
+                <a href="/community/academy.html" class="nav-link mobile-only-link">Offline Academy</a>
+            </nav>
+
+            <div class="header-actions">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search courses & domains...">
+                </div>
+                <!-- AUTH BUTTONS REMOVED -->
+            </div> 
+
+            <button class="hamburger-menu" id="hamburgerMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
+        <div id="searchResults" class="search-results-container container hidden"></div>
     </header>
 
     <main>
-        <section class="hero" style="padding: 60px 0; text-align: center;">
+        <!-- Page Header -->
+        <section class="page-header">
             <div class="container">
-                <h1 class="hero-heading" style="font-size: 2.5rem;">Refund & Cancellation Policy</h1>
-                <p class="hero-description" style="max-width: 800px; margin: 0 auto;">Last Updated: October 16, 2025</p>
+                <h1 class="section-title">Refund Policy</h1>
+                <p class="section-subtitle">Transparent guidelines regarding fees, payments, and refund eligibility for all paid services.</p>
             </div>
         </section>
 
-        <section style="padding: 60px 0;">
-            <div class="container" style="max-width: 800px; margin: 0 auto;">
-                 <h2 style="font-size: 1.5rem; margin-top: 30px; margin-bottom: 15px;">1. Course Fees</h2>
-                <p>All courses currently listed on Internadda are free of charge. Therefore, no refund policy is applicable to course enrollments.</p>
+        <!-- Policy Content -->
+        <section class="content-section">
+            <div class="container">
+                <div class="policy-content">
+                    <p>This Refund Policy applies to all paid services offered by Internadda, including but not limited to, Final Exam fees for internship qualification and any future premium paid courses. By making a payment, you agree to the terms outlined below.</p>
 
-                <h2 style="font-size: 1.5rem; margin-top: 30px; margin-bottom: 15px;">2. Internship Test Fees</h2>
-                <p>If a fee is charged for any final internship examination, it will be clearly stated before payment. This fee is non-refundable as it covers the administrative costs of conducting the test.</p>
+                    <h2>1. Final Exam Fees (Internship Qualification)</h2>
+                    <p>The Final Exam is a paid service designed to rigorously assess your skills for guaranteed internship placement opportunities with our partner companies. The following refund conditions apply to the Final Exam fee:</p>
+                    <ul>
+                        <li><strong>Non-Refundable:</strong> The Final Exam fee is **strictly non-refundable** once the payment is successfully processed and the exam is accessible to the user (i.e., the user has started or attempted the exam).</li>
+                        <li><strong>Access:</strong> The fee covers the attempt to take the high-stakes qualification test. Since the entire value is derived from the testing opportunity and the potential for placement, the fee cannot be refunded if the exam has been initiated or if the user fails to pass.</li>
+                        <li><strong>Technical Issues:</strong> If a technical issue on Internadda’s side prevents a user from accessing or completing the exam, we will offer a free re-attempt or, if a re-attempt is not feasible, a full refund of the fee paid for that specific exam attempt.</li>
+                    </ul>
+                    
+                    <h3>2. Paid Courses or Premium Content</h3>
+                    <p>For any paid educational courses or premium content purchased directly through the Internadda platform, the following refund conditions apply:</p>
+                    <ul>
+                        <li><strong>7-Day Money-Back Guarantee:</strong> You may request a full refund within **7 days** of the original purchase date, **provided** that you have consumed less than 10% of the course content (measured by video time or lesson completion).</li>
+                        <li><strong>Ineligible for Refund:</strong> A refund request will be rejected if:
+                            <ul>
+                                <li>The request is made after the 7-day period.</li>
+                                <li>More than 10% of the course content has been accessed or downloaded.</li>
+                                <li>A Certificate of Completion has been generated or issued for the course.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
+                    <h3>3. Refund Processing</h3>
+                    <p>All eligible refunds will be processed within **10-14 business days** from the date the refund request is officially approved by the Internadda team. The refund will be credited back to the original payment method used during the purchase (e.g., Credit Card, UPI, Net Banking).</p>
+                    
+                    <p>Please note that depending on your bank or payment gateway, it may take additional time for the refunded amount to reflect in your account statement.</p>
+                    
+                    <h3>4. How to Request a Refund</h3>
+                    <p>To request a refund, please contact our support team immediately with the following information:</p>
+                    <ol>
+                        <li>Your full name and registered email address.</li>
+                        <li>The exact name of the product or exam purchased.</li>
+                        <li>Date of purchase.</li>
+                        <li>Reason for the refund request.</li>
+                    </ol>
+                    <p>Email your request to: **support@internadda.com**</p>
+                    
+                    <p style="margin-top: 30px; font-style: italic; color: var(--gray);">Internadda reserves the right to modify this policy at any time, effective upon posting of the updated policy on this page.</p>
 
-                <h2 style="font-size: 1.5rem; margin-top: 30px; margin-bottom: 15px;">3. Cancellations</h2>
-                <p>You may delete your account at any time from your profile settings. As our services are free, no cancellation fees apply.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <h2 class="cta-title">Need to Get in Touch?</h2>
+                <p class="cta-description">If you have questions about a payment or need support, our team is here to help.</p>
+                <div class="cta-buttons">
+                    <a href="contact.html" class="btn btn-light btn-lg">Contact Support</a>
+                </div>
             </div>
         </section>
     </main>
 
+    <!-- ==============================================
+         FOOTER: Updated with Tools Column (Request 3)
+         ============================================== -->
     <footer>
         <div class="container">
             <div class="footer-grid">
-                 <div class="footer-brand">
+                <div class="footer-brand">
                     <div class="footer-logo">Internadda</div>
                     <p class="footer-description">Transforming careers through learning, interning, and earning opportunities.</p>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/company/internadda-india" target="_blank" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@theinternadda" target="_blank" class="social-link" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://www.instagram.com/internadda.india" target="_blank" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
                 </div>
+
                 <div class="footer-links-column">
-                    <h3 class="footer-links-title">Company</h3>
+                    <h3 class="footer-links-title">Learn</h3>
                     <ul class="footer-links">
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                        <li><a href="#">Careers</a></li>
+                        <li><a href="/courses/course.html">Browse Courses</a></li>
+                        <li><a href="/courses/course.html">Free Courses</a></li>
+                        <li><a href="#">Paid Courses</a></li>
+                        <li><a href="#">Become an Instructor</a></li>
                     </ul>
                 </div>
+
                 <div class="footer-links-column">
-                    <h3 class="footer-links-title">Legal</h3>
+                    <h3 class="footer-links-title">Intern</h3>
                     <ul class="footer-links">
-                        <li><a href="terms.html">Terms & Conditions</a></li>
-                        <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="refund.html">Refund & Cancellation</a></li>
+                        <li><a href="/intern/internship.html">Find Internships</a></li>
+                        <li><a href="#">For Companies</a></li>
+                        <li><a href="#">Success Stories</a></li>
+                        <li><a href="#">Career Coaching</a></li>
                     </ul>
                 </div>
-                 <div class="footer-links-column">
-                    <h3 class="footer-links-title">Contact</h3>
-                     <ul class="footer-links">
-                        <li><a href="mailto:support@internadda.com">support@internadda.com</a></li>
-                        <li><a href="tel:+918287742390">+91 82877 42390</a></li>
-                        <li>New Delhi, India</li>
+                
+                <!-- NEW TOOLS COLUMN (Request 3) -->
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">Career Tools</h3>
+                    <ul class="footer-links">
+                        <li><a href="/tools/ats-score.html">ATS Score Checker</a></li>
+                        <li><a href="/tools/resume-builder.html">Resume Builder</a></li>
+                        <li><a href="/tools/interview-questions.html">Interview Prep</a></li>
+                        <li><a href="/tools/cover-letter.html">Cover Letter Gen</a></li>
+                        <li><a href="/tools/paraphraser.html">Essay Paraphraser</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">InternAdda</h3>
+                    <ul class="footer-links">
+                        <li><a href="/about.html">About Us</a></li>
+                        <li><a href="/contact.html">Contact Us</a></li>
+                        <li><a href="/terms.html">Terms & Conditions</a></li>
+                        <li><a href="/refund.html">Refund Policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">Community</h3>
+                    <ul class="footer-links">
+                        <li><a href="/community/join.html">Join Community</a></li>
+                        <li><a href="/community/partners.html">Partners</a></li>
+                        <li><a href="/blog/index.html">Blog</a></li>
+                        <li><a href="/community/academy.html">Offline Academy</a></li>
                     </ul>
                 </div>
             </div>
+
             <div class="footer-bottom">
-                <p>© 2025 Internadda. All rights reserved.</p>
+                <p>© 2025 Internadda. All rights reserved. | Developed by Internadda Team</p>
             </div>
         </div>
     </footer>
+
     <script src="script.js"></script>
-
-    <div id="authModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" id="closeModal">&times;</span>
-
-            <div id="loginSection" class="auth-section">
-                <div class="auth-notification">
-                    <i class="fas fa-lock"></i> <strong>Log in Required:</strong> Log in to take courses, track progress, and apply for internships.
-                 </div>
-                <h2 class="auth-title">Welcome Back</h2>
-                <div class="loading" id="loginLoading">
-                    <div class="spinner"></div>
-                    <span>Signing in...</span>
-                </div>
-                <div id="loginError" class="error"></div>
-
-                <div class="form-group">
-                    <label for="loginEmail">Email</label>
-                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="loginPassword">Password</label>
-                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
-                </div>
-
-                <button class="btn btn-primary" id="emailLoginBtn">Sign In</button>
-                <div class="separator"><span>OR</span></div>
-                <button class="btn btn-google" id="googleLoginBtn"><i class="fab fa-google"></i> Continue with Google</button>
-
-                <div class="toggle-auth">
-                    <span>Don't have an account?</span> <a href="#" id="showSignup">Sign up</a>
-                </div>
-            </div>
-
-            <div id="signupSection" class="auth-section">
-                <h2 class="auth-title">Create Account</h2>
-                <div class="loading" id="signupLoading">
-                    <div class="spinner"></div>
-                    <span>Creating account...</span>
-                </div>
-                <div id="signupError" class="error"></div>
-
-                <div class="form-group">
-                    <label for="signupEmail">Email</label>
-                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="signupPassword">Password</label>
-                    <input type="password" id="signupPassword" placeholder="Create a password (6+ characters)" required>
-                </div>
-
-                <button class="btn btn-primary" id="emailSignupBtn">Create Account</button>
-                <div class="separator"><span>OR</span></div>
-                <button class="btn btn-google" id="googleSignupBtn"><i class="fab fa-google"></i> Sign up with Google</button>
-
-                <div class="toggle-auth">
-                    <span>Already have an account?</span> <a href="#" id="showLogin">Sign in</a>
-                </div>
-            </div>
-
-            <div id="dashboardSection" class="auth-section">
-                 <div class="dashboard-content">
-                    <div class="profile-tabs">
-                         <button class="tab-btn active" data-tab="profile">Profile</button>
-                         <button class="tab-btn" data-tab="internships">Internships</button>
-                    </div>
-
-                    <div id="profileTabContent" class="tab-content">
-                         <div id="profileDisplaySection">
-                             <div class="user-info-profile">
-                                 <div class="profile-avatar-display">
-                                     <img id="userAvatarDashboard" class="user-avatar" src="images/no_image.png" alt="User Avatar">
-                                 </div>
-                                 <div class="user-profile-details">
-                                     <h2 id="userNameDashboard"></h2>
-                                     <p id="userEmailDashboard"></p>
-                                 </div>
-                             </div>
-                             <div class="profile-details">
-                                 <h3 class="section-title-small">Profile Information</h3>
-                                 <div class="profile-info-item">
-                                     <strong>Gender:</strong> <span id="profileGenderDisplay">Not specified</span>
-                                 </div>
-                                 <div class="profile-info-item">
-                                     <strong>Interested Domain:</strong> <span id="profileDomainDisplay">Not specified</span>
-                                 </div>
-                             </div>
-                             <button class="btn btn-primary" id="shareProfileBtn" style="width: 100%; margin-top: 20px;"><i class="fas fa-share-alt" style="margin-right: 8px;"></i> Share My Profile</button>
-                             <button class="btn btn-outline" id="editProfileBtn">Edit Profile</button>
-                         </div>
-
-                         <div id="profileEditSection" class="hidden">
-                            <div id="profileEditError" class="error" style="display: none;"></div>
-                             <div class="profile-avatar-display">
-                                 <img id="userAvatarPreview" class="user-avatar" src="images/no_image.png" alt="User Avatar Preview">
-                                 <label for="profileImageInput" class="file-upload-label">
-                                     <i class="fas fa-upload"></i> Upload Image
-                                 </label>
-                                 <input type="file" id="profileImageInput" accept="image/*">
-                                 <p class="profile-avatar-hint" style="margin-top: 5px; font-size: 0.85rem; color: #f56565;">*Image upload is for demo only; file storage is not active.</p>
-                             </div>
-                             <div class="form-group">
-                                 <label for="profileName">Full Name</label>
-                                 <input type="text" id="profileName" placeholder="Enter your full name">
-                             </div>
-                             <div class="form-group">
-                                 <label for="profileGender">Gender</label>
-                                 <select id="profileGender">
-                                     <option value="">Select Gender</option>
-                                     <option value="Male">Male</option>
-                                     <option value="Female">Female</option>
-                                     <option value="Other">Other</option>
-                                 </select>
-                             </div>
-                             <div class="form-group">
-                                 <label for="interestedDomain">Interested Domain</label>
-                                 <select id="interestedDomain">
-                                     <option value="">Select Domain</option>
-                                     <option value="Web Development">Web Development</option>
-                                     <option value="Data Science & AI">Data Science & AI</option>
-                                     <option value="Digital Marketing">Digital Marketing</option>
-                                     <option value="UI/UX Design">UI/UX Design</option>
-                                 </select>
-                             </div>
-                             <button class="btn btn-primary" id="saveProfileBtn">Save Profile</button>
-                         </div>
-                    </div>
-
-                    <div id="coursesTabContent" class="tab-content hidden">
-                        <h3 class="section-title-small">📚 Enrolled Courses & Certificates</h3>
-                        <p style="color: var(--gray); margin-bottom: 20px;">Track your progress and access completion certificates here.</p>
-                        <div id="coursesListContainer" class="user-data-list">
-                            <p style="text-align: center; padding: 20px;">Please log in to view your courses.</p>
-                        </div>
-                    </div>
-
-                    <div id="internshipsTabContent" class="tab-content hidden">
-                        <h3 class="section-title-small">💼 Internship Application History</h3>
-                        <p style="color: var(--gray); margin-bottom: 20px;">View your exam results and application status for different domains.</p>
-                        <div id="internshipsListContainer" class="user-data-list">
-                            <p style="text-align: center; padding: 20px;">Please log in to view your internship history.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </body>
 </html>
