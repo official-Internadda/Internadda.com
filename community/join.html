@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Corrected path for nested file structure -->
     <link rel="stylesheet" href="../style.css">
 
     <link rel="icon" type="image/png" href="../images/favicon.png">
@@ -83,7 +82,6 @@
     </style>
 </head>
 <body>
-    <!-- Google Analytics Script (Retained) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -92,9 +90,6 @@
       gtag('config', 'G-3ZZ3HGFM3Q');
     </script>
 
-    <!-- ==============================================
-         HEADER: 3D Animated Nav (Requests 1 & 2) - Adjusted paths
-         ============================================== -->
     <header>
         <div class="container header-container">
             <a href="../index.html" class="logo">
@@ -109,7 +104,6 @@
                 <a href="../jobs.html" class="nav-link">Jobs</a>
                 <a href="../about.html" class="nav-link">About</a>
                 
-                <!-- TOOLS DROPDOWN -->
                 <div class="nav-item dropdown" id="toolsDropdown">
                     <a href="#" class="nav-link dropdown-toggle">Tools <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
@@ -121,7 +115,6 @@
                     </div>
                 </div>
                 
-                <!-- MORE DROPDOWN -->
                 <div class="nav-item dropdown" id="moreDropdown">
                     <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
@@ -133,7 +126,6 @@
                     </div>
                 </div>
                 
-                <!-- MOBILE ONLY LINKS -->
                 <a href="../tools/ats-score.html" class="nav-link mobile-only-link">ATS Score</a>
                 <a href="../tools/resume-builder.html" class="nav-link mobile-only-link">Resume Builder</a>
                 <a href="../tools/interview-questions.html" class="nav-link mobile-only-link">Interview Question</a>
@@ -151,8 +143,7 @@
                     <i class="fas fa-search search-icon"></i>
                     <input type="text" id="searchInput" class="search-input" placeholder="Search courses & domains...">
                 </div>
-                <!-- AUTH BUTTONS REMOVED -->
-            </div> 
+                </div> 
 
             <button class="hamburger-menu" id="hamburgerMenu">
                 <span></span>
@@ -164,7 +155,6 @@
     </header>
 
     <main>
-        <!-- Page Header -->
         <section class="page-header">
             <div class="container">
                 <h1 class="section-title">Join the Internadda Community</h1>
@@ -172,51 +162,46 @@
             </div>
         </section>
 
-        <!-- Community Channels Section -->
         <section class="content-section">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">Connect on Your Favorite Platform</h2>
+                    <h2 class="section-title">Essential Channels for Growth</h2>
                     <p class="section-subtitle">Jump into our vibrant student channels for discussions, Q&A, and exclusive content.</p>
                 </div>
 
                 <div class="community-grid">
                     
-                    <!-- Discord Card -->
                     <div class="community-card">
-                        <i class="fab fa-discord community-icon" style="color: #5865F2;"></i>
-                        <h3>Discord Server</h3>
-                        <p>Join the main chat hub for real-time discussions, Q&A with mentors, and study groups.</p>
-                        <a href="YOUR_DISCORD_INVITE_LINK" target="_blank" class="btn btn-primary" style="background-color: #5865F2; border-color: #5865F2;">
-                            <i class="fab fa-discord"></i> Join Discord Now
+                        <i class="fab fa-whatsapp community-icon" style="color: #25D366;"></i>
+                        <h3>WhatsApp Channel (Official)</h3>
+                        <p>Get instant updates on new internship openings, course launches, and urgent career news directly from our team.</p>
+                        <a href="YOUR_WHATSAPP_CHANNEL_LINK" target="_blank" class="btn btn-primary" style="background-color: #25D366; border-color: #25D366;">
+                            <i class="fab fa-whatsapp"></i> Join Channel Now
                         </a>
                     </div>
 
-                    <!-- Telegram Card -->
-                    <div class="community-card">
-                        <i class="fab fa-telegram-plane community-icon" style="color: #0088CC;"></i>
-                        <h3>Telegram Channel</h3>
-                        <p>Get instant updates on new courses, internship opportunities, and career tips directly on Telegram.</p>
-                        <a href="YOUR_TELEGRAM_LINK" target="_blank" class="btn btn-primary" style="background-color: #0088CC; border-color: #0088CC;">
-                            <i class="fab fa-telegram-plane"></i> Follow on Telegram
-                        </a>
-                    </div>
-                    
-                    <!-- LinkedIn Card -->
                     <div class="community-card">
                         <i class="fab fa-linkedin-in community-icon" style="color: #0077B5;"></i>
-                        <h3>LinkedIn Group</h3>
-                        <p>Network professionally, share career milestones, and connect with recruiting partners and alumni.</p>
+                        <h3>LinkedIn Group (Professional)</h3>
+                        <p>Network with alumni, connect professionally with recruiting partners, and showcase your achievements in a professional setting.</p>
                         <a href="https://www.linkedin.com/company/internadda-india" target="_blank" class="btn btn-primary" style="background-color: #0077B5; border-color: #0077B5;">
                             <i class="fab fa-linkedin-in"></i> Join LinkedIn Group
                         </a>
                     </div>
+                    
+                    <div class="community-card">
+                        <i class="fas fa-users-cog community-icon" style="color: var(--secondary);"></i>
+                        <h3>Private Mentorship Group</h3>
+                        <p>Join a closed community for personalized guidance, project troubleshooting, and one-on-one sessions with domain experts.</p>
+                        <a href="YOUR_MENTORSHIP_GROUP_LINK" target="_blank" class="btn btn-primary">
+                            <i class="fas fa-lock"></i> Request Access
+                        </a>
+                    </div>
 
-                    <!-- Instagram Card -->
                     <div class="community-card">
                         <i class="fab fa-instagram community-icon" style="color: #E1306C;"></i>
-                        <h3>Instagram Feed</h3>
-                        <p>Follow us for daily motivational content, success stories, and platform feature highlights.</p>
+                        <h3>Instagram Feed (Success Stories)</h3>
+                        <p>Follow us for daily motivational content, behind-the-scenes looks, and feature highlights of our latest student success stories.</p>
                         <a href="https://www.instagram.com/internadda.india" target="_blank" class="btn btn-primary" style="background-color: #E1306C; border-color: #E1306C;">
                             <i class="fab fa-instagram"></i> Follow on Instagram
                         </a>
@@ -226,7 +211,6 @@
             </div>
         </section>
 
-        <!-- CTA Section - Value Proposition -->
         <section class="cta-section" style="background-color: #f0f4f8;">
             <div class="container">
                 <h2 class="cta-title" style="color: var(--primary);">Why Community Matters?</h2>
@@ -239,9 +223,6 @@
         </section>
     </main>
 
-    <!-- ==============================================
-         FOOTER: Updated with Tools Column (Request 3) - Adjusted paths
-         ============================================== -->
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -281,7 +262,6 @@
                     </ul>
                 </div>
                 
-                <!-- NEW TOOLS COLUMN (Request 3) -->
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Career Tools</h3>
                     <ul class="footer-links">
@@ -320,7 +300,6 @@
         </div>
     </footer>
 
-    <!-- Main JavaScript Logic (Adjusted path) -->
     <script src="../script.js"></script>
 </body>
 </html>
