@@ -13,7 +13,6 @@
     <link rel="icon" type="image/png" href="../images/favicon.png">
     <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico">
     
-    <!-- Custom styles for the Internship page (adjusting paths for nested file) -->
     <style>
         .page-header {
             background-color: #e6f7ff; /* Lighter, more encouraging blue background */
@@ -43,7 +42,6 @@
     </style>
 </head>
 <body>
-    <!-- Google Analytics Script (Retained) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -52,9 +50,6 @@
       gtag('config', 'G-3ZZ3HGFM3Q');
     </script>
 
-    <!-- ==============================================
-         HEADER: 3D Animated Nav (Requests 1 & 2) - Adjusted paths
-         ============================================== -->
     <header>
         <div class="container header-container">
             <a href="../index.html" class="logo">
@@ -69,7 +64,6 @@
                 <a href="../jobs.html" class="nav-link">Jobs</a>
                 <a href="../about.html" class="nav-link">About</a>
                 
-                <!-- TOOLS DROPDOWN -->
                 <div class="nav-item dropdown" id="toolsDropdown">
                     <a href="#" class="nav-link dropdown-toggle">Tools <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
@@ -81,7 +75,6 @@
                     </div>
                 </div>
                 
-                <!-- MORE DROPDOWN -->
                 <div class="nav-item dropdown" id="moreDropdown">
                     <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
@@ -93,7 +86,6 @@
                     </div>
                 </div>
                 
-                <!-- MOBILE ONLY LINKS -->
                 <a href="../tools/ats-score.html" class="nav-link mobile-only-link">ATS Score</a>
                 <a href="../tools/resume-builder.html" class="nav-link mobile-only-link">Resume Builder</a>
                 <a href="../tools/interview-questions.html" class="nav-link mobile-only-link">Interview Question</a>
@@ -111,8 +103,7 @@
                     <i class="fas fa-search search-icon"></i>
                     <input type="text" id="searchInput" class="search-input" placeholder="Search courses & domains...">
                 </div>
-                <!-- AUTH BUTTONS REMOVED -->
-            </div> 
+                </div> 
 
             <button class="hamburger-menu" id="hamburgerMenu">
                 <span></span>
@@ -124,7 +115,6 @@
     </header>
 
     <main>
-        <!-- Page Header -->
         <section class="page-header">
             <div class="container">
                 <h1 class="section-title">Paid Internship Opportunities</h1>
@@ -151,7 +141,6 @@
             </div>
         </section>
 
-        <!-- Internship Tests Section -->
         <section class="test-section" id="tests">
             <div class="container">
                 <div class="section-header">
@@ -161,7 +150,6 @@
 
                 <div class="courses-grid">
                    
-                    <!-- Internship Domain 1: Data Science -->
                     <div class="test-card">
                         <img src="../images/test_data Science.png" alt="Data Science" onerror="this.onerror=null;this.src='../images/no_image.png'">
                         <h3>Data Science & Analytics</h3>
@@ -172,7 +160,6 @@
                         </div>
                     </div>
 
-                    <!-- Internship Domain 2: AI/ML -->
                     <div class="test-card">
                         <img src="../images/test_Artificial Intelligence.png" alt="AI/ML" onerror="this.onerror=null;this.src='../images/no_image.png'">
                         <h3>Artificial Intelligence & ML</h3>
@@ -183,7 +170,6 @@
                         </div>
                     </div>
 
-                    <!-- Internship Domain 3: Python Development -->
                     <div class="test-card">
                         <img src="../images/test_Python Development.png" alt="Python Development" onerror="this.onerror=null;this.src='../images/no_image.png'">
                         <h3>Python Development & Software Eng.</h3>
@@ -194,7 +180,6 @@
                         </div>
                     </div>
                     
-                    <!-- Internship Domain 4: Cloud Computing (Placeholder image) -->
                     <div class="test-card">
                         <img src="../images/test_Cloud Computing.png" alt="Cloud Computing" onerror="this.onerror=null;this.src='../images/no_image.png'">
                         <h3>Cloud Computing & DevOps</h3>
@@ -205,7 +190,6 @@
                         </div>
                     </div>
                     
-                    <!-- Internship Domain 5: Cybersecurity (Placeholder image) -->
                     <div class="test-card">
                         <img src="../images/test_Cybersecurity & Ethical Hacking.png" alt="Cybersecurity" onerror="this.onerror=null;this.src='../images/no_image.png'">
                         <h3>Cybersecurity & Ethical Hacking</h3>
@@ -216,7 +200,6 @@
                         </div>
                     </div>
                     
-                    <!-- Internship Domain 6: Web & Mobile Dev (Placeholder image) -->
                     <div class="test-card">
                         <img src="../images/test_Web & Mobile Development.png" alt="Web & Mobile Development" onerror="this.onerror=null;this.src='../images/no_image.png'">
                         <h3>Web & Mobile Development</h3>
@@ -231,7 +214,6 @@
             </div>
         </section>
 
-        <!-- Testimonials - Auto-Scrolling Redesign (Request 5) -->
         <section class="testimonials" style="padding-bottom: 80px;">
             <div class="container">
                 <div class="section-header">
@@ -241,23 +223,10 @@
 
                 <div class="testimonial-wrapper">
                     <div class="testimonials-grid" id="internshipTestimonialsGrid">
-                        <!-- Card 1 -->
+                        
                         <div class="testimonial-card">
                             <div class="testimonial-content">
-                                <p class="testimonial-text">"The Python Final Exam was tough but fair. Passing it proved my skills and led directly to a remote paid internship. This is the fastest way to break into the tech industry!"</p>
-                                <div class="testimonial-author">
-                                    <img src="../images/no_image.png" alt="Ravi Shankar" class="author-avatar">
-                                    <div class="author-details">
-                                        <span class="author-name">Ravi Shankar</span>
-                                        <span class="author-role">Backend Developer Intern (IIT Bombay)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Card 2 -->
-                        <div class="testimonial-card">
-                            <div class="testimonial-content">
-                                <p class="testimonial-text">"I secured a Data Analyst internship with a stipend of ₹30,000/month, all thanks to the rigorous curriculum and certification. Internadda truly delivers on its promise."</p>
+                                <p class="testimonial-text">"I passed the Data Science exam and landed a remote internship with a stipend of **₹30,000/month**. The exam was tough, but the preparation modules ensured I was ready for the real-world challenge. Internadda truly opens doors."</p>
                                 <div class="testimonial-author">
                                     <img src="../images/no_image.png" alt="Pooja Verma" class="author-avatar">
                                     <div class="author-details">
@@ -267,10 +236,23 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Card 3 -->
+                        
                         <div class="testimonial-card">
                             <div class="testimonial-content">
-                                <p class="testimonial-text">"My resume was ignored everywhere until I added the Internadda Final Exam certificate. It instantly got me noticed and I landed a job offer shortly after the internship."</p>
+                                <p class="testimonial-text">"The Python Final Exam was the single most validating experience of my career so far. Passing it with a high score proved my skills and led directly to a remote **Backend Developer** internship. This is the fastest way to break into the tech industry!"</p>
+                                <div class="testimonial-author">
+                                    <img src="../images/no_image.png" alt="Ravi Shankar" class="author-avatar">
+                                    <div class="author-details">
+                                        <span class="author-name">Ravi Shankar</span>
+                                        <span class="author-role">Python Developer Intern (IIT Bombay)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="testimonial-card">
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">"My resume was constantly ignored until I added the Internadda Final Exam certificate. It instantly got me noticed by a corporate partner, and I landed a job offer shortly after completing the 6-month Cybersecurity internship. Life-changing."</p>
                                 <div class="testimonial-author">
                                     <img src="../images/no_image.png" alt="Kunal Mehta" class="author-avatar">
                                     <div class="author-details">
@@ -280,27 +262,66 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Duplicates for smooth auto-scroll -->
-                        <div class="testimonial-card cloned">
+                        
+                        <div class="testimonial-card">
                             <div class="testimonial-content">
-                                <p class="testimonial-text">"The Python Final Exam was tough but fair. Passing it proved my skills and led directly to a remote paid internship. This is the fastest way to break into the tech industry!"</p>
+                                <p class="testimonial-text">"I secured a performance-based stipend in **Digital Marketing** after passing the final assessment. The internship involved live campaigns, giving me practical experience far beyond my university coursework. The mentorship was excellent."</p>
                                 <div class="testimonial-author">
-                                    <img src="../images/no_image.png" alt="Ravi Shankar" class="author-avatar">
+                                    <img src="../images/no_image.png" alt="Anjali Verma" class="author-avatar">
                                     <div class="author-details">
-                                        <span class="author-name">Ravi Shankar</span>
-                                        <span class="author-role">Backend Developer Intern (IIT Bombay)</span>
+                                        <span class="author-name">Anjali Verma</span>
+                                        <span class="author-role">Digital Marketing Intern (JMI)</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        
+                        <div class="testimonial-card">
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">"I was skeptical about an AI internship at first, but the *Generative AI Masterclass* was top-tier. I aced the AI/ML Final Exam, securing an AI Innovation Internship where I work directly on LLM prompting. Fantastic opportunity for high-stipend roles."</p>
+                                <div class="testimonial-author">
+                                    <img src="../images/no_image.png" alt="Sumit Pandey" class="author-avatar">
+                                    <div class="author-details">
+                                        <span class="author-name">Sumit Pandey</span>
+                                        <span class="author-role">AI Innovation Intern (GGSIPU)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="testimonial-card">
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">"The placement team helped tailor my resume after my cloud certification, and I received an offer within two weeks of passing the DevOps exam. The system truly delivers on its promise of 'Learn, Intern, Earn'."</p>
+                                <div class="testimonial-author">
+                                    <img src="../images/no_image.png" alt="Akash Rao" class="author-avatar">
+                                    <div class="author-details">
+                                        <span class="author-name">Akash Rao</span>
+                                        <span class="author-role">Cloud & DevOps Intern (VIT)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="testimonial-card cloned">
                             <div class="testimonial-content">
-                                <p class="testimonial-text">"I secured a Data Analyst internship with a stipend of ₹30,000/month, all thanks to the rigorous curriculum and certification. Internadda truly delivers on its promise."</p>
+                                <p class="testimonial-text">"I passed the Data Science exam and landed a remote internship with a stipend of **₹30,000/month**. The exam was tough, but the preparation modules ensured I was ready for the real-world challenge. Internadda truly opens doors."</p>
                                 <div class="testimonial-author">
                                     <img src="../images/no_image.png" alt="Pooja Verma" class="author-avatar">
                                     <div class="author-details">
                                         <span class="author-name">Pooja Verma</span>
                                         <span class="author-role">Data Analyst Intern (Delhi University)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="testimonial-card cloned">
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">"The Python Final Exam was the single most validating experience of my career so far. Passing it with a high score proved my skills and led directly to a remote **Backend Developer** internship. This is the fastest way to break into the tech industry!"</p>
+                                <div class="testimonial-author">
+                                    <img src="../images/no_image.png" alt="Ravi Shankar" class="author-avatar">
+                                    <div class="author-details">
+                                        <span class="author-name">Ravi Shankar</span>
+                                        <span class="author-role">Python Developer Intern (IIT Bombay)</span>
                                     </div>
                                 </div>
                             </div>
@@ -321,9 +342,6 @@
         </section>
     </main>
 
-    <!-- ==============================================
-         FOOTER: Updated with Tools Column (Request 3) - Adjusted paths
-         ============================================== -->
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -363,7 +381,6 @@
                     </ul>
                 </div>
                 
-                <!-- NEW TOOLS COLUMN (Request 3) -->
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Career Tools</h3>
                     <ul class="footer-links">
@@ -402,7 +419,6 @@
         </div>
     </footer>
 
-    <!-- Main JavaScript Logic (Adjusted path) -->
     <script src="../script.js"></script>
 </body>
 </html>
