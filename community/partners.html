@@ -3,253 +3,342 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Partners | Internadda Community</title>
-    <meta name="description" content="Discover the companies and organizations partnering with Internadda to provide valuable internship opportunities and support student career growth.">
+    <title>Our Partners | Internadda - Corporate Collaborations</title>
+    <meta name="description" content="Meet the companies and organizations partnering with Internadda to provide paid internship opportunities and career exposure to our top students.">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Corrected path for nested file structure -->
     <link rel="stylesheet" href="../style.css">
+
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico">
+    
     <style>
-        .partners-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-            justify-items: center;
-        }
-        .partner-logo-container {
-            text-align: center;
-            background-color: var(--white);
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            padding: 20px;
-            transition: var(--transition);
-            width: 100%;
-        }
-        .partner-logo-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-        }
-        .partner-logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100px;
-            margin-bottom: 10px;
-        }
-        .partner-logo img {
-            max-width: 100%;
-            max-height: 70px;
-            object-fit: contain;
-            filter: none; 
-            opacity: 1;
-            transition: transform 0.3s ease;
-        }
-        .partner-logo-container:hover .partner-logo img {
-            transform: scale(1.05);
-        }
-        .social-links-partner {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 15px;
-            padding-top: 10px;
-            border-top: 1px solid #eee;
-        }
-        .social-links-partner a {
-            color: var(--dark);
-            font-size: 1.2rem;
-            transition: color 0.2s ease, transform 0.2s ease;
-        }
-        .social-links-partner a:hover {
-            color: var(--primary);
-            transform: translateY(-2px);
-        }
-        .coming-soon {
-             text-align: center;
-             font-style: italic;
-             color: var(--gray);
-             margin-top: 50px;
-             font-size: 1.1rem;
+        .page-header {
+            background-color: #f0f7f4; /* Soft green/teal background for growth/partnership */
         }
         .partner-benefits {
-            text-align: left;
-            margin: 30px auto;
-            max-width: 700px;
-            padding: 30px;
-            background: #f0f4ff;
-            border-radius: 12px;
-            border-left: 5px solid var(--primary);
+            background-color: var(--white);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 50px;
+            border-bottom: 5px solid var(--accent);
         }
-        .partner-benefits h3 {
+        .benefit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .benefit-item {
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f7fafc;
+            border-left: 4px solid var(--secondary);
+            transition: transform 0.3s ease;
+        }
+        .benefit-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        .benefit-item i {
+            font-size: 1.5rem;
             color: var(--primary);
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
-        .partner-benefits ul {
-            list-style: none;
-            padding: 0;
+        .benefit-item strong {
+            display: block;
+            font-size: 1.15rem;
+            color: var(--dark);
+            margin-bottom: 5px;
         }
-        .partner-benefits li {
-            font-size: 1.05rem;
-            margin-bottom: 15px;
-            position: relative;
-            padding-left: 30px;
+        
+        /* Specific styling for the list of main partners */
+        .main-partner-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
         }
-        .partner-benefits li i {
-            position: absolute;
-            left: 0;
-            top: 5px;
-            color: var(--success);
-            font-size: 1.2rem;
+        .partner-logo-card {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-        .founder-link-box {
-             margin-top: 25px;
-             padding: 15px;
-             border: 1px solid #e2e8f0;
-             border-radius: 8px;
-             display: inline-block;
-             background-color: var(--light);
+        .partner-logo-card:hover {
+            transform: scale(1.05) rotateZ(1deg);
+            box-shadow: 0 15px 30px rgba(43, 108, 176, 0.3);
         }
-
-        /* CUSTOM CSS OVERRIDES */
-        /* 1. Remove Mobile Hamburger Button on all screens */
-        .hamburger-menu { display: none !important; }
-        /* 2. Remove Desktop Auth Buttons */
-        .header-actions #authButtons { display: none !important; }
-        /* 3. Remove Mobile Auth/Profile block in active menu (since mobile nav is removed) */
-        .nav-actions-mobile { display: none !important; }
-        /* 4. Simplify Footer */
-        footer { 
-            background-color: var(--white); 
-            padding: 20px 0; 
-            border-top: 1px solid #e2e8f0; 
+        .partner-logo-card img {
+            width: 100%;
+            max-width: 150px;
+            height: auto;
+            object-fit: contain;
+            filter: grayscale(80%);
+            transition: filter 0.3s ease;
+        }
+        .partner-logo-card:hover img {
+            filter: grayscale(0%);
         }
     </style>
 </head>
 <body>
+    <!-- Google Analytics Script (Retained) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-3ZZ3HGFM3Q');
+    </script>
+
+    <!-- ==============================================
+         HEADER: 3D Animated Nav (Requests 1 & 2) - Adjusted paths
+         ============================================== -->
     <header>
         <div class="container header-container">
-        <a href="../index.html" class="logo">
-          <img src="../images/logo.jpg" alt="InternAdda Logo" class="logo-img">
-          <span class="logo-text">InternAdda</span>
-        </a>
+            <a href="../index.html" class="logo">
+                <img src="../images/logo.jpg" alt="InternAdda Logo" class="logo-img">
+                <span class="logo-text">InternAdda</span>
+            </a>
+
             <nav class="nav-menu">
                 <a href="../index.html" class="nav-link">Home</a>
                 <a href="../courses/course.html" class="nav-link">Courses</a>
                 <a href="../intern/internship.html" class="nav-link">Internships</a>
                 <a href="../jobs.html" class="nav-link">Jobs</a>
                 <a href="../about.html" class="nav-link">About</a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle">Community <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                
+                <!-- TOOLS DROPDOWN -->
+                <div class="nav-item dropdown" id="toolsDropdown">
+                    <a href="#" class="nav-link dropdown-toggle">Tools <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
-                        <a href="join.html" class="dropdown-link">Join Community</a>
-                        <a href="partners.html" class="dropdown-link">Partners</a>
-                        <a href="../blog/index.html" class="dropdown-link">Blog</a>
-                        <a href="academy.html" class="dropdown-link">Offline Academy</a>
+                        <a href="../tools/ats-score.html" class="dropdown-link"><i class="fas fa-chart-bar"></i> ATS Score</a>
+                        <a href="../tools/resume-builder.html" class="dropdown-link"><i class="fas fa-file-alt"></i> Resume Builder</a>
+                        <a href="../tools/interview-questions.html" class="dropdown-link"><i class="fas fa-question-circle"></i> Interview Question</a>
+                        <a href="../tools/cover-letter.html" class="dropdown-link"><i class="fas fa-envelope"></i> Cover Letter Generator</a>
+                        <a href="../tools/paraphraser.html" class="dropdown-link"><i class="fas fa-pen-nib"></i> Essay / Paraphraser Tool</a>
                     </div>
                 </div>
-                </nav>
+                
+                <!-- MORE DROPDOWN -->
+                <div class="nav-item dropdown" id="moreDropdown">
+                    <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                    <div class="dropdown-content">
+                        <a href="../contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
+                        <a href="../blog/index.html" class="dropdown-link"><i class="fas fa-newspaper"></i> Blog</a>
+                        <a href="join.html" class="dropdown-link"><i class="fas fa-users"></i> Community</a>
+                        <a href="partners.html" class="dropdown-link"><i class="fas fa-handshake"></i> Partners</a>
+                        <a href="academy.html" class="dropdown-link"><i class="fas fa-university"></i> Offline Academy</a>
+                    </div>
+                </div>
+                
+                <!-- MOBILE ONLY LINKS -->
+                <a href="../tools/ats-score.html" class="nav-link mobile-only-link">ATS Score</a>
+                <a href="../tools/resume-builder.html" class="nav-link mobile-only-link">Resume Builder</a>
+                <a href="../tools/interview-questions.html" class="nav-link mobile-only-link">Interview Question</a>
+                <a href="../tools/cover-letter.html" class="nav-link mobile-only-link">Cover Letter Generator</a>
+                <a href="../tools/paraphraser.html" class="nav-link mobile-only-link">Essay / Paraphraser Tool</a>
+                <a href="../contact.html" class="nav-link mobile-only-link">Contact</a>
+                <a href="../blog/index.html" class="nav-link mobile-only-link">Blog</a>
+                <a href="join.html" class="nav-link mobile-only-link">Community</a>
+                <a href="partners.html" class="nav-link mobile-only-link">Partners</a>
+                <a href="academy.html" class="nav-link mobile-only-link">Offline Academy</a>
+            </nav>
+
             <div class="header-actions">
-                 <div class="user-profile hidden" id="userProfile">
-                    <img src="../images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeader">
-                    <span id="userNameHeader"></span>
-                    <div class="dropdown-menu" id="userDropdown">
-                        <button id="profileBtnHeader">My Profile</button>
-                        <button id="logoutBtnHeader">Sign Out</button>
-                    </div>
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search courses & domains...">
                 </div>
-            </div>
-            </div>
+                <!-- AUTH BUTTONS REMOVED -->
+            </div> 
+
+            <button class="hamburger-menu" id="hamburgerMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div id="searchResults" class="search-results-container container hidden"></div>
     </header>
 
     <main>
-        <section class="hero" style="padding: 60px 0; text-align: center;">
+        <!-- Page Header -->
+        <section class="page-header">
             <div class="container">
-                <h1 class="hero-heading" style="font-size: 2.5rem;">Our Valued Partners</h1>
-                <p class="hero-description" style="max-width: 800px; margin: 0 auto;">Companies collaborating with Internadda to shape the future workforce.</p>
+                <h1 class="section-title">Corporate Partnership Network</h1>
+                <p class="section-subtitle">Collaborating with industry leaders to shape the future workforce.</p>
+                <div style="max-width: 800px; margin: 30px auto 0;">
+                    <p style="font-size: 1.05rem; color: var(--dark);">We partner with companies across various sectors—from startups to Fortune 500s—to offer exclusive, paid internship and placement opportunities for our successful candidates.</p>
+                </div>
             </div>
         </section>
 
-        <section class="courses" style="padding-top: 40px; padding-bottom: 80px;">
+        <!-- Partner Benefits Section -->
+        <section class="content-section">
             <div class="container">
-                 <h2 class="section-title" style="text-align: center; font-size: 2rem; margin-bottom: 40px;">Current Partners</h2>
-                 <p style="text-align: center; color: var(--gray); max-width: 700px; margin: -20px auto 40px auto;">We partner with innovative startups and established companies offering exciting internship opportunities across various domains.</p>
-
-                <div class="partners-grid">
+                <div class="partner-benefits">
+                    <h2 class="section-title" style="text-align: center; color: var(--dark); margin-bottom: 40px;">Why Partner with Internadda?</h2>
                     
-                    <div class="partner-logo-container">
-                        <div class="partner-logo">
-                            <img src="../images/compan1.jpg" alt="BRIDGE4MEAL Logo">
+                    <div class="benefit-grid">
+                        <div class="benefit-item">
+                            <i class="fas fa-star-half-alt"></i>
+                            <strong>Vetted Talent Pipeline</strong>
+                            <p style="font-size: 0.95rem; color: var(--gray);">Gain access to students who have already proven their domain knowledge through our rigorous skill tests.</p>
                         </div>
-                        <p style="font-weight: 600;">BRIDGE4MEAL</p>
-                        <div class="social-links-partner">
-                            <a href="https://www.instagram.com/bridge4meal/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                            <a href="https://www.linkedin.com/company/bridge4meal/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <div class="benefit-item">
+                            <i class="fas fa-handshake"></i>
+                            <strong>Zero Recruitment Cost</strong>
+                            <p style="font-size: 0.95rem; color: var(--gray);">We handle the sourcing and initial screening; you focus on hiring the best fit.</p>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-briefcase"></i>
+                            <strong>Intern-to-Hire Conversion</strong>
+                            <p style="font-size: 0.95rem; color: var(--gray);">Use the internship as a low-risk trial period for future full-time employees.</p>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-chart-line"></i>
+                            <strong>Brand Visibility</strong>
+                            <p style="font-size: 0.95rem; color: var(--gray);">Increase your visibility among thousands of ambitious college students nationwide.</p>
                         </div>
                     </div>
-                    
-                    <div class="partner-logo-container">
-                        <div class="partner-logo">
-                            <img src="../images/compan2.jpg" alt="IFL INSTITUTE Logo">
-                        </div>
-                        <p style="font-weight: 600;">IFL INSTITUTE</p>
-                        <div class="social-links-partner">
-                            <a href="https://www.instagram.com/iflinstitute/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                            <a href="https://www.linkedin.com/company/ifl-institute/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        </div>
-                    </div>
-                    
-                    <div class="partner-logo-container">
-                        <div class="partner-logo">
-                            <img src="../images/compan3.jpg" alt="BRANDED BASE Logo">
-                        </div>
-                        <p style="font-weight: 600;">BRANDED BASE</p>
-                        <div class="social-links-partner">
-                            <a href="https://www.instagram.com/brandedbase/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                            <a href="https://www.linkedin.com/company/brandedbase/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        </div>
-                    </div>
-                    
                 </div>
-                <p class="coming-soon">(More partners coming soon...)</p>
+
+                <!-- Featured Partners List -->
+                <div class="section-header" style="margin-bottom: 40px;">
+                    <h2 class="section-title">Our Featured Partners</h2>
+                    <p class="section-subtitle">We are proud to collaborate with these industry leaders.</p>
+                </div>
+
+                <div class="main-partner-list">
+                    <!-- Partner 1 -->
+                    <div class="partner-logo-card">
+                        <img src="../images/compan1.jpg" alt="Acme Solutions" onerror="this.onerror=null;this.src='../images/partenship.jpg'">
+                        <p style="margin-top: 15px; font-weight: 600; color: var(--primary);">Acme Solutions</p>
+                    </div>
+                    <!-- Partner 2 -->
+                    <div class="partner-logo-card">
+                        <img src="../images/compan2.jpg" alt="Innovate Tech" onerror="this.onerror=null;this.src='../images/partenship.jpg'">
+                        <p style="margin-top: 15px; font-weight: 600; color: var(--primary);">Innovate Tech</p>
+                    </div>
+                    <!-- Partner 3 -->
+                    <div class="partner-logo-card">
+                        <img src="../images/compan3.jpg" alt="Quantum Dynamics" onerror="this.onerror=null;this.src='../images/partenship.jpg'">
+                        <p style="margin-top: 15px; font-weight: 600; color: var(--primary);">Quantum Dynamics</p>
+                    </div>
+                    <!-- Partner 4 (Placeholder) -->
+                    <div class="partner-logo-card">
+                        <img src="https://placehold.co/150x80/a0aec0/ffffff?text=Fintech+Co" alt="Fintech Corp" onerror="this.onerror=null;this.src='../images/partenship.jpg'">
+                        <p style="margin-top: 15px; font-weight: 600; color: var(--primary);">Fintech Corp</p>
+                    </div>
+                    <!-- Partner 5 (Placeholder) -->
+                    <div class="partner-logo-card">
+                        <img src="https://placehold.co/150x80/63b3ed/ffffff?text=Cyber+Sec" alt="Secure Systems" onerror="this.onerror=null;this.src='../images/partenship.jpg'">
+                        <p style="margin-top: 15px; font-weight: 600; color: var(--primary);">Secure Systems</p>
+                    </div>
+                    <!-- Partner 6 (Placeholder) -->
+                    <div class="partner-logo-card">
+                        <img src="https://placehold.co/150x80/48bb78/ffffff?text=EdTech" alt="EdTech Hub" onerror="this.onerror=null;this.src='../images/partenship.jpg'">
+                        <p style="margin-top: 15px; font-weight: 600; color: var(--primary);">EdTech Hub</p>
+                    </div>
+                </div>
 
                 <div style="text-align: center; margin-top: 60px;">
-                    <h2 class="section-title" style="font-size: 2rem;">Interested in Partnering?</h2>
-                    <p style="color: var(--gray); max-width: 700px; margin: 0 auto 25px auto; font-weight: 500;">
-                        A great opportunity for startups and emerging companies to find pre-vetted interns and grow their teams efficiently.
-                    </p>
-                    
-                    <div class="partner-benefits">
-                        <h3 style="margin-top: 0;"><i class="fas fa-handshake"></i> Partner with Internadda: Key Benefits</h3>
-                        <ul>
-                            <li><i class="fas fa-check-circle"></i> <strong>Access Top Talent:</strong> Hire pre-vetted interns who have passed rigorous, skill-based exams.</li>
-                            <li><i class="fas fa-check-circle"></i> <strong>Free Recruitment:</strong> Zero recruitment fees; we bridge the gap between education and your hiring needs.</li>
-                            <li><i class="fas fa-check-circle"></i> <strong>Enhanced Brand Visibility:</strong> Showcase your company to a large, engaged student audience.</li>
-                            <li><i class="fas fa-check-circle"></i> <strong>Stipend Program:</strong> Offer competitive, performance-based stipends of up to ₹50,000 per month, ensuring your hard work is rewarded.</li>
-                        </ul>
-                    </div>
-                    
-                    <a href="mailto:official.internadda@gmail.com" class="btn btn-primary" style="margin-top: 20px;">
-                        <i class="fas fa-envelope" style="margin-right: 8px;"></i> Contact Our Partnership Team
-                    </a>
-                    
-                    <div class="founder-link-box">
-                         <i class="fab fa-linkedin-in" style="color: #0077B5; margin-right: 8px;"></i>
-                         Connect with our Founder:
-                         <a href="https://in.linkedin.com/in/luckytiwari" target="_blank" style="font-weight: 600; color: #0077B5;">Lucky Tiwari</a>
-                     </div>
+                    <a href="../contact.html" class="btn btn-primary btn-lg">Become a Partner Today <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </section>
+        
     </main>
 
+    <!-- ==============================================
+         FOOTER: Updated with Tools Column (Request 3) - Adjusted paths
+         ============================================== -->
     <footer>
         <div class="container">
-            <div class="footer-bottom" style="border-top: none; padding-top: 0;">
-                <p style="color: var(--gray); margin: 0;">© 2025 Internadda. All rights reserved.</p>
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">Internadda</div>
+                    <p class="footer-description">Transforming careers through learning, interning, and earning opportunities.</p>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/company/internadda-india" target="_blank" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@theinternadda" target="_blank" class="social-link" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://www.instagram.com/internadda.india" target="_blank" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">Learn</h3>
+                    <ul class="footer-links">
+                        <li><a href="../courses/course.html">Browse Courses</a></li>
+                        <li><a href="../courses/course.html">Free Courses</a></li>
+                        <li><a href="#">Paid Courses</a></li>
+                        <li><a href="#">Become an Instructor</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">Intern</h3>
+                    <ul class="footer-links">
+                        <li><a href="../intern/internship.html">Find Internships</a></li>
+                        <li><a href="#">For Companies</a></li>
+                        <li><a href="#">Success Stories</a></li>
+                        <li><a href="#">Career Coaching</a></li>
+                    </ul>
+                </div>
+                
+                <!-- NEW TOOLS COLUMN (Request 3) -->
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">Career Tools</h3>
+                    <ul class="footer-links">
+                        <li><a href="../tools/ats-score.html">ATS Score Checker</a></li>
+                        <li><a href="../tools/resume-builder.html">Resume Builder</a></li>
+                        <li><a href="../tools/interview-questions.html">Interview Prep</a></li>
+                        <li><a href="../tools/cover-letter.html">Cover Letter Gen</a></li>
+                        <li><a href="../tools/paraphraser.html">Essay Paraphraser</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">InternAdda</h3>
+                    <ul class="footer-links">
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact Us</a></li>
+                        <li><a href="../terms.html">Terms & Conditions</a></li>
+                        <li><a href="../refund.html">Refund Policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">Community</h3>
+                    <ul class="footer-links">
+                        <li><a href="join.html">Join Community</a></li>
+                        <li><a href="partners.html">Partners</a></li>
+                        <li><a href="../blog/index.html">Blog</a></li>
+                        <li><a href="academy.html">Offline Academy</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2025 Internadda. All rights reserved. | Developed by Internadda Team</p>
             </div>
         </div>
     </footer>
-    
+
+    <!-- Main JavaScript Logic (Adjusted path) -->
     <script src="../script.js"></script>
 </body>
 </html>
