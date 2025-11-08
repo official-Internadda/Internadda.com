@@ -29,7 +29,14 @@
             padding: 80px 0;
             color: var(--dark);
             transform: translateZ(0); /* Enable 3D rendering context */
+            text-align: center; /* Center aligning the hero content */
         }
+        .course-header-section .section-title, .course-header-section .section-subtitle {
+             text-align: center;
+             margin-left: auto;
+             margin-right: auto;
+        }
+
         .course-page-grid {
             display: grid;
             grid-template-columns: 2fr 1fr; /* Main content | Sidebar */
@@ -38,12 +45,12 @@
             padding: 40px 0;
         }
         
-        /* Main Content Styling */
+        /* Main Content Styling - Ensure text is left-aligned within containers */
         .main-content h2 {
             font-size: 2rem;
             color: var(--data-science-color);
             margin-bottom: 20px;
-            border-left: 5px solid var(--data-science-color); /* Slightly thicker border */
+            border-left: 5px solid var(--data-science-color); 
             padding-left: 15px;
         }
         .course-details-box {
@@ -53,6 +60,10 @@
             padding: 30px;
             margin-bottom: 30px;
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            text-align: left; /* Default alignment for main reading content */
+        }
+        .course-details-box p {
+            text-align: left;
         }
         /* Subtle 3D hover on main content boxes */
         .course-details-box:hover {
@@ -60,6 +71,9 @@
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
 
+        .key-topic-list, .prereq-list {
+            padding-left: 20px;
+        }
         .key-topic-list li, .prereq-list li {
             font-size: 1rem;
             line-height: 1.6;
@@ -173,6 +187,42 @@
             color: var(--gray);
             font-size: 0.9rem;
         }
+
+        /* NEW CTA SECTION STYLES FOR HIGH CONTRAST */
+        .cta-section.test-prep-cta {
+            background-color: var(--primary); /* Strong primary color */
+            color: var(--white);
+            padding: 60px 0;
+            text-align: center;
+            border-radius: 12px;
+            margin-top: 40px;
+            box-shadow: 0 10px 20px rgba(var(--primary-rgb), 0.3);
+            transition: all 0.3s ease;
+        }
+        .cta-section.test-prep-cta:hover {
+            box-shadow: 0 15px 30px rgba(var(--primary-rgb), 0.4);
+        }
+        .cta-section.test-prep-cta .cta-title {
+            color: var(--white) !important;
+            margin-bottom: 10px;
+        }
+        .cta-section.test-prep-cta .cta-description {
+            color: rgba(255, 255, 255, 0.9) !important; 
+            max-width: 700px;
+            margin: 0 auto 30px auto;
+            font-size: 1.1rem;
+        }
+        /* Custom button style for high contrast on the CTA */
+        .cta-section.test-prep-cta .btn-white {
+             background-color: var(--white); 
+             color: var(--primary);
+             border: 2px solid var(--white);
+             transition: all 0.3s ease;
+        }
+        .cta-section.test-prep-cta .btn-white:hover {
+            background-color: transparent;
+            color: var(--white);
+        }
         
         /* Keyframe for small animation */
         @keyframes bounceIn {
@@ -196,6 +246,9 @@
             }
             .main-content h2 {
                 font-size: 1.8rem;
+            }
+            .cta-section.test-prep-cta {
+                border-radius: 0; /* Remove border-radius for full width on small screens */
             }
         }
     </style>
@@ -291,7 +344,7 @@
                 <p class="section-subtitle" style="font-size: 1.2rem; max-width: 800px; margin-bottom: 25px; color: var(--dark-light);">
                     Launch your career in Data Science! Master the core concepts and tools needed to pass the Internadda certification exam and secure a high-stipend internship.
                 </p>
-                <div style="display: flex; gap: 25px; align-items: center; flex-wrap: wrap; margin-bottom: 20px;">
+                <div style="display: flex; gap: 25px; align-items: center; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;">
                     <span style="font-weight: 600; color: var(--secondary);"><i class="fas fa-star" style="margin-right: 5px;"></i> 4.9 Rating (3K+ Enrollments)</span>
                     <span style="font-weight: 600; color: var(--dark);"><i class="fas fa-clock" style="margin-right: 5px;"></i> Est. Time: 1 to 1.5 Hours</span>
                     <span style="font-weight: 600; color: #28a745;"><i class="fas fa-certificate" style="margin-right: 5px;"></i> Certificate Included</span>
@@ -338,7 +391,6 @@
                     
                     <div class="course-details-box">
                          <h2>Your Instructor: Lucky Kumar</h2>
-                         <!-- Updated image path to lucky.jpg as requested -->
                          <div class="instructor-card">
                              <img src="../../images/lucky.jpg" alt="Lucky Kumar Instructor" class="avatar" 
                                   onerror="this.onerror=null;this.src='https://placehold.co/80x80/2980b9/ffffff?text=L.K'">
@@ -371,7 +423,7 @@
                         <i class="fas fa-play-circle" style="margin-right: 10px;"></i> Start for FREE Now
                     </a>
 
-                    <ul style="list-style: none; padding: 0; margin-top: 20px; font-size: 0.95rem; color: var(--gray);">
+                    <ul style="list-style: none; padding: 0; margin-top: 20px; font-size: 0.95rem; color: var(--gray); text-align: left;">
                         <li style="margin-bottom: 10px;"><i class="fas fa-file-pdf" style="margin-right: 8px; color: var(--data-science-color);"></i> Access to All Videos</li>
                         <li style="margin-bottom: 10px;"><i class="fas fa-code" style="margin-right: 8px; color: var(--data-science-color);"></i> Downloadable Code & Data</li>
                         <li style="margin-bottom: 10px;"><i class="fas fa-user-friends" style="margin-right: 8px; color: var(--data-science-color);"></i> Community Support</li>
@@ -382,20 +434,21 @@
             </div>
         </section>
 
-        <!-- Related Courses CTA -->
-        <section class="cta-section" style="background-color: #f8f9fa;">
+        <!-- Related Courses CTA - HIGH CONTRAST FOOTER SECTION -->
+        <section class="cta-section test-prep-cta">
             <div class="container">
-                <h2 class="cta-title" style="color: var(--dark);">Ready to Test Your Skills?</h2>
-                <p class="cta-description" style="color: var(--gray);">After completing this free course, prove your expertise in our final exam to qualify for a paid internship opportunity.</p>
+                <h2 class="cta-title">Ready to Test Your Skills?</h2>
+                <p class="cta-description">After completing this free course, prove your expertise in our final exam to qualify for a paid internship opportunity.</p>
                 <div class="cta-buttons">
-                    <a href="../../intern/internship.html" class="btn btn-primary btn-lg">View Final Exam & Internship</a>
+                    <!-- Changed class to btn-white for defined high-contrast style -->
+                    <a href="../../intern/internship.html" class="btn btn-white btn-lg">View Final Exam & Internship</a>
                 </div>
             </div>
         </section>
     </main>
 
     <!-- ==============================================
-         FOOTER: Replicated from updated index.html, adjusted paths
+         FOOTER: Adjusted paths
          ============================================== -->
     <footer>
         <div class="container">
