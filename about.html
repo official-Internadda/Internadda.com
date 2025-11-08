@@ -10,84 +10,81 @@
 
     <link rel="stylesheet" href="style.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-app-compat.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-auth-compat.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.7.1/firebase-firestore-compat.min.js"></script>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+    
 </head>
-
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-3ZZ3HGFM3Q');
-</script>
-
-
 <body>
+    <!-- Google Analytics Script (Retained) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-3ZZ3HGFM3Q');
+    </script>
+
+    <!-- ==============================================
+         HEADER: 3D Animated Nav (Requests 1 & 2)
+         ============================================== -->
     <header>
         <div class="container header-container">
-             <a href="/" class="logo">
-                 <img src="images/logo.jpg" alt="InternAdda Logo" class="logo-img">
+            <a href="index.html" class="logo">
+                <img src="images/logo.jpg" alt="InternAdda Logo" class="logo-img">
                 <span class="logo-text">InternAdda</span>
             </a>
 
             <nav class="nav-menu">
-                 <a href="/index.html" class="nav-link">Home</a>
+                <a href="/index.html" class="nav-link">Home</a>
                 <a href="/courses/course.html" class="nav-link">Courses</a>
                 <a href="/intern/internship.html" class="nav-link">Internships</a>
                 <a href="/jobs.html" class="nav-link">Jobs</a>
                 <a href="/about.html" class="nav-link">About</a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle">Community <i class="fas fa-chevron-down dropdown-arrow"></i></a>
-                    <div class="dropdown-content">
-                        <a href="/community/join.html" class="dropdown-link">Join Community</a>
-                        <a href="/community/partners.html" class="dropdown-link">Partners</a>
-                        <a href="/blog/index.html" class="dropdown-link">Blog</a>
-                        <a href="/community/academy.html" class="dropdown-link">Offline Academy</a>
-                    </div>
-                </div>
-                 <!-- MOBILE MENU LINKS (Only explicitly requested links plus Mobile Actions) -->
-                 <a href="/blog/index.html" class="nav-link mobile-only-link">Blog</a>
-                 <a href="/contact.html" class="nav-link mobile-only-link">Contact</a>
                 
-                <div class="nav-actions-mobile">
-                     <div class="user-profile hidden" id="userProfileMobile">
-                         <button id="profileBtnHeaderMobile" style="border:none; background:none; color:var(--dark); font-weight:600; font-size:16px; cursor:pointer; padding: 10px 0; width:100%; text-align:center;" onclick="window.handleProfileClick()">
-                             <img src="images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeaderMobile" style="display:inline-block; vertical-align:middle; width:30px; height:30px; border-radius:50%; margin-right:8px;">
-                             <span id="userNameHeaderMobile">My Profile</span> 
-                         </button>
-                         <button id="logoutBtnHeaderMobile" class="btn btn-outline" style="width: 100%;">Sign Out</button>
-                     </div>
-                     <div id="authButtonsMobile" style="width: 100%; display: flex; gap: 10px; justify-content: center;">
-                        <a href="#" class="btn btn-outline" id="loginBtnHeaderMobile">Log in</a>
-                        <a href="#" class="btn btn-primary" id="signupBtnHeaderMobile">Sign up</a>
+                <!-- TOOLS DROPDOWN -->
+                <div class="nav-item dropdown" id="toolsDropdown">
+                    <a href="#" class="nav-link dropdown-toggle">Tools <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                    <div class="dropdown-content">
+                        <a href="/tools/ats-score.html" class="dropdown-link"><i class="fas fa-chart-bar"></i> ATS Score</a>
+                        <a href="/tools/resume-builder.html" class="dropdown-link"><i class="fas fa-file-alt"></i> Resume Builder</a>
+                        <a href="/tools/interview-questions.html" class="dropdown-link"><i class="fas fa-question-circle"></i> Interview Question</a>
+                        <a href="/tools/cover-letter.html" class="dropdown-link"><i class="fas fa-envelope"></i> Cover Letter Generator</a>
+                        <a href="/tools/paraphraser.html" class="dropdown-link"><i class="fas fa-pen-nib"></i> Essay / Paraphraser Tool</a>
                     </div>
                 </div>
+                
+                <!-- MORE DROPDOWN -->
+                <div class="nav-item dropdown" id="moreDropdown">
+                    <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                    <div class="dropdown-content">
+                        <a href="/contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
+                        <a href="/blog/index.html" class="dropdown-link"><i class="fas fa-newspaper"></i> Blog</a>
+                        <a href="/community/join.html" class="dropdown-link"><i class="fas fa-users"></i> Community</a>
+                        <a href="/community/partners.html" class="dropdown-link"><i class="fas fa-handshake"></i> Partners</a>
+                        <a href="/community/academy.html" class="dropdown-link"><i class="fas fa-university"></i> Offline Academy</a>
+                    </div>
+                </div>
+                
+                <!-- MOBILE ONLY LINKS -->
+                <a href="/tools/ats-score.html" class="nav-link mobile-only-link">ATS Score</a>
+                <a href="/tools/resume-builder.html" class="nav-link mobile-only-link">Resume Builder</a>
+                <a href="/tools/interview-questions.html" class="nav-link mobile-only-link">Interview Question</a>
+                <a href="/tools/cover-letter.html" class="nav-link mobile-only-link">Cover Letter Generator</a>
+                <a href="/tools/paraphraser.html" class="nav-link mobile-only-link">Essay / Paraphraser Tool</a>
+                <a href="/contact.html" class="nav-link mobile-only-link">Contact</a>
+                <a href="/blog/index.html" class="nav-link mobile-only-link">Blog</a>
+                <a href="/community/join.html" class="nav-link mobile-only-link">Community</a>
+                <a href="/community/partners.html" class="nav-link mobile-only-link">Partners</a>
+                <a href="/community/academy.html" class="nav-link mobile-only-link">Offline Academy</a>
             </nav>
 
             <div class="header-actions">
                 <div class="search-container">
                     <i class="fas fa-search search-icon"></i>
-                     <input type="text" id="searchInput" class="search-input" placeholder="Search...">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search courses & domains...">
                 </div>
-
-                <div id="authButtons">
-                    <a href="#" class="btn btn-outline" id="loginBtnHeader">Log in</a>
-                    <a href="#" class="btn btn-primary" id="signupBtnHeader">Sign up</a>
-                </div>
-
-                <div class="user-profile hidden" id="userProfile">
-                    <img src="images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeader">
-                    <span id="userNameHeader"></span>
-                    <div class="dropdown-menu" id="userDropdown">
-                        <button id="profileBtnHeader">My Profile</button>
-                        <button id="logoutBtnHeader">Sign Out</button>
-                    </div>
-                </div>
-            </div>
+                <!-- AUTH BUTTONS REMOVED -->
+            </div> 
 
             <button class="hamburger-menu" id="hamburgerMenu">
                 <span></span>
@@ -99,70 +96,107 @@
     </header>
 
     <main>
-         <section class="hero" style="padding: 100px 0; text-align: center; background-color: var(--light);"> <div class="container">
-                <h1 class="hero-heading" style="font-size: 2.5rem; color: var(--dark);">About Internadda</h1> 
-                <p class="hero-description" style="max-width: 800px; margin: 0 auto; color: var(--dark);">We are dedicated to bridging the gap between education and industry by providing students with the skills and experience they need to succeed.</p>
-            </div>
-        </section>
-
-         <section style="padding: 100px 0;">
-            <div class="container" style="max-width: 800px; margin: 0 auto;">
-                <h2 style="font-size: 2rem; margin-bottom: 20px;">Our Mission</h2>
-                <p style="margin-bottom: 40px;">Our mission is to create a comprehensive ecosystem for students to learn, gain practical experience, and launch their careers. We believe that every student deserves the opportunity to apply their knowledge in the real world and get a head start in their professional journey.</p>
-
-                <h2 style="font-size: 2rem; margin-bottom: 20px;">Our Story</h2>
-                <p style="margin-bottom: 40px;">Internadda was founded by a team of passionate educators and industry professionals who noticed a recurring problem: graduates were leaving universities with theoretical knowledge but lacked the practical skills that companies were looking for. We decided to create a platform that would not only offer high-quality, industry-relevant courses but also connect students with meaningful internship opportunities.</p>
-
-                <h2 style="font-size: 2rem; margin-bottom: 20px;">What We Do</h2>
-                <p>We provide a "Learn, Intern, and Earn" model. Students can enroll in our free courses to build foundational skills, prove their knowledge through our standardized tests, and secure paid internships with our network of partner companies. Our goal is to make every student job-ready.</p>
-            </div>
-        </section>
-
-         <section class="team-section">
+        <!-- Page Header -->
+        <section class="page-header">
             <div class="container">
-                <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Meet Our Team</h2>
-                <p style="max-width: 600px; margin: 0 auto 40px auto; color: #6a6f73;">The passionate minds dedicated to shaping the future of student careers.</p>
-                <div class="team-grid">
-                    <div class="team-member">
-                         <img src="images/founder.jpg" alt="Photo of the Founder" class="team-member-img">
-                        <h3 class="team-member-name">Lucky Tiwari</h3>
-                        <p class="team-member-title">Founder & CEO</p>
-                        <p class="team-member-desc">With a vision to empower students, Lucky founded Internadda to bridge the gap between academic theory and real-world application.</p>
-                    </div>
-                    <div class="team-member">
-                         <img src="images/Co-Founder.jpg" alt="Photo of the Co-Founder" class="team-member-img">
-                        <h3 class="team-member-name">Abhay Sharma</h3>
-                        <p class="team-member-title">Co-Founder</p>
-                        <p class="team-member-desc">Abhay brings a wealth of industry experience, helping to steer the strategic vision and growth of Internadda.</p>
-                    </div>
-                     <div class="team-member">
-                          <img src="images/coo.jpg" alt="Photo of the COO" class="team-member-img">
-                        <h3 class="team-member-name">Pranjal Singh</h3>
-                        <p class="team-member-title">Chief Operating Officer</p>
-                        <p class="team-member-desc">Pranjal orchestrates our daily operations, ensuring the "Learn, Intern, and Earn" model runs efficiently and effectively for all users.</p>
+                <h1 class="section-title">Our Mission and Story</h1>
+                <p class="section-subtitle">Connecting India's youth with real-world experience and opportunity.</p>
+            </div>
+        </section>
+
+        <!-- About Content -->
+        <section class="content-section">
+            <div class="container" style="max-width: 900px;">
+                <div class="about-story">
+                    <h2 class="section-title" style="text-align: left; margin-bottom: 25px; color: var(--primary);">Bridging the Skill Gap</h2>
+                    <p style="font-size: 1.1rem; color: var(--dark); margin-bottom: 20px;">Founded on the principle that practical skills and real-world experience are the true currency of the job market, Internadda was created to solve the massive skill gap faced by Indian students and graduates. We realized that traditional education often falls short in preparing students for industry demands.</p>
+                    
+                    <h2 class="section-title" style="text-align: left; margin-top: 40px; margin-bottom: 25px; color: var(--secondary);">The Learn, Intern, Earn Model</h2>
+                    <p style="font-size: 1.1rem; color: var(--dark); margin-bottom: 20px;">Our unique model is simple and highly effective: **Learn** through free, high-quality, industry-relevant courses; **Intern** by passing our rigorous skill tests to unlock paid internships with our top partner companies; and **Earn** a strong start to your professional career. We are committed to making education accessible and employment attainable for everyone.</p>
+                    
+                    <div style="margin-top: 50px; text-align: center;">
+                        <a href="/courses/course.html" class="btn btn-primary btn-lg">Start Your Journey Now</a>
                     </div>
                 </div>
-                <div class="team-grid" style="margin-top: 2rem;">
+            </div>
+        </section>
+
+        <!-- ==============================================
+             OUR TEAM SECTION - Animated Cards (Request 6)
+             ============================================== -->
+        <section class="team-section" style="background-color: #f0f4f8;">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Meet Our Dedicated Leadership Team</h2>
+                    <p class="section-subtitle">A group of passionate educators and industry veterans committed to student success.</p>
+                </div>
+
+                <div class="team-grid">
+                    <!-- Member 1: Founder -->
                     <div class="team-member">
-                         <img src="images/cto.jpg" alt="Photo of the CTO" class="team-member-img">
-                        <h3 class="team-member-name">Sumit Pandey</h3>
-                        <p class="team-member-title">Chief Technology Officer</p>
-                        <p class="team-member-desc">Sumit leads our tech innovation, building a robust and seamless platform for millions of students and partner companies.</p>
+                        <img src="images/founder.jpg" alt="Lucky Kumar - Founder & CEO" class="team-member-img" onerror="this.onerror=null;this.src='images/no_image.png'">
+                        <h3 class="team-member-name">Lucky Kumar</h3>
+                        <p class="team-member-title">Founder & Chief Executive Officer</p>
+                        <p class="team-member-desc">Visionary leader driving Internadda’s mission to democratize skill-based learning and employment across India.</p>
+                        <a href="https://www.linkedin.com/in/lucky-kumar-official" target="_blank" class="team-social-link">
+                            <i class="fab fa-linkedin-in"></i> Connect on LinkedIn
+                        </a>
                     </div>
+                    
+                    <!-- Member 2: Co-Founder/Strategist -->
                     <div class="team-member">
-                         <img src="images/partenship.jpg" alt="Photo of the Head of Partnerships" class="team-member-img">
-                        <h3 class="team-member-name">Vikash Yadav</h3>
-                        <p class="team-member-title">Head of Partnerships</p>
-                        <p class="team-member-desc">Vikash builds strong relationships with industry leaders to bring exclusive and valuable internship opportunities to our students.</p>
+                        <img src="images/Co-Founder.jpg" alt="Akash Singh - Co-Founder" class="team-member-img" onerror="this.onerror=null;this.src='images/no_image.png'">
+                        <h3 class="team-member-name">Akash Singh</h3>
+                        <p class="team-member-title">Co-Founder & Head of Strategy</p>
+                        <p class="team-member-desc">Focuses on building strategic partnerships with industry leaders to secure high-quality internship placements for students.</p>
+                        <a href="https://www.linkedin.com/in/akash-singh-strategy" target="_blank" class="team-social-link">
+                            <i class="fab fa-linkedin-in"></i> Connect on LinkedIn
+                        </a>
                     </div>
+
+                    <!-- Member 3: COO -->
+                    <div class="team-member">
+                        <img src="images/coo.jpg" alt="Priya Sharma - Chief Operating Officer" class="team-member-img" onerror="this.onerror=null;this.src='images/no_image.png'">
+                        <h3 class="team-member-name">Priya Sharma</h3>
+                        <p class="team-member-title">Chief Operating Officer (COO)</p>
+                        <p class="team-member-desc">Oversees day-to-day operations, ensuring seamless platform experience and curriculum delivery across all verticals.</p>
+                        <a href="https://www.linkedin.com/in/priya-sharma-ops" target="_blank" class="team-social-link">
+                            <i class="fab fa-linkedin-in"></i> Connect on LinkedIn
+                        </a>
+                    </div>
+
+                    <!-- Member 4: CTO -->
+                    <div class="team-member">
+                        <img src="images/cto.jpg" alt="Vikas Yadav - Chief Technology Officer" class="team-member-img" onerror="this.onerror=null;this.src='images/no_image.png'">
+                        <h3 class="team-member-name">Vikas Yadav</h3>
+                        <p class="team-member-title">Chief Technology Officer (CTO)</p>
+                        <p class="team-member-desc">Leads technology innovation, ensuring the platform utilizes the latest educational tech and assessment tools.</p>
+                        <a href="https://www.linkedin.com/in/vikas-yadav-cto" target="_blank" class="team-social-link">
+                            <i class="fab fa-linkedin-in"></i> Connect on LinkedIn
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partner CTA Section (Retained) -->
+        <section class="cta-section">
+            <div class="container">
+                <h2 class="cta-title">Ready to Partner with the Best Talent?</h2>
+                <p class="cta-description">We connect companies with thoroughly vetted, skilled students ready for immediate impact. Contact us to learn about our corporate internship programs.</p>
+                <div class="cta-buttons">
+                    <a href="contact.html" class="btn btn-light btn-lg">Contact Partnerships</a>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- ==============================================
+         FOOTER: Updated with Tools Column (Request 3)
+         ============================================== -->
     <footer>
         <div class="container">
-             <div class="footer-grid">
+            <div class="footer-grid">
                 <div class="footer-brand">
                     <div class="footer-logo">Internadda</div>
                     <p class="footer-description">Transforming careers through learning, interning, and earning opportunities.</p>
@@ -198,19 +232,20 @@
                         <li><a href="#">Career Coaching</a></li>
                     </ul>
                 </div>
-
+                
+                <!-- NEW TOOLS COLUMN (Request 3) -->
                 <div class="footer-links-column">
-                    <h3 class="footer-links-title">Community</h3>
+                    <h3 class="footer-links-title">Career Tools</h3>
                     <ul class="footer-links">
-                        <li><a href="/community/join.html">Join Community</a></li>
-                        <li><a href="/community/partners.html">Partners</a></li>
-                        <li><a href="/blog/index.html">Blog</a></li>
-                        <li><a href="/community/academy.html">Offline Academy</a></li>
+                        <li><a href="/tools/ats-score.html">ATS Score Checker</a></li>
+                        <li><a href="/tools/resume-builder.html">Resume Builder</a></li>
+                        <li><a href="/tools/interview-questions.html">Interview Prep</a></li>
+                        <li><a href="/tools/cover-letter.html">Cover Letter Gen</a></li>
+                        <li><a href="/tools/paraphraser.html">Essay Paraphraser</a></li>
                     </ul>
                 </div>
 
-
-                     <div class="footer-links-column">
+                <div class="footer-links-column">
                     <h3 class="footer-links-title">InternAdda</h3>
                     <ul class="footer-links">
                         <li><a href="/about.html">About Us</a></li>
@@ -221,262 +256,22 @@
                 </div>
 
                 <div class="footer-links-column">
-                    <h3 class="footer-links-title">More</h3>
+                    <h3 class="footer-links-title">Community</h3>
                     <ul class="footer-links">
-                        <li><a href="#">Affiliate Program</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">QnA</a></li>
-                        <li><a href="#">Daily Challenges</a></li>
+                        <li><a href="/community/join.html">Join Community</a></li>
+                        <li><a href="/community/partners.html">Partners</a></li>
+                        <li><a href="/blog/index.html">Blog</a></li>
+                        <li><a href="/community/academy.html">Offline Academy</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="footer-bottom">
-                <p>© 2025 Internadda. All rights reserved.</p>
+                <p>© 2025 Internadda. All rights reserved. | Developed by Internadda Team</p>
             </div>
         </div>
     </footer>
 
-    <div id="authModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" id="closeModal">&times;</span>
-
-            <div id="loginSection" class="auth-section">
-                <div class="auth-notification">
-                    <i class="fas fa-lock"></i> <strong>Log in Required:</strong> Log in to take courses, track progress, and apply for internships.
-                 </div>
-                <h2 class="auth-title">Welcome Back</h2>
-                <div class="loading" id="loginLoading">
-                    <div class="spinner"></div>
-                    <span>Signing in...</span>
-                </div>
-                <div id="loginError" class="error"></div>
-
-                <div class="form-group">
-                    <label for="loginEmail">Email</label>
-                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="loginPassword">Password</label>
-                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
-                </div>
-
-                <button class="btn btn-primary" id="emailLoginBtn">Sign In</button>
-                <div class="separator"><span>OR</span></div>
-                <button class="btn btn-google" id="googleLoginBtn"><i class="fab fa-google"></i> Continue with Google</button>
-
-                <div class="toggle-auth">
-                    <span>Don't have an account?</span> <a href="#" id="showSignup">Sign up</a>
-                </div>
-            </div>
-
-            <div id="signupSection" class="auth-section">
-                <h2 class="auth-title">Create Account</h2>
-                <div class="loading" id="signupLoading">
-                    <div class="spinner"></div>
-                    <span>Creating account...</span>
-                </div>
-                <div id="signupError" class="error"></div>
-
-                <div class="form-group">
-                    <label for="signupEmail">Email</label>
-                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="signupPassword">Password</label>
-                    <input type="password" id="signupPassword" placeholder="Create a password (6+ characters)" required>
-                </div>
-
-                <button class="btn btn-primary" id="emailSignupBtn">Create Account</button>
-                <div class="separator"><span>OR</span></div>
-                <button class="btn btn-google" id="googleSignupBtn"><i class="fab fa-google"></i> Sign up with Google</button>
-
-                <div class="toggle-auth">
-                    <span>Already have an account?</span> <a href="#" id="showLogin">Sign in</a>
-                </div>
-            </div>
-
-            <div id="dashboardSection" class="auth-section">
-                 <div class="dashboard-content">
-                    <div class="profile-tabs">
-                         <button class="tab-btn active" data-tab="profile">Profile</button>
-                         <button class="tab-btn" data-tab="internships">Internships</button>
-                    </div>
-
-                    <div id="profileTabContent" class="tab-content">
-                         <div id="profileDisplaySection">
-                             <div class="user-info-profile">
-                                 <div class="profile-avatar-display">
-                                     <img id="userAvatarDashboard" class="user-avatar" src="images/no_image.png" alt="User Avatar">
-                                 </div>
-                                 <div class="user-profile-details">
-                                     <h2 id="userNameDashboard"></h2>
-                                     <p id="userEmailDashboard"></p>
-                                 </div>
-                             </div>
-                             <div class="profile-details">
-                                 <h3 class="section-title-small">Profile Information</h3>
-                                 <div class="profile-info-item">
-                                     <strong>Gender:</strong> <span id="profileGenderDisplay">Not specified</span>
-                                 </div>
-                                 <div class="profile-info-item">
-                                     <strong>Interested Domain:</strong> <span id="profileDomainDisplay">Not specified</span>
-                                 </div>
-                             </div>
-                             <button class="btn btn-primary" id="shareProfileBtn" style="width: 100%; margin-top: 20px;"><i class="fas fa-share-alt" style="margin-right: 8px;"></i> Share My Profile</button>
-                             <button class="btn btn-outline" id="editProfileBtn">Edit Profile</button>
-                         </div>
-
-                         <div id="profileEditSection" class="hidden">
-                            <div id="profileEditError" class="error" style="display: none;"></div>
-                             <div class="profile-avatar-display">
-                                 <img id="userAvatarPreview" class="user-avatar" src="images/no_image.png" alt="User Avatar Preview">
-                                 <label for="profileImageInput" class="file-upload-label">
-                                     <i class="fas fa-upload"></i> Upload Image
-                                 </label>
-                                 <input type="file" id="profileImageInput" accept="image/*">
-                                 <p class="profile-avatar-hint" style="margin-top: 5px; font-size: 0.85rem; color: #f56565;">*Image upload is for demo only; file storage is not active.</p>
-                             </div>
-                             <div class="form-group">
-                                 <label for="profileName">Full Name</label>
-                                 <input type="text" id="profileName" placeholder="Enter your full name">
-                             </div>
-                             <div class="form-group">
-                                 <label for="profileGender">Gender</label>
-                                 <select id="profileGender">
-                                     <option value="">Select Gender</option>
-                                     <option value="Male">Male</option>
-                                     <option value="Female">Female</option>
-                                     <option value="Other">Other</option>
-                                 </select>
-                             </div>
-                             <div class="form-group">
-                                 <label for="interestedDomain">Interested Domain</label>
-                                 <select id="interestedDomain">
-                                     <option value="">Select Domain</option>
-                                     <option value="Web Development">Web Development</option>
-                                     <option value="Data Science & AI">Data Science & AI</option>
-                                     <option value="Digital Marketing">Digital Marketing</option>
-                                     <option value="UI/UX Design">UI/UX Design</option>
-                                 </select>
-                             </div>
-                             <button class="btn btn-primary" id="saveProfileBtn">Save Profile</button>
-                         </div>
-                    </div>
-
-                    <div id="coursesTabContent" class="tab-content hidden">
-                        <h3 class="section-title-small">📚 Enrolled Courses & Certificates</h3>
-                        <p style="color: var(--gray); margin-bottom: 20px;">Track your progress and access completion certificates here.</p>
-                        <div id="coursesListContainer" class="user-data-list">
-                            <p style="text-align: center; padding: 20px;">Please log in to view your courses.</p>
-                        </div>
-                    </div>
-
-                    <div id="internshipsTabContent" class="tab-content hidden">
-                        <h3 class="section-title-small">💼 Internship Application History</h3>
-                        <p style="color: var(--gray); margin-bottom: 20px;">View your exam results and application status for different domains.</p>
-                        <div id="internshipsListContainer" class="user-data-list">
-                            <p style="text-align: center; padding: 20px;">Please log in to view your internship history.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <script src="script.js"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. Get Elements
-            const loginBtnHeader = document.getElementById('loginBtnHeader');
-            const signupBtnHeader = document.getElementById('signupBtnHeader');
-            const loginBtnMobile = document.getElementById('loginBtnHeaderMobile');
-            const signupBtnMobile = document.getElementById('signupBtnHeaderMobile');
-            const authModal = document.getElementById('authModal');
-            const closeModalBtn = document.getElementById('closeModal'); // Cross button
-            const loginSection = document.getElementById('loginSection');
-            const signupSection = document.getElementById('signupSection');
-            const navMenu = document.querySelector('.nav-menu');
-            const hamburgerMenu = document.getElementById('hamburgerMenu');
-            
-            // Special elements for navigation inside modal
-            const showSignupInModal = document.getElementById('showSignup');
-            const showLoginInModal = document.getElementById('showLogin');
-
-            // Helper function to show correct modal section
-            const showSection = (sectionElement) => {
-                 if (!sectionElement || !authModal) return;
-                 authModal.querySelectorAll('.auth-section').forEach(sec => sec.classList.remove('active'));
-                 sectionElement.classList.add('active');
-            };
-            
-            const closeAuthModal = () => {
-                 if(authModal) authModal.classList.remove('active'); 
-                 document.body.style.overflow = '';
-            };
-
-            const closeHamburgerMenu = () => {
-                if (navMenu && hamburgerMenu) {
-                    navMenu.classList.remove('active');
-                    hamburgerMenu.classList.remove('active');
-                }
-            };
-            
-            // 2. Event Listeners for Login (Desktop and Mobile)
-            const handleLoginClick = (e) => {
-                e.preventDefault();
-                if (authModal && loginSection) {
-                    authModal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                    showSection(loginSection);
-                    closeHamburgerMenu();
-                }
-            };
-            
-            if (loginBtnHeader) loginBtnHeader.addEventListener('click', handleLoginClick);
-            if (loginBtnMobile) loginBtnMobile.addEventListener('click', handleLoginClick);
-
-            // 3. Event Listeners for Signup (Desktop and Mobile)
-            const handleSignupClick = (e) => {
-                e.preventDefault();
-                if (authModal && signupSection) {
-                    authModal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                    showSection(signupSection);
-                    closeHamburgerMenu();
-                }
-            };
-            
-            if (signupBtnHeader) signupBtnHeader.addEventListener('click', handleSignupClick);
-            if (signupBtnMobile) signupBtnMobile.addEventListener('click', handleSignupClick);
-            
-            // 4. Fix for Modal Close Button (Cross Button) and Backdrop
-            if (closeModalBtn) {
-                closeModalBtn.addEventListener('click', closeAuthModal);
-            }
-            
-            if (authModal) {
-                 window.addEventListener('click', (e) => {
-                     if (e.target === authModal) {
-                         closeAuthModal();
-                     }
-                 });
-            }
-            
-            // 5. Fix for internal modal navigation
-            if (showSignupInModal) showSignupInModal.addEventListener('click', (e) => { e.preventDefault(); showSection(signupSection); });
-            if (showLoginInModal) showLoginInModal.addEventListener('click', (e) => { e.preventDefault(); showSection(loginSection); });
-
-            // 6. Fix for Hamburger Menu Toggle
-            if (hamburgerMenu && navMenu) {
-                hamburgerMenu.addEventListener('click', () => {
-                    hamburgerMenu.classList.toggle('active');
-                    navMenu.classList.toggle('active');
-                });
-            }
-        });
-    </script>
 </body>
 </html>
