@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Under Maintenance - Visit Later</title>
+    <style>
+        /* CSS for the 3D Flip Effect */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9; /* Light background */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            perspective: 1000px; /* Essential for 3D effect */
+            overflow: hidden; /* Prevent scrollbars */
+        }
+
+        .flip-container {
+            width: 400px;
+            height: 250px;
+            position: relative;
+            transform-style: preserve-3d; /* Allows children to be positioned in 3D space */
+            transition: transform 1.5s; /* Smooth flip animation */
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+        }
+
+        .flipper {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        .front, .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* Hide the back of the element when facing away */
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .front {
+            background: linear-gradient(135deg, #4caf50, #8bc34a); /* Green gradient */
+            color: white;
+            z-index: 2;
+        }
+
+        .back {
+            background: linear-gradient(135deg, #ff9800, #ff5722); /* Orange/Red gradient */
+            color: white;
+            transform: rotateY(180deg); /* Start with the back side rotated */
+        }
+        
+        /* The animation class applied by JavaScript */
+        .flip-container.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.2em;
+        }
+
+        p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="flip-container" id="maintenanceCard">
+        <div class="flipper">
+            <div class="front">
+                <h1>Welcome to Bard Academy</h1>
+                <p>We are currently **improving our platform**. Please check back shortly!</p>
+            </div>
+            
+            <div class="back">
+                <h1>🚧 Under Maintenance 🚧</h1>
+                <p>Our educational resources are being updated. **Visit later** for a better experience.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to automatically flip the card a short time after the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            const card = document.getElementById('maintenanceCard');
+
+            // Set a timeout to apply the 'is-flipped' class after a delay (e.g., 1 second)
+            setTimeout(() => {
+                card.classList.add('is-flipped');
+            }, 1000);
+            
+            // Optional: Add an event listener to flip it back and forth on click/tap
+            card.addEventListener('click', () => {
+                card.classList.toggle('is-flipped');
+            });
+        });
+    </script>
+
+</body>
+</html>
