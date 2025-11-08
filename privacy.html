@@ -3,345 +3,306 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy — Internadda</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Privacy Policy | Internadda - Data Security and Usage</title>
+    <meta name="description" content="Read Internadda's Privacy Policy regarding the collection, use, and protection of your personal information as you use our courses and internship services.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <link rel="stylesheet" href="style.css">
+
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+    
+    <style>
+        /* Reusing styles defined in style.css for policy content, ensuring consistency */
+        .page-header {
+            background-color: #ebfff0; /* Soft green/light blue for trust/security */
+        }
+        .policy-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+        .policy-content h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 5px;
+        }
+        .policy-content h3 {
+            font-size: 1.6rem;
+            color: var(--secondary);
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+        .policy-content p {
+            margin-bottom: 20px;
+            color: var(--dark);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+        .policy-content ul, .policy-content ol {
+            padding-left: 25px;
+            list-style-type: disc;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        .policy-content ol {
+             list-style-type: decimal;
+        }
+        .policy-content li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .policy-content strong {
+            font-weight: 700;
+            color: var(--dark);
+        }
+    </style>
 </head>
 <body>
+    <!-- Google Analytics Script (Retained) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-3ZZ3HGFM3Q');
+    </script>
+
+    <!-- ==============================================
+         HEADER: 3D Animated Nav (Requests 1 & 2)
+         ============================================== -->
     <header>
         <div class="container header-container">
-        <a href="index.html" class="logo">
-          <img src="images/logo.jpg" alt="InternAdda Logo" class="logo-img">
-          <span class="logo-text">InternAdda</span>
-        </a>
+            <a href="index.html" class="logo">
+                <img src="images/logo.jpg" alt="InternAdda Logo" class="logo-img">
+                <span class="logo-text">InternAdda</span>
+            </a>
+
             <nav class="nav-menu">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="courses/course.html" class="nav-link">Courses</a>
-                <a href="intern/internship.html" class="nav-link">Internships</a>
-                <a href="#" class="nav-link">Jobs</a>
-                <a href="about.html" class="nav-link">About</a>
-            </nav>
-            <div class="header-actions">
-                 <div id="authButtons">
-                    <a href="#" class="btn btn-outline" id="loginBtnHeader">Log in</a>
-                    <a href="#" class="btn btn-primary" id="signupBtnHeader">Sign up</a>
-                </div>
-                 <div class="user-profile hidden" id="userProfile">
-                    <img src="images/no_image.png" alt="User Avatar" class="user-avatar-header" id="userAvatarHeader">
-                    <span id="userNameHeader"></span>
-                    <div class="dropdown-menu" id="userDropdown">
-                        <button id="profileBtnHeader">My Profile</button>
-                        <button id="logoutBtnHeader">Sign Out</button>
+                <a href="/index.html" class="nav-link">Home</a>
+                <a href="/courses/course.html" class="nav-link">Courses</a>
+                <a href="/intern/internship.html" class="nav-link">Internships</a>
+                <a href="/jobs.html" class="nav-link">Jobs</a>
+                <a href="/about.html" class="nav-link">About</a>
+                
+                <!-- TOOLS DROPDOWN -->
+                <div class="nav-item dropdown" id="toolsDropdown">
+                    <a href="#" class="nav-link dropdown-toggle">Tools <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                    <div class="dropdown-content">
+                        <a href="/tools/ats-score.html" class="dropdown-link"><i class="fas fa-chart-bar"></i> ATS Score</a>
+                        <a href="/tools/resume-builder.html" class="dropdown-link"><i class="fas fa-file-alt"></i> Resume Builder</a>
+                        <a href="/tools/interview-questions.html" class="dropdown-link"><i class="fas fa-question-circle"></i> Interview Question</a>
+                        <a href="/tools/cover-letter.html" class="dropdown-link"><i class="fas fa-envelope"></i> Cover Letter Generator</a>
+                        <a href="/tools/paraphraser.html" class="dropdown-link"><i class="fas fa-pen-nib"></i> Essay / Paraphraser Tool</a>
                     </div>
                 </div>
-            </div>
+                
+                <!-- MORE DROPDOWN -->
+                <div class="nav-item dropdown" id="moreDropdown">
+                    <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                    <div class="dropdown-content">
+                        <a href="/contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
+                        <a href="/blog/index.html" class="dropdown-link"><i class="fas fa-newspaper"></i> Blog</a>
+                        <a href="/community/join.html" class="dropdown-link"><i class="fas fa-users"></i> Community</a>
+                        <a href="/community/partners.html" class="dropdown-link"><i class="fas fa-handshake"></i> Partners</a>
+                        <a href="/community/academy.html" class="dropdown-link"><i class="fas fa-university"></i> Offline Academy</a>
+                    </div>
+                </div>
+                
+                <!-- MOBILE ONLY LINKS -->
+                <a href="/tools/ats-score.html" class="nav-link mobile-only-link">ATS Score</a>
+                <a href="/tools/resume-builder.html" class="nav-link mobile-only-link">Resume Builder</a>
+                <a href="/tools/interview-questions.html" class="nav-link mobile-only-link">Interview Question</a>
+                <a href="/tools/cover-letter.html" class="nav-link mobile-only-link">Cover Letter Generator</a>
+                <a href="/tools/paraphraser.html" class="nav-link mobile-only-link">Essay / Paraphraser Tool</a>
+                <a href="/contact.html" class="nav-link mobile-only-link">Contact</a>
+                <a href="/blog/index.html" class="nav-link mobile-only-link">Blog</a>
+                <a href="/community/join.html" class="nav-link mobile-only-link">Community</a>
+                <a href="/community/partners.html" class="nav-link mobile-only-link">Partners</a>
+                <a href="/community/academy.html" class="nav-link mobile-only-link">Offline Academy</a>
+            </nav>
+
+            <div class="header-actions">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search courses & domains...">
+                </div>
+                <!-- AUTH BUTTONS REMOVED -->
+            </div> 
+
+            <button class="hamburger-menu" id="hamburgerMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
+        <div id="searchResults" class="search-results-container container hidden"></div>
     </header>
 
     <main>
-        <section class="hero" style="padding: 60px 0; text-align: center;">
+        <!-- Page Header -->
+        <section class="page-header">
             <div class="container">
-                <h1 class="hero-heading" style="font-size: 2.5rem;">Privacy Policy</h1>
-                <p class="hero-description" style="max-width: 800px; margin: 0 auto;">Last Updated: October 16, 2025</p>
+                <h1 class="section-title">Privacy Policy</h1>
+                <p class="section-subtitle">Your trust is our top priority. We are transparent about how we collect and use your data.</p>
             </div>
         </section>
 
-        <section style="padding: 60px 0;">
-            <div class="container" style="max-width: 800px; margin: 0 auto;">
-                <p>This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service.</p>
+        <!-- Policy Content -->
+        <section class="content-section">
+            <div class="container">
+                <div class="policy-content">
+                    <p>This Privacy Policy describes how Internadda ("we," "us," or "our") collects, uses, and discloses your personal information when you use our website, courses, and internship services (collectively, the "Service").</p>
+                    <p><strong>Last Updated: November 8, 2025</strong></p>
 
-                <h2 style="font-size: 1.5rem; margin-top: 30px; margin-bottom: 15px;">1. Information We Collect</h2>
-                <p>We collect several different types of information for various purposes to provide and improve our Service to you. This includes personal data, such as email address, first name and last name, and usage data.</p>
+                    <h2>1. Information We Collect</h2>
+                    <p>We collect information primarily to provide and improve our services, communicate with you, and connect you with internship opportunities.</p>
+                    
+                    <h3>A. Information You Provide Directly</h3>
+                    <p>When you use our Service, you may provide us with the following personal information:</p>
+                    <ul>
+                        <li><strong>Contact Information:</strong> Name, email address, and phone number (used for communication, support, and placement contact).</li>
+                        <li><strong>Educational/Career Data:</strong> Academic background, skill assessment scores, resume details (if you use our tools), and internship preferences (used for screening and matching with corporate partners).</li>
+                        <li><strong>Payment Information:</strong> We do not store full payment card details. Payment processing is handled by secure, third-party payment gateways (e.g., Razorpay, Stripe). We only retain transaction records.</li>
+                    </ul>
 
-                <h2 style="font-size: 1.5rem; margin-top: 30px; margin-bottom: 15px;">2. Use of Your Personal Data</h2>
-                <p>Internadda may use Personal Data for the following purposes: to provide and maintain our Service, to manage Your Account, to contact You, and for data analysis to improve our services.</p>
+                    <h3>B. Information Collected Automatically (Cookies and Tracking)</h3>
+                    <p>We use standard technologies to automatically collect information about your usage of the Service:</p>
+                    <ul>
+                        <li><strong>Usage Data:</strong> Information about your interactions, such as courses viewed, lessons completed, time spent on pages, and buttons clicked (used to track progress and improve content).</li>
+                        <li><strong>Technical Data:</strong> IP address, browser type, device type, operating system, and unique device identifiers (used for security and troubleshooting).</li>
+                        <li><strong>Cookies:</strong> Small data files stored on your device that help us remember your preferences, keep you logged into the session (although login is removed, session management may still occur for progress tracking), and analyze site traffic.</li>
+                    </ul>
 
-                <h2 style="font-size: 1.5rem; margin-top: 30px; margin-bottom: 15px;">3. Security of Your Personal Data</h2>
-                <p>The security of Your Personal Data is important to Us, but remember that no method of transmission over the Internet, or method of electronic storage is 100% secure. While We strive to use commercially acceptable means to protect Your Personal Data, We cannot guarantee its absolute security.</p>
+                    <h2>2. How We Use Your Information</h2>
+                    <p>We use the collected information for the following purposes:</p>
+                    <ol>
+                        <li><strong>Service Provision:</strong> To provide access to free courses, manage your progress, and issue certificates.</li>
+                        <li><strong>Internship Placement:</strong> To match your profile, resume data, and skill test scores with our corporate partners for paid internship opportunities.</li>
+                        <li><strong>Communication:</strong> To send you essential service updates, educational content, career newsletters, and respond to your support requests.</li>
+                        <li><strong>Improvement and Analytics:</strong> To understand user behavior, troubleshoot technical issues, and improve the quality and relevance of our course materials and platform features.</li>
+                        <li><strong>Legal Compliance:</strong> To comply with legal obligations and protect our rights, privacy, safety, or property, and that of our affiliates, partners, and users.</li>
+                    </ol>
+
+                    <h2>3. Sharing Your Information</h2>
+                    <p>We only share your information in the following limited circumstances:</p>
+                    <ul>
+                        <li><strong>Corporate Partners:</strong> If you successfully pass a Final Exam, we will share your **name, contact information, and skill assessment scores/resume** with relevant corporate partners for the sole purpose of internship placement.</li>
+                        <li><strong>Service Providers:</strong> We use third-party companies and individuals to facilitate our Service (e.g., cloud hosting, payment processing, analytics). These providers only have access to the necessary information to perform their tasks on our behalf and are obligated not to disclose or use it for any other purpose.</li>
+                        <li><strong>Legal Requirements:</strong> We may disclose your information if required to do so by law or in the good faith belief that such action is necessary to comply with a legal obligation or protect the rights or safety of Internadda or the public.</li>
+                    </ul>
+
+                    <h2>4. Data Security and Retention</h2>
+                    <p>We employ commercially acceptable measures to protect your personal information from unauthorized access, use, or disclosure. However, no method of transmission over the Internet or method of electronic storage is 100% secure.</p>
+                    <p>We retain your personal information for as long as necessary to provide you with the Service or for other essential purposes such as complying with our legal obligations, resolving disputes, and enforcing our agreements.</p>
+                    
+                    <h2>5. Contact Us</h2>
+                    <p>If you have any questions about this Privacy Policy or our data practices, please contact us at:</p>
+                    <p><strong>Email:</strong> <a href="mailto:support@internadda.com">support@internadda.com</a></p>
+                    <p style="font-style: italic; color: var(--gray);">By using our Service, you acknowledge that you have read and understood this Privacy Policy.</p>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <h2 class="cta-title">Your Career is Secure With Us</h2>
+                <p class="cta-description">We handle your data responsibly so you can focus on **learning, interning, and earning**.</p>
+                <div class="cta-buttons">
+                    <a href="terms.html" class="btn btn-light btn-lg">View Terms & Conditions</a>
+                </div>
             </div>
         </section>
     </main>
 
+    <!-- ==============================================
+         FOOTER: Updated with Tools Column (Request 3)
+         ============================================== -->
     <footer>
         <div class="container">
             <div class="footer-grid">
-                 <div class="footer-brand">
+                <div class="footer-brand">
                     <div class="footer-logo">Internadda</div>
                     <p class="footer-description">Transforming careers through learning, interning, and earning opportunities.</p>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/company/internadda-india" target="_blank" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@theinternadda" target="_blank" class="social-link" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://www.instagram.com/internadda.india" target="_blank" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
                 </div>
+
                 <div class="footer-links-column">
-                    <h3 class="footer-links-title">Company</h3>
+                    <h3 class="footer-links-title">Learn</h3>
                     <ul class="footer-links">
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                        <li><a href="#">Careers</a></li>
+                        <li><a href="/courses/course.html">Browse Courses</a></li>
+                        <li><a href="/courses/course.html">Free Courses</a></li>
+                        <li><a href="#">Paid Courses</a></li>
+                        <li><a href="#">Become an Instructor</a></li>
                     </ul>
                 </div>
+
                 <div class="footer-links-column">
-                    <h3 class="footer-links-title">Legal</h3>
+                    <h3 class="footer-links-title">Intern</h3>
                     <ul class="footer-links">
-                        <li><a href="terms.html">Terms & Conditions</a></li>
-                        <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="refund.html">Refund & Cancellation</a></li>
+                        <li><a href="/intern/internship.html">Find Internships</a></li>
+                        <li><a href="#">For Companies</a></li>
+                        <li><a href="#">Success Stories</a></li>
+                        <li><a href="#">Career Coaching</a></li>
                     </ul>
                 </div>
-                 <div class="footer-links-column">
-                    <h3 class="footer-links-title">Contact</h3>
-                     <ul class="footer-links">
-                        <li><a href="mailto:support@internadda.com">support@internadda.com</a></li>
-                        <li><a href="tel:+918287742390">+91 82877 42390</a></li>
-                        <li>New Delhi, India</li>
+                
+                <!-- NEW TOOLS COLUMN (Request 3) -->
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">Career Tools</h3>
+                    <ul class="footer-links">
+                        <li><a href="/tools/ats-score.html">ATS Score Checker</a></li>
+                        <li><a href="/tools/resume-builder.html">Resume Builder</a></li>
+                        <li><a href="/tools/interview-questions.html">Interview Prep</a></li>
+                        <li><a href="/tools/cover-letter.html">Cover Letter Gen</a></li>
+                        <li><a href="/tools/paraphraser.html">Essay Paraphraser</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">InternAdda</h3>
+                    <ul class="footer-links">
+                        <li><a href="/about.html">About Us</a></li>
+                        <li><a href="/contact.html">Contact Us</a></li>
+                        <li><a href="/terms.html">Terms & Conditions</a></li>
+                        <li><a href="/refund.html">Refund Policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">Community</h3>
+                    <ul class="footer-links">
+                        <li><a href="/community/join.html">Join Community</a></li>
+                        <li><a href="/community/partners.html">Partners</a></li>
+                        <li><a href="/blog/index.html">Blog</a></li>
+                        <li><a href="/community/academy.html">Offline Academy</a></li>
                     </ul>
                 </div>
             </div>
+
             <div class="footer-bottom">
-                <p>© 2025 Internadda. All rights reserved.</p>
+                <p>© 2025 Internadda. All rights reserved. | Developed by Internadda Team</p>
             </div>
         </div>
     </footer>
+
     <script src="script.js"></script>
-    
-    <div id="authModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" id="closeModal">&times;</span>
-
-            <div id="loginSection" class="auth-section">
-                <div class="auth-notification">
-                    <i class="fas fa-lock"></i> <strong>Log in Required:</strong> Log in to take courses, track progress, and apply for internships.
-                 </div>
-                <h2 class="auth-title">Welcome Back</h2>
-                <div class="loading" id="loginLoading">
-                    <div class="spinner"></div>
-                    <span>Signing in...</span>
-                </div>
-                <div id="loginError" class="error"></div>
-
-                <div class="form-group">
-                    <label for="loginEmail">Email</label>
-                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="loginPassword">Password</label>
-                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
-                </div>
-
-                <button class="btn btn-primary" id="emailLoginBtn">Sign In</button>
-                <div class="separator"><span>OR</span></div>
-                <button class="btn btn-google" id="googleLoginBtn"><i class="fab fa-google"></i> Continue with Google</button>
-
-                <div class="toggle-auth">
-                    <span>Don't have an account?</span> <a href="#" id="showSignup">Sign up</a>
-                </div>
-            </div>
-
-            <div id="signupSection" class="auth-section">
-                <h2 class="auth-title">Create Account</h2>
-                <div class="loading" id="signupLoading">
-                    <div class="spinner"></div>
-                    <span>Creating account...</span>
-                </div>
-                <div id="signupError" class="error"></div>
-
-                <div class="form-group">
-                    <label for="signupEmail">Email</label>
-                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="signupPassword">Password</label>
-                    <input type="password" id="signupPassword" placeholder="Create a password (6+ characters)" required>
-                </div>
-
-                <button class="btn btn-primary" id="emailSignupBtn">Create Account</button>
-                <div class="separator"><span>OR</span></div>
-                <button class="btn btn-google" id="googleSignupBtn"><i class="fab fa-google"></i> Sign up with Google</button>
-
-                <div class="toggle-auth">
-                    <span>Already have an account?</span> <a href="#" id="showLogin">Sign in</a>
-                </div>
-            </div>
-
-            <div id="dashboardSection" class="auth-section">
-                 <div class="dashboard-content">
-                    <div class="profile-tabs">
-                         <button class="tab-btn active" data-tab="profile">Profile</button>
-                         <button class="tab-btn" data-tab="internships">Internships</button>
-                    </div>
-
-                    <div id="profileTabContent" class="tab-content">
-                         <div id="profileDisplaySection">
-                             <div class="user-info-profile">
-                                 <div class="profile-avatar-display">
-                                     <img id="userAvatarDashboard" class="user-avatar" src="images/no_image.png" alt="User Avatar">
-                                 </div>
-                                 <div class="user-profile-details">
-                                     <h2 id="userNameDashboard"></h2>
-                                     <p id="userEmailDashboard"></p>
-                                 </div>
-                             </div>
-                             <div class="profile-details">
-                                 <h3 class="section-title-small">Profile Information</h3>
-                                 <div class="profile-info-item">
-                                     <strong>Gender:</strong> <span id="profileGenderDisplay">Not specified</span>
-                                 </div>
-                                 <div class="profile-info-item">
-                                     <strong>Interested Domain:</strong> <span id="profileDomainDisplay">Not specified</span>
-                                 </div>
-                             </div>
-                            <button class="btn btn-primary" id="shareProfileBtn" style="width: 100%; margin-top: 20px;"><i class="fas fa-share-alt" style="margin-right: 8px;"></i> Share My Profile</button>
-                             <button class="btn btn-outline" id="editProfileBtn">Edit Profile</button>
-                         </div>
-
-                         <div id="profileEditSection" class="hidden">
-                            <div id="profileEditError" class="error" style="display: none;"></div>
-                             <div class="profile-avatar-display">
-                                 <img id="userAvatarPreview" class="user-avatar" src="images/no_image.png" alt="User Avatar Preview">
-                                 <label for="profileImageInput" class="file-upload-label">
-                                     <i class="fas fa-upload"></i> Upload Image
-                                 </label>
-                                 <input type="file" id="profileImageInput" accept="image/*">
-                                 <p class="profile-avatar-hint" style="margin-top: 5px; font-size: 0.85rem; color: #f56565;">*Image upload is for demo only; file storage is not active.</p>
-                             </div>
-                             <div class="form-group">
-                                 <label for="profileName">Full Name</label>
-                                 <input type="text" id="profileName" placeholder="Enter your full name">
-                             </div>
-                             <div class="form-group">
-                                 <label for="profileGender">Gender</label>
-                                 <select id="profileGender">
-                                     <option value="">Select Gender</option>
-                                     <option value="Male">Male</option>
-                                     <option value="Female">Female</option>
-                                     <option value="Other">Other</option>
-                                 </select>
-                             </div>
-                             <div class="form-group">
-                                 <label for="interestedDomain">Interested Domain</label>
-                                 <select id="interestedDomain">
-                                     <option value="">Select Domain</option>
-                                     <option value="Web Development">Web Development</option>
-                                     <option value="Data Science & AI">Data Science & AI</option>
-                                     <option value="Digital Marketing">Digital Marketing</option>
-                                     <option value="UI/UX Design">UI/UX Design</option>
-                                 </select>
-                             </div>
-                             <button class="btn btn-primary" id="saveProfileBtn">Save Profile</button>
-                         </div>
-                    </div>
-
-                    <div id="coursesTabContent" class="tab-content hidden">
-                        <h3 class="section-title-small">📚 Enrolled Courses & Certificates</h3>
-                        <p style="color: var(--gray); margin-bottom: 20px;">Track your progress and access completion certificates here.</p>
-                        <div id="coursesListContainer" class="user-data-list">
-                            <p style="text-align: center; padding: 20px;">Please log in to view your courses.</p>
-                        </div>
-                    </div>
-
-                    <div id="internshipsTabContent" class="tab-content hidden">
-                        <h3 class="section-title-small">💼 Internship Application History</h3>
-                        <p style="color: var(--gray); margin-bottom: 20px;">View your exam results and application status for different domains.</p>
-                        <div id="internshipsListContainer" class="user-data-list">
-                            <p style="text-align: center; padding: 20px;">Please log in to view your internship history.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. Get Elements
-            const loginBtnHeader = document.getElementById('loginBtnHeader');
-            const signupBtnHeader = document.getElementById('signupBtnHeader');
-            const loginBtnMobile = document.getElementById('loginBtnHeaderMobile');
-            const signupBtnMobile = document.getElementById('signupBtnHeaderMobile');
-            const authModal = document.getElementById('authModal');
-            const closeModalBtn = document.getElementById('closeModal'); // Cross button
-            const loginSection = document.getElementById('loginSection');
-            const signupSection = document.getElementById('signupSection');
-            const navMenu = document.querySelector('.nav-menu');
-            const hamburgerMenu = document.getElementById('hamburgerMenu');
-            
-            // Special elements for navigation inside modal
-            const showSignupInModal = document.getElementById('showSignup');
-            const showLoginInModal = document.getElementById('showLogin');
-
-            // Helper function to show correct modal section
-            const showSection = (sectionElement) => {
-                 if (!sectionElement || !authModal) return;
-                 authModal.querySelectorAll('.auth-section').forEach(sec => sec.classList.remove('active'));
-                 sectionElement.classList.add('active');
-            };
-            
-            const closeAuthModal = () => {
-                 if(authModal) authModal.classList.remove('active'); 
-                 document.body.style.overflow = '';
-            };
-
-            const closeHamburgerMenu = () => {
-                if (navMenu && hamburgerMenu) {
-                    navMenu.classList.remove('active');
-                    hamburgerMenu.classList.remove('active');
-                }
-            };
-            
-            // 2. Event Listeners for Login (Desktop and Mobile)
-            const handleLoginClick = (e) => {
-                e.preventDefault();
-                if (authModal && loginSection) {
-                    authModal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                    showSection(loginSection);
-                    closeHamburgerMenu();
-                }
-            };
-            
-            if (loginBtnHeader) loginBtnHeader.addEventListener('click', handleLoginClick);
-            if (loginBtnMobile) loginBtnMobile.addEventListener('click', handleLoginClick);
-
-            // 3. Event Listeners for Signup (Desktop and Mobile)
-            const handleSignupClick = (e) => {
-                e.preventDefault();
-                if (authModal && signupSection) {
-                    authModal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                    showSection(signupSection);
-                    closeHamburgerMenu();
-                }
-            };
-            
-            if (signupBtnHeader) signupBtnHeader.addEventListener('click', handleSignupClick);
-            if (signupBtnMobile) signupBtnMobile.addEventListener('click', handleSignupClick);
-            
-            // 4. Fix for Modal Close Button (Cross Button) and Backdrop
-            if (closeModalBtn) {
-                closeModalBtn.addEventListener('click', closeAuthModal);
-            }
-            
-            if (authModal) {
-                 window.addEventListener('click', (e) => {
-                     if (e.target === authModal) {
-                         closeAuthModal();
-                     }
-                 });
-            }
-            
-            // 5. Fix for internal modal navigation
-            if (showSignupInModal) showSignupInModal.addEventListener('click', (e) => { e.preventDefault(); showSection(signupSection); });
-            if (showLoginInModal) showLoginInModal.addEventListener('click', (e) => { e.preventDefault(); showSection(loginSection); });
-
-            // 6. Fix for Hamburger Menu Toggle
-            if (hamburgerMenu && navMenu) {
-                hamburgerMenu.addEventListener('click', () => {
-                    hamburgerMenu.classList.toggle('active');
-                    navMenu.classList.toggle('active');
-                });
-            }
-        });
-    </script>
-
 </body>
 </html>
