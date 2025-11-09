@@ -202,8 +202,8 @@
                     <div class="exam-header">
                         <h1 class="exam-title">AI/ML Practice Test (Free)</h1>
                         <p>Evaluate your readiness for the Final Exam and Internship Placement</p>
-                        <div id="focusWarning" style="color: red; font-weight: bold; margin-top: 15px; display: none;">
-                            <i class="fas fa-exclamation-triangle"></i> <strong>EXAM CANCELLED.</strong>
+                        <div id="focusCancellationMessage" style="color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 10px; border-radius: 5px; font-weight: bold; margin-top: 15px; display: none;">
+                            <i class="fas fa-ban"></i> <strong>EXAM CANCELLED.</strong>
                         </div>
                     </div>
 
@@ -351,6 +351,7 @@
                 </div>
         </div>
     </div>
+    
     <div id="focusWarningModal" class="modal">
         <div class="modal-content">
             <h2 class="modal-title warning-color"><i class="fas fa-exclamation-triangle"></i> FOCUS WARNING</h2>
@@ -364,6 +365,7 @@
             </div>
         </div>
     </div>
+
     <footer>
         <div class="container">
             </div>
@@ -379,8 +381,7 @@
             const modalMessage = document.getElementById('modalMessage');
             const modalFooter = document.getElementById('modalFooter');
             const focusWarningModal = document.getElementById('focusWarningModal');
-            const focusModalMessage = document.getElementById('focusModalMessage');
-            const examContainer = document.querySelector('.exam-container');
+            const focusCancellationMessage = document.getElementById('focusCancellationMessage'); // New element to show cancellation on the page
 
             const totalQuestions = 10;
             const passingScore = totalQuestions * 0.5;
@@ -405,6 +406,7 @@
             // --- Helper Functions ---
             function lockExam() {
                 submitButton.disabled = true;
+                // submitButton.textContent = 'Exam Concluded'; // Optional: Change button text
                 form.style.pointerEvents = 'none'; // Lock the form content
             }
             
@@ -414,7 +416,7 @@
             }
 
 
-            // --- Focus Loss Detection Logic (FIXED: Uses custom modal) ---
+            // --- Focus Loss Detection Logic (Modified) ---
 
             function handleFocusLoss() {
                 if (examCancelled || examSubmitted) return;
@@ -422,7 +424,7 @@
                 focusLossCount++;
                 
                 if (focusLossCount === 1) {
-                    // Show custom warning modal
+                    // 1st warning - Show custom modal
                     focusWarningModal.style.display = 'block';
                     // Optional: Disable the context menu (right-click) for stricter focus loss control
                     document.addEventListener('contextmenu', preventDefaultAction);
@@ -432,6 +434,10 @@
                     lockExam();
                     document.removeEventListener('contextmenu', preventDefaultAction);
                     
+                    // Show cancellation message on the main page
+                    focusCancellationMessage.style.display = 'block'; 
+                    document.getElementById('submitInfo').textContent = 'Your exam was cancelled due to loss of focus.';
+
                     // Display cancellation result immediately in result modal
                     displayResult(0, true);
                 }
@@ -441,7 +447,7 @@
                  e.preventDefault();
             }
 
-            // Listeners for focus loss
+            // Listeners for focus loss (blur and visibilitychange)
             window.addEventListener('blur', handleFocusLoss);
             document.addEventListener('visibilitychange', () => {
                 if (document.visibilityState === 'hidden') {
@@ -485,7 +491,7 @@
                 return score;
             }
 
-            // --- Result Display and Action Logic (FIXED: Result button state) ---
+            // --- Result Display and Action Logic (Fixed and Integrated) ---
 
             function displayResult(score, wasCancelled = false) {
                 // Remove focus loss listeners once submitted/cancelled
@@ -518,8 +524,8 @@
                     modalMessage.innerHTML = `You have successfully qualified. Click below to proceed to the final step!`;
 
                     actionButtonHTML = `<button type="button" class="btn btn-primary btn-lg action-button" id="proceedToFinal">
-                                            <i class="fas fa-rocket"></i> Proceed to Final Exam
-                                        </button>`;
+                                        <i class="fas fa-rocket"></i> Proceed to Final Exam
+                                    </button>`;
                 } else {
                     // Failed
                     modalTitle.innerHTML = `<i class="fas fa-times-circle"></i> FAILED: FOCUS ON IMPROVEMENT`;
@@ -531,9 +537,8 @@
                 }
 
                 modalFooter.innerHTML = actionButtonHTML;
-                modal.style.display = 'block'; // Show the result modal
                 hideModals(); // Hide warning modal if it's still open
-                modal.style.display = 'block';
+                modal.style.display = 'block'; // Show the result modal
 
                 // Add event listener for the Proceed button if it exists
                 const proceedButton = document.getElementById('proceedToFinal');
@@ -545,10 +550,11 @@
             }
 
 
-            // --- Submission Handler (FIXED: Button click logic) ---
+            // --- Submission Handler (FIXED) ---
 
             function handleSubmit(e) {
-                e.preventDefault();
+                e.preventDefault(); // This is crucial for the submit button issue! Prevents default form submission/page reload.
+                
                 // If the exam was already cancelled by focus loss, just redisplay the cancellation modal
                 if (examCancelled) {
                     displayResult(0, true); 
@@ -560,7 +566,7 @@
                 displayResult(finalScore);
             }
 
-            // Attach submit listener to the form (This ensures the button, which is type="submit", works)
+            // Attach submit listener to the form
             if (form) {
                 form.addEventListener('submit', handleSubmit);
             }
