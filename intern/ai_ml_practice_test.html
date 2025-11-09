@@ -16,8 +16,16 @@
 
     <style>
         /* Base Exam Styles (Retained) */
+        :root {
+            --primary: #4c51bf; /* Example Primary Color */
+            --secondary: #805ad5; /* Example Secondary Color (Purple for AI/ML) */
+            --dark: #2d3748; /* Example Dark Color */
+            --gray: #718096; /* Example Gray Color */
+            --white: #ffffff; /* Example White Color */
+        }
         body {
             background-color: #f7fafc;
+            font-family: 'Inter', sans-serif;
         }
         main {
             padding-top: 20px;
@@ -41,11 +49,6 @@
             font-size: 2.5rem;
             color: var(--secondary);
             margin-bottom: 5px;
-        }
-        .exam-header p {
-            color: var(--dark);
-            font-size: 1.1rem;
-            font-weight: 600;
         }
         .exam-info-box {
             display: flex;
@@ -100,14 +103,22 @@
             border-top: 1px solid #e2e8f0;
             margin-top: 30px;
         }
-        .next-step-cta {
-            color: var(--primary);
-            background-color: #ebf8ff;
-            padding: 15px;
+        .btn {
+            padding: 12px 25px;
             border-radius: 8px;
-            border: 1px solid #cceeff;
-            margin-bottom: 20px;
             font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--white);
+        }
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
         }
         .action-button {
             width: 300px; 
@@ -166,8 +177,11 @@
         }
         .pass-color { color: #155724; } /* Green */
         .fail-color { color: #721c24; } /* Red */
-        .pass-bg { background-color: #d4edda; border: 1px solid #c3e6cb; padding: 10px; border-radius: 8px; }
-        .fail-bg { background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 10px; border-radius: 8px; }
+
+        /* Placeholder for header/footer classes not included in this snippet */
+        .header-container, .logo, .nav-menu, .footer-grid { /* Prevent errors if external CSS is missing */
+            display: none; 
+        }
     </style>
 </head>
 <body>
@@ -181,66 +195,7 @@
 
     <header>
         <div class="container header-container">
-            <a href="../index.html" class="logo">
-                <img src="../images/logo.jpg" alt="InternAdda Logo" class="logo-img">
-                <span class="logo-text">InternAdda</span>
-            </a>
-
-            <nav class="nav-menu">
-                <a href="../index.html" class="nav-link">Home</a>
-                <a href="../courses/course.html" class="nav-link">Courses</a>
-                <a href="internship.html" class="nav-link">Internships</a>
-                <a href="../jobs.html" class="nav-link">Jobs</a>
-                <a href="../about.html" class="nav-link">About</a>
-                
-                <div class="nav-item dropdown" id="toolsDropdown">
-                    <a href="#" class="nav-link dropdown-toggle">Tools <i class="fas fa-chevron-down dropdown-arrow"></i></a>
-                    <div class="dropdown-content">
-                        <a href="../tools/ats-score.html" class="dropdown-link"><i class="fas fa-chart-bar"></i> ATS Score</a>
-                        <a href="../tools/resume-builder.html" class="dropdown-link"><i class="fas fa-file-alt"></i> Resume Builder</a>
-                        <a href="../tools/interview-questions.html" class="dropdown-link"><i class="fas fa-question-circle"></i> Interview Question</a>
-                        <a href="../tools/cover-letter.html" class="dropdown-link"><i class="fas fa-envelope"></i> Cover Letter Generator</a>
-                        <a href="../tools/paraphraser.html" class="dropdown-link"><i class="fas fa-pen-nib"></i> Essay / Paraphraser Tool</a>
-                    </div>
-                </div>
-                
-                <div class="nav-item dropdown" id="moreDropdown">
-                    <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
-                    <div class="dropdown-content">
-                        <a href="../contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
-                        <a href="../blog/index.html" class="dropdown-link"><i class="fas fa-newspaper"></i> Blog</a>
-                        <a href="../community/join.html" class="dropdown-link"><i class="fas fa-users"></i> Community</a>
-                        <a href="../community/partners.html" class="dropdown-link"><i class="fas fa-handshake"></i> Partners</a>
-                        <a href="../community/academy.html" class="dropdown-link"><i class="fas fa-university"></i> Offline Academy</a>
-                    </div>
-                </div>
-                
-                <a href="../tools/ats-score.html" class="nav-link mobile-only-link">ATS Score</a>
-                <a href="../tools/resume-builder.html" class="nav-link mobile-only-link">Resume Builder</a>
-                <a href="../tools/interview-questions.html" class="nav-link mobile-only-link">Interview Question</a>
-                <a href="../tools/cover-letter.html" class="nav-link mobile-only-link">Cover Letter Generator</a>
-                <a href="../tools/paraphraser.html" class="nav-link mobile-only-link">Essay / Paraphraser Tool</a>
-                <a href="../contact.html" class="nav-link mobile-only-link">Contact</a>
-                <a href="../blog/index.html" class="nav-link mobile-only-link">Blog</a>
-                <a href="../community/join.html" class="nav-link mobile-only-link">Community</a>
-                <a href="../community/partners.html" class="nav-link mobile-only-link">Partners</a>
-                <a href="../community/academy.html" class="nav-link mobile-only-link">Offline Academy</a>
-            </nav>
-
-            <div class="header-actions">
-                <div class="search-container">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="searchInput" class="search-input" placeholder="Search courses & domains...">
-                </div>
-            </div> 
-
-            <button class="hamburger-menu" id="hamburgerMenu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-        <div id="searchResults" class="search-results-container container hidden"></div>
+            </div>
     </header>
 
     <main>
@@ -401,79 +356,7 @@
     </div>
     <footer>
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <div class="footer-logo">Internadda</div>
-                    <p class="footer-description">Transforming careers through learning, interning, and earning opportunities.</p>
-                    <div class="social-links">
-                        <a href="https://www.linkedin.com/company/internadda-india" target="_blank" class="social-link" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="https://www.youtube.com/@theinternadda" target="_blank" class="social-link" aria-label="YouTube">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                        <a href="https://www.instagram.com/internadda.india" target="_blank" class="social-link" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Learn</h3>
-                    <ul class="footer-links">
-                        <li><a href="../courses/course.html">Browse Courses</a></li>
-                        <li><a href="../courses/course.html">Free Courses</a></li>
-                        <li><a href="#">Paid Courses</a></li>
-                        <li><a href="#">Become an Instructor</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Intern</h3>
-                    <ul class="footer-links">
-                        <li><a href="internship.html">Find Internships</a></li>
-                        <li><a href="#">For Companies</a></li>
-                        <li><a href="#">Success Stories</a></li>
-                        <li><a href="#">Career Coaching</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Career Tools</h3>
-                    <ul class="footer-links">
-                        <li><a href="../tools/ats-score.html">ATS Score Checker</a></li>
-                        <li><a href="../tools/resume-builder.html">Resume Builder</a></li>
-                        <li><a href="../tools/interview-questions.html">Interview Prep</a></li>
-                        <li><a href="../tools/cover-letter.html">Cover Letter Gen</a></li>
-                        <li><a href="../tools/paraphraser.html">Essay Paraphraser</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">InternAdda</h3>
-                    <ul class="footer-links">
-                        <li><a href="../about.html">About Us</a></li>
-                        <li><a href="../contact.html">Contact Us</a></li>
-                        <li><a href="../terms.html">Terms & Conditions</a></li>
-                        <li><a href="../refund.html">Refund Policy</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Community</h3>
-                    <ul class="footer-links">
-                        <li><a href="../community/join.html">Join Community</a></li>
-                        <li><a href="../community/partners.html">Partners</a></li>
-                        <li><a href="../blog/index.html">Blog</a></li>
-                        <li><a href="../community/academy.html">Offline Academy</a></li>
-                    </ul>
-                </div>
             </div>
-
-            <div class="footer-bottom">
-                <p>© 2025 Internadda. All rights reserved. | Developed by Internadda Team</p>
-            </div>
-        </div>
     </footer>
 
     <script>
@@ -493,7 +376,7 @@
             let focusLossCount = 0;
             let examCancelled = false;
 
-            // --- Answer Key for 10 Questions (Retained) ---
+            // --- Answer Key for 10 Questions ---
             const answerKey = {
                 q1: 'B', 
                 q2: ['A', 'B'], 
@@ -507,7 +390,7 @@
                 q10: 'B' 
             };
 
-            // --- Focus Loss Detection Logic (Modified to disable form) ---
+            // --- Focus Loss Detection Logic ---
 
             function handleFocusLoss() {
                 if (examCancelled) return;
@@ -515,14 +398,12 @@
                 focusLossCount++;
                 if (focusLossCount === 1) {
                     focusWarning.style.display = 'block';
-                    // Using standard alert for warning, as requested by initial prompt
                     alert("⚠️ WARNING! Focus lost. If you lose focus again (e.g., by changing tabs or opening another app), your exam will be instantly cancelled.");
                 } else if (focusLossCount >= 2) {
                     examCancelled = true;
-                    // Cancel exam and display result
+                    // Disable button and form interaction completely
                     submitButton.disabled = true;
-                    form.removeEventListener('submit', handleSubmit);
-                    
+                    form.style.pointerEvents = 'none'; 
                     // Display cancellation result immediately in modal
                     displayResult(0, true);
                 }
@@ -537,7 +418,7 @@
             });
 
 
-            // --- Scoring Logic (Retained) ---
+            // --- Scoring Logic ---
 
             function getScore() {
                 let score = 0;
@@ -568,6 +449,7 @@
                     const userResponse = q3Input.value.trim().toLowerCase();
                     const correctAnswers = answerKey['q3'].map(a => a.toLowerCase());
                     
+                    // Simple check for inclusion in the list of correct answers
                     if (correctAnswers.includes(userResponse) || (correctAnswers.some(a => userResponse.includes(a)) && userResponse.length > 0) ) {
                         score++;
                     }
@@ -576,16 +458,15 @@
                 return score;
             }
 
-            // --- Result Display and Action Logic (MODIFIED for Modal) ---
+            // --- Result Display and Action Logic ---
 
             function displayResult(score, wasCancelled = false) {
-                // Disable form interaction after submission
+                // Disable button for further clicks
                 submitButton.disabled = true;
                 form.style.pointerEvents = 'none'; // Lock the form content
                 
                 const percentage = (score / totalQuestions) * 100;
                 
-                modalContent.classList.remove('pass-bg', 'fail-bg');
                 modalTitle.classList.remove('pass-color', 'fail-color');
                 modalFooter.innerHTML = ''; // Clear previous button
 
@@ -637,7 +518,7 @@
             function handleSubmit(e) {
                 e.preventDefault();
                 if (examCancelled) {
-                    displayResult(0, true); // Re-display cancellation modal if user tries to submit cancelled exam
+                    displayResult(0, true); 
                     return;
                 }
                 
@@ -645,7 +526,7 @@
                 displayResult(finalScore);
             }
 
-            // Attach submit listener
+            // Attach submit listener to the form
             if (form) {
                 form.addEventListener('submit', handleSubmit);
             }
