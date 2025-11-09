@@ -340,7 +340,7 @@
                     <form id="dataSciencePracticeTestForm">
                         
                         <div class="question-card">
-                            <p>1. In statistical hypothesis testing, what does the **p-value** represent?</p>
+                            <p>1. In statistical hypothesis testing, what does the <strong>p-value</strong> represent?</p>
                             <div class="options">
                                 <label><input type="radio" name="q1" value="A"> The probability that the null hypothesis is true.</label>
                                 <label><input type="radio" name="q1" value="B"> The probability of observing the data (or more extreme) if the null hypothesis is true.</label>
@@ -350,7 +350,7 @@
                         </div>
 
                         <div class="question-card">
-                            <p>2. Select all techniques commonly used for **dimensionality reduction** in data science:</p>
+                            <p>2. Select all techniques commonly used for <strong>dimensionality reduction</strong> in data science:</p>
                             <div class="options">
                                 <label><input type="checkbox" name="q2" value="A"> Principal Component Analysis (PCA)</label>
                                 <label><input type="checkbox" name="q2" value="B"> Linear Discriminant Analysis (LDA)</label>
@@ -360,14 +360,14 @@
                         </div>
                         
                         <div class="question-card">
-                            <p>3. In a classification problem, the **True Positive Rate** is also mathematically known as _________.</p>
+                            <p>3. In a classification problem, the <strong>True Positive Rate</strong> is also mathematically known as _________.</p>
                             <div class="options">
                                 <input type="text" name="q3" placeholder="Enter your answer (e.g., Sensitivity, Recall)">
                             </div>
                         </div>
                         
                         <div class="question-card">
-                            <p>4. Which type of chart is most suitable for visualizing the relationship between two **continuous numerical variables**?</p>
+                            <p>4. Which type of chart is most suitable for visualizing the relationship between two <strong>continuous numerical variables</strong>?</p>
                             <div class="options">
                                 <label><input type="radio" name="q4" value="A"> Histogram</label>
                                 <label><input type="radio" name="q4" value="B"> Scatter Plot</label>
@@ -451,7 +451,7 @@
             <div class="modal-content focus-content">
                 <i class="fas fa-eye-slash modal-icon jiggle"></i>
                 <h2><span id="warningCount">1st Warning</span>: Focus Lost!</h2>
-                <p>This is a simulated **proctored exam**. Navigating away from the window or clicking outside the test area is considered a violation.</p>
+                <p>This is a simulated <strong>proctored exam</strong>. Navigating away from the window or clicking outside the test area is considered a violation.</p>
                 <p>Remaining warnings: <span id="warningsLeft" class="warning-text">2</span></p>
                 <button id="returnToTestBtn" class="btn btn-primary btn-lg">Return to Test Now</button>
             </div>
@@ -562,6 +562,7 @@
             let warningsLeft = 3;
             const totalQuestions = 10;
             const passScore = totalQuestions / 2; // 50% pass rate
+            const testName = 'dataScience';
 
             // Hardcoded Answers for the 10 questions
             const correctAnswers = {
@@ -619,10 +620,9 @@
                 }
             }
 
+            // Corrected Focus Bindings
             window.addEventListener('blur', showFocusWarning);
             returnToTestBtn.addEventListener('click', hideFocusWarning);
-
-            // Optional: Also check for focus violation when clicking outside the window
             window.addEventListener('focus', hideFocusWarning);
 
             // --- Scoring and Redirection Logic ---
@@ -631,54 +631,60 @@
                 e.preventDefault();
                 
                 if (warningsLeft <= 0) {
-                     // If already disqualified via focus, prevent resubmission but show modal
                      handleFocusViolation();
                      return;
                 }
 
                 let score = 0;
                 let answeredCount = 0;
-                let missingAnswers = false;
 
                 // 1. Calculate Score and Check for missing answers
                 for (let i = 1; i <= totalQuestions; i++) {
                     const qName = `q${i}`;
                     const correct = correctAnswers[qName];
                     let userAnswer = '';
+                    let isAnswered = false;
+                    let isCorrect = false;
                     
-                    // Handle Radio Buttons (Multiple Choice)
-                    const radioInputs = document.querySelectorAll(`input[name="${qName}"]:checked`);
-                    if (radioInputs.length > 0) {
-                        userAnswer = radioInputs[0].value;
-                    } 
-                    
-                    // Handle Text Input (Fill-in-the-blank / Short Answer)
                     const textInput = document.querySelector(`input[name="${qName}"][type="text"]`);
-                    if (textInput) {
+                    
+                    if (qName === 'q2') { // Special handling for multi-select (Q2)
+                        const checkboxInputs = document.querySelectorAll(`input[name="${qName}"][type="checkbox"]:checked`);
+                        if (checkboxInputs.length > 0) {
+                            userAnswer = Array.from(checkboxInputs).map(cb => cb.value).sort().join(',');
+                            isAnswered = true;
+                        }
+                    } else if (textInput) { // Handle Text Input (Q3)
                         userAnswer = textInput.value.trim();
+                        if (userAnswer.length > 0) isAnswered = true;
+                    } else { // Handle Radio Buttons (MCQ)
+                        const radioInputs = document.querySelector(`input[name="${qName}"]:checked`);
+                        if (radioInputs) {
+                            userAnswer = radioInputs.value;
+                            isAnswered = true;
+                        }
                     }
 
-                    if (userAnswer.length > 0) {
+                    if (isAnswered) {
                         answeredCount++;
-                    } 
-
-                    // Check answer against hardcoded correct answers (case-insensitive for text)
-                    if (userAnswer.length > 0) {
-                        if (qName === 'q3') {
-                            // Special handling for fill-in-the-blank (q3 is Recall in this test)
-                            if (userAnswer.toLowerCase().includes(correct.toLowerCase())) {
-                                score++;
+                        
+                        // Check correctness
+                        if (qName === 'q3') { // Special check for Fill-in-the-blank (Q3: Recall, Sensitivity)
+                            const lowerAnswer = userAnswer.toLowerCase();
+                            if (lowerAnswer.includes('recall') || lowerAnswer.includes('sensitivity')) {
+                                isCorrect = true;
                             }
                         } else if (userAnswer === correct) {
-                            score++;
+                            isCorrect = true;
                         }
+
+                        if (isCorrect) score++;
                     }
                 }
 
                 // 2. Check for missing answers
                 if (answeredCount < totalQuestions) {
                     unansweredWarning.style.display = 'block';
-                    // Use a subtle jiggle animation on the submit button for feedback
                     submitButton.classList.add('jiggle');
                     setTimeout(() => submitButton.classList.remove('jiggle'), 1000);
                     return; 
@@ -692,9 +698,8 @@
                 
                 document.getElementById('finalScore').textContent = score;
                 document.getElementById('finalScore').style.color = isPass ? '#48bb78' : '#e53e3e';
-                document.getElementById('resultsIcon').classList.remove('fa-times-circle');
-                document.getElementById('resultsIcon').classList.remove('fa-trophy');
-
+                document.getElementById('resultsIcon').className = 'fas modal-icon scaleIn'; // Reset classes
+                
                 if (isPass) {
                     document.getElementById('resultsIcon').classList.add('fa-trophy');
                     document.getElementById('resultsIcon').style.color = '#2b6cb0';
