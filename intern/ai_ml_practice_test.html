@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Corrected path for nested file structure -->
     <link rel="stylesheet" href="../style.css">
 
     <link rel="icon" type="image/png" href="../images/favicon.png">
@@ -101,6 +100,12 @@
             margin-right: 10px;
             accent-color: var(--secondary);
         }
+        .options input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
         .exam-submit-area {
             text-align: center;
             padding-top: 30px;
@@ -116,8 +121,37 @@
             margin-bottom: 20px;
             font-weight: 600;
         }
-        
-        /* Mobile adjustments */
+        /* Result Styles */
+        #resultContainer {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: none; /* Hidden by default */
+        }
+        .pass {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .fail {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .result-score {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+            margin: 10px 0;
+        }
+        .action-button {
+            width: 300px; 
+            margin-top: 15px;
+        }
+
+        /* Mobile adjustments (Retained) */
         @media (max-width: 768px) {
             .exam-container {
                 padding: 20px;
@@ -134,7 +168,6 @@
     </style>
 </head>
 <body>
-    <!-- Google Analytics Script (Retained) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -143,9 +176,6 @@
       gtag('config', 'G-3ZZ3HGFM3Q');
     </script>
 
-    <!-- ==============================================
-         HEADER: 3D Animated Nav (Requests 1 & 2) - Adjusted paths
-         ============================================== -->
     <header>
         <div class="container header-container">
             <a href="../index.html" class="logo">
@@ -160,7 +190,6 @@
                 <a href="../jobs.html" class="nav-link">Jobs</a>
                 <a href="../about.html" class="nav-link">About</a>
                 
-                <!-- TOOLS DROPDOWN -->
                 <div class="nav-item dropdown" id="toolsDropdown">
                     <a href="#" class="nav-link dropdown-toggle">Tools <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
@@ -172,7 +201,6 @@
                     </div>
                 </div>
                 
-                <!-- MORE DROPDOWN -->
                 <div class="nav-item dropdown" id="moreDropdown">
                     <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
@@ -184,7 +212,6 @@
                     </div>
                 </div>
                 
-                <!-- MOBILE ONLY LINKS -->
                 <a href="../tools/ats-score.html" class="nav-link mobile-only-link">ATS Score</a>
                 <a href="../tools/resume-builder.html" class="nav-link mobile-only-link">Resume Builder</a>
                 <a href="../tools/interview-questions.html" class="nav-link mobile-only-link">Interview Question</a>
@@ -202,8 +229,7 @@
                     <i class="fas fa-search search-icon"></i>
                     <input type="text" id="searchInput" class="search-input" placeholder="Search courses & domains...">
                 </div>
-                <!-- AUTH BUTTONS REMOVED -->
-            </div> 
+                </div> 
 
             <button class="hamburger-menu" id="hamburgerMenu">
                 <span></span>
@@ -221,6 +247,9 @@
                     <div class="exam-header">
                         <h1 class="exam-title">AI/ML Practice Test (Free)</h1>
                         <p>Evaluate your readiness for the Final Exam and Internship Placement</p>
+                        <div id="focusWarning" style="color: red; font-weight: bold; margin-top: 15px; display: none;">
+                            ⚠️ **WARNING!** Focus lost. One more loss will cancel the exam.
+                        </div>
                     </div>
 
                     <div class="next-step-cta">
@@ -236,19 +265,18 @@
                         </div>
                         <div class="info-item">
                             <i class="fas fa-clipboard-list" style="color: var(--secondary);"></i>
-                            <strong>20</strong>
+                            <strong id="totalQuestionsCount">10</strong>
                             <span>Practice Questions</span>
                         </div>
                         <div class="info-item">
-                            <i class="fas fa-info-circle" style="color: var(--secondary);"></i>
-                            <strong>No Score Recorded</strong>
-                            <span>Purely for Self-Assessment</span>
+                            <i class="fas fa-check-circle" style="color: var(--secondary);"></i>
+                            <strong>50%</strong>
+                            <span>Passing Score</span>
                         </div>
                     </div>
 
                     <form id="aiMlPracticeTestForm">
                         
-                        <!-- Question 1: Multiple Choice (Core Concept) -->
                         <div class="question-card">
                             <p>1. Which type of Artificial Intelligence focuses on systems that can only perform specific, narrow tasks?</p>
                             <div class="options">
@@ -259,9 +287,8 @@
                             </div>
                         </div>
 
-                        <!-- Question 2: Multiple Selection (ML Process) -->
                         <div class="question-card">
-                            <p>2. Select all common steps involved in the Machine Learning model training process:</p>
+                            <p>2. Select all common steps involved in the Machine Learning model training process: (Select 2)</p>
                             <div class="options">
                                 <label><input type="checkbox" name="q2" value="A"> Feature Engineering</label>
                                 <label><input type="checkbox" name="q2" value="B"> Model Evaluation</label>
@@ -270,16 +297,14 @@
                             </div>
                         </div>
                         
-                        <!-- Question 3: Fill in the blank/Short Answer (Deep Learning) -->
                         <div class="question-card">
-                            <p>3. In the context of Deep Learning, the technique used to combat **vanishing gradient** problems in recurrent networks is called _________.</p>
+                            <p>3. In the context of Deep Learning, the technique used to combat **vanishing gradient** problems in recurrent networks is called (Acronym or Full Name is acceptable)?</p>
                             <div class="options">
-                                <input type="text" name="q3" placeholder="Enter your answer (e.g., LSTM, ReLU)">
+                                <input type="text" name="q3" placeholder="Enter your answer (e.g., LSTM or Long Short-Term Memory)">
                             </div>
                         </div>
                         
-                        <!-- Question 4: Multiple Choice (Evaluation Metric) -->
-                         <div class="question-card">
+                        <div class="question-card">
                             <p>4. For a highly imbalanced classification dataset where the positive class is rare, which evaluation metric is generally preferred over accuracy?</p>
                             <div class="options">
                                 <label><input type="radio" name="q4" value="A"> R-squared</label>
@@ -289,8 +314,7 @@
                             </div>
                         </div>
                         
-                        <!-- Question 5: Multiple Choice (Supervised Learning) -->
-                         <div class="question-card">
+                        <div class="question-card">
                             <p>5. Which of the following algorithms is an example of a **supervised learning** technique?</p>
                             <div class="options">
                                 <label><input type="radio" name="q5" value="A"> K-Means Clustering</label>
@@ -300,27 +324,72 @@
                             </div>
                         </div>
 
+                        <div class="question-card">
+                            <p>6. In Reinforcement Learning, what is the term for the function that an agent tries to maximize?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q6" value="A"> Cost Function</label>
+                                <label><input type="radio" name="q6" value="B"> Reward Function</label>
+                                <label><input type="radio" name="q6" value="C"> Loss Function</label>
+                                <label><input type="radio" name="q6" value="D"> Utility Function</label>
+                            </div>
+                        </div>
 
-                        <!-- Add more questions here (omitted for brevity - placeholder for 20 questions) -->
+                        <div class="question-card">
+                            <p>7. The process of converting categorical text data into numerical format for use in ML algorithms is typically called:</p>
+                            <div class="options">
+                                <label><input type="radio" name="q7" value="A"> Feature Scaling</label>
+                                <label><input type="radio" name="q7" value="B"> One-Hot Encoding</label>
+                                <label><input type="radio" name="q7" value="C"> Normalization</label>
+                                <label><input type="radio" name="q7" value="D"> Dimensionality Reduction</label>
+                            </div>
+                        </div>
+
+                        <div class="question-card">
+                            <p>8. What type of neural network is primarily used for processing sequential data like text or time series?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q8" value="A"> Convolutional Neural Network (CNN)</label>
+                                <label><input type="radio" name="q8" value="B"> Generative Adversarial Network (GAN)</label>
+                                <label><input type="radio" name="q8" value="C"> Recurrent Neural Network (RNN)</label>
+                                <label><input type="radio" name="q8" value="D"> Autoencoder</label>
+                            </div>
+                        </div>
+
+                        <div class="question-card">
+                            <p>9. When a machine learning model performs very well on the training data but poorly on unseen test data, it is a sign of:</p>
+                            <div class="options">
+                                <label><input type="radio" name="q9" value="A"> Underfitting</label>
+                                <label><input type="radio" name="q9" value="B"> Bias-Variance Trade-off</label>
+                                <label><input type="radio" name="q9" value="C"> Overfitting</label>
+                                <label><input type="radio" name="q9" value="D"> Normalization Error</label>
+                            </div>
+                        </div>
+
+                        <div class="question-card">
+                            <p>10. What is the primary purpose of a **Loss Function** in an ML model?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q10" value="A"> To speed up the model's training time.</label>
+                                <label><input type="radio" name="q10" value="B"> To measure the difference between the predicted and actual output.</label>
+                                <label><input type="radio" name="q10" value="C"> To convert input data into features.</label>
+                                <label><input type="radio" name="q10" value="D"> To regularize the model and prevent overfitting.</label>
+                            </div>
+                        </div>
+
 
                         <div class="exam-submit-area">
-                            <p style="color: var(--gray); font-size: 1rem;">Once submitted, your answers will be reviewed locally for immediate feedback.</p>
-                            <button type="submit" class="btn btn-secondary btn-lg" id="submitPracticeButton" style="width: 300px; margin-top: 15px;">
-                                <i class="fas fa-check-double" style="margin-right: 10px;"></i> Review My Answers
+                            <div id="resultContainer" class="pass">
+                                </div>
+
+                            <p style="color: var(--gray); font-size: 1rem;" id="submitInfo">Once submitted, your answers will be reviewed locally for immediate feedback.</p>
+                            <button type="submit" class="btn btn-secondary btn-lg action-button" id="submitPracticeButton">
+                                <i class="fas fa-check-double" style="margin-right: 10px;"></i> Instant Check and Result
                             </button>
-                            <a href="ai_ml_final_exam.html" class="btn btn-primary btn-lg" style="width: 300px; margin-top: 15px;">
-                                <i class="fas fa-rocket" style="margin-right: 10px;"></i> Proceed to Final Exam
-                            </a>
-                        </div>
+                            </div>
                     </form>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- ==============================================
-         FOOTER: Updated with Tools Column (Request 3) - Adjusted paths
-         ============================================== -->
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -360,7 +429,6 @@
                     </ul>
                 </div>
                 
-                <!-- NEW TOOLS COLUMN (Request 3) -->
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Career Tools</h3>
                     <ul class="footer-links">
@@ -399,21 +467,187 @@
         </div>
     </footer>
 
-    <!-- NOTE: The global script.js is NOT included here. Exam-specific script included below. -->
     <script>
-        // Simple Client-side Exam Logic (Placeholder)
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('aiMlPracticeTestForm');
-            
-            // This is a placeholder function for the practice test submission.
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
+            const submitButton = document.getElementById('submitPracticeButton');
+            const resultContainer = document.getElementById('resultContainer');
+            const submitArea = document.querySelector('.exam-submit-area');
+            const focusWarning = document.getElementById('focusWarning');
+            const totalQuestions = 10;
+            const passingScore = totalQuestions * 0.5;
+            let focusLossCount = 0;
+            let examCancelled = false;
+
+            // --- Answer Key for 10 Questions ---
+            const answerKey = {
+                q1: 'B', // Artificial Narrow Intelligence (ANI)
+                q2: ['A', 'B'], // Feature Engineering, Model Evaluation (assuming two correct answers)
+                q3: ['LSTM', 'Long Short-Term Memory'], // Case-insensitive and minor variations handled in scoring
+                q4: 'B', // F1 Score
+                q5: 'C', // Decision Tree Classification
+                q6: 'B', // Reward Function
+                q7: 'B', // One-Hot Encoding
+                q8: 'C', // Recurrent Neural Network (RNN)
+                q9: 'C', // Overfitting
+                q10: 'B' // To measure the difference between the predicted and actual output.
+            };
+
+            // --- Focus Loss Detection Logic ---
+
+            function handleFocusLoss() {
+                if (examCancelled) return;
+
+                focusLossCount++;
+                if (focusLossCount === 1) {
+                    focusWarning.style.display = 'block';
+                    alert("⚠️ WARNING! Focus lost. If you lose focus again (e.g., by changing tabs or opening another app), your exam will be instantly cancelled.");
+                } else if (focusLossCount >= 2) {
+                    examCancelled = true;
+                    // Cancel exam and display result
+                    submitButton.disabled = true;
+                    form.removeEventListener('submit', handleSubmit);
+                    displayResult(0, true);
+                    alert("🚫 EXAM CANCELLED! Focus lost too many times. Your result has been recorded as 0/10.");
                     
-                    // In a real practice test, this would provide immediate, local feedback on answers.
-                    alert("Practice Test submitted! Review feature (local scoring/feedback) coming soon. For now, this confirms submission.");
-                });
+                }
             }
+
+            // Listeners for focus loss
+            window.addEventListener('blur', handleFocusLoss);
+            
+            // Optional: Also listen to visibilitychange for better mobile/tab detection
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'hidden') {
+                    handleFocusLoss();
+                }
+            });
+
+
+            // --- Scoring Logic ---
+
+            function getScore() {
+                let score = 0;
+
+                // 1. Check Multiple Choice / Radio button questions (q1, q4, q5, q6, q7, q8, q9, q10)
+                for (let i = 1; i <= 10; i++) {
+                    if (i === 2) continue; // Skip q2 (Checkbox)
+                    if (i === 3) continue; // Skip q3 (Text)
+                    
+                    const qName = 'q' + i;
+                    const selected = form.querySelector(`input[name="${qName}"]:checked`);
+                    
+                    if (selected && selected.value === answerKey[qName]) {
+                        score++;
+                    }
+                }
+
+                // 2. Check Multiple Selection / Checkbox question (q2)
+                const q2Selections = Array.from(form.querySelectorAll('input[name="q2"]:checked')).map(input => input.value).sort();
+                const q2Correct = answerKey['q2'].sort();
+                
+                // Only award point if ALL correct options are selected and NO incorrect options are selected
+                if (q2Selections.length === q2Correct.length && q2Selections.every((val, index) => val === q2Correct[index])) {
+                    score++;
+                }
+
+                // 3. Check Short Answer / Text question (q3)
+                const q3Input = form.querySelector('input[name="q3"]');
+                if (q3Input) {
+                    const userResponse = q3Input.value.trim().toLowerCase();
+                    const correctAnswers = answerKey['q3'].map(a => a.toLowerCase());
+                    
+                    if (correctAnswers.includes(userResponse) || (correctAnswers.some(a => userResponse.includes(a)) && userResponse.length > 0) ) {
+                        // Accept "LSTM" or "long short-term memory" or a response that clearly includes it.
+                        score++;
+                    }
+                }
+                
+                return score;
+            }
+
+            // --- Result Display and Action Logic ---
+
+            function displayResult(score, wasCancelled = false) {
+                // Hide the old submit button and info
+                submitButton.style.display = 'none';
+                document.getElementById('submitInfo').style.display = 'none';
+                focusWarning.style.display = 'none';
+                
+                const percentage = (score / totalQuestions) * 100;
+                resultContainer.style.display = 'block';
+                resultContainer.classList.remove('pass', 'fail');
+
+                let contentHTML = '';
+                let actionButtonHTML = '';
+
+                if (wasCancelled) {
+                    resultContainer.classList.add('fail');
+                    contentHTML = `
+                        <i class="fas fa-ban"></i> **Exam Cancelled**
+                        <span class="result-score">0 / ${totalQuestions}</span>
+                        <p style="font-weight: 400; font-size: 1rem;">The test was cancelled due to loss of focus/window change. Please close this window and try again later if allowed.</p>
+                    `;
+                    actionButtonHTML = `<a href="javascript:location.reload()" class="btn btn-secondary btn-lg action-button"><i class="fas fa-redo"></i> Try Again</a>`;
+                } else if (percentage >= 50) {
+                    // Passed
+                    resultContainer.classList.add('pass');
+                    contentHTML = `
+                        <i class="fas fa-trophy"></i> **Congratulations! You Passed!**
+                        <span class="result-score">${score} / ${totalQuestions} (${percentage.toFixed(0)}%)</span>
+                        <p style="font-weight: 400; font-size: 1rem;">You are now eligible for the Final Exam and Internship Placement process.</p>
+                    `;
+                    actionButtonHTML = `<button type="button" class="btn btn-primary btn-lg action-button" id="proceedToFinal">
+                                            <i class="fas fa-rocket"></i> Proceed to Final Exam
+                                        </button>`;
+                } else {
+                    // Failed
+                    resultContainer.classList.add('fail');
+                    contentHTML = `
+                        <i class="fas fa-times-circle"></i> **Focus on Improvement**
+                        <span class="result-score">${score} / ${totalQuestions} (${percentage.toFixed(0)}%)</span>
+                        <p style="font-weight: 400; font-size: 1rem;">You need a score of ${passingScore.toFixed(0)} or higher. Please review the course material and attempt the test again.</p>
+                    `;
+                    actionButtonHTML = `<a href="javascript:location.reload()" class="btn btn-secondary btn-lg action-button"><i class="fas fa-redo"></i> Retry Practice Test</a>`;
+                }
+
+                resultContainer.innerHTML = contentHTML;
+                submitArea.insertAdjacentHTML('beforeend', actionButtonHTML);
+
+                // Add event listener for the Proceed button if it exists
+                const proceedButton = document.getElementById('proceedToFinal');
+                if (proceedButton) {
+                    proceedButton.addEventListener('click', () => {
+                        alert("Great Job! You will now be redirected to the Final Exam Payment Page.");
+                        window.location.href = 'payment_page_ai_ml.html';
+                    });
+                }
+            }
+
+
+            // --- Submission Handler ---
+
+            function handleSubmit(e) {
+                e.preventDefault();
+                if (examCancelled) return;
+                
+                // Disable button to prevent multiple submissions
+                submitButton.disabled = true;
+                
+                // Get the final score
+                const finalScore = getScore();
+
+                // Display the result and corresponding action button
+                displayResult(finalScore);
+            }
+
+            // Attach submit listener
+            if (form) {
+                form.addEventListener('submit', handleSubmit);
+            }
+
+
+            // --- Other Logic (Retained) ---
 
             // Re-adding the header menu toggle logic since the global script is removed
             const hamburgerMenu = document.getElementById('hamburgerMenu');
