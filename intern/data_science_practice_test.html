@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Corrected path for nested file structure -->
     <link rel="stylesheet" href="../style.css">
 
     <link rel="icon" type="image/png" href="../images/favicon.png">
@@ -117,6 +116,106 @@
             font-weight: 600;
         }
         
+        /* NEW: Modal Base Styles */
+        .modal {
+            position: fixed;
+            z-index: 10000; /* High z-index */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background-color: var(--white);
+            padding: 40px;
+            border-radius: 18px;
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            transform-style: preserve-3d;
+            animation: slideDownIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        
+        /* Focus Warning Specific Styles */
+        .focus-content {
+            border: 4px solid var(--warning);
+        }
+        .focus-content h2 {
+            color: var(--warning);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        .focus-content p {
+            color: var(--dark);
+            font-size: 1.05rem;
+            margin-bottom: 25px;
+        }
+        .modal-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        .warning-text {
+            color: var(--warning);
+            font-weight: 700;
+            font-size: 1.2em;
+        }
+
+        /* Results Modal Specific Styles */
+        .results-content {
+            border: 4px solid var(--primary);
+        }
+        .result-score-box {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f7fafc;
+            border-radius: 8px;
+        }
+        .score-value {
+             color: var(--accent); /* Default to green */
+        }
+        
+        /* 3D and Animation Styles */
+        @keyframes slideDownIn {
+            from { opacity: 0; transform: translateY(-50px) rotateX(10deg); }
+            to { opacity: 1; transform: translateY(0) rotateX(0deg); }
+        }
+        @keyframes jiggle {
+            0% { transform: rotate(0deg); }
+            10% { transform: rotate(-5deg); }
+            20% { transform: rotate(5deg); }
+            30% { transform: rotate(-3deg); }
+            40% { transform: rotate(3deg); }
+            50% { transform: rotate(0deg); }
+        }
+        .jiggle {
+            animation: jiggle 0.7s ease-in-out infinite;
+        }
+        @keyframes scaleIn {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .scaleIn {
+            animation: scaleIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        .flip3D {
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+        .flip3D:hover {
+            transform: rotateY(10deg) translateZ(10px);
+        }
+
         /* Mobile adjustments */
         @media (max-width: 768px) {
             .exam-container {
@@ -134,7 +233,6 @@
     </style>
 </head>
 <body>
-    <!-- Google Analytics Script (Retained) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -143,9 +241,6 @@
       gtag('config', 'G-3ZZ3HGFM3Q');
     </script>
 
-    <!-- ==============================================
-         HEADER: 3D Animated Nav (Requests 1 & 2) - Adjusted paths
-         ============================================== -->
     <header>
         <div class="container header-container">
             <a href="../index.html" class="logo">
@@ -160,7 +255,6 @@
                 <a href="../jobs.html" class="nav-link">Jobs</a>
                 <a href="../about.html" class="nav-link">About</a>
                 
-                <!-- TOOLS DROPDOWN -->
                 <div class="nav-item dropdown" id="toolsDropdown">
                     <a href="#" class="nav-link dropdown-toggle">Tools <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
@@ -172,7 +266,6 @@
                     </div>
                 </div>
                 
-                <!-- MORE DROPDOWN -->
                 <div class="nav-item dropdown" id="moreDropdown">
                     <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
@@ -184,7 +277,6 @@
                     </div>
                 </div>
                 
-                <!-- MOBILE ONLY LINKS -->
                 <a href="../tools/ats-score.html" class="nav-link mobile-only-link">ATS Score</a>
                 <a href="../tools/resume-builder.html" class="nav-link mobile-only-link">Resume Builder</a>
                 <a href="../tools/interview-questions.html" class="nav-link mobile-only-link">Interview Question</a>
@@ -202,8 +294,7 @@
                     <i class="fas fa-search search-icon"></i>
                     <input type="text" id="searchInput" class="search-input" placeholder="Search courses & domains...">
                 </div>
-                <!-- AUTH BUTTONS REMOVED -->
-            </div> 
+                </div> 
 
             <button class="hamburger-menu" id="hamburgerMenu">
                 <span></span>
@@ -225,30 +316,29 @@
 
                     <div class="next-step-cta">
                         <i class="fas fa-graduation-cap"></i> 
-                        <strong>This is a free practice resource.</strong> Take your time, review your course material, and test your knowledge before attempting the paid Final Exam.
+                        <strong>This is a free practice resource.</strong> 10 Questions. Aim for 50% to unlock the next step!
                     </div>
 
                     <div class="exam-info-box">
                         <div class="info-item">
                             <i class="far fa-clock" style="color: var(--secondary);"></i>
-                            <strong>Untimed</strong>
-                            <span>Practice at Your Own Pace</span>
+                            <strong>15 Minutes</strong>
+                            <span>Time Limit (Recommended)</span>
                         </div>
                         <div class="info-item">
                             <i class="fas fa-clipboard-list" style="color: var(--secondary);"></i>
-                            <strong>20</strong>
+                            <strong>10</strong>
                             <span>Practice Questions</span>
                         </div>
                         <div class="info-item">
-                            <i class="fas fa-info-circle" style="color: var(--secondary);"></i>
-                            <strong>No Score Recorded</strong>
-                            <span>Purely for Self-Assessment</span>
+                            <i class="fas fa-percent" style="color: var(--secondary);"></i>
+                            <strong>50% Pass</strong>
+                            <span>Minimum Score to Proceed</span>
                         </div>
                     </div>
 
                     <form id="dataSciencePracticeTestForm">
                         
-                        <!-- Question 1: Multiple Choice (Hypothesis Testing) -->
                         <div class="question-card">
                             <p>1. In statistical hypothesis testing, what does the **p-value** represent?</p>
                             <div class="options">
@@ -259,7 +349,6 @@
                             </div>
                         </div>
 
-                        <!-- Question 2: Multiple Selection (Dimensionality Reduction) -->
                         <div class="question-card">
                             <p>2. Select all techniques commonly used for **dimensionality reduction** in data science:</p>
                             <div class="options">
@@ -270,7 +359,6 @@
                             </div>
                         </div>
                         
-                        <!-- Question 3: Fill in the blank/Short Answer (Model Evaluation) -->
                         <div class="question-card">
                             <p>3. In a classification problem, the **True Positive Rate** is also mathematically known as _________.</p>
                             <div class="options">
@@ -278,8 +366,7 @@
                             </div>
                         </div>
                         
-                        <!-- Question 4: Multiple Choice (Data Visualization) -->
-                         <div class="question-card">
+                        <div class="question-card">
                             <p>4. Which type of chart is most suitable for visualizing the relationship between two **continuous numerical variables**?</p>
                             <div class="options">
                                 <label><input type="radio" name="q4" value="A"> Histogram</label>
@@ -289,8 +376,7 @@
                             </div>
                         </div>
                         
-                        <!-- Question 5: Multiple Choice (Python Libraries) -->
-                         <div class="question-card">
+                        <div class="question-card">
                             <p>5. Which popular Python library is primarily used for efficient handling and manipulation of structured data (DataFrames)?</p>
                             <div class="options">
                                 <label><input type="radio" name="q5" value="A"> Matplotlib</label>
@@ -300,27 +386,92 @@
                             </div>
                         </div>
 
+                        <div class="question-card">
+                            <p>6. In a Pandas DataFrame, which parameter in the `pd.read_csv()` function is used to handle multiple types of missing values (e.g., 'N/A', '?', '--')?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q6" value="A"> `na_values`</label>
+                                <label><input type="radio" name="q6" value="B"> `missing_data`</label>
+                                <label><input type="radio" name="q6" value="C"> `skip_bad_lines`</label>
+                                <label><input type="radio" name="q6" value="D"> `null_check`</label>
+                            </div>
+                        </div>
+                        
+                        <div class="question-card">
+                            <p>7. What is the fundamental difference between supervised and unsupervised machine learning?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q7" value="A"> Data size</label>
+                                <label><input type="radio" name="q7" value="B"> Presence of labeled data</label>
+                                <label><input type="radio" name="q7" value="C"> Algorithm speed</label>
+                                <label><input type="radio" name="q7" value="D"> Model complexity</label>
+                            </div>
+                        </div>
 
-                        <!-- Add more questions here (omitted for brevity - placeholder for 20 questions) -->
+                        <div class="question-card">
+                            <p>8. Which technique is used to combat the multicollinearity problem in linear regression?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q8" value="A"> Principal Component Analysis (PCA)</label>
+                                <label><input type="radio" name="q8" value="B"> K-Means Clustering</label>
+                                <label><input type="radio" name="q8" value="C"> One-Hot Encoding</label>
+                                <label><input type="radio" name="q8" value="D"> T-SNE</label>
+                            </div>
+                        </div>
 
-                        <div class="exam-submit-area">
-                            <p style="color: var(--gray); font-size: 1rem;">Once submitted, your answers will be reviewed locally for immediate feedback.</p>
-                            <button type="submit" class="btn btn-secondary btn-lg" id="submitPracticeButton" style="width: 300px; margin-top: 15px;">
-                                <i class="fas fa-check-double" style="margin-right: 10px;"></i> Review My Answers
-                            </button>
-                            <a href="data_science_final_exam.html" class="btn btn-primary btn-lg" style="width: 300px; margin-top: 15px;">
-                                <i class="fas fa-rocket" style="margin-right: 10px;"></i> Proceed to Final Exam
-                            </a>
+                        <div class="question-card">
+                            <p>9. In SQL, what is the default behavior of the `JOIN` keyword if no type is specified?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q9" value="A"> `LEFT JOIN`</label>
+                                <label><input type="radio" name="q9" value="B"> `FULL OUTER JOIN`</label>
+                                <label><input type="radio" name="q9" value="C"> `INNER JOIN`</label>
+                                <label><input type="radio" name="q9" value="D"> `CROSS JOIN`</label>
+                            </div>
+                        </div>
+
+                        <div class="question-card">
+                            <p>10. What does ROC stand for in the context of classification model evaluation?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q10" value="A"> Receiver Operating Characteristic</label>
+                                <label><input type="radio" name="q10" value="B"> Ratio of Classifiers</label>
+                                <label><input type="radio" name="q10" value="C"> Random Order Comparison</label>
+                                <label><input type="radio" name="q10" value="D"> Response Outcome Check</label>
+                            </div>
                         </div>
                     </form>
+
+                    <div class="exam-submit-area">
+                        <p id="unansweredWarning" class="warning-message" style="display: none;"><i class="fas fa-exclamation-triangle"></i> Please answer all 10 questions before submitting.</p>
+                        <button type="submit" class="btn btn-primary btn-lg flip3D" id="submitPracticeButton" style="width: 300px; margin-top: 15px;">
+                            <i class="fas fa-check-double" style="margin-right: 10px;"></i> Instant Score & Next Step
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
+        
+        <div id="focusWarningModal" class="modal hidden">
+            <div class="modal-content focus-content">
+                <i class="fas fa-eye-slash modal-icon jiggle"></i>
+                <h2><span id="warningCount">1st Warning</span>: Focus Lost!</h2>
+                <p>This is a simulated **proctored exam**. Navigating away from the window or clicking outside the test area is considered a violation.</p>
+                <p>Remaining warnings: <span id="warningsLeft" class="warning-text">2</span></p>
+                <button id="returnToTestBtn" class="btn btn-primary btn-lg">Return to Test Now</button>
+            </div>
+        </div>
+
+        <div id="resultsModal" class="modal hidden">
+            <div class="modal-content results-content">
+                <i id="resultsIcon" class="fas modal-icon scaleIn"></i>
+                <h2 id="resultsTitle"></h2>
+                <p id="resultsMessage"></p>
+                <div class="result-score-box">
+                     Your Score: <span id="finalScore" class="score-value"></span>/10
+                </div>
+                <p style="margin: 20px 0 30px;">Minimum passing score is 50% (5/10).</p>
+                <a id="resultsCta" href="#" class="btn btn-lg flip3D"></a>
+                <p id="post-cta-message" style="margin-top: 15px; font-size: 0.9rem; color: var(--gray);"></p>
+            </div>
+        </div>
     </main>
 
-    <!-- ==============================================
-         FOOTER: Updated with Tools Column (Request 3) - Adjusted paths
-         ============================================== -->
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -360,7 +511,6 @@
                     </ul>
                 </div>
                 
-                <!-- NEW TOOLS COLUMN (Request 3) -->
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Career Tools</h3>
                     <ul class="footer-links">
@@ -399,22 +549,185 @@
         </div>
     </footer>
 
-    <!-- NOTE: The global script.js is NOT included here. Exam-specific script included below. -->
     <script>
-        // Simple Client-side Exam Logic (Placeholder)
+        // Simple Client-side Exam Logic
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('dataSciencePracticeTestForm');
+            const submitButton = document.getElementById('submitPracticeButton');
+            const resultsModal = document.getElementById('resultsModal');
+            const focusWarningModal = document.getElementById('focusWarningModal');
+            const returnToTestBtn = document.getElementById('returnToTestBtn');
+            const unansweredWarning = document.getElementById('unansweredWarning');
             
-            // This is a placeholder function for the practice test submission.
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    // In a real practice test, this would provide immediate, local feedback on answers.
-                    alert("Practice Test submitted! Review feature (local scoring/feedback) coming soon. For now, this confirms submission.");
-                });
+            let warningsLeft = 3;
+            const totalQuestions = 10;
+            const passScore = totalQuestions / 2; // 50% pass rate
+
+            // Hardcoded Answers for the 10 questions
+            const correctAnswers = {
+                q1: 'B', // P-value is probability of observing data if null is true.
+                q2: 'A,B', // PCA and LDA. C/D are feature transformation/scaling.
+                q3: 'Recall', // True Positive Rate is Recall/Sensitivity
+                q4: 'B', // Scatter plot for two continuous variables
+                q5: 'D', // Pandas for DataFrames
+                q6: 'A', // na_values in pd.read_csv()
+                q7: 'B', // Supervised uses labeled data (targets)
+                q8: 'A', // PCA can reduce correlated features
+                q9: 'C', // Default join is INNER JOIN
+                q10: 'A' // Receiver Operating Characteristic
+            };
+            
+            // --- Focus Loss / Proctoring Logic ---
+
+            function showFocusWarning() {
+                if (resultsModal.classList.contains('hidden') && warningsLeft > 0) {
+                    warningsLeft--;
+                    document.getElementById('warningCount').textContent = `${3 - warningsLeft}th Warning`;
+                    document.getElementById('warningsLeft').textContent = warningsLeft;
+                    focusWarningModal.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                }
+            }
+            
+            function handleFocusViolation() {
+                if (warningsLeft <= 0) {
+                    // FAIL THE TEST ON MAX WARNINGS
+                    document.getElementById('resultsIcon').classList.remove('fa-trophy');
+                    document.getElementById('resultsIcon').classList.remove('fa-check-circle');
+                    document.getElementById('resultsIcon').classList.add('fa-times-circle');
+                    document.getElementById('resultsIcon').style.color = '#e53e3e';
+                    document.getElementById('resultsTitle').textContent = 'Test Disqualified!';
+                    document.getElementById('resultsMessage').textContent = 'Maximum focus warnings reached. The exam is terminated due to simulated proctoring failure.';
+                    document.getElementById('finalScore').textContent = '0';
+                    document.getElementById('resultsCta').textContent = 'Retry Practice Test';
+                    document.getElementById('resultsCta').href = 'data_science_practice_test.html'; // Redirect to retry
+                    document.getElementById('post-cta-message').textContent = 'Please study the materials thoroughly before attempting again.';
+
+                    focusWarningModal.classList.add('hidden');
+                    resultsModal.classList.remove('hidden');
+                    // Ensure no further focus events affect the results modal
+                    window.removeEventListener('blur', showFocusWarning);
+                    window.removeEventListener('focus', hideFocusWarning);
+                }
             }
 
+            function hideFocusWarning() {
+                focusWarningModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+                if (warningsLeft <= 0) {
+                    handleFocusViolation(); // Check for disqualification
+                }
+            }
+
+            window.addEventListener('blur', showFocusWarning);
+            returnToTestBtn.addEventListener('click', hideFocusWarning);
+
+            // Optional: Also check for focus violation when clicking outside the window
+            window.addEventListener('focus', hideFocusWarning);
+
+            // --- Scoring and Redirection Logic ---
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (warningsLeft <= 0) {
+                     // If already disqualified via focus, prevent resubmission but show modal
+                     handleFocusViolation();
+                     return;
+                }
+
+                let score = 0;
+                let answeredCount = 0;
+                let missingAnswers = false;
+
+                // 1. Calculate Score and Check for missing answers
+                for (let i = 1; i <= totalQuestions; i++) {
+                    const qName = `q${i}`;
+                    const correct = correctAnswers[qName];
+                    let userAnswer = '';
+                    
+                    // Handle Radio Buttons (Multiple Choice)
+                    const radioInputs = document.querySelectorAll(`input[name="${qName}"]:checked`);
+                    if (radioInputs.length > 0) {
+                        userAnswer = radioInputs[0].value;
+                    } 
+                    
+                    // Handle Text Input (Fill-in-the-blank / Short Answer)
+                    const textInput = document.querySelector(`input[name="${qName}"][type="text"]`);
+                    if (textInput) {
+                        userAnswer = textInput.value.trim();
+                    }
+
+                    if (userAnswer.length > 0) {
+                        answeredCount++;
+                    } 
+
+                    // Check answer against hardcoded correct answers (case-insensitive for text)
+                    if (userAnswer.length > 0) {
+                        if (qName === 'q3') {
+                            // Special handling for fill-in-the-blank (q3 is Recall in this test)
+                            if (userAnswer.toLowerCase().includes(correct.toLowerCase())) {
+                                score++;
+                            }
+                        } else if (userAnswer === correct) {
+                            score++;
+                        }
+                    }
+                }
+
+                // 2. Check for missing answers
+                if (answeredCount < totalQuestions) {
+                    unansweredWarning.style.display = 'block';
+                    // Use a subtle jiggle animation on the submit button for feedback
+                    submitButton.classList.add('jiggle');
+                    setTimeout(() => submitButton.classList.remove('jiggle'), 1000);
+                    return; 
+                } else {
+                     unansweredWarning.style.display = 'none';
+                }
+                
+                // 3. Render Results Modal and Redirect
+                
+                const isPass = score >= passScore;
+                
+                document.getElementById('finalScore').textContent = score;
+                document.getElementById('finalScore').style.color = isPass ? '#48bb78' : '#e53e3e';
+                document.getElementById('resultsIcon').classList.remove('fa-times-circle');
+                document.getElementById('resultsIcon').classList.remove('fa-trophy');
+
+                if (isPass) {
+                    document.getElementById('resultsIcon').classList.add('fa-trophy');
+                    document.getElementById('resultsIcon').style.color = '#2b6cb0';
+                    document.getElementById('resultsTitle').textContent = 'Congratulations! You Qualified!';
+                    document.getElementById('resultsMessage').textContent = 'Your strong performance on the practice test confirms your readiness for the Final Exam.';
+                    document.getElementById('resultsCta').textContent = 'Proceed to Final Exam (Paid)';
+                    document.getElementById('resultsCta').href = 'payment_page_data_science.html';
+                    document.getElementById('resultsCta').classList.remove('btn-secondary');
+                    document.getElementById('resultsCta').classList.add('btn-primary');
+                    document.getElementById('post-cta-message').textContent = 'Pass the Final Exam to unlock paid internship placement.';
+                    
+                } else {
+                    document.getElementById('resultsIcon').classList.add('fa-times-circle');
+                    document.getElementById('resultsIcon').style.color = '#e53e3e';
+                    document.getElementById('resultsTitle').textContent = 'Keep Practicing!';
+                    document.getElementById('resultsMessage').textContent = 'You did not reach the minimum score. Review the free course material before retrying.';
+                    document.getElementById('resultsCta').textContent = 'Retry Practice Test (Free)';
+                    document.getElementById('resultsCta').href = 'data_science_practice_test.html'; // Retry self
+                    document.getElementById('resultsCta').classList.remove('btn-primary');
+                    document.getElementById('resultsCta').classList.add('btn-secondary');
+                    document.getElementById('post-cta-message').textContent = 'You can retry the practice test immediately.';
+                }
+
+                resultsModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                
+                // Disable further attempts and focus loss detection
+                submitButton.disabled = true;
+                window.removeEventListener('blur', showFocusWarning);
+                window.removeEventListener('focus', hideFocusWarning);
+
+            });
+            
             // Re-adding the header menu toggle logic since the global script is removed
             const hamburgerMenu = document.getElementById('hamburgerMenu');
             const navMenu = document.querySelector('.nav-menu');
