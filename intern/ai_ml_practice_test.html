@@ -15,13 +15,13 @@
     <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico">
 
     <style>
-        /* Base Exam Styles (Retained) */
+        /* Base Exam Styles (Retained/Refined) */
         :root {
-            --primary: #4c51bf; /* Example Primary Color */
-            --secondary: #805ad5; /* Example Secondary Color (Purple for AI/ML) */
-            --dark: #2d3748; /* Example Dark Color */
-            --gray: #718096; /* Example Gray Color */
-            --white: #ffffff; /* Example White Color */
+            --primary: #4c51bf;
+            --secondary: #805ad5;
+            --dark: #2d3748;
+            --gray: #718096;
+            --white: #ffffff;
         }
         body {
             background-color: #f7fafc;
@@ -87,10 +87,6 @@
             transition: all 0.2s ease;
             border: 1px solid #e2e8f0;
         }
-        .options label:hover {
-            background-color: #edf2f7;
-            border-color: var(--secondary);
-        }
         .options input[type="text"] {
             width: 100%;
             padding: 10px;
@@ -125,9 +121,9 @@
             margin-top: 15px;
         }
 
-        /* --- Modal (Popup) Styles --- */
+        /* --- Modal (Popup) Styles - Shared for Result and Warning --- */
         .modal {
-            display: none; /* Hidden by default */
+            display: none; 
             position: fixed;
             z-index: 1000; 
             left: 0;
@@ -135,13 +131,13 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.6); /* Semi-transparent black overlay */
+            background-color: rgba(0,0,0,0.6);
             padding-top: 50px;
         }
 
         .modal-content {
             background-color: #fff;
-            margin: 10% auto; /* 10% from the top and centered */
+            margin: 10% auto;
             padding: 40px;
             border-radius: 15px;
             width: 80%;
@@ -175,12 +171,13 @@
         .modal-footer {
             margin-top: 30px;
         }
-        .pass-color { color: #155724; } /* Green */
-        .fail-color { color: #721c24; } /* Red */
+        .pass-color { color: #155724; }
+        .fail-color { color: #721c24; }
+        .warning-color { color: #cc8400; } /* Amber/Orange for Warning */
 
         /* Placeholder for header/footer classes not included in this snippet */
-        .header-container, .logo, .nav-menu, .footer-grid { /* Prevent errors if external CSS is missing */
-            display: none; 
+        .header-container, .logo, .nav-menu, .footer-grid { 
+             /* Styles omitted for brevity - assuming they exist in external CSS */
         }
     </style>
 </head>
@@ -206,7 +203,7 @@
                         <h1 class="exam-title">AI/ML Practice Test (Free)</h1>
                         <p>Evaluate your readiness for the Final Exam and Internship Placement</p>
                         <div id="focusWarning" style="color: red; font-weight: bold; margin-top: 15px; display: none;">
-                            <i class="fas fa-exclamation-triangle"></i> <strong>WARNING!</strong> Focus lost. One more loss will cancel the exam.
+                            <i class="fas fa-exclamation-triangle"></i> <strong>EXAM CANCELLED.</strong>
                         </div>
                     </div>
 
@@ -354,6 +351,19 @@
                 </div>
         </div>
     </div>
+    <div id="focusWarningModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-title warning-color"><i class="fas fa-exclamation-triangle"></i> FOCUS WARNING</h2>
+            <p id="focusModalMessage" style="font-size: 1.1rem; color: var(--dark);">
+                You left the exam window. If you leave again, your attempt will be cancelled and marked as 0. Please return to the test now.
+            </p>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-lg action-button" onclick="document.getElementById('focusWarningModal').style.display='none';">
+                    <i class="fas fa-check"></i> Return to Exam
+                </button>
+            </div>
+        </div>
+    </div>
     <footer>
         <div class="container">
             </div>
@@ -363,18 +373,20 @@
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('aiMlPracticeTestForm');
             const submitButton = document.getElementById('submitPracticeButton');
-            const focusWarning = document.getElementById('focusWarning');
             const modal = document.getElementById('resultModal');
             const modalTitle = document.getElementById('modalTitle');
             const modalScoreDisplay = document.getElementById('modalScoreDisplay');
             const modalMessage = document.getElementById('modalMessage');
             const modalFooter = document.getElementById('modalFooter');
-            const modalContent = document.querySelector('.modal-content');
+            const focusWarningModal = document.getElementById('focusWarningModal');
+            const focusModalMessage = document.getElementById('focusModalMessage');
+            const examContainer = document.querySelector('.exam-container');
 
             const totalQuestions = 10;
             const passingScore = totalQuestions * 0.5;
             let focusLossCount = 0;
             let examCancelled = false;
+            let examSubmitted = false;
 
             // --- Answer Key for 10 Questions ---
             const answerKey = {
@@ -389,24 +401,44 @@
                 q9: 'C', 
                 q10: 'B' 
             };
+            
+            // --- Helper Functions ---
+            function lockExam() {
+                submitButton.disabled = true;
+                form.style.pointerEvents = 'none'; // Lock the form content
+            }
+            
+            function hideModals() {
+                modal.style.display = 'none';
+                focusWarningModal.style.display = 'none';
+            }
 
-            // --- Focus Loss Detection Logic ---
+
+            // --- Focus Loss Detection Logic (FIXED: Uses custom modal) ---
 
             function handleFocusLoss() {
-                if (examCancelled) return;
+                if (examCancelled || examSubmitted) return;
 
                 focusLossCount++;
+                
                 if (focusLossCount === 1) {
-                    focusWarning.style.display = 'block';
-                    alert("⚠️ WARNING! Focus lost. If you lose focus again (e.g., by changing tabs or opening another app), your exam will be instantly cancelled.");
+                    // Show custom warning modal
+                    focusWarningModal.style.display = 'block';
+                    // Optional: Disable the context menu (right-click) for stricter focus loss control
+                    document.addEventListener('contextmenu', preventDefaultAction);
                 } else if (focusLossCount >= 2) {
                     examCancelled = true;
-                    // Disable button and form interaction completely
-                    submitButton.disabled = true;
-                    form.style.pointerEvents = 'none'; 
-                    // Display cancellation result immediately in modal
+                    // Cancel exam and display result immediately
+                    lockExam();
+                    document.removeEventListener('contextmenu', preventDefaultAction);
+                    
+                    // Display cancellation result immediately in result modal
                     displayResult(0, true);
                 }
+            }
+            
+            function preventDefaultAction(e) {
+                 e.preventDefault();
             }
 
             // Listeners for focus loss
@@ -418,123 +450,126 @@
             });
 
 
-            // --- Scoring Logic ---
+            // --- Scoring Logic (Retained) ---
 
             function getScore() {
                 let score = 0;
 
-                // Check Multiple Choice / Radio button questions (q1, q4-q10)
+                // Check all questions
                 for (let i = 1; i <= 10; i++) {
-                    if (i === 2 || i === 3) continue;
-                    
                     const qName = 'q' + i;
-                    const selected = form.querySelector(`input[name="${qName}"]:checked`);
-                    
-                    if (selected && selected.value === answerKey[qName]) {
-                        score++;
-                    }
-                }
 
-                // Check Multiple Selection / Checkbox question (q2)
-                const q2Selections = Array.from(form.querySelectorAll('input[name="q2"]:checked')).map(input => input.value).sort();
-                const q2Correct = answerKey['q2'].sort();
-                
-                if (q2Selections.length === q2Correct.length && q2Selections.every((val, index) => val === q2Correct[index])) {
-                    score++;
-                }
-
-                // Check Short Answer / Text question (q3)
-                const q3Input = form.querySelector('input[name="q3"]');
-                if (q3Input) {
-                    const userResponse = q3Input.value.trim().toLowerCase();
-                    const correctAnswers = answerKey['q3'].map(a => a.toLowerCase());
-                    
-                    // Simple check for inclusion in the list of correct answers
-                    if (correctAnswers.includes(userResponse) || (correctAnswers.some(a => userResponse.includes(a)) && userResponse.length > 0) ) {
-                        score++;
+                    if (i === 2) { // Multiple Selection / Checkbox (q2)
+                        const q2Selections = Array.from(form.querySelectorAll('input[name="q2"]:checked')).map(input => input.value).sort();
+                        const q2Correct = answerKey['q2'].sort();
+                        if (q2Selections.length === q2Correct.length && q2Selections.every((val, index) => val === q2Correct[index])) {
+                            score++;
+                        }
+                    } else if (i === 3) { // Short Answer / Text (q3)
+                        const q3Input = form.querySelector('input[name="q3"]');
+                        if (q3Input) {
+                            const userResponse = q3Input.value.trim().toLowerCase();
+                            const correctAnswers = answerKey['q3'].map(a => a.toLowerCase());
+                            if (correctAnswers.includes(userResponse) || (correctAnswers.some(a => userResponse.includes(a)) && userResponse.length > 0) ) {
+                                score++;
+                            }
+                        }
+                    } else { // Multiple Choice / Radio button (all others)
+                        const selected = form.querySelector(`input[name="${qName}"]:checked`);
+                        if (selected && selected.value === answerKey[qName]) {
+                            score++;
+                        }
                     }
                 }
                 
                 return score;
             }
 
-            // --- Result Display and Action Logic ---
+            // --- Result Display and Action Logic (FIXED: Result button state) ---
 
             function displayResult(score, wasCancelled = false) {
-                // Disable button for further clicks
-                submitButton.disabled = true;
-                form.style.pointerEvents = 'none'; // Lock the form content
+                // Remove focus loss listeners once submitted/cancelled
+                window.removeEventListener('blur', handleFocusLoss);
+                document.removeEventListener('visibilitychange', handleFocusLoss);
+                document.removeEventListener('contextmenu', preventDefaultAction);
+                
+                lockExam(); // Ensure exam is locked
+                examSubmitted = true;
                 
                 const percentage = (score / totalQuestions) * 100;
                 
-                modalTitle.classList.remove('pass-color', 'fail-color');
+                modalTitle.classList.remove('pass-color', 'fail-color', 'warning-color');
                 modalFooter.innerHTML = ''; // Clear previous button
 
                 let actionButtonHTML = '';
 
                 if (wasCancelled) {
-                    modalTitle.innerHTML = `<i class="fas fa-ban"></i> Exam Cancelled`;
+                    modalTitle.innerHTML = `<i class="fas fa-ban"></i> EXAM CANCELLED`;
                     modalTitle.classList.add('fail-color');
                     modalScoreDisplay.innerHTML = `0 / 10`;
-                    modalMessage.innerHTML = `<strong>Cancellation:</strong> The test was cancelled due to multiple losses of focus/window changes.`;
+                    modalMessage.innerHTML = `<strong>Attention:</strong> The test was cancelled due to multiple losses of window focus. You must retry.`;
                     
-                    actionButtonHTML = `<a href="javascript:location.reload()" class="btn btn-secondary btn-lg action-button"><i class="fas fa-redo"></i> Retry Test</a>`;
+                    actionButtonHTML = `<a href="javascript:location.reload()" class="btn btn-secondary btn-lg action-button"><i class="fas fa-redo"></i> Retry Practice Test</a>`;
                 } else if (percentage >= 50) {
                     // Passed
-                    modalTitle.innerHTML = `<i class="fas fa-trophy"></i> Congratulations!`;
+                    modalTitle.innerHTML = `<i class="fas fa-trophy"></i> CONGRATULATIONS!`;
                     modalTitle.classList.add('pass-color');
                     modalScoreDisplay.innerHTML = `${score} / ${totalQuestions} (${percentage.toFixed(0)}%)`;
-                    modalMessage.innerHTML = `You have successfully passed the practice test. Proceed to the Final Exam!`;
+                    modalMessage.innerHTML = `You have successfully qualified. Click below to proceed to the final step!`;
 
                     actionButtonHTML = `<button type="button" class="btn btn-primary btn-lg action-button" id="proceedToFinal">
                                             <i class="fas fa-rocket"></i> Proceed to Final Exam
                                         </button>`;
                 } else {
                     // Failed
-                    modalTitle.innerHTML = `<i class="fas fa-times-circle"></i> Focus on Improvement`;
+                    modalTitle.innerHTML = `<i class="fas fa-times-circle"></i> FAILED: FOCUS ON IMPROVEMENT`;
                     modalTitle.classList.add('fail-color');
                     modalScoreDisplay.innerHTML = `${score} / ${totalQuestions} (${percentage.toFixed(0)}%)`;
-                    modalMessage.innerHTML = `You need a score of 5 or higher. Please review the course material before trying again.`;
+                    modalMessage.innerHTML = `You need a score of 5 or higher. Please review the course material and retry.`;
 
                     actionButtonHTML = `<a href="javascript:location.reload()" class="btn btn-secondary btn-lg action-button"><i class="fas fa-redo"></i> Retry Practice Test</a>`;
                 }
 
                 modalFooter.innerHTML = actionButtonHTML;
-                modal.style.display = 'block'; // Show the modal
+                modal.style.display = 'block'; // Show the result modal
+                hideModals(); // Hide warning modal if it's still open
+                modal.style.display = 'block';
 
                 // Add event listener for the Proceed button if it exists
                 const proceedButton = document.getElementById('proceedToFinal');
                 if (proceedButton) {
                     proceedButton.addEventListener('click', () => {
-                        // Redirect to the payment page as required
                         window.location.href = 'payment_page_ai_ml.html';
                     });
                 }
             }
 
 
-            // --- Submission Handler ---
+            // --- Submission Handler (FIXED: Button click logic) ---
 
             function handleSubmit(e) {
                 e.preventDefault();
+                // If the exam was already cancelled by focus loss, just redisplay the cancellation modal
                 if (examCancelled) {
                     displayResult(0, true); 
                     return;
                 }
                 
+                // --- Submission is now valid ---
                 const finalScore = getScore();
                 displayResult(finalScore);
             }
 
-            // Attach submit listener to the form
+            // Attach submit listener to the form (This ensures the button, which is type="submit", works)
             if (form) {
                 form.addEventListener('submit', handleSubmit);
             }
+            
+            // Initial state: Ensure button is clickable on load
+            submitButton.disabled = false;
 
 
-            // --- Other Logic (Retained) ---
-
-            // Re-adding the header menu toggle logic since the global script is removed
+            // --- Other Logic (Hamburger menu retained) ---
             const hamburgerMenu = document.getElementById('hamburgerMenu');
             const navMenu = document.querySelector('.nav-menu');
             
