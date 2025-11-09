@@ -15,7 +15,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico">
 
     <style>
-        /* Specific Styles for Exam Interface (Shared with other Exams) */
+        /* Base Exam Styles (Retained) */
         body {
             background-color: #f7fafc;
         }
@@ -33,7 +33,7 @@
         }
         .exam-header {
             text-align: center;
-            border-bottom: 3px solid var(--secondary); /* Practice test uses secondary color */
+            border-bottom: 3px solid var(--secondary);
             padding-bottom: 20px;
             margin-bottom: 30px;
         }
@@ -53,21 +53,14 @@
             gap: 20px;
             margin-bottom: 30px;
             padding: 15px;
-            background-color: #fce6ff; /* Lighter background for practice */
+            background-color: #fce6ff;
             border-radius: 10px;
             border: 1px solid #f0ccff;
-        }
-        .info-item {
-            text-align: center;
         }
         .info-item strong {
             display: block;
             font-size: 1.4rem;
             color: var(--dark);
-        }
-        .info-item span {
-            font-size: 0.9rem;
-            color: var(--gray);
         }
         .question-card {
             border: 1px solid #e2e8f0;
@@ -95,11 +88,6 @@
             background-color: #edf2f7;
             border-color: var(--secondary);
         }
-        .options input[type="radio"],
-        .options input[type="checkbox"] {
-            margin-right: 10px;
-            accent-color: var(--secondary);
-        }
         .options input[type="text"] {
             width: 100%;
             padding: 10px;
@@ -121,50 +109,65 @@
             margin-bottom: 20px;
             font-weight: 600;
         }
-        /* Result Styles */
-        #resultContainer {
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            display: none; /* Hidden by default */
-        }
-        .pass {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .fail {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        .result-score {
-            font-size: 2rem;
-            font-weight: 700;
-            display: block;
-            margin: 10px 0;
-        }
         .action-button {
             width: 300px; 
             margin-top: 15px;
         }
 
-        /* Mobile adjustments (Retained) */
-        @media (max-width: 768px) {
-            .exam-container {
-                padding: 20px;
-                margin: 20px auto;
-            }
-            .exam-header h1 {
-                font-size: 2rem;
-            }
-            .exam-info-box {
-                flex-direction: column;
-                gap: 10px;
+        /* --- Modal (Popup) Styles --- */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000; 
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6); /* Semi-transparent black overlay */
+            padding-top: 50px;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto; /* 10% from the top and centered */
+            padding: 40px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            /* 3D Animation: Pop-in effect */
+            transform: scale(0.9);
+            opacity: 0;
+            animation: popIn 0.3s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            to {
+                transform: scale(1);
+                opacity: 1;
             }
         }
+        
+        .modal-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .modal-score {
+            font-size: 3rem;
+            font-weight: 900;
+            display: block;
+            margin: 15px 0;
+        }
+        .modal-footer {
+            margin-top: 30px;
+        }
+        .pass-color { color: #155724; } /* Green */
+        .fail-color { color: #721c24; } /* Red */
+        .pass-bg { background-color: #d4edda; border: 1px solid #c3e6cb; padding: 10px; border-radius: 8px; }
+        .fail-bg { background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 10px; border-radius: 8px; }
     </style>
 </head>
 <body>
@@ -229,7 +232,7 @@
                     <i class="fas fa-search search-icon"></i>
                     <input type="text" id="searchInput" class="search-input" placeholder="Search courses & domains...">
                 </div>
-                </div> 
+            </div> 
 
             <button class="hamburger-menu" id="hamburgerMenu">
                 <span></span>
@@ -248,7 +251,7 @@
                         <h1 class="exam-title">AI/ML Practice Test (Free)</h1>
                         <p>Evaluate your readiness for the Final Exam and Internship Placement</p>
                         <div id="focusWarning" style="color: red; font-weight: bold; margin-top: 15px; display: none;">
-                            ⚠️ **WARNING!** Focus lost. One more loss will cancel the exam.
+                            <i class="fas fa-exclamation-triangle"></i> <strong>WARNING!</strong> Focus lost. One more loss will cancel the exam.
                         </div>
                     </div>
 
@@ -298,7 +301,7 @@
                         </div>
                         
                         <div class="question-card">
-                            <p>3. In the context of Deep Learning, the technique used to combat **vanishing gradient** problems in recurrent networks is called (Acronym or Full Name is acceptable)?</p>
+                            <p>3. In the context of Deep Learning, the technique used to combat <strong>vanishing gradient</strong> problems in recurrent networks is called (Acronym or Full Name is acceptable)?</p>
                             <div class="options">
                                 <input type="text" name="q3" placeholder="Enter your answer (e.g., LSTM or Long Short-Term Memory)">
                             </div>
@@ -315,7 +318,7 @@
                         </div>
                         
                         <div class="question-card">
-                            <p>5. Which of the following algorithms is an example of a **supervised learning** technique?</p>
+                            <p>5. Which of the following algorithms is an example of a <strong>supervised learning</strong> technique?</p>
                             <div class="options">
                                 <label><input type="radio" name="q5" value="A"> K-Means Clustering</label>
                                 <label><input type="radio" name="q5" value="B"> Principal Component Analysis (PCA)</label>
@@ -365,7 +368,7 @@
                         </div>
 
                         <div class="question-card">
-                            <p>10. What is the primary purpose of a **Loss Function** in an ML model?</p>
+                            <p>10. What is the primary purpose of a <strong>Loss Function</strong> in an ML model?</p>
                             <div class="options">
                                 <label><input type="radio" name="q10" value="A"> To speed up the model's training time.</label>
                                 <label><input type="radio" name="q10" value="B"> To measure the difference between the predicted and actual output.</label>
@@ -376,20 +379,26 @@
 
 
                         <div class="exam-submit-area">
-                            <div id="resultContainer" class="pass">
-                                </div>
-
-                            <p style="color: var(--gray); font-size: 1rem;" id="submitInfo">Once submitted, your answers will be reviewed locally for immediate feedback.</p>
+                            <p style="color: var(--gray); font-size: 1rem;" id="submitInfo">Click the button below for instant scoring and feedback.</p>
                             <button type="submit" class="btn btn-secondary btn-lg action-button" id="submitPracticeButton">
                                 <i class="fas fa-check-double" style="margin-right: 10px;"></i> Instant Check and Result
                             </button>
-                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
         </section>
     </main>
 
+    <div id="resultModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-title" id="modalTitle"></h2>
+            <div id="modalScoreDisplay" class="modal-score"></div>
+            <p id="modalMessage"></p>
+            <div class="modal-footer" id="modalFooter">
+                </div>
+        </div>
+    </div>
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -471,29 +480,34 @@
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('aiMlPracticeTestForm');
             const submitButton = document.getElementById('submitPracticeButton');
-            const resultContainer = document.getElementById('resultContainer');
-            const submitArea = document.querySelector('.exam-submit-area');
             const focusWarning = document.getElementById('focusWarning');
+            const modal = document.getElementById('resultModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalScoreDisplay = document.getElementById('modalScoreDisplay');
+            const modalMessage = document.getElementById('modalMessage');
+            const modalFooter = document.getElementById('modalFooter');
+            const modalContent = document.querySelector('.modal-content');
+
             const totalQuestions = 10;
             const passingScore = totalQuestions * 0.5;
             let focusLossCount = 0;
             let examCancelled = false;
 
-            // --- Answer Key for 10 Questions ---
+            // --- Answer Key for 10 Questions (Retained) ---
             const answerKey = {
-                q1: 'B', // Artificial Narrow Intelligence (ANI)
-                q2: ['A', 'B'], // Feature Engineering, Model Evaluation (assuming two correct answers)
-                q3: ['LSTM', 'Long Short-Term Memory'], // Case-insensitive and minor variations handled in scoring
-                q4: 'B', // F1 Score
-                q5: 'C', // Decision Tree Classification
-                q6: 'B', // Reward Function
-                q7: 'B', // One-Hot Encoding
-                q8: 'C', // Recurrent Neural Network (RNN)
-                q9: 'C', // Overfitting
-                q10: 'B' // To measure the difference between the predicted and actual output.
+                q1: 'B', 
+                q2: ['A', 'B'], 
+                q3: ['LSTM', 'Long Short-Term Memory'], 
+                q4: 'B', 
+                q5: 'C', 
+                q6: 'B', 
+                q7: 'B', 
+                q8: 'C', 
+                q9: 'C', 
+                q10: 'B' 
             };
 
-            // --- Focus Loss Detection Logic ---
+            // --- Focus Loss Detection Logic (Modified to disable form) ---
 
             function handleFocusLoss() {
                 if (examCancelled) return;
@@ -501,22 +515,21 @@
                 focusLossCount++;
                 if (focusLossCount === 1) {
                     focusWarning.style.display = 'block';
+                    // Using standard alert for warning, as requested by initial prompt
                     alert("⚠️ WARNING! Focus lost. If you lose focus again (e.g., by changing tabs or opening another app), your exam will be instantly cancelled.");
                 } else if (focusLossCount >= 2) {
                     examCancelled = true;
                     // Cancel exam and display result
                     submitButton.disabled = true;
                     form.removeEventListener('submit', handleSubmit);
-                    displayResult(0, true);
-                    alert("🚫 EXAM CANCELLED! Focus lost too many times. Your result has been recorded as 0/10.");
                     
+                    // Display cancellation result immediately in modal
+                    displayResult(0, true);
                 }
             }
 
             // Listeners for focus loss
             window.addEventListener('blur', handleFocusLoss);
-            
-            // Optional: Also listen to visibilitychange for better mobile/tab detection
             document.addEventListener('visibilitychange', () => {
                 if (document.visibilityState === 'hidden') {
                     handleFocusLoss();
@@ -524,15 +537,14 @@
             });
 
 
-            // --- Scoring Logic ---
+            // --- Scoring Logic (Retained) ---
 
             function getScore() {
                 let score = 0;
 
-                // 1. Check Multiple Choice / Radio button questions (q1, q4, q5, q6, q7, q8, q9, q10)
+                // Check Multiple Choice / Radio button questions (q1, q4-q10)
                 for (let i = 1; i <= 10; i++) {
-                    if (i === 2) continue; // Skip q2 (Checkbox)
-                    if (i === 3) continue; // Skip q3 (Text)
+                    if (i === 2 || i === 3) continue;
                     
                     const qName = 'q' + i;
                     const selected = form.querySelector(`input[name="${qName}"]:checked`);
@@ -542,23 +554,21 @@
                     }
                 }
 
-                // 2. Check Multiple Selection / Checkbox question (q2)
+                // Check Multiple Selection / Checkbox question (q2)
                 const q2Selections = Array.from(form.querySelectorAll('input[name="q2"]:checked')).map(input => input.value).sort();
                 const q2Correct = answerKey['q2'].sort();
                 
-                // Only award point if ALL correct options are selected and NO incorrect options are selected
                 if (q2Selections.length === q2Correct.length && q2Selections.every((val, index) => val === q2Correct[index])) {
                     score++;
                 }
 
-                // 3. Check Short Answer / Text question (q3)
+                // Check Short Answer / Text question (q3)
                 const q3Input = form.querySelector('input[name="q3"]');
                 if (q3Input) {
                     const userResponse = q3Input.value.trim().toLowerCase();
                     const correctAnswers = answerKey['q3'].map(a => a.toLowerCase());
                     
                     if (correctAnswers.includes(userResponse) || (correctAnswers.some(a => userResponse.includes(a)) && userResponse.length > 0) ) {
-                        // Accept "LSTM" or "long short-term memory" or a response that clearly includes it.
                         score++;
                     }
                 }
@@ -566,59 +576,56 @@
                 return score;
             }
 
-            // --- Result Display and Action Logic ---
+            // --- Result Display and Action Logic (MODIFIED for Modal) ---
 
             function displayResult(score, wasCancelled = false) {
-                // Hide the old submit button and info
-                submitButton.style.display = 'none';
-                document.getElementById('submitInfo').style.display = 'none';
-                focusWarning.style.display = 'none';
+                // Disable form interaction after submission
+                submitButton.disabled = true;
+                form.style.pointerEvents = 'none'; // Lock the form content
                 
                 const percentage = (score / totalQuestions) * 100;
-                resultContainer.style.display = 'block';
-                resultContainer.classList.remove('pass', 'fail');
+                
+                modalContent.classList.remove('pass-bg', 'fail-bg');
+                modalTitle.classList.remove('pass-color', 'fail-color');
+                modalFooter.innerHTML = ''; // Clear previous button
 
-                let contentHTML = '';
                 let actionButtonHTML = '';
 
                 if (wasCancelled) {
-                    resultContainer.classList.add('fail');
-                    contentHTML = `
-                        <i class="fas fa-ban"></i> **Exam Cancelled**
-                        <span class="result-score">0 / ${totalQuestions}</span>
-                        <p style="font-weight: 400; font-size: 1rem;">The test was cancelled due to loss of focus/window change. Please close this window and try again later if allowed.</p>
-                    `;
-                    actionButtonHTML = `<a href="javascript:location.reload()" class="btn btn-secondary btn-lg action-button"><i class="fas fa-redo"></i> Try Again</a>`;
+                    modalTitle.innerHTML = `<i class="fas fa-ban"></i> Exam Cancelled`;
+                    modalTitle.classList.add('fail-color');
+                    modalScoreDisplay.innerHTML = `0 / 10`;
+                    modalMessage.innerHTML = `<strong>Cancellation:</strong> The test was cancelled due to multiple losses of focus/window changes.`;
+                    
+                    actionButtonHTML = `<a href="javascript:location.reload()" class="btn btn-secondary btn-lg action-button"><i class="fas fa-redo"></i> Retry Test</a>`;
                 } else if (percentage >= 50) {
                     // Passed
-                    resultContainer.classList.add('pass');
-                    contentHTML = `
-                        <i class="fas fa-trophy"></i> **Congratulations! You Passed!**
-                        <span class="result-score">${score} / ${totalQuestions} (${percentage.toFixed(0)}%)</span>
-                        <p style="font-weight: 400; font-size: 1rem;">You are now eligible for the Final Exam and Internship Placement process.</p>
-                    `;
+                    modalTitle.innerHTML = `<i class="fas fa-trophy"></i> Congratulations!`;
+                    modalTitle.classList.add('pass-color');
+                    modalScoreDisplay.innerHTML = `${score} / ${totalQuestions} (${percentage.toFixed(0)}%)`;
+                    modalMessage.innerHTML = `You have successfully passed the practice test. Proceed to the Final Exam!`;
+
                     actionButtonHTML = `<button type="button" class="btn btn-primary btn-lg action-button" id="proceedToFinal">
                                             <i class="fas fa-rocket"></i> Proceed to Final Exam
                                         </button>`;
                 } else {
                     // Failed
-                    resultContainer.classList.add('fail');
-                    contentHTML = `
-                        <i class="fas fa-times-circle"></i> **Focus on Improvement**
-                        <span class="result-score">${score} / ${totalQuestions} (${percentage.toFixed(0)}%)</span>
-                        <p style="font-weight: 400; font-size: 1rem;">You need a score of ${passingScore.toFixed(0)} or higher. Please review the course material and attempt the test again.</p>
-                    `;
+                    modalTitle.innerHTML = `<i class="fas fa-times-circle"></i> Focus on Improvement`;
+                    modalTitle.classList.add('fail-color');
+                    modalScoreDisplay.innerHTML = `${score} / ${totalQuestions} (${percentage.toFixed(0)}%)`;
+                    modalMessage.innerHTML = `You need a score of 5 or higher. Please review the course material before trying again.`;
+
                     actionButtonHTML = `<a href="javascript:location.reload()" class="btn btn-secondary btn-lg action-button"><i class="fas fa-redo"></i> Retry Practice Test</a>`;
                 }
 
-                resultContainer.innerHTML = contentHTML;
-                submitArea.insertAdjacentHTML('beforeend', actionButtonHTML);
+                modalFooter.innerHTML = actionButtonHTML;
+                modal.style.display = 'block'; // Show the modal
 
                 // Add event listener for the Proceed button if it exists
                 const proceedButton = document.getElementById('proceedToFinal');
                 if (proceedButton) {
                     proceedButton.addEventListener('click', () => {
-                        alert("Great Job! You will now be redirected to the Final Exam Payment Page.");
+                        // Redirect to the payment page as required
                         window.location.href = 'payment_page_ai_ml.html';
                     });
                 }
@@ -629,15 +636,12 @@
 
             function handleSubmit(e) {
                 e.preventDefault();
-                if (examCancelled) return;
+                if (examCancelled) {
+                    displayResult(0, true); // Re-display cancellation modal if user tries to submit cancelled exam
+                    return;
+                }
                 
-                // Disable button to prevent multiple submissions
-                submitButton.disabled = true;
-                
-                // Get the final score
                 const finalScore = getScore();
-
-                // Display the result and corresponding action button
                 displayResult(finalScore);
             }
 
