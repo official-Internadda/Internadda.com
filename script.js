@@ -91,7 +91,7 @@ function renderSearchResults(query) {
     const results = allSearchableItems.filter(item =>
         item.title.toLowerCase().includes(q) ||
         (item.roles && item.roles.toLowerCase().includes(q))
-    ).slice(0, 8); // Limit to top 8 results
+    ).slice(0, 8);
 
     if (results.length === 0) {
         searchResultsContainer.innerHTML = `<p style="padding: 10px 15px; color: var(--gray);">No courses or internships found for "${query}".</p>`;
@@ -142,6 +142,31 @@ function renderSearchResults(query) {
 
     searchResultsContainer.classList.remove('hidden');
 }
+
+
+// ✅ ADD THIS BELOW renderSearchResults() — ensures redirect also happens when user presses Enter
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                const q = searchInput.value.toLowerCase().trim();
+                if (
+                    q === "all course" ||
+                    q === "all courses" ||
+                    q === "courses" ||
+                    q === "course" ||
+                    q.includes("all course") ||
+                    q.includes("courses") ||
+                    q.includes("course list")
+                ) {
+                    window.location.href = "https://courses.internadda.com/";
+                    event.preventDefault();
+                }
+            }
+        });
+    }
+});
 
 
 // --- Testimonial Carousel/Auto-Scroll Logic (Request 5) ---
