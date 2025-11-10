@@ -66,14 +66,30 @@ const allSearchableItems = [...allCourses, ...allInternships];
 function renderSearchResults(query) {
     const searchResultsContainer = document.getElementById('searchResults');
     if (!searchResultsContainer) return;
+
     const q = query.toLowerCase().trim();
+
+    // --- Redirect condition for "all courses" search ---
+    if (
+        q === "all course" ||
+        q === "all courses" ||
+        q === "courses" ||
+        q === "course" ||
+        q.includes("all course") ||
+        q.includes("courses") ||
+        q.includes("course list")
+    ) {
+        window.location.href = "https://courses.internadda.com/";
+        return;
+    }
+
     searchResultsContainer.classList.add('hidden');
     searchResultsContainer.innerHTML = '';
 
     if (q.length < 2) return;
 
-    const results = allSearchableItems.filter(item => 
-        item.title.toLowerCase().includes(q) || 
+    const results = allSearchableItems.filter(item =>
+        item.title.toLowerCase().includes(q) ||
         (item.roles && item.roles.toLowerCase().includes(q))
     ).slice(0, 8); // Limit to top 8 results
 
@@ -86,7 +102,7 @@ function renderSearchResults(query) {
     results.forEach(item => {
         let itemHtml = '';
         const courseUrl = getRelativePath(item.url);
-        
+
         if (item.type === 'course') {
             const imgSrc = getRelativePath(item.image);
             itemHtml = `
@@ -103,7 +119,7 @@ function renderSearchResults(query) {
             const imgSrc = getRelativePath(item.image);
             const practiceUrl = getRelativePath(item.practiceUrl);
             const finalExamUrl = getRelativePath(item.finalExamUrl);
-            
+
             itemHtml = `
                 <div class="search-result-item internship-result">
                     <div>
@@ -120,6 +136,7 @@ function renderSearchResults(query) {
                 </div>
             `;
         }
+
         searchResultsContainer.innerHTML += itemHtml;
     });
 
