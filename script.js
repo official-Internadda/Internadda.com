@@ -30,15 +30,19 @@ function getRelativePath(targetPath) {
 
 // Hardcoded data (used for search/listings)
 const allCourses = [
-    // FIXED: Changed generic external URL to local course detail page URL
+    // FIX: Direct link to local HTML file. (%20 is URL encoding for space)
     { type: 'course', title: 'Essential Data Science Intern Course', instructor: 'Lucky Kumar', image: '/images/Essential Data Science Intern Course.png', url: "/courses/courses/Essential%20Data%20Science%20Intern%20Course.html" },
-    // FIXED: Changed generic external URL to local course detail page URL
+    
+    // FIX: Direct link to local HTML file.
     { type: 'course', title: 'Generative AI & Prompt Engineering Masterclass', instructor: 'Lucky Kumar', image: '/images/Generative-AI-Prompt-Engineering-Masterclass.png', url: "/courses/courses/Generative-AI-Prompt-Engineering-Masterclass.html" },
-    // FIXED: Changed generic external URL to local course detail page URL
+    
+    // FIX: Direct link to local HTML file.
     { type: 'course', title: 'Ethical Hacking Mastery', instructor: 'Lucky Kumar', image: '/images/Ethical-Hacking-Mastery.png', url: "/courses/courses/Ethical-Hacking-Mastery.html" },
-    // FIXED: Changed generic external URL to local course detail page URL
+    
+    // FIX: Direct link to local HTML file.
     { type: 'course', title: 'Python Essentials for All', instructor: 'Lucky Kumar', image: '/images/Python-Essentials-for-All.png', url: "/courses/courses/Python-Essentials-for-All.html" },
-    // FIXED: Changed generic external URL to the main course listing page for non-dedicated pages
+    
+    // Cloud & DevOps does not have a dedicated HTML file, linking to the main course listing.
     { type: 'course', title: 'Cloud & DevOps Essentials', instructor: 'Lucky Kumar', image: '/images/Cloud-DevOps-Essentials.png', url: "/courses/course.html" }
 ];
 
