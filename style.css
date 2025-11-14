@@ -473,7 +473,7 @@ header.scrolled {
 
 .testimonials-grid {
     display: flex;
-    overflow-x: auto;
+    overflow-x: hidden; /* Change to hidden for smooth JS auto-scrolling */
     scroll-snap-type: x mandatory;
     padding-bottom: 20px;
     gap: 36px;
@@ -519,7 +519,7 @@ header.scrolled {
     top: -50px;
     left: -20px;
     font-family: Georgia, serif;
-    z-index: 1;
+    z-index: 1; /* Corrected z-index for the quote mark */
 }
 .testimonial-author {
     display: flex;
@@ -639,38 +639,39 @@ header.scrolled {
 
 .logo-marquee {
     display: flex;
-    animation: scroll-left 30s linear infinite; /* Adjust time for speed */
+    animation: scroll-left 30s linear infinite;
 }
 
 .logo-item {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0 50px;
+    padding: 0 40px; /* Reduced padding slightly for tighter grouping */
     height: 90px;
-    filter: grayscale(100%);
-    opacity: 0.6;
+    filter: none; /* Set logos to full color by default */
+    opacity: 1; /* Full opacity by default */
     transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
     flex-shrink: 0;
+    position: relative;
 }
 
 .logo-item img {
     height: 60px;
     width: 60px;
     border-radius: 50%;
-    box-shadow: 0 0 0 0px rgba(43, 108, 176, 0.15);
+    box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.1); /* Subtle initial shadow */
     transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
     object-fit: contain;
 }
 
 .logo-item:hover {
-    opacity: 1;
-    filter: grayscale(0%);
+    opacity: 1; /* Already 1 */
+    filter: none; /* Already none */
 }
 
 .logo-item:hover img {
-    transform: scale(1.15) rotate(5deg) perspective(1000px) translateZ(10px);
-    box-shadow: 0 0 0 4px var(--secondary), 0 8px 20px rgba(0, 0, 0, 0.2);
+    transform: scale(1.18) rotate(2deg); /* Enhanced hover effect */
+    box-shadow: 0 0 0 5px var(--secondary), 0 12px 30px rgba(159, 122, 234, 0.8); /* Purple glow */
 }
 
 /* Re-defined Marquee Animation to fix scroll issue (Request 7) */
@@ -1342,27 +1343,55 @@ footer {
     border-radius: 12px;
     box-shadow: var(--shadow);
     text-align: center;
-    border-bottom: 4px solid var(--primary);
+    border: 1px solid #e2e8f0; /* Add base border */
+    border-bottom: 8px solid var(--secondary); /* Thicker bottom bar for visual weight */
+    transition: var(--transition);
+    overflow: hidden;
+    position: relative;
+}
+.test-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom right, rgba(43, 108, 176, 0.05), transparent 30%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 0;
+}
+.test-card:hover::before {
+    opacity: 1;
+}
+.test-card:hover {
+    transform: translateY(-8px) scale(1.01); /* Stronger lift */
+    box-shadow: 0 15px 40px rgba(43, 108, 176, 0.4);
+    border-bottom-color: var(--primary); /* Change color on hover */
 }
 .test-card img {
-    height: 80px;
-    width: 80px;
-    margin-bottom: 15px;
+    height: 90px;
+    width: 90px;
+    margin-bottom: 20px;
     object-fit: contain;
 }
 .test-card h3 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     margin-bottom: 10px;
-    color: var(--dark);
+    color: var(--primary); /* Primary color for title */
 }
 .test-card p {
     color: var(--gray);
     margin-bottom: 20px;
+    font-size: 0.95rem;
 }
 .test-card-actions {
     display: flex;
     justify-content: center;
     gap: 15px;
+}
+.test-card-actions a {
+    flex-grow: 1;
 }
 
 /* ============================
@@ -1414,6 +1443,7 @@ footer {
         /* Target main links like Home, Courses, Jobs, etc. */
         font-weight: 700;
         color: var(--primary);
+        font-size: 15px; /* Reduced font size for pro mobile look */
     }
 
     /* Dropdown containers (Tools and More) */
@@ -1448,7 +1478,7 @@ footer {
     /* Dropdown Inner Links (ATS Score, Contact, Blog, etc.) */
     .nav-menu.active .dropdown-content .dropdown-link {
         padding: 8px 30px 8px 50px;
-        font-size: 16px;
+        font-size: 15px; /* Reduced font size for pro mobile look */
         background-color: #f7fafc;
         border-bottom: 1px solid #f0f0f0;
         color: var(--dark); /* Inner links slightly subdued */
@@ -1460,6 +1490,14 @@ footer {
     }
     .nav-link.mobile-only-link {
         display: none; 
+    }
+    
+    /* Logo scaling fix */
+    .logo-img {
+        height: 40px; /* Reduced from 50px */
+    }
+    .logo-text {
+        font-size: 1.8rem; /* Reduced from 2.2rem for professional small look */
     }
 
 
@@ -1476,7 +1514,7 @@ footer {
         max-width: 100%;
     }
     .hero-heading {
-        font-size: 2.5rem;
+        font-size: 2.2rem; /* Reduced for phone/tablet professional look */
     }
     .hero-stats {
         justify-content: center;
@@ -1526,6 +1564,16 @@ footer {
 
 @media (max-width: 768px) {
     .container { padding: 0 16px; }
+
+    .hero-heading {
+        font-size: 2.0rem; /* Further reduction */
+    }
+    .section-title {
+        font-size: 1.8rem; /* Further reduction */
+    }
+    .hero-description, .section-subtitle {
+        font-size: 1.0rem; /* Tighter font size */
+    }
 
     /* Testimonial card sizing for mobile carousel */
     .testimonials-grid {
