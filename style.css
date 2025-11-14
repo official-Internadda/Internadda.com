@@ -43,7 +43,7 @@ body {
 }
 
 /* ============================
-   Header Styles - ULTRA ANIMATED/3D FOCUS (Request 2)
+   Header Styles - ULTRA ANIMATED/3D FOCUS
    ============================ */
 header {
     background-color: var(--white);
@@ -1327,7 +1327,7 @@ footer {
     margin-bottom: 8px;
 }
 
-/* --- Internship Page Specific Styles --- */
+/* --- Internship Page Specific Styles (MODIFIED) --- */
 .internship-header-cta {
     display: flex;
     justify-content: center;
@@ -1339,13 +1339,13 @@ footer {
 }
 .test-card {
     background-color: var(--white);
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Subtle Shadow */
+    padding: 30px 20px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     text-align: center;
     border: 1px solid #e2e8f0; 
-    border-bottom: 8px solid var(--secondary); /* Thicker bottom bar */
-    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bouncy Transition */
+    border-bottom: 8px solid var(--secondary); 
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
     overflow: hidden;
     position: relative;
     transform-style: preserve-3d;
@@ -1366,66 +1366,88 @@ footer {
     opacity: 1;
 }
 .test-card:hover {
-    transform: translateY(-12px) perspective(1000px) rotateX(1deg); /* Stronger lift with 3D */
+    transform: translateY(-12px) perspective(1000px) rotateX(1deg);
     box-shadow: 0 25px 40px rgba(43, 108, 176, 0.4);
     border-bottom-color: var(--primary); 
 }
 .test-card img {
-    height: 90px;
-    width: 90px;
+    height: 120px; 
+    width: 120px;
     margin-bottom: 20px;
     object-fit: contain;
     transition: transform 0.4s ease;
+    border-radius: 12px;
+    padding: 5px; 
+    background: #e6f7ff;
 }
 .test-card:hover img {
-     transform: scale(1.08) rotate(-2deg);
+     transform: scale(1.05) rotate(0deg);
 }
 .test-card h3 {
-    font-size: 1.6rem;
-    margin-bottom: 10px;
-    color: var(--primary);
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+    color: var(--dark);
+    font-weight: 800;
 }
 .test-card p {
     color: var(--gray);
     margin-bottom: 20px;
     font-size: 0.95rem;
+    min-height: 40px;
 }
 .test-card-actions {
     display: flex;
-    justify-content: center;
-    gap: 15px;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
 }
 .test-card-actions a {
     flex-grow: 1;
+    font-size: 14px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.test-card-actions a.btn-transparent {
+    color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+/* Revert button stacking on wider screens to save vertical space */
+@media (min-width: 769px) {
+    .test-card-actions {
+        flex-direction: row;
+    }
 }
 
 /* ============================
-   Mobile Layout Fixes (Request 4, General)
+   Mobile Layout Fixes (General)
    ============================ */
 @media (max-width: 1024px) {
 
     /* Global Typography Scaling */
     .section-title {
-        font-size: 2.0rem; /* Reduced from 2.5rem */
+        font-size: 2.0rem;
     }
     .hero-heading {
-        font-size: 2.5rem; /* Reduced from 3.5rem */
+        font-size: 2.5rem;
     }
     .hero-description, .section-subtitle {
-        font-size: 1.1rem; /* Reduced from 1.25/1.15rem */
+        font-size: 1.1rem;
     }
     .btn-lg {
-        font-size: 16px; /* Reduced from 18px */
+        font-size: 16px;
     }
 
     /* Header Fixes */
     .container { padding: 0 24px; }
     
     .logo-img {
-        height: 40px; /* Reduced from 50px */
+        height: 40px;
     }
     .logo-text {
-        font-size: 1.8rem; /* Reduced from 2.2rem */
+        font-size: 1.8rem;
     }
     
     /* Show Hamburger Menu */
@@ -1463,7 +1485,7 @@ footer {
         padding: 12px 30px;
         border-bottom: 1px solid #eee;
         margin: 0;
-        font-size: 15px; /* Reduced font size */
+        font-size: 15px;
     }
     .nav-menu.active > a.nav-link:not(.mobile-only-link) {
         /* Target main links like Home, Courses, Jobs, etc. */
@@ -1484,7 +1506,7 @@ footer {
     }
     .nav-menu.active .dropdown-content .dropdown-link {
         padding: 8px 30px 8px 50px;
-        font-size: 14px; /* Reduced inner link font size */
+        font-size: 14px;
         background-color: #f7fafc;
         border-bottom: 1px solid #f0f0f0;
     }
