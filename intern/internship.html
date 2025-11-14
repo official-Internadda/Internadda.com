@@ -39,13 +39,6 @@
         .test-card-actions a {
             flex-grow: 1;
         }
-
-        /* 🔥 CRITICAL CSS SAFETY PATCH 🔥 */
-        /* This ensures hidden elements (like search results) do not block clicks */
-        .hidden, .search-results-container.hidden {
-            pointer-events: none !important; /* Disables click interaction for the element */
-        }
-        /* End CSS Safety Patch */
     </style>
 </head>
 <body>
