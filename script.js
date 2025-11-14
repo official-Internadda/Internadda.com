@@ -1,3 +1,4 @@
+// official-internadda/internadda.com/Internadda.com-42eb2d6d091fd8be3671c44c0b78359624cb4d47/script.js
 // ---------------------------------------------
 // Website Main Script (Auth Removed, Nav & Carousel Reworked)
 // ---------------------------------------------
@@ -146,62 +147,105 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-// --- Testimonial Carousel/Auto-Scroll Logic (Request 1) ---
+// --- Testimonial Carousel/Auto-Scroll Logic (FIXED for seamless loop) ---
 
 function initTestimonialCarousel(containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    // Check if enough original cards exist (assuming minimal 3 cards for carousel effect)
+    // Remove existing clones before re-initializing
+    container.querySelectorAll('.cloned').forEach(clone => clone.remove());
+
     const originalCards = Array.from(container.children).filter(child => !child.classList.contains('cloned'));
+    const visibleCardCount = 2; // Approximate number of cards visible on a large screen
     
-    // Duplicate cards if necessary to ensure smooth looping (seamless loop needs at least 1-2 duplicates of each visible card set)
-    if (originalCards.length > 0 && container.children.length === originalCards.length) {
-         originalCards.forEach(card => {
-             const clone = card.cloneNode(true);
-             clone.classList.add('cloned'); // Mark as clone to prevent re-duplication
+    // Duplicate enough cards to guarantee seamless looping
+    if (originalCards.length > 0 && originalCards.length > visibleCardCount) {
+         for (let i = 0; i < originalCards.length; i++) {
+             const clone = originalCards[i].cloneNode(true);
+             clone.classList.add('cloned'); // Mark as clone
+             
+             // Update image source for clones (optional, to represent unique students)
+             const img = clone.querySelector('.author-avatar');
+             if (img) {
+                 // Cycle through placeholder student images (assuming student1.png to studentX.png)
+                 const studentIndex = (originalCards.length + i) % 6 + 1; // Cycle through 1 to 6
+                 img.src = getRelativePath(`/images/student${studentIndex}.png`);
+                 img.onerror = function() { this.onerror=null; this.src=getRelativePath('/images/no_image.png'); };
+             }
+             
              container.appendChild(clone);
-         });
+         }
     }
 
-    // Start auto-scrolling only if there are enough items for a carousel effect
+    // Start auto-scrolling only if there are items
     if (container.children.length > originalCards.length) {
         startAutoScroll(container, originalCards.length);
     }
 }
 
 function startAutoScroll(container, originalCount) {
-    let animationFrame;
-    const scrollSpeed = 0.5; // pixels per requestAnimationFrame
+    // Clear previous animation frames if they exist
+    if (container.autoScrollRAF) {
+        cancelAnimationFrame(container.autoScrollRAF);
+    }
+    
+    let scrollSpeed = 0.5; // pixels per requestAnimationFrame
+    let currentScroll = container.scrollLeft;
     
     // Calculate the width of the original content block. This is the reset point.
-    // Assuming uniform width + gap, this is a rough calculation based on number of original cards * card width approximation
-    let singleCardWidth = 380; // Default width from CSS
-    let gap = 36; // Default gap from CSS
-    if (window.innerWidth <= 768) {
-        singleCardWidth = window.innerWidth * 0.85; // Mobile width approximation
-        gap = 20;
+    // This calculation is now done entirely in CSS via 'gap' and 'scroll-snap-type' for simpler horizontal scrolling,
+    // but for infinite loop simulation, we need the total width of the *original set*.
+    // We use a rough calculation based on total content width for the reset point.
+    
+    // IMPORTANT: The key to smooth looping is making sure the total scrollable width
+    // of the original cards exactly matches the reset point.
+    
+    function getOriginalContentWidth() {
+         let totalWidth = 0;
+         const originalChildren = Array.from(container.children).slice(0, originalCount);
+         if (originalChildren.length === 0) return 0;
+         
+         // Measure first card's width + its margin-right/gap
+         const firstCardRect = originalChildren[0].getBoundingClientRect();
+         const containerStyle = window.getComputedStyle(container);
+         const gap = parseFloat(containerStyle.gap) || 36;
+         
+         const singleCardFullWidth = firstCardRect.width + gap;
+         
+         // Total width of the original set excluding the last item's gap
+         totalWidth = (singleCardFullWidth * originalCount) - gap;
+         
+         return totalWidth;
     }
-
-    const totalContentWidth = originalCount * singleCardWidth + (originalCount - 1) * gap + 50; // Add buffer
 
     function autoScroll() {
+        const resetPoint = getOriginalContentWidth();
+        
         // If scroll position reaches the start of the duplicated content, reset it to the beginning.
-        // We use scrollLeft for horizontal scrolling.
-        if (container.scrollLeft >= totalContentWidth) {
+        if (container.scrollLeft >= resetPoint) {
+            // Snap back to the visual start point (scroll position 0) instantly
             container.scrollLeft = 0;
         }
+        
         container.scrollLeft += scrollSpeed;
-        animationFrame = requestAnimationFrame(autoScroll);
+        container.autoScrollRAF = requestAnimationFrame(autoScroll);
     }
     
-    // Stop scrolling if the user manually interacts (optional but improves UX)
-    container.addEventListener('mouseenter', () => cancelAnimationFrame(animationFrame));
-    container.addEventListener('touchstart', () => cancelAnimationFrame(animationFrame));
-    container.addEventListener('mouseleave', () => animationFrame = requestAnimationFrame(autoScroll));
-    container.addEventListener('touchend', () => animationFrame = requestAnimationFrame(autoScroll));
+    // Stop scrolling if the user manually interacts (improves UX)
+    const stopScroll = () => cancelAnimationFrame(container.autoScrollRAF);
+    const resumeScroll = () => {
+        if (!container.isScrollingPaused) {
+            container.autoScrollRAF = requestAnimationFrame(autoScroll);
+        }
+    };
+
+    container.addEventListener('mouseenter', stopScroll);
+    container.addEventListener('touchstart', stopScroll);
+    container.addEventListener('mouseleave', resumeScroll);
+    container.addEventListener('touchend', resumeScroll);
     
-    animationFrame = requestAnimationFrame(autoScroll);
+    container.autoScrollRAF = requestAnimationFrame(autoScroll);
 }
 
 
@@ -326,5 +370,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // 5. Initialize Testimonial Carousels
     initTestimonialCarousel('testimonialsGrid');
     initTestimonialCarousel('internshipTestimonialsGrid');
+    
+    // 6. Re-initialize carousel on window resize to fix dimensions
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            initTestimonialCarousel('testimonialsGrid');
+            initTestimonialCarousel('internshipTestimonialsGrid');
+        }, 250);
+    });
     
 });
