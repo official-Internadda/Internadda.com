@@ -1,4 +1,3 @@
-<file_content_replace file_name="official-internadda/internadda.com/Internadda.com-05872db3aec3bcd0007c87fb723b234f785dc8d7/script.js">
 // ---------------------------------------------
 // Website Main Script (Auth Removed, Nav & Carousel Reworked)
 // ---------------------------------------------
@@ -67,33 +66,17 @@ function renderSearchResults(query) {
 
     if (q.length < 2) return;
 
-    const results = allSearchableItems.filter(item =>
-        item.title.toLowerCase().includes(q) ||
-        (item.roles && item.roles.toLowerCase().includes(q))
+    // MODIFIED: Filter to only include 'internship' types and limit results
+    const displayResults = allSearchableItems.filter(item =>
+        (item.type === 'internship') &&
+        (item.title.toLowerCase().includes(q) || (item.roles && item.roles.toLowerCase().includes(q)))
     ).slice(0, 8);
     
-    // --- Prioritize Internship Results (Request 5) ---
-    // Separate by type and interleave for better variety.
-    const internshipResults = results.filter(item => item.type === 'internship');
-    const courseResults = results.filter(item => item.type === 'course');
-    
-    let displayResults = [];
-    let i = 0, j = 0;
-    while (i < internshipResults.length || j < courseResults.length) {
-        if (i < internshipResults.length) {
-            displayResults.push(internshipResults[i++]);
-        }
-        if (i < internshipResults.length) { // Add another internship if available
-            displayResults.push(internshipResults[i++]);
-        }
-        if (j < courseResults.length) { // Add one course
-            displayResults.push(courseResults[j++]);
-        }
-    }
-    displayResults = displayResults.slice(0, 8); // Limit final output to 8
+    // --- Removed redundant interleaving logic as we only show internships now ---
 
     if (displayResults.length === 0) {
-        searchResultsContainer.innerHTML = `<p style="padding: 10px 15px; color: var(--gray);">No related courses or internships found for "${query}".</p>`;
+        // MODIFIED: Updated message to reflect search only for internships
+        searchResultsContainer.innerHTML = `<p style="padding: 10px 15px; color: var(--gray);">No related internships found for "${query}".</p>`;
         searchResultsContainer.classList.remove('hidden');
         return;
     }
@@ -345,4 +328,3 @@ document.addEventListener('DOMContentLoaded', function() {
     initTestimonialCarousel('internshipTestimonialsGrid');
     
 });
-</file_content_replace>
