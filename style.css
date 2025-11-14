@@ -1492,7 +1492,7 @@ footer {
         width: 100%;
     }
 
-    /* Dropdown content scaling */
+    /* Dropdown content scaling - MODIFIED FOR CONSISTENCY */
     .nav-menu.active .dropdown-content {
         position: static;
         box-shadow: none;
@@ -1504,8 +1504,8 @@ footer {
         border: none;
     }
     .nav-menu.active .dropdown-content .dropdown-link {
-        padding: 8px 30px 8px 50px;
-        font-size: 14px;
+        padding: 12px 30px 12px 40px; /* Adjusted padding for better consistency */
+        font-size: 15px; /* Adjusted font size for better consistency */
         background-color: #f7fafc;
         border-bottom: 1px solid #f0f0f0;
     }
