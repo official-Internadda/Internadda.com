@@ -127,7 +127,7 @@ function renderSearchResults(query) {
     searchResultsContainer.classList.remove('hidden');
 }
 
-// ✅ ADD THIS BELOW renderSearchResults() — ensures redirect also happens when user presses Enter
+// ✅ Ensures redirect also happens when user presses Enter
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
@@ -166,6 +166,7 @@ function initTestimonialCarousel(containerId) {
              clone.classList.add('cloned'); // Mark as clone
              
              // Update image source for clones (optional, to represent unique students)
+             // This supports the user request to use student images for the visual scroll
              const img = clone.querySelector('.author-avatar');
              if (img) {
                  // Cycle through placeholder student images (assuming student1.png to studentX.png)
@@ -195,13 +196,6 @@ function startAutoScroll(container, originalCount) {
     let currentScroll = container.scrollLeft;
     
     // Calculate the width of the original content block. This is the reset point.
-    // This calculation is now done entirely in CSS via 'gap' and 'scroll-snap-type' for simpler horizontal scrolling,
-    // but for infinite loop simulation, we need the total width of the *original set*.
-    // We use a rough calculation based on total content width for the reset point.
-    
-    // IMPORTANT: The key to smooth looping is making sure the total scrollable width
-    // of the original cards exactly matches the reset point.
-    
     function getOriginalContentWidth() {
          let totalWidth = 0;
          const originalChildren = Array.from(container.children).slice(0, originalCount);
@@ -369,6 +363,8 @@ document.addEventListener('DOMContentLoaded', function() {
      }
 
     // 5. Initialize Testimonial Carousels
+    // NOTE: CSS/HTML must be updated to change the look of these cards 
+    // to match the "partner logo" style for a full visual transformation.
     initTestimonialCarousel('testimonialsGrid');
     initTestimonialCarousel('internshipTestimonialsGrid');
     
