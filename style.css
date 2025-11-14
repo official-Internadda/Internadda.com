@@ -40,6 +40,8 @@ body {
 /* Helper classes */
 .hidden {
     display: none !important;
+    /* 🔥 CRITICAL FIX: Prevents hidden elements (like search results) from blocking clicks below them */
+    pointer-events: none !important;
 }
 
 /* ============================
