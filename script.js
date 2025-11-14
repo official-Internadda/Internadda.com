@@ -1,12 +1,11 @@
+<file_content_replace file_name="official-internadda/internadda.com/Internadda.com-05872db3aec3bcd0007c87fb723b234f785dc8d7/script.js">
 // ---------------------------------------------
 // Website Main Script (Auth Removed, Nav & Carousel Reworked)
 // ---------------------------------------------
 
 // --- FIREBASE / AUTH CODE COMPLETELY REMOVED ---
-// All logic related to user authentication, sign-up, login, profile dashboard, 
-// and modals has been eliminated based on Request 1.
 
-// --- GLOBAL SEARCH DATA AND LOGIC ---
+// --- GLOBAL SEARCH DATA AND LOGIC (Request 5) ---
 
 // Utility function to get the correct path prefix for assets based on the current page depth
 function getRelativePath(targetPath) {
@@ -28,40 +27,24 @@ function getRelativePath(targetPath) {
     return prefix + cleanTargetPath;
 }
 
-// Hardcoded data (used for search/listings)
-const allCourses = [
-    // FIX: Direct link to local HTML file. (%20 is URL encoding for space)
+// Hardcoded data for search
+const allSearchableItems = [
+    // Courses (Kept for broad search but de-prioritized in logic)
     { type: 'course', title: 'Essential Data Science Intern Course', instructor: 'Lucky Kumar', image: '/images/Essential Data Science Intern Course.png', url: "/courses/courses/Essential%20Data%20Science%20Intern%20Course.html" },
-    
-    // FIX: Direct link to local HTML file.
     { type: 'course', title: 'Generative AI & Prompt Engineering Masterclass', instructor: 'Lucky Kumar', image: '/images/Generative-AI-Prompt-Engineering-Masterclass.png', url: "/courses/courses/Generative-AI-Prompt-Engineering-Masterclass.html" },
-    
-    // FIX: Direct link to local HTML file.
     { type: 'course', title: 'Ethical Hacking Mastery', instructor: 'Lucky Kumar', image: '/images/Ethical-Hacking-Mastery.png', url: "/courses/courses/Ethical-Hacking-Mastery.html" },
-    
-    // FIX: Direct link to local HTML file.
     { type: 'course', title: 'Python Essentials for All', instructor: 'Lucky Kumar', image: '/images/Python-Essentials-for-All.png', url: "/courses/courses/Python-Essentials-for-All.html" },
     
-    // Cloud & DevOps does not have a dedicated HTML file, linking to the main course listing.
-    { type: 'course', title: 'Cloud & DevOps Essentials', instructor: 'Lucky Kumar', image: '/images/Cloud-DevOps-Essentials.png', url: "/courses/course.html" }
-];
-
-const allInternships = [
+    // Internships (Priority items for search results)
     { type: 'internship', title: 'Data Science & Analytics', roles: 'Data Analyst, Data Scientist Intern', url: '/intern/internship.html#tests', image: '/images/test_data Science.png', practiceUrl: '/intern/data_science_practice_test.html', finalExamUrl: '/intern/payment_page_data_science.html' },
     { type: 'internship', title: 'Artificial Intelligence & ML', roles: 'AI Intern, Machine Learning Intern', url: '/intern/internship.html#tests', image: '/images/test_Artificial Intelligence.png', practiceUrl: '/intern/ai_ml_practice_test.html', finalExamUrl: '/intern/payment_page_ai_ml.html' },
-    { type: 'internship', title: 'Python Dev & Software Eng', roles: 'Python Developer, Backend Developer', url: '/intern/internship.html#tests', image: '/images/test_Python Development.png', practiceUrl: '/intern/python_dev_practice_test.html', finalExamUrl: '/intern/payment_page_python.html' }
-    // Full list of 11 internship domains (kept for search completeness)
-    , { type: 'internship', title: 'Cloud Computing & DevOps', roles: 'Cloud Engineer, DevOps Intern', url: '/intern/internship.html#tests', image: '/images/test_Cloud Computing.png', practiceUrl: '/intern/cloud_devops_practice_test.html', finalExamUrl: '/intern/cloud_devops_final_exam.html' }
-    , { type: 'internship', title: 'Cybersecurity & Ethical Hacking', roles: 'Security Analyst, Pentester', url: '/intern/internship.html#tests', image: '/images/test_Cybersecurity & Ethical Hacking.png', practiceUrl: '/intern/cybersecurity_practice_test.html', finalExamUrl: '/intern/cybersecurity_final_exam.html' }
-    , { type: 'internship', title: 'Web & Mobile Development', roles: 'Frontend, React/Angular Dev', url: '/intern/internship.html#tests', image: '/images/test_Web & Mobile Development.png', practiceUrl: '/intern/web_mobile_practice_test.html', finalExamUrl: '/intern/web_mobile_final_exam.html' }
-    , { type: 'internship', title: 'UI/UX Design & Product Design', roles: 'UI/UX Designer, Product Intern', url: '/intern/internship.html#tests', image: '/images/test_UIUX Design & Product Design.png', practiceUrl: '/intern/uiux_practice_test.html', finalExamUrl: '/intern/uiux_final_exam.html' }
-    , { type: 'internship', title: 'Digital Marketing & Growth Hacking', roles: 'SEO, SEM, Social Media Intern', url: '/intern/internship.html#tests', image: '/images/test_Digital Marketing & Growth Hacking.png', practiceUrl: '/intern/digital_marketing_practice_test.html', finalExamUrl: '/intern/digital_marketing_final_exam.html' }
-    , { type: 'internship', title: 'Prompt Engineering & AI Innovation', roles: 'Prompt Engineer, AI Strategist', url: '/intern/internship.html#tests', image: '/images/test_Prompt Engineering.png', practiceUrl: '/intern/prompt_engineering_practice_test.html', finalExamUrl: '/intern/prompt_engineering_final_exam.html' }
-    , { type: 'internship', title: 'Game Development Internship', roles: 'Unity/Unreal Developer Intern', url: '/intern/internship.html#tests', image: '/images/test_Game Development.png', practiceUrl: '/intern/game_dev_practice_test.html', finalExamUrl: '/intern/game_dev_final_exam.html' }
-    , { type: 'internship', title: 'Blockchain & Web3 Dev / Fintech', roles: 'Solidity Developer, Fintech Analyst', url: '/intern/internship.html#tests', image: '/images/test_Blockchain & Web3.png', practiceUrl: '/intern/blockchain_practice_test.html', finalExamUrl: '/intern/blockchain_final_exam.html' }
+    { type: 'internship', title: 'Python Dev & Software Eng', roles: 'Python Developer, Backend Developer', url: '/intern/internship.html#tests', image: '/images/test_Python Development.png', practiceUrl: '/intern/python_dev_practice_test.html', finalExamUrl: '/intern/payment_page_python.html' },
+    { type: 'internship', title: 'Cloud Computing & DevOps', roles: 'Cloud Engineer, DevOps Intern', url: '/intern/internship.html#tests', image: '/images/test_Cloud Computing.png', practiceUrl: '#', finalExamUrl: '#' },
+    { type: 'internship', title: 'Cybersecurity & Ethical Hacking', roles: 'Security Analyst, Pentester', url: '/intern/internship.html#tests', image: '/images/test_Cybersecurity & Ethical Hacking.png', practiceUrl: '#', finalExamUrl: '#' },
+    { type: 'internship', title: 'Web & Mobile Development', roles: 'Frontend, React/Angular Dev', url: '/intern/internship.html#tests', image: '/images/test_Web & Mobile Development.png', practiceUrl: '#', finalExamUrl: '#' },
+    { type: 'internship', title: 'UI/UX Design & Product Design', roles: 'UI/UX Designer, Product Intern', url: '/intern/internship.html#tests', image: '/images/test_UIUX Design & Product Design.png', practiceUrl: '#', finalExamUrl: '#' },
+    { type: 'internship', title: 'Digital Marketing & Growth Hacking', roles: 'SEO, SEM, Social Media Intern', url: '/intern/internship.html#tests', image: '/images/test_Digital Marketing & Growth Hacking.png', practiceUrl: '#', finalExamUrl: '#' }
 ];
-
-const allSearchableItems = [...allCourses, ...allInternships];
 
 function renderSearchResults(query) {
     const searchResultsContainer = document.getElementById('searchResults');
@@ -69,17 +52,13 @@ function renderSearchResults(query) {
 
     const q = query.toLowerCase().trim();
 
-    // --- Redirect condition for "all courses" search ---
-    if (
-        q === "all course" ||
-        q === "all courses" ||
-        q === "courses" ||
-        q === "course" ||
-        q.includes("all course") ||
-        q.includes("courses") ||
-        q.includes("course list")
-    ) {
-        window.location.href = "https://courses.internadda.com/";
+    // --- Redirect condition for quick actions ---
+    if (q === "all courses") {
+        window.location.href = getRelativePath('/courses/course.html');
+        return;
+    }
+    if (q === "all internships" || q === "internships") {
+        window.location.href = getRelativePath('/intern/internship.html');
         return;
     }
 
@@ -92,21 +71,41 @@ function renderSearchResults(query) {
         item.title.toLowerCase().includes(q) ||
         (item.roles && item.roles.toLowerCase().includes(q))
     ).slice(0, 8);
+    
+    // --- Prioritize Internship Results (Request 5) ---
+    // Separate by type and interleave for better variety.
+    const internshipResults = results.filter(item => item.type === 'internship');
+    const courseResults = results.filter(item => item.type === 'course');
+    
+    let displayResults = [];
+    let i = 0, j = 0;
+    while (i < internshipResults.length || j < courseResults.length) {
+        if (i < internshipResults.length) {
+            displayResults.push(internshipResults[i++]);
+        }
+        if (i < internshipResults.length) { // Add another internship if available
+            displayResults.push(internshipResults[i++]);
+        }
+        if (j < courseResults.length) { // Add one course
+            displayResults.push(courseResults[j++]);
+        }
+    }
+    displayResults = displayResults.slice(0, 8); // Limit final output to 8
 
-    if (results.length === 0) {
-        searchResultsContainer.innerHTML = `<p style="padding: 10px 15px; color: var(--gray);">No courses or internships found for "${query}".</p>`;
+    if (displayResults.length === 0) {
+        searchResultsContainer.innerHTML = `<p style="padding: 10px 15px; color: var(--gray);">No related courses or internships found for "${query}".</p>`;
         searchResultsContainer.classList.remove('hidden');
         return;
     }
 
-    results.forEach(item => {
+    displayResults.forEach(item => {
         let itemHtml = '';
-        const courseUrl = getRelativePath(item.url);
+        const baseItemUrl = getRelativePath(item.url);
 
         if (item.type === 'course') {
             const imgSrc = getRelativePath(item.image);
             itemHtml = `
-                <a href="${courseUrl}" class="search-result-item course-result">
+                <a href="${baseItemUrl}" class="search-result-item course-result">
                     <img src="${imgSrc}" alt="${item.title}" onerror="this.onerror=null;this.src='${getRelativePath('/images/logo.jpg')}'">
                     <div>
                         <h4>${item.title}</h4>
@@ -117,8 +116,9 @@ function renderSearchResults(query) {
             `;
         } else if (item.type === 'internship') {
             const imgSrc = getRelativePath(item.image);
-            const practiceUrl = getRelativePath(item.practiceUrl);
-            const finalExamUrl = getRelativePath(item.finalExamUrl);
+            const practiceUrl = item.practiceUrl === '#' ? '#' : getRelativePath(item.practiceUrl);
+            const finalExamUrl = item.finalExamUrl === '#' ? '#' : getRelativePath(item.finalExamUrl);
+            const isDisabled = item.practiceUrl === '#' && item.finalExamUrl === '#';
 
             itemHtml = `
                 <div class="search-result-item internship-result">
@@ -130,8 +130,8 @@ function renderSearchResults(query) {
                         </div>
                     </div>
                     <div class="search-result-actions">
-                         <a href="${practiceUrl}" class="search-action-link btn btn-outline">Practice Test</a>
-                         <a href="${finalExamUrl}" class="search-action-link btn btn-primary">Final Exam</a>
+                         <a href="${practiceUrl}" class="search-action-link btn btn-transparent ${isDisabled ? 'disabled' : ''}">${item.practiceUrl === '#' ? 'Practice (Soon)' : 'Practice Test'}</a>
+                         <a href="${finalExamUrl}" class="search-action-link btn btn-primary ${isDisabled ? 'disabled' : ''}">${item.finalExamUrl === '#' ? 'Final Exam (Soon)' : 'Final Exam'}</a>
                     </div>
                 </div>
             `;
@@ -143,7 +143,6 @@ function renderSearchResults(query) {
     searchResultsContainer.classList.remove('hidden');
 }
 
-
 // ✅ ADD THIS BELOW renderSearchResults() — ensures redirect also happens when user presses Enter
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('searchInput');
@@ -151,16 +150,11 @@ document.addEventListener('DOMContentLoaded', function() {
         searchInput.addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
                 const q = searchInput.value.toLowerCase().trim();
-                if (
-                    q === "all course" ||
-                    q === "all courses" ||
-                    q === "courses" ||
-                    q === "course" ||
-                    q.includes("all course") ||
-                    q.includes("courses") ||
-                    q.includes("course list")
-                ) {
-                    window.location.href = "https://courses.internadda.com/";
+                if (q === "all courses" || q === "courses") {
+                    window.location.href = getRelativePath('/courses/course.html');
+                    event.preventDefault();
+                } else if (q === "all internships" || q === "internships") {
+                    window.location.href = getRelativePath('/intern/internship.html');
                     event.preventDefault();
                 }
             }
@@ -169,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-// --- Testimonial Carousel/Auto-Scroll Logic (Request 5) ---
+// --- Testimonial Carousel/Auto-Scroll Logic (Request 1) ---
 
 function initTestimonialCarousel(containerId) {
     const container = document.getElementById(containerId);
@@ -178,14 +172,8 @@ function initTestimonialCarousel(containerId) {
     // Check if enough original cards exist (assuming minimal 3 cards for carousel effect)
     const originalCards = Array.from(container.children).filter(child => !child.classList.contains('cloned'));
     
-    // If we already have duplicates (e.g., in index.html where they are added manually), just start scrolling
-    if (container.children.length > originalCards.length) {
-        startAutoScroll(container);
-        return;
-    }
-
-    // Duplicate all children if less than 6 cards are present in total (for visual loop)
-    if (originalCards.length > 0 && originalCards.length < 6) {
+    // Duplicate cards if necessary to ensure smooth looping (seamless loop needs at least 1-2 duplicates of each visible card set)
+    if (originalCards.length > 0 && container.children.length === originalCards.length) {
          originalCards.forEach(card => {
              const clone = card.cloneNode(true);
              clone.classList.add('cloned'); // Mark as clone to prevent re-duplication
@@ -193,19 +181,30 @@ function initTestimonialCarousel(containerId) {
          });
     }
 
-    // Start auto-scrolling only if there are enough items for a carousel effect (3 original + 3 clone minimum)
-    if (container.children.length >= 3) {
-        startAutoScroll(container);
+    // Start auto-scrolling only if there are enough items for a carousel effect
+    if (container.children.length > originalCards.length) {
+        startAutoScroll(container, originalCards.length);
     }
 }
 
-function startAutoScroll(container) {
+function startAutoScroll(container, originalCount) {
     let animationFrame;
     const scrollSpeed = 0.5; // pixels per requestAnimationFrame
-    const totalContentWidth = container.scrollWidth / 2; // Scroll width of the original content
+    
+    // Calculate the width of the original content block. This is the reset point.
+    // Assuming uniform width + gap, this is a rough calculation based on number of original cards * card width approximation
+    let singleCardWidth = 380; // Default width from CSS
+    let gap = 36; // Default gap from CSS
+    if (window.innerWidth <= 768) {
+        singleCardWidth = window.innerWidth * 0.85; // Mobile width approximation
+        gap = 20;
+    }
+
+    const totalContentWidth = originalCount * singleCardWidth + (originalCount - 1) * gap + 50; // Add buffer
 
     function autoScroll() {
-        // If scroll position reaches the end of the original content (start of the duplicates), reset
+        // If scroll position reaches the start of the duplicated content, reset it to the beginning.
+        // We use scrollLeft for horizontal scrolling.
         if (container.scrollLeft >= totalContentWidth) {
             container.scrollLeft = 0;
         }
@@ -232,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('searchInput');
     const searchResultsContainer = document.getElementById('searchResults');
     
-    // 1. Hamburger Menu Toggle Logic (Request 2)
+    // 1. Hamburger Menu Toggle Logic
     if (hamburgerMenu && navMenu) {
         hamburgerMenu.addEventListener('click', () => {
             hamburgerMenu.classList.toggle('active');
@@ -341,12 +340,9 @@ document.addEventListener('DOMContentLoaded', function() {
          });
      }
 
-    // 5. Initialize Testimonial Carousels (Request 5)
+    // 5. Initialize Testimonial Carousels
     initTestimonialCarousel('testimonialsGrid');
     initTestimonialCarousel('internshipTestimonialsGrid');
     
-    // 6. Partner Marquee Fix (Request 7 & 8)
-    // The visual fix relies primarily on CSS keyframes and duplicating the content in HTML.
-    // The script only ensures the container is present and the animation is running via CSS.
-    
 });
+</file_content_replace>
