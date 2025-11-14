@@ -1124,19 +1124,6 @@ footer {
     gap: 15px;
 }
 
-.social-link {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: var(--white);
-    font-size: 1.1rem;
-    transition: var(--transition);
-}
-
 .social-link:hover {
     background-color: var(--primary);
     transform: translateY(-3px) scale(1.1);
@@ -1468,7 +1455,14 @@ footer {
     }
     .nav-menu.active {
         display: flex;
+        flex-direction: column;
+        /* MODIFICATION START: Ensure all items are left-aligned */
+        align-items: flex-start; 
+        width: 100%;
+        /* MODIFICATION END */
         gap: 0;
+        overflow-y: auto;
+        max-height: 80vh;
     }
 
     .hamburger-menu {
@@ -1487,10 +1481,15 @@ footer {
         margin: 0;
         font-size: 15px;
     }
-    .nav-menu.active > a.nav-link:not(.mobile-only-link) {
+    .nav-menu.active > a.nav-link:not(.dropdown-toggle) {
         /* Target main links like Home, Courses, Jobs, etc. */
         font-weight: 700;
         color: var(--primary);
+    }
+    
+    /* Ensure the dropdown container element also takes full width */
+    .nav-menu.active .nav-item.dropdown {
+        width: 100%;
     }
 
     /* Dropdown content scaling */
