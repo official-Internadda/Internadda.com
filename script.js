@@ -170,7 +170,7 @@ function initTestimonialCarousel(containerId) {
              if (img) {
                  // Cycle through placeholder student images (assuming student1.png to studentX.png)
                  const studentIndex = (originalCards.length + i) % 6 + 1; // Cycle through 1 to 6
-                 img.src = getRelativePath(`/images/student${studentIndex}.png`);
+                 img.src = getRelativePath(`/images/student${studentIndex}.png`); 
                  img.onerror = function() { this.onerror=null; this.src=getRelativePath('/images/no_image.png'); };
              }
              
@@ -190,7 +190,8 @@ function startAutoScroll(container, originalCount) {
         cancelAnimationFrame(container.autoScrollRAF);
     }
     
-    let scrollSpeed = 0.5; // pixels per requestAnimationFrame
+    // CHANGED: Increased speed from 0.5 to 1.0 for visible movement and looping fix
+    let scrollSpeed = 1.0; // pixels per requestAnimationFrame
     let currentScroll = container.scrollLeft;
     
     // Calculate the width of the original content block. This is the reset point.
@@ -222,8 +223,8 @@ function startAutoScroll(container, originalCount) {
     function autoScroll() {
         const resetPoint = getOriginalContentWidth();
         
-        // If scroll position reaches the start of the duplicated content, reset it to the beginning.
-        if (container.scrollLeft >= resetPoint) {
+        // MODIFIED: Check against resetPoint minus scrollSpeed for smoother loop boundary detection
+        if (container.scrollLeft >= resetPoint - scrollSpeed) {
             // Snap back to the visual start point (scroll position 0) instantly
             container.scrollLeft = 0;
         }
