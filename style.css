@@ -1,4 +1,3 @@
-// official-internadda/internadda.com/Internadda.com-42eb2d6d091fd8be3671c44c0b78359624cb4d47/style.css
 /* Global variables and resets */
 :root {
     --primary: #2b6cb0; /* Trustworthy blue */
@@ -15,7 +14,6 @@
     --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
     --profile-width: 480px;
-    --mobile-nav-padding: 30px; /* Consistent left padding for mobile menu items */
 }
 
 * {
@@ -386,7 +384,7 @@ header.scrolled {
 @keyframes slideDown { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
 /* ============================
-   NAVIGATION DROPDOWN STYLES
+   NAVIGATION DROPDOWN STYLES (New Structure - Request 2)
    ============================ */
 .nav-item.dropdown { position: relative; }
 /* Force dropdown links to look like regular nav links */
@@ -465,7 +463,7 @@ header.scrolled {
 
 
 /* ============================
-   Testimonials (Success Stories) - Auto-Scrolling Carousel (FIXED)
+   Testimonials (Success Stories) - Auto-Scrolling Carousel (Request 5)
    ============================ */
 
 .testimonials {
@@ -480,12 +478,6 @@ header.scrolled {
     padding-bottom: 20px;
     gap: 36px;
     width: 100%;
-    /* Added CSS to ensure smooth scrolling appearance for the carousel */
-    scrollbar-width: none; /* Hide scrollbar for Firefox */
-    -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
-}
-.testimonials-grid::-webkit-scrollbar {
-    display: none; /* Hide scrollbar for Chrome, Safari and Opera */
 }
 .testimonial-wrapper {
      overflow: hidden;
@@ -1455,7 +1447,7 @@ footer {
         width: 100%;
         background-color: var(--white);
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        padding: 0; /* Remove padding from menu container */
+        padding: 10px 0 20px 0;
         z-index: 999;
         gap: 0;
         overflow-y: auto;
@@ -1464,8 +1456,13 @@ footer {
     .nav-menu.active {
         display: flex;
         flex-direction: column;
+        /* MODIFICATION START: Ensure all items are left-aligned */
         align-items: flex-start; 
         width: 100%;
+        /* MODIFICATION END */
+        gap: 0;
+        overflow-y: auto;
+        max-height: 80vh;
     }
 
     .hamburger-menu {
@@ -1475,18 +1472,17 @@ footer {
         display: none; /* Hide search/auth actions on mobile header */
     }
     
-    /* FIX: Consistent padding and alignment for all top-level links */
-    .nav-menu.active > a,
-    .nav-menu.active .dropdown-toggle {
+    .nav-menu.active > a {
         display: block !important;
         width: 100%;
         text-align: left;
-        padding: 15px var(--mobile-nav-padding); /* Use consistent variable padding */
+        padding: 12px 30px;
         border-bottom: 1px solid #eee;
         margin: 0;
         font-size: 15px;
     }
     .nav-menu.active > a.nav-link:not(.dropdown-toggle) {
+        /* Target main links like Home, Courses, Jobs, etc. */
         font-weight: 700;
         color: var(--primary);
     }
@@ -1494,14 +1490,7 @@ footer {
     /* Ensure the dropdown container element also takes full width */
     .nav-menu.active .nav-item.dropdown {
         width: 100%;
-        /* Remove its default padding to rely on toggle/link padding */
     }
-    /* Ensure toggle style is maintained inside dropdown nav item */
-    .nav-menu.active .nav-item.dropdown .nav-link.dropdown-toggle {
-        /* This rule is intentionally duplicated to ensure priority */
-        padding: 15px var(--mobile-nav-padding); 
-    }
-
 
     /* Dropdown content scaling */
     .nav-menu.active .dropdown-content {
@@ -1515,8 +1504,7 @@ footer {
         border: none;
     }
     .nav-menu.active .dropdown-content .dropdown-link {
-        /* Increased left padding for indentation */
-        padding: 10px calc(var(--mobile-nav-padding) + 15px) 10px var(--mobile-nav-padding); 
+        padding: 8px 30px 8px 50px;
         font-size: 14px;
         background-color: #f7fafc;
         border-bottom: 1px solid #f0f0f0;
