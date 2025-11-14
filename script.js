@@ -100,6 +100,7 @@ function renderSearchResults(query) {
             `;
         } else if (item.type === 'internship') {
             const imgSrc = getRelativePath(item.image);
+            // Handle '#' links correctly by generating a link to '#' for unimplemented practice/exam links
             const practiceUrl = item.practiceUrl === '#' ? '#' : getRelativePath(item.practiceUrl);
             const finalExamUrl = item.finalExamUrl === '#' ? '#' : getRelativePath(item.finalExamUrl);
             const isDisabled = item.practiceUrl === '#' && item.finalExamUrl === '#';
@@ -344,6 +345,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
          // Close search results when clicking anywhere outside
          document.addEventListener('click', (e) => {
+             // The CSS fix (.hidden { pointer-events: none !important; }) ensures that 
+             // even when searchResultsContainer is visible, if the click is outside, 
+             // the container quickly hides itself without blocking clicks on the main page.
              if (!searchInput.contains(e.target) && !searchResultsContainer.contains(e.target)) {
                  searchResultsContainer.classList.add('hidden');
              }
