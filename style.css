@@ -474,7 +474,7 @@ header.scrolled {
 .testimonials-grid {
     display: flex;
     overflow-x: hidden;
-    scroll-snap-type: x mandatory;
+    /* REMOVED: scroll-snap-type: x mandatory; for smooth scroll */
     padding-bottom: 20px;
     gap: 36px;
     width: 100%;
@@ -487,64 +487,67 @@ header.scrolled {
 
 .testimonial-card {
     flex-shrink: 0;
-    width: 380px;
+    /* CHANGED: Fixed width for consistent marquee look */
+    min-width: 250px; 
+    height: 150px; 
     background: var(--white);
     border-radius: 18px;
-    padding: 36px;
+    padding: 30px; /* Reduced padding */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    scroll-snap-align: start;
-    border-left: 5px solid var(--secondary);
+    /* REMOVED: scroll-snap-align: start; */
+    border-left: none; /* Removed left bar */
+    border-bottom: 3px solid var(--secondary); /* Added bottom bar for flair */
     transform-style: preserve-3d;
+    
+    /* NEW: Center content for logo-like feel */
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 .testimonial-card:hover {
     transform: perspective(1000px) translateY(-15px) rotateX(3deg);
     box-shadow: 0 20px 40px rgba(43, 108, 176, 0.2);
     border-left-color: var(--primary);
+    border-bottom-color: var(--primary); /* Hover effect on new border */
 }
 
-.testimonial-text {
-    font-style: italic;
-    margin-bottom: 24px;
-    position: relative;
-    font-size: 16px;
-    color: var(--dark);
-    line-height: 1.7;
+/* NEW: Hide testimonial text to focus on image/name (user request) */
+.testimonial-content p.testimonial-text {
+    display: none; 
 }
 .testimonial-text::before {
-    content: "\201C";
-    font-size: 110px;
-    color: rgba(43, 108, 176, 0.1);
-    position: absolute;
-    top: -50px;
-    left: -20px;
-    font-family: Georgia, serif;
-    z-index: 1;
+    display: none; /* Hide large quote mark */
 }
+
 .testimonial-author {
     display: flex;
+    flex-direction: column; /* Stack vertically for logo style */
     align-items: center;
-    gap: 18px;
-    margin-top: 20px;
+    gap: 8px; /* Reduced gap */
+    margin-top: 0;
     z-index: 2;
     position: relative;
+    width: 100%;
 }
 .author-avatar {
-    width: 64px;
-    height: 64px;
+    width: 80px; /* Increased size for focus */
+    height: 80px;
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid var(--primary);
     transition: var(--transition);
+    margin-bottom: 5px;
 }
 .author-name {
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1rem; /* Smaller name */
     color: var(--primary);
 }
 .author-role {
     color: var(--gray);
-    font-size: 0.9rem;
+    font-size: 0.8rem; /* Smaller role */
 }
 
 
@@ -1480,6 +1483,8 @@ footer {
         border-bottom: 1px solid #eee;
         margin: 0;
         font-size: 15px;
+        font-weight: 700;
+        color: var(--primary);
     }
     .nav-menu.active > a.nav-link:not(.dropdown-toggle) {
         /* Target main links like Home, Courses, Jobs, etc. */
@@ -1492,7 +1497,7 @@ footer {
         width: 100%;
     }
 
-    /* Dropdown content scaling - MODIFIED FOR CONSISTENCY */
+    /* Dropdown content scaling - FIXED FOR CONSISTENCY (All items must align to 30px left from the screen edge) */
     .nav-menu.active .dropdown-content {
         position: static;
         box-shadow: none;
@@ -1504,8 +1509,9 @@ footer {
         border: none;
     }
     .nav-menu.active .dropdown-content .dropdown-link {
-        padding: 12px 30px 12px 40px; /* Adjusted padding for better consistency */
-        font-size: 15px; /* Adjusted font size for better consistency */
+        /* PADDING FIX: Use 12px 30px for dropdown, rely on the icon margin for slight visual indent if needed */
+        padding: 12px 30px; 
+        font-size: 15px; 
         background-color: #f7fafc;
         border-bottom: 1px solid #f0f0f0;
     }
@@ -1616,11 +1622,6 @@ footer {
         width: 85vw;
         max-width: 400px;
         margin: 0;
-    }
-    .testimonial-text::before {
-        font-size: 80px;
-        top: -40px;
-        left: -10px;
     }
     .testimonial-card:hover {
         transform: translateY(-8px);
