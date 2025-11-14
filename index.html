@@ -3,44 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paid Internships | Internadda - Learn, Intern, Earn</title>
-    <meta name="description" content="Secure paid internships with top companies by proving your skills through our rigorous, free skill tests. Start your career in Data Science, AI, Web Dev, and more.">
+    
+    <title>Internadda — India’s Adda for Free Courses & Paid Internships</title>
+    <meta name="description" content="Access free, industry-focused courses. Land paid internships (up to ₹50K/month) through our proven test-based selection process. Learn, Intern, & Earn with Internadda.">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../style.css">
 
-    <link rel="icon" type="image/png" href="../images/favicon.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico">
+    <link rel="stylesheet" href="style.css">
+
+    <meta property="og:title" content="Internadda — India’s Adda for Free Courses & Paid Internships" />
+    <meta property="og:description" content="Access free, industry-focused courses. Land paid internships (up to ₹50K/month) through our proven test-based selection process." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://internadda.com/index.html" />
+    <meta property="og:image" content="https://internadda.com/images/slide1.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Internadda: Learn, Intern, Earn - Paid Internships Await" />
+    <meta name="twitter:description" content="India's fastest-growing platform connecting talent with top companies via skill tests. Start your career journey today!" />
+    <meta name="twitter:image" content="https://internadda.com/images/slide1.png" />
     
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+
     <style>
-        .page-header {
-            background-color: #e6f7ff; /* Lighter, more encouraging blue background */
+        .hero-heading {
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
-        .internship-program-card {
-            background-color: var(--white);
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            margin-top: 40px;
+        .hero-image-slider {
+            transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s;
         }
-        .program-feature {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-            font-weight: 500;
+        .hero-image-slider:hover {
+            transform: perspective(1000px) translateZ(15px) rotateY(3deg) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
         }
-        .program-feature i {
-            font-size: 1.5rem;
-            color: var(--primary);
-        }
-        .test-card-actions a {
-            flex-grow: 1;
+        .value-card:hover {
+            border-bottom: 3px solid var(--accent); /* Added subtle border highlight on hover */
         }
     </style>
+    
 </head>
+
+
 <body>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
     <script>
@@ -50,19 +53,21 @@
       gtag('config', 'G-3ZZ3HGFM3Q');
     </script>
 
+
     <header>
         <div class="container header-container">
-            <a href="../index.html" class="logo">
-                <img src="../images/logo.jpg" alt="InternAdda Logo" class="logo-img">
+            <a href="index.html" class="logo">
+                <img src="images/logo.jpg" alt="InternAdda Logo" class="logo-img">
                 <span class="logo-text">InternAdda</span>
             </a>
 
+        
             <nav class="nav-menu">
-                <a href="../index.html" class="nav-link">Home</a>
+                <a href="/index.html" class="nav-link">Home</a>
                 <a href="https://courses.internadda.com/" class="nav-link">Courses</a>
-                <a href="internship.html" class="nav-link">Internships</a>
-                <a href="../jobs.html" class="nav-link">Jobs</a>
-                <a href="../about.html" class="nav-link">About</a>
+                <a href="/intern/internship.html" class="nav-link">Internships</a>
+                <a href="/jobs.html" class="nav-link">Jobs</a>
+                <a href="/about.html" class="nav-link">About</a>
                 
                 <div class="nav-item dropdown" id="toolsDropdown">
                     <a href="#" class="nav-link dropdown-toggle">Tools <i class="fas fa-chevron-down dropdown-arrow"></i></a>
@@ -78,11 +83,11 @@
                 <div class="nav-item dropdown" id="moreDropdown">
                     <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
-                        <a href="../contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
+                        <a href="/contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
                         <a href="https://blog-internadda.blogspot.com/" class="dropdown-link"><i class="fas fa-newspaper"></i> Blog</a>
-                        <a href="../community/join.html" class="dropdown-link"><i class="fas fa-users"></i> Community</a>
-                        <a href="../community/partners.html" class="dropdown-link"><i class="fas fa-handshake"></i> Partners</a>
-                        <a href="../community/academy.html" class="dropdown-link"><i class="fas fa-university"></i> Offline Academy</a>
+                        <a href="/community/join.html" class="dropdown-link"><i class="fas fa-users"></i> Community</a>
+                        <a href="/community/partners.html" class="dropdown-link"><i class="fas fa-handshake"></i> Partners</a>
+                        <a href="/community/academy.html" class="dropdown-link"><i class="fas fa-university"></i> Offline Academy</a>
                     </div>
                 </div>
                 
@@ -91,11 +96,11 @@
                 <a href="https://interview-preparation.internadda.com/" class="nav-link mobile-only-link">Interview Question</a>
                 <a href="https://letter-builder.internadda.com/" class="nav-link mobile-only-link">Cover Letter Generator</a>
                 <a href="https://ai-paraphraser.internadda.com" class="nav-link mobile-only-link">Essay / Paraphraser Tool</a>
-                <a href="../contact.html" class="nav-link mobile-only-link">Contact</a>
+                <a href="/contact.html" class="nav-link mobile-only-link">Contact</a>
                 <a href="https://blog-internadda.blogspot.com/" class="nav-link mobile-only-link">Blog</a>
-                <a href="../community/join.html" class="nav-link mobile-only-link">Community</a>
-                <a href="../community/partners.html" class="nav-link mobile-only-link">Partners</a>
-                <a href="../community/academy.html" class="nav-link mobile-only-link">Offline Academy</a>
+                <a href="/community/join.html" class="nav-link mobile-only-link">Community</a>
+                <a href="/community/partners.html" class="nav-link mobile-only-link">Partners</a>
+                <a href="/community/academy.html" class="nav-link mobile-only-link">Offline Academy</a>
             </nav>
 
             <div class="header-actions">
@@ -103,6 +108,7 @@
                     <i class="fas fa-search search-icon"></i>
                     <input type="text" id="searchInput" class="search-input" placeholder="Search courses & domains...">
                 </div>
+
                 </div> 
 
             <button class="hamburger-menu" id="hamburgerMenu">
@@ -113,124 +119,279 @@
         </div>
         <div id="searchResults" class="search-results-container container hidden"></div>
     </header>
+
     <main>
-        <section class="page-header">
-            <div class="container">
-                <h1 class="section-title">Paid Internship Opportunities</h1>
-                <p class="section-subtitle">Prove your skills, secure a stipend, and launch your career with top companies.</p>
-                <div class="internship-program-card">
-                    <h2 class="section-title" style="text-align: center; color: var(--secondary); margin-bottom: 30px;">How the Program Works</h2>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-                        <div class="program-feature">
-                            <i class="fas fa-chalkboard-teacher"></i>
-                            <span><strong>Step 1: Learn Skills</strong> - Complete our free, domain-specific courses.</span>
+        <section class="hero">
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-heading">India’s Adda for <span>Internships</span></h1>
+                    <p class="hero-description">The perfect launchpad for your career. Gain in-demand skills through our <strong>free courses</strong>, secure paid internships with top companies, and get placed with our job assistance.</p>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">100+</span>
+                            <span class="stat-label">Free Courses</span>
                         </div>
-                        <div class="program-feature">
-                            <i class="fas fa-file-signature"></i>
-                            <span><strong>Step 2: Pass the Test</strong> - Take the rigorous Final Exam to validate your knowledge.</span>
+                        <div class="stat-item">
+                            <span class="stat-value">10K+</span>
+                            <span class="stat-label">Students Enrolled</span>
                         </div>
-                        <div class="program-feature">
-                            <i class="fas fa-briefcase-medical"></i>
-                            <span><strong>Step 3: Secure Internship</strong> - Successful candidates are directly placed in paid internships.</span>
+                        <div class="stat-item">
+                            <span class="stat-value">4.7★</span>
+                            <span class="stat-label">Average Rating</span>
+                        </div>
+                    </div>
+
+
+                    <div class="hero-cta">
+                        <a href="https://courses.internadda.com/" class="btn btn-primary btn-lg">Explore Courses</a>
+                        <a href="intern/internship.html" class="btn btn-transparent btn-lg">Find Internships</a>
+                    </div>
+                </div>
+
+                <div class="hero-image">
+                    <div class="hero-image-slider" id="heroImageSlider">
+                        <div class="slider-wrapper">
+                            <img src="images/slide1.png" alt="India's Fastest Growing Internship Provider" class="slide hero-img active">
+                            <img src="images/slide2.png" alt="Learn, Intern, Earn Model" class="slide hero-img">
+                            <img src="images/slide3.png" alt="Connecting Talent, Building Futures" class="slide hero-img">
+                        </div>
+                        <div class="slider-nav">
+                            <div class="dot active" data-slide="0"></div>
+                            <div class="dot" data-slide="1"></div>
+                            <div class="dot" data-slide="2"></div>
                         </div>
                     </div>
                 </div>
-                
-                <a href="#tests" class="btn btn-primary btn-lg" style="margin-top: 30px;"><i class="fas fa-chevron-down"></i> Start Your Final Exam</a>
             </div>
         </section>
 
-        <section class="test-section" id="tests">
+        <section class="partner-logo-section">
+            <div class="logo-marquee-container">
+                <div class="logo-marquee" style="animation-delay: 0s;">
+                    <div class="logo-item"><img src="images/compan1.jpg" alt="Partner Logo"></div>
+                    <div class="logo-item"><img src="images/compan2.jpg" alt="Partner Logo"></div>
+                    <div class="logo-item"><img src="images/compan3.jpg" alt="Partner Logo"></div>
+                    <div class="logo-item"><img src="images/compan1.jpg" alt="Partner Logo"></div>
+                    <div class="logo-item"><img src="images/compan2.jpg" alt="Partner Logo"></div>
+                    <div class="logo-item"><img src="images/compan3.jpg" alt="Partner Logo"></div>
+                    <div class="logo-item"><img src="images/compan1.jpg" alt="Partner Logo"></div>
+                    <div class="logo-item"><img src="images/compan2.jpg" alt="Partner Logo"></div>
+                    <div class="logo-item"><img src="images/compan3.jpg" alt="Partner Logo"></div>
+                </div>
+                <div class="logo-marquee duplicate" style="animation-delay: 0s;">
+                    <div class="logo-item"><img src="images/compan1.jpg" alt="Partner Logo"></div>
+                    <div class="logo-item"><img src="images/compan2.jpg" alt="Partner Logo"></div>
+                    <div class="logo-item"><img src="images/compan3.jpg" alt="Partner Logo"></div>
+                    <div class="logo-item"><img src="images/compan1.jpg" alt="Partner Logo"></div>
+                    <div class="logo-item"><img src="images/compan2.jpg" alt="Partner Logo"></div>
+                    <div class="logo-item"><img src="images/compan3.jpg" alt="Partner Logo"></div>
+                    <div class="logo-item"><img src="images/compan1.jpg" alt="Partner Logo"></div>
+                    <div class="logo-item"><img src="images/compan2.jpg" alt="Partner Logo"></div>
+                    <div class="logo-item"><img src="images/compan3.jpg" alt="Partner Logo"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="value-prop">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">Choose Your Internship Domain</h2>
-                    <p class="section-subtitle">Practice with the free test, then take the paid Final Exam to qualify for placement.</p>
+                    <h2 class="section-title">Your Career Transformation Journey</h2>
+                    <p class="section-subtitle">We provide a complete pathway from learning to earning through skill development, practical experience, and career placement.</p>
                 </div>
+
+                <div class="value-cards">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="value-title">Learn</h3>
+                        <p class="value-description">Access <strong>free, industry-focused courses</strong> taught by experts with hands-on projects and certifications.</p>
+                    </div>
+
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h3 class="value-title">Intern</h3>
+                        <p class="value-description">Gain real-world experience with our network of company partners and secure a <strong>paid internship</strong>.</p>
+                    </div>
+
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <h3 class="value-title">Earn</h3>
+                        <p class="value-description">Launch your career with our <strong>job placement assistance</strong> and start earning in your chosen field.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="courses">
+            <div class="container">
+                <div class="courses-header">
+                    <h2 class="section-title">Popular Courses</h2>
+                    <a href="https://courses.internadda.com/" class="btn btn-outline">View All Courses</a>
+                </div>
+
+
 
                 <div class="courses-grid">
-                   
-                    <div class="test-card">
-                        <img src="../images/test_data Science.png" alt="Data Science" onerror="this.onerror=null;this.src='../images/no_image.png'">
-                        <h3>Data Science & Analytics</h3>
-                        <p>Roles: Data Analyst, Data Scientist Intern, Business Intelligence Analyst.</p>
-                        <div class="test-card-actions">
-                            <a href="data_science_practice_test.html" class="btn btn-transparent">Practice Test (Free)</a>
-                            <a href="payment_page_data_science.html" class="btn btn-primary">Final Exam (Paid)</a>
+                   <a href="https://courses.internadda.com/" class="course-card" style="text-decoration:none; color:inherit;">
+                        <div class="course-image">
+                            <img src="images/Essential Data Science Intern Course.png"
+                                 alt="Essential Data Science Intern Course"
+                                 onerror="this.onerror=null;this.src='images/no_image.png'">
+                        </div>
+                        <div class="course-content">
+                            <h3 class="course-title">Data Science Intern Course</h3>
+                            <p class="course-author">Instructed by Lucky Kumar</p>
+                            <div class="course-rating">
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="rating-value">4.9</span>
+                            </div>
+                            <div class="course-duration">
+                                <i class="far fa-clock"></i> Average Duration: 27 mins
+                            </div>
+                            <div class="course-price">
+                                <span class="original-price">₹1,999</span>
+                                <span class="badge free">FREE</span>
+                            </div>
+                        </div>
+                    </a>
+
+                <a href="https://courses.internadda.com/"
+                   class="course-card"
+                   style="text-decoration:none; color:inherit;">
+                     <div class="course-image">
+                         <img src="images/Generative-AI-Prompt-Engineering-Masterclass.png"
+                              alt="Generative AI & Prompt Engineering Masterclass"
+                              onerror="this.onerror=null;this.src='images/no_image.png'">
+                     </div>
+                     <div class="course-content">
+                         <h3 class="course-title">Generative AI & Prompt Engineering</h3>
+                         <p class="course-author">Instructed by Lucky Kumar</p>
+                         <div class="course-rating">
+                             <div class="rating-stars">
+                                 <i class="fas fa-star"></i>
+                                 <i class="fas fa-star"></i>
+                                 <i class="fas fa-star"></i>
+                                 <i class="fas fa-star"></i>
+                                 <i class="fas fa-star-half-alt"></i>
+                             </div>
+                             <span class="rating-value">4.7</span>
+                         </div>
+                         <div class="course-duration">
+                            <i class="far fa-clock"></i> Average Duration: 30 mins
+                        </div>
+                         <div class="course-price">
+                             <span class="original-price">₹2,999</span>
+                             <span class="badge free">FREE</span>
+                         </div>
+                     </div>
+                 </a>
+
+
+                <a href="https://courses.internadda.com/"
+                   class="course-card"
+                   style="text-decoration:none; color:inherit;">
+                     <div class="course-image">
+                         <img src="images/Python-Essentials-for-All.png"
+                              alt="Python Essentials for All"
+                              onerror="this.onerror=null;this.src='images/no_image.png'">
+                     </div>
+                     <div class="course-content">
+                         <h3 class="course-title">Python Essentials for All</h3>
+                         <p class="course-author">Instructed by Lucky Kumar</p>
+                         <div class="course-rating">
+                             <div class="rating-stars">
+                                 <i class="fas fa-star"></i>
+                                 <i class="fas fa-star"></i>
+                                 <i class="fas fa-star"></i>
+                                 <i class="fas fa-star"></i>
+                                 <i class="fas fa-star-half-alt"></i>
+                             </div>
+                             <span class="rating-value">4.8</span>
+                         </div>
+                         <div class="course-duration">
+                            <i class="far fa-clock"></i> Average Duration: 28 mins
+                        </div>
+                         <div class="course-price">
+                             <span class="original-price">₹1,999</span>
+                             <span class="badge free">FREE</span>
+                         </div>
+                     </div>
+                 </a>
+
+            </div>
+        </section>
+
+        <section class="internships">
+            <div class="container internship-container">
+                <div class="internship-content">
+                    <h2 class="section-title">Get Real-World Experience with Our Internship Program</h2>
+                    <p>Our internship program connects you with top companies where you can apply your skills, gain valuable experience, and build your professional network. This unparalleled experience is essential for bridging the gap between academic knowledge and industry demands.</p>
+
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span>Paid internship opportunities</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span>Remote and on-site options</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span>Mentorship from industry professionals</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span>Potential for full-time job offers</span>
                         </div>
                     </div>
 
-                    <div class="test-card">
-                        <img src="../images/test_Artificial Intelligence.png" alt="AI/ML" onerror="this.onerror=null;this.src='../images/no_image.png'">
-                        <h3>Artificial Intelligence & ML</h3>
-                        <p>Roles: AI Intern, Machine Learning Intern, Computer Vision Specialist.</p>
-                        <div class="test-card-actions">
-                            <a href="ai_ml_practice_test.html" class="btn btn-transparent">Practice Test (Free)</a>
-                            <a href="payment_page_ai_ml.html" class="btn btn-primary">Final Exam (Paid)</a>
-                        </div>
-                    </div>
+                    <a href="intern/internship.html" class="btn btn-primary">Explore Internships</a>
+                </div>
 
-                    <div class="test-card">
-                        <img src="../images/test_Python Development.png" alt="Python Development" onerror="this.onerror=null;this.src='../images/no_image.png'">
-                        <h3>Python Development</h3>
-                        <p>Roles: Python Developer, Backend Developer, Scripting & Automation Engineer.</p>
-                        <div class="test-card-actions">
-                            <a href="python_dev_practice_test.html" class="btn btn-transparent">Practice Test (Free)</a>
-                            <a href="payment_page_python.html" class="btn btn-primary">Final Exam (Paid)</a>
-                        </div>
-                    </div>
-                    
-                    <div class="test-card">
-                        <img src="../images/test_Cloud Computing.png" alt="Cloud Computing" onerror="this.onerror=null;this.src='../images/no_image.png'">
-                        <h3>Cloud Computing & DevOps</h3>
-                        <p>Roles: Cloud Engineer, DevOps Intern, Infrastructure as Code Specialist.</p>
-                        <div class="test-card-actions">
-                            <a href="../courses/course.html" class="btn btn-transparent">Practice Test</a>
-                            <a href="../courses/course.html" class="btn btn-primary">Final Exam</a>
-                        </div>
-                    </div>
-                    
-                    <div class="test-card">
-                        <img src="../images/test_Cybersecurity & Ethical Hacking.png" alt="Cybersecurity" onerror="this.onerror=null;this.src='../images/no_image.png'">
-                        <h3>Cybersecurity & Hacking</h3>
-                        <p>Roles: Security Analyst, Pentester, Threat Intelligence Intern.</p>
-                        <div class="test-card-actions">
-                            <a href="../courses/course.html" class="btn btn-transparent">Practice Test</a>
-                            <a href="../courses/course.html" class="btn btn-primary">Final Exam</a>
-                        </div>
-                    </div>
-                    
-                    <div class="test-card">
-                        <img src="../images/test_Web & Mobile Development.png" alt="Web & Mobile Development" onerror="this.onerror=null;this.src='../images/no_image.png'">
-                        <h3>Web & Mobile Development</h3>
-                        <p>Roles: Frontend Developer, React/Angular Dev, Mobile App Intern.</p>
-                        <div class="test-card-actions">
-                            <a href="../courses/course.html" class="btn btn-transparent">Practice Test</a>
-                            <a href="../courses/course.html" class="btn btn-primary">Final Exam</a>
-                        </div>
-                    </div>
-
+                <div class="internship-image">
+                    <img src="https://images.unsplash.com/photo-1579389083078-4e7018379f7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Internship program" class="internship-img" onerror="this.onerror=null;this.src='images/intern.jpg'">
                 </div>
             </div>
         </section>
 
-        <section class="testimonials" style="padding-bottom: 80px;">
+        <section class="testimonials">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">Success Stories: Internship Placements</h2>
-                    <p class="section-subtitle">Hear from students who landed paid internships after passing our skill tests.</p>
+                    <h2 class="section-title">Success Stories: Students Who Transformed Their Careers</h2>
+                    <p class="section-subtitle">Hear from our students who transformed their careers through Internadda's Learn, Intern, Earn model.</p>
                 </div>
 
                 <div class="testimonial-wrapper">
-                    <div class="testimonials-grid" id="internshipTestimonialsGrid">
+                    <div class="testimonials-grid" id="testimonialsGrid">
                         
                         <div class="testimonial-card">
                             <div class="testimonial-content">
-                                <p class="testimonial-text">"I passed the Data Science exam and landed a remote internship with a stipend of **₹30,000/month**. The exam was tough, but the preparation modules ensured I was ready for the real-world challenge. Internadda truly opens doors."</p>
+                                <p class="testimonial-text">"I started with Python essentials and landed a Backend Dev internship with a ₹25,000 stipend in 4 months. The course projects were identical to the real-world tasks I face daily. Highly recommend Internadda's clear-cut path!"</p>
                                 <div class="testimonial-author">
-                                    <img src="../images/no_image.png" alt="Pooja Verma" class="author-avatar">
+                                    <img src="images/no_image.png" alt="Ravi Kumar" class="author-avatar">
                                     <div class="author-details">
-                                        <span class="author-name">Pooja Verma</span>
-                                        <span class="author-role">Data Analyst Intern (Delhi University)</span>
+                                        <span class="author-name">Ravi Kumar</span>
+                                        <span class="author-role">Backend Developer Intern (IIT Roorkee)</span>
                                     </div>
                                 </div>
                             </div>
@@ -238,12 +399,12 @@
                         
                         <div class="testimonial-card">
                             <div class="testimonial-content">
-                                <p class="testimonial-text">"The Python Final Exam was the single most validating experience of my career so far. Passing it with a high score proved my skills and led directly to a remote **Backend Developer** internship. This is the fastest way to break into the tech industry!"</p>
+                                <p class="testimonial-text">"After a year of rejected applications, the Data Science exam finally broke the barrier. The preparation material was incredibly focused. I now work as a Jr. Data Analyst remotely. I couldn't have done it without the dedicated resources."</p>
                                 <div class="testimonial-author">
-                                    <img src="../images/no_image.png" alt="Ravi Shankar" class="author-avatar">
+                                    <img src="images/no_image.png" alt="Neha Sharma" class="author-avatar">
                                     <div class="author-details">
-                                        <span class="author-name">Ravi Shankar</span>
-                                        <span class="author-role">Python Developer Intern (IIT Bombay)</span>
+                                        <span class="author-name">Neha Sharma</span>
+                                        <span class="author-role">Jr. Data Analyst (Mumbai University)</span>
                                     </div>
                                 </div>
                             </div>
@@ -251,12 +412,12 @@
                         
                         <div class="testimonial-card">
                             <div class="testimonial-content">
-                                <p class="testimonial-text">"My resume was constantly ignored until I added the Internadda Final Exam certificate. It instantly got me noticed by a corporate partner, and I landed a job offer shortly after completing the 6-month Cybersecurity internship. Life-changing."</p>
+                                <p class="testimonial-text">"The Web Development track gave me the confidence to handle React projects. I loved the hands-on approach. Got placed immediately after the final test and started earning a great remote stipend."</p>
                                 <div class="testimonial-author">
-                                    <img src="../images/no_image.png" alt="Kunal Mehta" class="author-avatar">
+                                    <img src="images/no_image.png" alt="Aman Singh" class="author-avatar">
                                     <div class="author-details">
-                                        <span class="author-name">Kunal Mehta</span>
-                                        <span class="author-role">Cybersecurity Intern (B.Tech Graduate)</span>
+                                        <span class="author-name">Aman Singh</span>
+                                        <span class="author-role">Full Stack Intern (DU Graduate)</span>
                                     </div>
                                 </div>
                             </div>
@@ -264,12 +425,12 @@
                         
                         <div class="testimonial-card">
                             <div class="testimonial-content">
-                                <p class="testimonial-text">"I secured a performance-based stipend in **Digital Marketing** after passing the final assessment. The internship involved live campaigns, giving me practical experience far beyond my university coursework. The mentorship was excellent."</p>
-                                <div class="testimonial-author">
-                                    <img src="../images/no_image.png" alt="Anjali Verma" class="author-avatar">
+                                <p class="testimonial-text">"I transitioned from a non-tech background to AI/ML thanks to Internadda. The prompt engineering module was a game-changer. I secured my first internship offer in just 6 weeks. The speed is unbelievable!"</p>
+                            <div class="testimonial-author">
+                                    <img src="images/no_image.png" alt="Sanya Jain" class="author-avatar">
                                     <div class="author-details">
-                                        <span class="author-name">Anjali Verma</span>
-                                        <span class="author-role">Digital Marketing Intern (JMI)</span>
+                                        <span class="author-name">Sanya Jain</span>
+                                        <span class="author-role">AI Strategist (MBA Graduate)</span>
                                     </div>
                                 </div>
                             </div>
@@ -277,12 +438,12 @@
                         
                         <div class="testimonial-card">
                             <div class="testimonial-content">
-                                <p class="testimonial-text">"I was skeptical about an AI internship at first, but the *Generative AI Masterclass* was top-tier. I aced the AI/ML Final Exam, securing an AI Innovation Internship where I work directly on LLM prompting. Fantastic opportunity for high-stipend roles."</p>
+                                <p class="testimonial-text">"The UI/UX course was structured perfectly for building a strong portfolio. Passed the final exam and was placed at a design studio where my skills felt genuinely valued. Their focus on practical skills is unmatched."</p>
                                 <div class="testimonial-author">
-                                    <img src="../images/no_image.png" alt="Sumit Pandey" class="author-avatar">
+                                    <img src="images/no_image.png" alt="Vikram Mehta" class="author-avatar">
                                     <div class="author-details">
-                                        <span class="author-name">Sumit Pandey</span>
-                                        <span class="author-role">AI Innovation Intern (GGSIPU)</span>
+                                        <span class="author-name">Vikram Mehta</span>
+                                        <span class="author-role">Product Designer Intern (NIFT)</span>
                                     </div>
                                 </div>
                             </div>
@@ -290,28 +451,53 @@
                         
                         <div class="testimonial-card">
                             <div class="testimonial-content">
-                                <p class="testimonial-text">"The placement team helped tailor my resume after my cloud certification, and I received an offer within two weeks of passing the DevOps exam. The system truly delivers on its promise of 'Learn, Intern, Earn'."</p>
+                                <p class="testimonial-text">"The free AI course was incredibly dense and practical. It immediately led to me acing the final exam and landing my first ever paid AI Analyst internship. The best learning experience in India."</p>
                                 <div class="testimonial-author">
-                                    <img src="../images/no_image.png" alt="Akash Rao" class="author-avatar">
+                                    <img src="images/no_image.png" alt="Deepa Verma" class="author-avatar">
                                     <div class="author-details">
-                                        <span class="author-name">Akash Rao</span>
-                                        <span class="author-role">Cloud & DevOps Intern (VIT)</span>
+                                        <span class="author-name">Deepa Verma</span>
+                                        <span class="author-role">AI Analyst (IIT Graduate)</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         
+                        <div class="testimonial-card cloned">
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">"I started with Python essentials and landed a Backend Dev internship with a ₹25,000 stipend in 4 months. The course projects were identical to the real-world tasks I face daily. Highly recommend Internadda's clear-cut path!"</p>
+                                <div class="testimonial-author">
+                                    <img src="images/no_image.png" alt="Ravi Kumar" class="author-avatar">
+                                    <div class="author-details">
+                                        <span class="author-name">Ravi Kumar</span>
+                                        <span class="author-role">Backend Developer Intern (IIT Roorkee)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-card cloned">
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">"After a year of rejected applications, the Data Science exam finally broke the barrier. The preparation material was incredibly focused. I now work as a Jr. Data Analyst remotely. I couldn't have done it without the dedicated resources."</p>
+                                <div class="testimonial-author">
+                                    <img src="images/no_image.png" alt="Neha Sharma" class="author-avatar">
+                                    <div class="author-details">
+                                        <span class="author-name">Neha Sharma</span>
+                                        <span class="author-role">Jr. Data Analyst (Mumbai University)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                  </div>
            </div>
         </section>
-        
+
         <section class="cta-section">
             <div class="container">
-                <h2 class="cta-title">Need Help with Your Resume?</h2>
-                <p class="cta-description">Use our <strong>free Career Tools</strong> like the Resume Builder and ATS Score Checker to maximize your placement chances.</p>
+                <h2 class="cta-title">Start Your Career Journey Today</h2>
+                <p class="cta-description">Join thousands of students who have transformed their careers through Internadda's learn, intern, and earn model.</p>
                 <div class="cta-buttons">
-                    <a href="../tools/resume-builder.html" class="btn btn-light btn-lg">Access Resume Builder</a>
+                    <a href="intern/internship.html" class="btn btn-light btn-lg">Get Started</a>
+                    <a href="https://courses.internadda.com/" class="btn btn-transparent btn-lg">Browse Courses</a>
                 </div>
             </div>
         </section>
@@ -349,7 +535,7 @@
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Intern</h3>
                     <ul class="footer-links">
-                        <li><a href="internship.html">Find Internships</a></li>
+                        <li><a href="/intern/internship.html">Find Internships</a></li>
                         <li><a href="#">For Companies</a></li>
                         <li><a href="#">Success Stories</a></li>
                         <li><a href="#">Career Coaching</a></li>
@@ -370,20 +556,20 @@
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">InternAdda</h3>
                     <ul class="footer-links">
-                        <li><a href="../about.html">About Us</a></li>
-                        <li><a href="../contact.html">Contact Us</a></li>
-                        <li><a href="../terms.html">Terms & Conditions</a></li>
-                        <li><a href="../refund.html">Refund Policy</a></li>
+                        <li><a href="/about.html">About Us</a></li>
+                        <li><a href="/contact.html">Contact Us</a></li>
+                        <li><a href="/terms.html">Terms & Conditions</a></li>
+                        <li><a href="/refund.html">Refund Policy</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Community</h3>
                     <ul class="footer-links">
-                        <li><a href="../community/join.html">Join Community</a></li>
-                        <li><a href="../community/partners.html">Partners</a></li>
+                        <li><a href="/community/join.html">Join Community</a></li>
+                        <li><a href="/community/partners.html">Partners</a></li>
                         <li><a href="https://blog-internadda.blogspot.com/">Blog</a></li>
-                        <li><a href="../community/academy.html">Offline Academy</a></li>
+                        <li><a href="/community/academy.html">Offline Academy</a></li>
                     </ul>
                 </div>
             </div>
@@ -393,6 +579,39 @@
             </div>
         </div>
     </footer>
-    <script src="../script.js"></script>
+
+    <script src="script.js"></script>
+    <script>
+        // Hero Image Slider Logic (retained from original index.html)
+        document.addEventListener('DOMContentLoaded', function() {
+            const sliderWrapper = document.querySelector('.slider-wrapper');
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.dot');
+            const totalSlides = slides.length;
+            let currentIndex = 0;
+
+            const updateSlider = () => {
+                sliderWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentIndex);
+                });
+            };
+
+            // Auto-scroll the hero slider every 5 seconds
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % totalSlides;
+                updateSlider();
+            }, 5000);
+
+            // Manual navigation via dots 
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateSlider();
+                });
+            });
+            
+        });
+    </script>
 </body>
 </html>
