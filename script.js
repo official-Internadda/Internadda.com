@@ -191,7 +191,7 @@ function startAutoScroll(container, originalCount) {
         cancelAnimationFrame(container.autoScrollRAF);
     }
     
-    // CHANGED: Increased speed from 0.5 to 1.0 for visible movement and looping fix
+    // FIX: Increased speed from 0.5 to 1.0 for visible movement and continuous scroll
     let scrollSpeed = 1.0; // pixels per requestAnimationFrame
     let currentScroll = container.scrollLeft;
     
@@ -217,7 +217,7 @@ function startAutoScroll(container, originalCount) {
     function autoScroll() {
         const resetPoint = getOriginalContentWidth();
         
-        // MODIFIED: Check against resetPoint minus scrollSpeed for smoother loop boundary detection
+        // FIX: Check against resetPoint minus scrollSpeed for smoother loop boundary detection
         if (container.scrollLeft >= resetPoint - scrollSpeed) {
             // Snap back to the visual start point (scroll position 0) instantly
             container.scrollLeft = 0;
@@ -363,8 +363,6 @@ document.addEventListener('DOMContentLoaded', function() {
      }
 
     // 5. Initialize Testimonial Carousels
-    // NOTE: CSS/HTML must be updated to change the look of these cards 
-    // to match the "partner logo" style for a full visual transformation.
     initTestimonialCarousel('testimonialsGrid');
     initTestimonialCarousel('internshipTestimonialsGrid');
     
