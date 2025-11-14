@@ -473,7 +473,7 @@ header.scrolled {
 
 .testimonials-grid {
     display: flex;
-    overflow-x: hidden; /* Change to hidden for smooth JS auto-scrolling */
+    overflow-x: hidden;
     scroll-snap-type: x mandatory;
     padding-bottom: 20px;
     gap: 36px;
@@ -519,7 +519,7 @@ header.scrolled {
     top: -50px;
     left: -20px;
     font-family: Georgia, serif;
-    z-index: 1; /* Corrected z-index for the quote mark */
+    z-index: 1;
 }
 .testimonial-author {
     display: flex;
@@ -639,7 +639,7 @@ header.scrolled {
 
 .logo-marquee {
     display: flex;
-    animation: scroll-left 30s linear infinite;
+    animation: scroll-left 30s linear infinite; /* Adjust time for speed */
 }
 
 .logo-item {
@@ -1341,13 +1341,14 @@ footer {
     background-color: var(--white);
     padding: 30px;
     border-radius: 12px;
-    box-shadow: var(--shadow);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Subtle Shadow */
     text-align: center;
-    border: 1px solid #e2e8f0; /* Add base border */
-    border-bottom: 8px solid var(--secondary); /* Thicker bottom bar for visual weight */
-    transition: var(--transition);
+    border: 1px solid #e2e8f0; 
+    border-bottom: 8px solid var(--secondary); /* Thicker bottom bar */
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bouncy Transition */
     overflow: hidden;
     position: relative;
+    transform-style: preserve-3d;
 }
 .test-card::before {
     content: '';
@@ -1365,20 +1366,24 @@ footer {
     opacity: 1;
 }
 .test-card:hover {
-    transform: translateY(-8px) scale(1.01); /* Stronger lift */
-    box-shadow: 0 15px 40px rgba(43, 108, 176, 0.4);
-    border-bottom-color: var(--primary); /* Change color on hover */
+    transform: translateY(-12px) perspective(1000px) rotateX(1deg); /* Stronger lift with 3D */
+    box-shadow: 0 25px 40px rgba(43, 108, 176, 0.4);
+    border-bottom-color: var(--primary); 
 }
 .test-card img {
     height: 90px;
     width: 90px;
     margin-bottom: 20px;
     object-fit: contain;
+    transition: transform 0.4s ease;
+}
+.test-card:hover img {
+     transform: scale(1.08) rotate(-2deg);
 }
 .test-card h3 {
     font-size: 1.6rem;
     margin-bottom: 10px;
-    color: var(--primary); /* Primary color for title */
+    color: var(--primary);
 }
 .test-card p {
     color: var(--gray);
@@ -1399,8 +1404,29 @@ footer {
    ============================ */
 @media (max-width: 1024px) {
 
-    /* General Padding Fix */
+    /* Global Typography Scaling */
+    .section-title {
+        font-size: 2.0rem; /* Reduced from 2.5rem */
+    }
+    .hero-heading {
+        font-size: 2.5rem; /* Reduced from 3.5rem */
+    }
+    .hero-description, .section-subtitle {
+        font-size: 1.1rem; /* Reduced from 1.25/1.15rem */
+    }
+    .btn-lg {
+        font-size: 16px; /* Reduced from 18px */
+    }
+
+    /* Header Fixes */
     .container { padding: 0 24px; }
+    
+    .logo-img {
+        height: 40px; /* Reduced from 50px */
+    }
+    .logo-text {
+        font-size: 1.8rem; /* Reduced from 2.2rem */
+    }
     
     /* Show Hamburger Menu */
     .nav-menu {
@@ -1437,32 +1463,15 @@ footer {
         padding: 12px 30px;
         border-bottom: 1px solid #eee;
         margin: 0;
-        font-size: 17px;
+        font-size: 15px; /* Reduced font size */
     }
     .nav-menu.active > a.nav-link:not(.mobile-only-link) {
         /* Target main links like Home, Courses, Jobs, etc. */
         font-weight: 700;
         color: var(--primary);
-        font-size: 15px; /* Reduced font size for pro mobile look */
     }
 
-    /* Dropdown containers (Tools and More) */
-    .nav-menu.active .nav-item.dropdown {
-        display: block !important;
-        width: 100%;
-        border-bottom: 1px solid #eee;
-    }
-    
-    /* Dropdown Toggle Button Styling */
-    .nav-menu.active .nav-item.dropdown .dropdown-toggle {
-        width: 100%;
-        padding: 12px 30px;
-        justify-content: space-between;
-        color: var(--primary); /* Highlight dropdown toggles */
-        font-weight: 700;
-    }
-
-    /* Dropdown Content (the list of tools/more links) */
+    /* Dropdown content scaling */
     .nav-menu.active .dropdown-content {
         position: static;
         box-shadow: none;
@@ -1472,16 +1481,12 @@ footer {
         animation: none;
         transform: none;
         border: none;
-        /* The mobile script toggles 'display: block' on click */
     }
-
-    /* Dropdown Inner Links (ATS Score, Contact, Blog, etc.) */
     .nav-menu.active .dropdown-content .dropdown-link {
         padding: 8px 30px 8px 50px;
-        font-size: 15px; /* Reduced font size for pro mobile look */
+        font-size: 14px; /* Reduced inner link font size */
         background-color: #f7fafc;
         border-bottom: 1px solid #f0f0f0;
-        color: var(--dark); /* Inner links slightly subdued */
     }
 
     /* Remove desktop-specific links and show mobile only links */
@@ -1491,14 +1496,6 @@ footer {
     .nav-link.mobile-only-link {
         display: none; 
     }
-    
-    /* Logo scaling fix */
-    .logo-img {
-        height: 40px; /* Reduced from 50px */
-    }
-    .logo-text {
-        font-size: 1.8rem; /* Reduced from 2.2rem for professional small look */
-    }
 
 
     /* Hero Section Mobile */
@@ -1506,6 +1503,7 @@ footer {
         flex-direction: column;
         text-align: center;
         gap: 40px;
+        padding: 60px 0;
     }
     .hero-content {
         max-width: 100%;
@@ -1514,7 +1512,7 @@ footer {
         max-width: 100%;
     }
     .hero-heading {
-        font-size: 2.2rem; /* Reduced for phone/tablet professional look */
+        font-size: 2.5rem;
     }
     .hero-stats {
         justify-content: center;
@@ -1544,7 +1542,7 @@ footer {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     }
     .footer-brand {
-        grid-column: 1 / -1; /* Take full width */
+        grid-column: 1 / -1; 
         text-align: center;
         max-width: 100%;
     }
@@ -1552,7 +1550,7 @@ footer {
         justify-content: center;
     }
     .footer-links-column {
-        padding: 0 10px; /* Add some padding to columns */
+        padding: 0 10px; 
     }
 
 
@@ -1565,23 +1563,33 @@ footer {
 @media (max-width: 768px) {
     .container { padding: 0 16px; }
 
-    .hero-heading {
-        font-size: 2.0rem; /* Further reduction */
-    }
+    /* Further Global Typography Scaling for Smaller Screens */
     .section-title {
-        font-size: 1.8rem; /* Further reduction */
+        font-size: 1.6rem; 
+    }
+    .hero-heading {
+        font-size: 2.0rem; 
     }
     .hero-description, .section-subtitle {
-        font-size: 1.0rem; /* Tighter font size */
+        font-size: 1.0rem; 
+    }
+    .value-title {
+        font-size: 1.3rem;
+    }
+    .value-card {
+        padding: 30px 20px;
+    }
+    .test-card h3 {
+        font-size: 1.3rem; /* Smallest card heading size */
     }
 
-    /* Testimonial card sizing for mobile carousel */
+    /* Testimonial card sizing for mobile carousel (Request 1) */
     .testimonials-grid {
         gap: 20px;
         padding: 0 16px 20px 16px;
         margin-left: -16px;
         width: calc(100% + 32px);
-        -webkit-overflow-scrolling: touch; /* Smoother scrolling on iOS */
+        -webkit-overflow-scrolling: touch; 
     }
     .testimonial-card {
         width: 85vw;
