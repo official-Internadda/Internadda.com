@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paid Internships | Internadda - The Future of Student Education & Placement</title>
-    <meta name="description" content="Secure paid internships with top companies by proving your skills through our rigorous skill tests. Launching soon with a live countdown!">
+    <title>Paid Internships | Internadda - High-Skill Education & Placement</title>
+    <meta name="description" content="Internadda provides rigorous skill validation and direct placement into paid internships for high-potential students. Official launch countdown is live!">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,29 +14,32 @@
     <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico">
     
     <style>
-        /* --- Premium & Education-Focused CSS Refinements --- */
+        /* --- Premium & Educational Color Palette --- */
         :root {
-            --primary: #007bff; /* Deep Blue - Professional */
-            --secondary: #343a40; /* Dark Gray for text */
-            --background: #f4f7f9; /* Light background for premium feel */
+            --primary: #001f44; /* Deep Navy Blue (Authority, Education) */
+            --secondary: #ffc107; /* Gold/Amber (Excellence, Premium) */
+            --text-dark: #343a40;
+            --background: #f8f9fa; /* Off-White/Light Gray */
             --white: #ffffff;
             --success: #28a745;
         }
 
         body {
             background-color: var(--background);
+            color: var(--text-dark);
         }
 
         .page-header {
-            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); /* Blue gradient header */
+            /* Dark Blue to Black Gradient for High-End Feel */
+            background: linear-gradient(135deg, var(--primary) 0%, #0d2a4a 100%); 
             color: var(--white);
             padding: 100px 0 60px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
         
         .section-title {
             font-family: 'Poppins', sans-serif;
-            color: inherit; /* Inherit color for header, secondary for main */
+            color: inherit;
             font-size: 3rem;
             font-weight: 800;
             margin-bottom: 20px;
@@ -47,7 +50,7 @@
 
         .section-subtitle {
             font-size: 1.25rem;
-            color: #cce5ff;
+            color: #d1e3ff; /* Lighter blue for contrast on dark header */
             text-align: center;
             margin-bottom: 50px;
             font-weight: 300;
@@ -80,7 +83,7 @@
             padding: 30px 20px;
             min-width: 150px;
             transition: transform 0.3s ease-in-out;
-            border-bottom: 5px solid var(--primary);
+            border-bottom: 5px solid var(--secondary); /* Gold accent */
         }
         .time-unit:hover {
             transform: translateY(-5px);
@@ -97,7 +100,7 @@
         .time-label {
             font-size: 1rem;
             font-weight: 600;
-            color: var(--secondary);
+            color: var(--text-dark);
             text-transform: uppercase;
         }
 
@@ -108,6 +111,7 @@
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
             padding: 50px;
             margin-top: 40px;
+            margin-bottom: 60px; /* Added spacing */
         }
         .structure-grid {
             display: grid;
@@ -118,8 +122,8 @@
         .step-card {
             padding: 30px;
             border-radius: 12px;
-            background-color: #eaf3ff; 
-            border: 1px solid #c8e1ff;
+            background-color: #fcfcfc; 
+            border: 1px solid #e0e0e0;
             position: relative;
             text-align: center;
         }
@@ -131,7 +135,7 @@
             left: 20px;
             font-size: 2.5rem;
             font-weight: 800;
-            color: rgba(0, 123, 255, 0.3); 
+            color: rgba(255, 193, 7, 0.3); /* Transparent Gold */
         }
         .step-card h3 {
             font-size: 1.4rem;
@@ -140,44 +144,31 @@
             margin-bottom: 10px;
         }
         .step-card p {
-            color: var(--secondary);
+            color: var(--text-dark);
         }
-
-        /* Testimonials Section */
-        .testimonials {
-            padding: 80px 0;
-            background-color: var(--background);
-        }
-        .testimonial-card {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            transition: box-shadow 0.3s;
-        }
-        .testimonial-card:hover {
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        }
-        .testimonial-text strong {
-            color: var(--success);
-        }
-
-        /* CTA Section */
+        
+        /* CTA Section using primary color */
         .cta-section {
             background-color: var(--primary);
+            padding: 60px 0;
         }
-        .cta-title, .cta-description {
-            color: white;
+        .btn-primary {
+            background-color: var(--secondary); /* Gold button */
+            color: var(--primary);
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #e0a800; /* Darker Gold */
         }
 
-        /* Footer links styling */
-        .footer-links-column a {
-            transition: color 0.3s;
+        .btn-light {
+             background-color: var(--white);
+             color: var(--primary);
         }
-        .footer-links-column a:hover {
-            color: #b3d9ff;
-        }
-
     </style>
 </head>
 <body>
@@ -255,15 +246,15 @@
     <main>
         <section class="page-header">
             <div class="container text-center">
-                <h1 class="section-title">Validate Skills. Secure Paid Internships.</h1>
-                <p class="section-subtitle">Internadda is transforming student education and career placement. Our rigorous skill tests are your guaranteed pathway to real-world stipended roles.</p>
-                <a href="#countdown-section" class="btn btn-primary btn-lg" style="background-color: white; color: var(--primary); margin-top: 20px;"><i class="fas fa-rocket"></i> View Official Launch Countdown</a>
+                <h1 class="section-title">The Future of High-Skill Student Placement</h1>
+                <p class="section-subtitle">We don't just teach—we validate, certify, and place. Our platform is built on **rigorous education** and **guaranteed opportunity** for high-potential students.</p>
+                <a href="#countdown-section" class="btn btn-primary btn-lg" style="background-color: var(--secondary); color: var(--primary); margin-top: 20px;"><i class="fas fa-clock"></i> View Official Launch Countdown</a>
             </div>
         </section>
 
         <section class="countdown-section" id="countdown-section">
             <div class="container">
-                <h2 class="countdown-title">The Official Launch is Happening In...</h2>
+                <h2 class="countdown-title">Official Launch Event In...</h2>
                 
                 <div id="countdown-timer">
                     <div class="time-unit">
@@ -283,92 +274,39 @@
                         <div class="time-label">Seconds</div>
                     </div>
                 </div>
-                <p style="font-size: 1.1rem; color: var(--secondary); margin-top: 40px;">On launch, all new Final Qualification Exams will be live, directly connecting top performers with our corporate partners.</p>
+                <p style="font-size: 1.1rem; color: var(--text-dark); margin-top: 40px;">New Final Qualification Exams and exclusive paid internship opportunities will be released immediately upon launch. Be ready!</p>
             </div>
         </section>
 
-        <section class="coming-soon-section" style="padding: 0; background-color: var(--background);">
+        <section class="program-flow" style="padding: 0; background-color: var(--background);">
              <div class="container">
                 <div class="program-structure">
-                    <h2 class="section-title" style="font-size: 2rem; margin-bottom: 30px; color: var(--secondary); text-align: left;"><i class="fas fa-lightbulb"></i> Our Educational Placement Model</h2>
+                    <h2 class="section-title" style="font-size: 2rem; margin-bottom: 30px; color: var(--primary); text-align: left;"><i class="fas fa-graduation-cap"></i> The Internadda Education & Placement Process</h2>
                     <div class="structure-grid">
                         
                         <div class="step-card">
-                            <h3>1. Comprehensive Education</h3>
-                            <p>Access high-quality, free learning materials and courses designed by industry experts to build a robust educational foundation.</p>
+                            <h3>1. Foundational Learning</h3>
+                            <p>Engage with free, high-quality educational content and resources designed to match precise industry requirements across various domains.</p>
                         </div>
 
                         <div class="step-card">
-                            <h3>2. Skill Validation</h3>
-                            <p>Prove your competence by passing our highly selective, practical Final Exams, earning a certificate recognized by top employers.</p>
+                            <h3>2. Rigorous Validation</h3>
+                            <p>Enroll in and pass our paid, comprehensive Final Qualification Exams. This certificate proves job-readiness beyond a traditional degree.</p>
                         </div>
                         
                         <div class="step-card">
-                            <h3>3. Career Acceleration</h3>
-                            <p>Transition seamlessly from education to earning through direct placement into paid internships with high-growth companies.</p>
+                            <h3>3. Accelerated Placement</h3>
+                            <p>Top performers gain priority access to our corporate network, securing remote and stipend-based internships seamlessly and rapidly.</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <section class="testimonials">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title" style="color: var(--secondary);">Student Success Stories</h2>
-                    <p class="section-subtitle" style="color: #6c757d;">Hear from students who landed paid internships after validating their skills with Internadda.</p>
-                </div>
-
-                <div class="testimonial-wrapper">
-                    <div class="testimonials-grid" id="internshipTestimonialsGrid">
-                        
-                        <div class="testimonial-card">
-                            <div class="testimonial-content">
-                                <p class="testimonial-text">"I passed the Data Science exam and landed a remote internship with a stipend of <strong>₹30,000/month</strong>. The preparation modules were superior and ensured I was ready for the real-world challenge. Internadda truly opens doors."</p>
-                                <div class="testimonial-author">
-                                    <img src="../images/no_image.png" alt="Pooja Verma" class="author-avatar">
-                                    <div class="author-details">
-                                        <span class="author-name">Pooja Verma</span>
-                                        <span class="author-role">Data Analyst Intern (Delhi University)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="testimonial-card">
-                            <div class="testimonial-content">
-                                <p class="testimonial-text">"The Python Final Exam was the single most validating experience of my career so far. Passing it with a high score proved my skills and led directly to a remote <strong>Backend Developer</strong> internship. This is the fastest way to break into the tech industry!"</p>
-                                <div class="testimonial-author">
-                                    <img src="../images/no_image.png" alt="Ravi Shankar" class="author-avatar">
-                                    <div class="author-details">
-                                        <span class="author-name">Ravi Shankar</span>
-                                        <span class="author-role">Python Developer Intern (IIT Bombay)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="testimonial-card">
-                            <div class="testimonial-content">
-                                <p class="testimonial-text">"My resume was constantly ignored until I added the Internadda Final Exam certificate. It instantly got me noticed by a corporate partner, and I landed a job offer shortly after completing the 6-month Cybersecurity internship. Life-changing."</p>
-                                <div class="testimonial-author">
-                                    <img src="../images/no_image.png" alt="Kunal Mehta" class="author-avatar">
-                                    <div class="author-details">
-                                        <span class="author-name">Kunal Mehta</span>
-                                        <span class="author-role">Cybersecurity Intern (B.Tech Graduate)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                 </div>
             </div>
         </section>
         
         <section class="cta-section">
             <div class="container">
-                <h2 class="cta-title">Prepare Your Profile Now</h2>
-                <p class="cta-description">Use our <strong>free Career Tools</strong> like the Resume Builder and ATS Score Checker to maximize your placement chances post-launch.</p>
+                <h2 class="cta-title">Refine Your Resume. Ready Your Career.</h2>
+                <p class="cta-description">Utilize our <strong>free Career Tools</strong>, including the Resume Builder and ATS Score Checker, to ensure your profile is optimized for launch day opportunities.</p>
                 <div class="cta-buttons">
                     <a href="../tools/resume-builder.html" class="btn btn-light btn-lg">Access Resume Builder</a>
                 </div>
@@ -452,35 +390,39 @@
     </footer>
 
     <script>
-        // Set the date we're counting down to: November 21, 2025, 10:40:00 PM IST (5 days from current context)
-        // Note: The launch date must be static in the code, but calculated based on user's 5-day request
-        const launchDate = new Date("November 21, 2025 22:40:00").getTime();
+        // Set the launch date 5 days from the context time (Nov 16, 2025, 10:42:26 PM IST)
+        // Launch date: November 21, 2025, 10:42:26 PM IST
+        // We use a fixed date for reliable countdown calculation:
+        const launchDate = new Date("November 21, 2025 22:42:26").getTime();
 
         // Update the countdown every 1 second
         const countdownInterval = setInterval(function() {
 
-            // Get today's date and time
+            // Get today's date and time (current moment)
             const now = new Date().getTime();
 
-            // Find the distance between now and the launch date
+            // Find the distance (time remaining)
             const distance = launchDate - now;
 
-            // Time calculations for days, hours, minutes and seconds
+            // Time calculations for D, H, M, S
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Output the result in elements with specific IDs
-            document.getElementById("days").innerHTML = days < 10 ? '0' + days : days;
-            document.getElementById("hours").innerHTML = hours < 10 ? '0' + hours : hours;
-            document.getElementById("minutes").innerHTML = minutes < 10 ? '0' + minutes : minutes;
-            document.getElementById("seconds").innerHTML = seconds < 10 ? '0' + seconds : seconds;
+            // Helper function to pad single digits with a leading zero
+            const pad = (num) => num < 10 ? '0' + num : num;
 
-            // If the countdown is finished, write some text 
+            // Output the result in elements with specific IDs
+            document.getElementById("days").innerHTML = pad(days);
+            document.getElementById("hours").innerHTML = pad(hours);
+            document.getElementById("minutes").innerHTML = pad(minutes);
+            document.getElementById("seconds").innerHTML = pad(seconds);
+
+            // If the countdown is finished, stop updating and display "Live" message
             if (distance < 0) {
                 clearInterval(countdownInterval);
-                document.getElementById("countdown-timer").innerHTML = '<div class="time-unit" style="min-width: 100%;"><div class="time-value" style="font-size: 2.5rem;">LAUNCH IS LIVE! <i class="fas fa-check-circle" style="color: var(--success);"></i></div><div class="time-label">Explore New Opportunities Now!</div></div>';
+                document.getElementById("countdown-timer").innerHTML = '<div class="time-unit" style="min-width: 100%; border-bottom-color: var(--success);"><div class="time-value" style="font-size: 2.5rem; color: var(--success);">LAUNCH IS LIVE!</div><div class="time-label">Explore New Opportunities Now!</div></div>';
             }
         }, 1000);
     </script>
