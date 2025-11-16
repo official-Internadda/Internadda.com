@@ -39,6 +39,53 @@
         .test-card-actions a {
             flex-grow: 1;
         }
+
+        /* --- New CSS for Animated Launch Message --- */
+        .launch-message-container {
+            width: 100%;
+            background: linear-gradient(90deg, #ff7e5f, #feb47b); /* Warm, energetic gradient */
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .launch-message {
+            display: inline-block;
+            white-space: nowrap;
+            animation: move-text 15s linear infinite;
+            padding-left: 100%; /* Start off-screen to the right */
+        }
+
+        .launch-message strong {
+            color: #fff000; /* Yellow highlight */
+            font-size: 1.4rem;
+        }
+
+        @keyframes move-text {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); } /* Move to the left off-screen */
+        }
+        /* --- End New CSS --- */
+
+        .section-title.countdown-title {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .coming-soon-message {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #6c757d;
+            padding: 50px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
     </style>
 </head>
 <body>
@@ -59,7 +106,6 @@
 
             <nav class="nav-menu">
                 <a href="../index.html" class="nav-link">Home</a>
-                <a href="https://courses.internadda.com/" class="nav-link">Courses</a>
                 <a href="internship.html" class="nav-link">Internships</a>
                 <a href="../jobs.html" class="nav-link">Jobs</a>
                 <a href="../about.html" class="nav-link">About</a>
@@ -101,7 +147,7 @@
             <div class="header-actions">
                 <div class="search-container">
                     <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="searchInput" class="search-input" placeholder="Search courses & domains...">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search domains...">
                 </div>
                 </div> 
 
@@ -114,6 +160,11 @@
         <div id="searchResults" class="search-results-container hidden"></div>
     </header>
 
+    <div class="launch-message-container">
+        <div class="launch-message">
+            🚀 InternAdda Official Launch in **5 Days**! Get ready for massive paid internship opportunities! 🚀 &nbsp; &nbsp; &nbsp; 🚀 InternAdda Official Launch in **5 Days**! Get ready for massive paid internship opportunities! 🚀
+        </div>
+    </div>
     <main>
         <section class="page-header">
             <div class="container">
@@ -137,79 +188,20 @@
                     </div>
                 </div>
                 
-                <a href="#tests" class="btn btn-primary btn-lg" style="margin-top: 30px;"><i class="fas fa-chevron-down"></i> Start Your Final Exam</a>
+                <a href="#tests" class="btn btn-primary btn-lg" style="margin-top: 30px;"><i class="fas fa-chevron-down"></i> Check Available Tests</a>
             </div>
         </section>
 
         <section class="test-section" id="tests">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">Choose Your Internship Domain</h2>
-                    <p class="section-subtitle">Practice with the free test, then take the paid Final Exam to qualify for placement.</p>
+                    <h2 class="section-title countdown-title">Internship Qualification Tests</h2>
+                    <p class="section-subtitle">The official Final Exams for paid placements will be available upon launch. Stay tuned!</p>
                 </div>
-
-                <div class="courses-grid">
-                   
-                    <div class="test-card">
-                        <img src="../images/test_data Science.png" alt="Data Science" onerror="this.onerror=null;this.src='../images/no_image.png'">
-                        <h3>Data Science & Analytics</h3>
-                        <p>Roles: Data Analyst, Data Scientist Intern, Business Intelligence Analyst.</p>
-                        <div class="test-card-actions">
-                            <a href="data_science_practice_test.html" class="btn btn-transparent">Practice Test (Free)</a>
-                            <a href="payment_page_data_science.html" class="btn btn-primary">Final Exam (Paid)</a>
-                        </div>
-                    </div>
-
-                    <div class="test-card">
-                        <img src="../images/test_Artificial Intelligence.png" alt="AI/ML" onerror="this.onerror=null;this.src='../images/no_image.png'">
-                        <h3>Artificial Intelligence & ML</h3>
-                        <p>Roles: AI Intern, Machine Learning Intern, Computer Vision Specialist.</p>
-                        <div class="test-card-actions">
-                            <a href="ai_ml_practice_test.html" class="btn btn-transparent">Practice Test (Free)</a>
-                            <a href="payment_page_ai_ml.html" class="btn btn-primary">Final Exam (Paid)</a>
-                        </div>
-                    </div>
-
-                    <div class="test-card">
-                        <img src="../images/test_Python Development.png" alt="Python Development" onerror="this.onerror=null;this.src='../images/no_image.png'">
-                        <h3>Python Development</h3>
-                        <p>Roles: Python Developer, Backend Developer, Scripting & Automation Engineer.</p>
-                        <div class="test-card-actions">
-                            <a href="python_dev_practice_test.html" class="btn btn-transparent">Practice Test (Free)</a>
-                            <a href="payment_page_python.html" class="btn btn-primary">Final Exam (Paid)</a>
-                        </div>
-                    </div>
-                    
-                    <div class="test-card">
-                        <img src="../images/test_Cloud Computing.png" alt="Cloud Computing" onerror="this.onerror=null;this.src='../images/no_image.png'">
-                        <h3>Cloud Computing & DevOps</h3>
-                        <p>Roles: Cloud Engineer, DevOps Intern, Infrastructure as Code Specialist.</p>
-                        <div class="test-card-actions">
-                            <a href="../courses/course.html" class="btn btn-transparent">Practice Test</a>
-                            <a href="#" class="btn btn-primary disabled-placeholder" style="opacity: 0.6; pointer-events: none;">Final Exam (Soon)</a>
-                        </div>
-                    </div>
-                    
-                    <div class="test-card">
-                        <img src="../images/test_Cybersecurity & Ethical Hacking.png" alt="Cybersecurity" onerror="this.onerror=null;this.src='../images/no_image.png'">
-                        <h3>Cybersecurity & Hacking</h3>
-                        <p>Roles: Security Analyst, Pentester, Threat Intelligence Intern.</p>
-                        <div class="test-card-actions">
-                             <a href="../courses/courses/Ethical-Hacking-Mastery.html" class="btn btn-transparent">Practice Test</a>
-                            <a href="#" class="btn btn-primary disabled-placeholder" style="opacity: 0.6; pointer-events: none;">Final Exam (Soon)</a>
-                        </div>
-                    </div>
-                    
-                    <div class="test-card">
-                        <img src="../images/test_Web & Mobile Development.png" alt="Web & Mobile Development" onerror="this.onerror=null;this.src='../images/no_image.png'">
-                        <h3>Web & Mobile Development</h3>
-                        <p>Roles: Frontend Developer, React/Angular Dev, Mobile App Intern.</p>
-                        <div class="test-card-actions">
-                            <a href="../courses/courses/Python-Essentials-for-All.html" class="btn btn-transparent">Practice Test</a>
-                            <a href="#" class="btn btn-primary disabled-placeholder" style="opacity: 0.6; pointer-events: none;">Final Exam (Soon)</a>
-                        </div>
-                    </div>
-
+                <div class="coming-soon-message">
+                    <i class="fas fa-clock"></i> **New Internship Qualification Tests** and **Final Exams** will be live in **5 DAYS** after the official launch!
+                    <br><br>
+                    Please check the homepage for the official countdown to the launch!
                 </div>
             </div>
         </section>
@@ -304,13 +296,13 @@
                         
                     </div>
                  </div>
-           </div>
+            </div>
         </section>
         
         <section class="cta-section">
             <div class="container">
                 <h2 class="cta-title">Need Help with Your Resume?</h2>
-                <p class="cta-description">Use our <strong>free Career Tools</strong> like the Resume Builder and ATS Score Checker to maximize your placement chances.</p>
+                <p class="cta-description">Use our **free Career Tools** like the Resume Builder and ATS Score Checker to maximize your placement chances.</p>
                 <div class="cta-buttons">
                     <a href="../tools/resume-builder.html" class="btn btn-light btn-lg">Access Resume Builder</a>
                 </div>
@@ -340,8 +332,6 @@
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Learn</h3>
                     <ul class="footer-links">
-                        <li><a href="https://courses.internadda.com/">Browse Courses</a></li>
-                        <li><a href="https://courses.internadda.com/">Free Courses</a></li>
                         <li><a href="#">Paid Courses</a></li>
                         <li><a href="#">Become an Instructor</a></li>
                     </ul>
