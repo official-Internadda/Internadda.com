@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paid Internships | Internadda - Learn, Intern, Earn</title>
-    <meta name="description" content="Secure paid internships with top companies by proving your skills through our rigorous, free skill tests. Start your career in Data Science, AI, Web Dev, and more.">
+    <meta name="description" content="Secure paid internships with top companies by proving your skills through our rigorous skill tests. Official launch in 5 days!">
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght=700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../style.css">
 
@@ -14,77 +14,187 @@
     <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico">
     
     <style>
+        /* Base page styling */
         .page-header {
-            background-color: #e6f7ff; /* Lighter, more encouraging blue background */
+            background-color: #e6f7ff;
+            padding: 80px 0 60px;
         }
-        .internship-program-card {
-            background-color: var(--white);
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            margin-top: 40px;
-        }
-        .program-feature {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
-        .program-feature i {
-            font-size: 1.5rem;
+        .section-title {
+            font-family: 'Poppins', sans-serif;
             color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-align: center;
         }
-        .test-card-actions a {
-            flex-grow: 1;
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: #555;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #004d80;
         }
 
-        /* --- New CSS for Animated Launch Message --- */
+        /* --- Animated Launch Message --- */
         .launch-message-container {
             width: 100%;
-            background: linear-gradient(90deg, #ff7e5f, #feb47b); /* Warm, energetic gradient */
+            background: linear-gradient(90deg, #ff5722, #ff9800); /* Vibrant gradient */
             color: white;
-            padding: 15px 0;
+            padding: 12px 0;
             text-align: center;
-            font-weight: 700;
-            font-size: 1.25rem;
+            font-weight: 600;
+            font-size: 1.1rem;
             overflow: hidden;
             position: relative;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            margin-bottom: 0;
         }
 
         .launch-message {
             display: inline-block;
             white-space: nowrap;
             animation: move-text 15s linear infinite;
-            padding-left: 100%; /* Start off-screen to the right */
+            padding-left: 100%; /* Start off-screen */
         }
 
         .launch-message strong {
-            color: #fff000; /* Yellow highlight */
-            font-size: 1.4rem;
+            color: #ffe082; /* Bright highlight */
+            font-size: 1.2rem;
+            font-weight: 800;
         }
 
         @keyframes move-text {
             0% { transform: translate(0, 0); }
             100% { transform: translate(-100%, 0); } /* Move to the left off-screen */
         }
-        /* --- End New CSS --- */
+        /* --- End Animated Launch Message --- */
 
-        .section-title.countdown-title {
-            color: var(--primary);
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .coming-soon-message {
-            text-align: center;
-            font-size: 1.5rem;
-            color: #6c757d;
+        /* Core Program Structure */
+        .program-structure {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
             padding: 50px;
-            background-color: #f8f9fa;
-            border-radius: 10px;
             margin-top: 40px;
+        }
+        .structure-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            counter-reset: step-counter;
+        }
+        .step-card {
+            padding: 30px;
+            border-radius: 12px;
+            background-color: #f7faff;
+            border: 1px solid #e0f0ff;
+            position: relative;
+        }
+        .step-card::before {
+            counter-increment: step-counter;
+            content: "STEP " counter(step-counter);
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background-color: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        .step-card h3 {
+            font-size: 1.4rem;
+            color: var(--secondary);
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+        .step-card p {
+            color: #666;
+        }
+
+        /* Coming Soon Section */
+        .coming-soon-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+        .launch-info-box {
+            background-color: #fffde7; /* Light yellow background */
+            border: 2px dashed #ffd54f;
+            padding: 50px;
+            border-radius: 15px;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+        .launch-info-box h3 {
+            font-size: 2rem;
+            color: #f57f17; /* Darker orange */
+            margin-bottom: 15px;
+        }
+        .launch-info-box p {
+            font-size: 1.2rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Testimonials Section Updates */
+        .testimonials {
+            padding: 60px 0;
+            background-color: #f8f9fa;
+        }
+        .testimonial-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            height: 100%; /* Ensure equal height */
+        }
+        .testimonial-text {
+            font-style: italic;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            margin-top: auto;
+        }
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+        .author-name {
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .author-role {
+            font-size: 0.9rem;
+            color: #777;
+        }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
         }
     </style>
 </head>
@@ -162,55 +272,62 @@
 
     <div class="launch-message-container">
         <div class="launch-message">
-            🚀 InternAdda Official Launch in **5 Days**! Get ready for massive paid internship opportunities! 🚀 &nbsp; &nbsp; &nbsp; 🚀 InternAdda Official Launch in **5 Days**! Get ready for massive paid internship opportunities! 🚀
+            🚀 Internadda Official Launch in <strong>5 Days</strong>! Get ready for massive paid internship opportunities! 🚀 &nbsp; &nbsp; &nbsp; 🚀 Internadda Official Launch in <strong>5 Days</strong>! Get ready for massive paid internship opportunities! 🚀
         </div>
     </div>
     <main>
         <section class="page-header">
             <div class="container">
-                <h1 class="section-title">Paid Internship Opportunities</h1>
-                <p class="section-subtitle">Prove your skills, secure a stipend, and launch your career with top companies.</p>
-                <div class="internship-program-card">
-                    <h2 class="section-title" style="text-align: center; color: var(--secondary); margin-bottom: 30px;">How the Program Works</h2>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-                        <div class="program-feature">
-                            <i class="fas fa-chalkboard-teacher"></i>
-                            <span><strong>Step 1: Learn Skills</strong> - Complete our free, domain-specific courses.</span>
+                <h1 class="section-title">The Gateway to Paid Internships</h1>
+                <p class="section-subtitle">Validate your expertise, secure a stipend, and launch your career with top-tier companies. This is where skills meet opportunity.</p>
+                
+                <div class="program-structure">
+                    <h2 class="section-title" style="font-size: 2rem; margin-bottom: 30px; color: var(--secondary);">How You Get Placed</h2>
+                    <div class="structure-grid">
+                        
+                        <div class="step-card">
+                            <i class="fas fa-graduation-cap fa-2x" style="color: #4CAF50;"></i>
+                            <h3>Master Your Domain</h3>
+                            <p>Access free learning modules and resources to build job-ready skills in your chosen field (e.g., Data Science, AI, Web Dev).</p>
                         </div>
-                        <div class="program-feature">
-                            <i class="fas fa-file-signature"></i>
-                            <span><strong>Step 2: Pass the Test</strong> - Take the rigorous Final Exam to validate your knowledge.</span>
+
+                        <div class="step-card">
+                            <i class="fas fa-medal fa-2x" style="color: #FFC107;"></i>
+                            <h3>Pass the Final Exam</h3>
+                            <p>Take our rigorous, paid Final Qualification Exam to officially validate your skills and prove your readiness to employers.</p>
                         </div>
-                        <div class="program-feature">
-                            <i class="fas fa-briefcase-medical"></i>
-                            <span><strong>Step 3: Secure Internship</strong> - Successful candidates are directly placed in paid internships.</span>
+                        
+                        <div class="step-card">
+                            <i class="fas fa-handshake fa-2x" style="color: #00BCD4;"></i>
+                            <h3>Guaranteed Placement</h3>
+                            <p>Successful candidates are directly connected and placed into paid, remote, and flexible internship roles with our corporate partners.</p>
                         </div>
                     </div>
                 </div>
-                
-                <a href="#tests" class="btn btn-primary btn-lg" style="margin-top: 30px;"><i class="fas fa-chevron-down"></i> Check Available Tests</a>
             </div>
         </section>
 
-        <section class="test-section" id="tests">
+        <section class="coming-soon-section" id="tests">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title countdown-title">Internship Qualification Tests</h2>
-                    <p class="section-subtitle">The official Final Exams for paid placements will be available upon launch. Stay tuned!</p>
+                    <h2 class="section-title">Internship Qualification Status</h2>
+                    <p class="section-subtitle">All new qualification exams and placement drives are launching soon!</p>
                 </div>
-                <div class="coming-soon-message">
-                    <i class="fas fa-clock"></i> **New Internship Qualification Tests** and **Final Exams** will be live in **5 DAYS** after the official launch!
-                    <br><br>
-                    Please check the homepage for the official countdown to the launch!
+                
+                <div class="launch-info-box">
+                    <h3><i class="fas fa-hourglass-half"></i> Official Launch Countdown!</h3>
+                    <p>Internadda's full suite of paid Final Exams and placement opportunities will go live in just <strong>5 DAYS</strong>.</p>
+                    <p>Prepare now using our free resources, and be ready to secure your high-stipend internship immediately after launch.</p>
+                    <a href="#" class="btn btn-primary" style="margin-top: 25px;"><i class="fas fa-bell"></i> Get Launch Notification</a>
                 </div>
             </div>
         </section>
 
-        <section class="testimonials" style="padding-bottom: 80px;">
+        <section class="testimonials">
             <div class="container">
                 <div class="section-header">
                     <h2 class="section-title">Success Stories: Internship Placements</h2>
-                    <p class="section-subtitle">Hear from students who landed paid internships after passing our skill tests.</p>
+                    <p class="section-subtitle">Hear from students who landed paid internships after validating their skills.</p>
                 </div>
 
                 <div class="testimonial-wrapper">
@@ -218,7 +335,7 @@
                         
                         <div class="testimonial-card">
                             <div class="testimonial-content">
-                                <p class="testimonial-text">"I passed the Data Science exam and landed a remote internship with a stipend of **₹30,000/month**. The exam was tough, but the preparation modules ensured I was ready for the real-world challenge. Internadda truly opens doors."</p>
+                                <p class="testimonial-text">"I passed the Data Science exam and landed a remote internship with a stipend of <strong>₹30,000/month</strong>. The exam was tough, but the preparation modules ensured I was ready for the real-world challenge. Internadda truly opens doors."</p>
                                 <div class="testimonial-author">
                                     <img src="../images/no_image.png" alt="Pooja Verma" class="author-avatar">
                                     <div class="author-details">
@@ -231,7 +348,7 @@
                         
                         <div class="testimonial-card">
                             <div class="testimonial-content">
-                                <p class="testimonial-text">"The Python Final Exam was the single most validating experience of my career so far. Passing it with a high score proved my skills and led directly to a remote **Backend Developer** internship. This is the fastest way to break into the tech industry!"</p>
+                                <p class="testimonial-text">"The Python Final Exam was the single most validating experience of my career so far. Passing it with a high score proved my skills and led directly to a remote <strong>Backend Developer</strong> internship. This is the fastest way to break into the tech industry!"</p>
                                 <div class="testimonial-author">
                                     <img src="../images/no_image.png" alt="Ravi Shankar" class="author-avatar">
                                     <div class="author-details">
@@ -254,46 +371,6 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="testimonial-card">
-                            <div class="testimonial-content">
-                                <p class="testimonial-text">"I secured a performance-based stipend in **Digital Marketing** after passing the final assessment. The internship involved live campaigns, giving me practical experience far beyond my university coursework. The mentorship was excellent."</p>
-                                <div class="testimonial-author">
-                                    <img src="../images/no_image.png" alt="Anjali Verma" class="author-avatar">
-                                    <div class="author-details">
-                                        <span class="author-name">Anjali Verma</span>
-                                        <span class="author-role">Digital Marketing Intern (JMI)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="testimonial-card">
-                            <div class="testimonial-content">
-                                <p class="testimonial-text">"I was skeptical about an AI internship at first, but the *Generative AI Masterclass* was top-tier. I aced the AI/ML Final Exam, securing an AI Innovation Internship where I work directly on LLM prompting. Fantastic opportunity for high-stipend roles."</p>
-                                <div class="testimonial-author">
-                                    <img src="../images/no_image.png" alt="Sumit Pandey" class="author-avatar">
-                                    <div class="author-details">
-                                        <span class="author-name">Sumit Pandey</span>
-                                        <span class="author-role">AI Innovation Intern (GGSIPU)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="testimonial-card">
-                            <div class="testimonial-content">
-                                <p class="testimonial-text">"The placement team helped tailor my resume after my cloud certification, and I received an offer within two weeks of passing the DevOps exam. The system truly delivers on its promise of 'Learn, Intern, Earn'."</p>
-                                <div class="testimonial-author">
-                                    <img src="../images/no_image.png" alt="Akash Rao" class="author-avatar">
-                                    <div class="author-details">
-                                        <span class="author-name">Akash Rao</span>
-                                        <span class="author-role">Cloud & DevOps Intern (VIT)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
                     </div>
                  </div>
             </div>
@@ -301,8 +378,8 @@
         
         <section class="cta-section">
             <div class="container">
-                <h2 class="cta-title">Need Help with Your Resume?</h2>
-                <p class="cta-description">Use our **free Career Tools** like the Resume Builder and ATS Score Checker to maximize your placement chances.</p>
+                <h2 class="cta-title">Ready Your Profile for Launch</h2>
+                <p class="cta-description">Use our <strong>free Career Tools</strong> like the Resume Builder and ATS Score Checker to maximize your placement chances.</p>
                 <div class="cta-buttons">
                     <a href="../tools/resume-builder.html" class="btn btn-light btn-lg">Access Resume Builder</a>
                 </div>
