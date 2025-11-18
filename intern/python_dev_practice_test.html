@@ -3,430 +3,499 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python Dev Practice Test | Internadda Free Prep</title>
-    <meta name="description" content="Free practice test for the Python Development Internship qualification. Test your knowledge in core Python, OOP, and web basics before attempting the Final Exam.">
-    
+    <title>Python Dev & SWE Practice Test — Internadda</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Corrected path for nested file structure -->
+
     <link rel="stylesheet" href="../style.css">
 
-    <link rel="icon" type="image/png" href="../images/favicon.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico">
-
     <style>
-        /* Specific Styles for Exam Interface (Shared with other Practice Exams) */
-        body {
-            background-color: #f7fafc;
-        }
-        main {
-            padding-top: 20px;
-            padding-bottom: 80px;
-        }
-        .exam-container {
-            max-width: 900px;
-            margin: 40px auto;
-            background-color: var(--white);
-            border-radius: 16px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-        }
-        .exam-header {
-            text-align: center;
-            border-bottom: 3px solid var(--secondary); /* Practice test uses secondary color */
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-        .exam-header h1 {
-            font-size: 2.5rem;
-            color: var(--secondary);
-            margin-bottom: 5px;
-        }
-        .exam-header p {
-            color: var(--dark);
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-        .exam-info-box {
-            display: flex;
-            justify-content: space-around;
-            gap: 20px;
-            margin-bottom: 30px;
-            padding: 15px;
-            background-color: #fce6ff; /* Lighter purple background for practice */
-            border-radius: 10px;
-            border: 1px solid #f0ccff;
-        }
-        .info-item {
-            text-align: center;
-        }
-        .info-item strong {
-            display: block;
-            font-size: 1.4rem;
-            color: var(--dark);
-        }
-        .info-item span {
-            font-size: 0.9rem;
-            color: var(--gray);
-        }
-        .question-card {
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 25px;
-        }
-        .question-card p {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 15px;
-        }
-        .options label {
-            display: block;
-            background-color: #f7fafc;
-            padding: 12px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 1px solid #e2e8f0;
-        }
-        .options label:hover {
-            background-color: #edf2f7;
-            border-color: var(--secondary);
-        }
-        .options input[type="radio"],
-        .options input[type="checkbox"] {
-            margin-right: 10px;
-            accent-color: var(--secondary);
-        }
-        .exam-submit-area {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid #e2e8f0;
-            margin-top: 30px;
-        }
-        .next-step-cta {
-            color: var(--primary);
-            background-color: #ebf8ff;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #cceeff;
-            margin-bottom: 20px;
-            font-weight: 600;
+        :root {
+            --primary: #4c51bf; /* Deeper Indigo/Violet */
+            --dark: #1a202c;
+            --gray: #4a5568;
+            --warning: #f6ad55; /* More vibrant orange */
+            --success: #38a169;
+            --light: #f7fafc;
+            --accent: #38a169;
+            --hover-light: #f0f4ff;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --transition: all 0.25s ease-in-out;
+            --fail-color: #e53e3e; /* Red for failure */
         }
         
-        /* Mobile adjustments */
-        @media (max-width: 768px) {
-            .exam-container {
-                padding: 20px;
-                margin: 20px auto;
-            }
-            .exam-header h1 {
-                font-size: 2rem;
-            }
-            .exam-info-box {
-                flex-direction: column;
-                gap: 10px;
-            }
+        /* --- New Top Bar Styles (Replaces Header) --- */
+        .page-top-bar { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 15px 30px; 
+            background: #fff; 
+            box-shadow: var(--shadow);
+        }
+        .page-top-bar .logo-container {
+            display: flex;
+            align-items: center;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .page-top-bar .logo-container i {
+            margin-right: 8px;
+            color: var(--warning); 
+        }
+        #timer-proof { /* New ID for the visible timer */
+            font-size: 1.4rem; 
+            font-weight: 700; 
+            color: var(--primary); 
+            background-color: #eef2f7; 
+            padding: 6px 12px; 
+            border-radius: 6px; 
+        }
+        /* --- End Top Bar Styles --- */
+
+
+        body { margin: 0; padding: 0; background-color: var(--light); font-family: 'Inter', sans-serif; color: var(--dark); }
+        .exam-container { max-width: 900px; margin: 40px auto; padding: 0 20px; position: relative; }
+        
+        .exam-header { display: none; } /* Hide old exam header */
+        #timer { display: none !important; } /* Hide old timer */
+        .hidden { display: none !important; }
+
+        /* Quiz Container Styles */
+        #quiz-container { background: #fff; padding: 40px; border-radius: 12px; box-shadow: var(--shadow); }
+        .question-block { margin-bottom: 35px; border-bottom: 1px solid #e2e8f0; padding-bottom: 25px; }
+        .question-block:last-child { border-bottom: none; margin-bottom: 0; }
+        .question-block h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 20px; line-height: 1.6; display: flex; align-items: flex-start; }
+        .question-block h3 strong { display: inline-block; background: var(--primary); color: white; border-radius: 50%; width: 30px; height: 30px; line-height: 30px; text-align: center; margin-right: 12px; font-size: 1rem; flex-shrink: 0; }
+        
+        /* Code block style */
+        .question-block pre { 
+            background-color: #f6f8fa; 
+            border: 1px solid #e2e8f0; 
+            border-radius: 8px; 
+            padding: 12px 16px; 
+            overflow-x: auto; 
+            white-space: pre-wrap; 
+            word-wrap: break-word; 
+            margin: 15px 0; 
+            line-height: 1.5; 
+            font-size: 0.95rem; 
+            color: #2d3748; 
+        }
+        
+        .options .option { background-color: var(--light); padding: 16px 20px; border: 1px solid #e2e8f0; border-radius: 10px; cursor: pointer; transition: var(--transition); margin-bottom: 10px; font-weight: 500; display: flex; align-items: center; gap: 12px; }
+        .options .option::before { content: ''; display: inline-block; width: 18px; height: 18px; border: 2px solid var(--gray); border-radius: 50%; transition: all 0.2s ease; flex-shrink: 0; }
+        .options .option:hover { background-color: #eef2f7; border-color: #cbd5e0; }
+        .options .option:hover::before { border-color: var(--primary); }
+        .options .option.selected { background-color: #ebf8ff; color: var(--primary); border-color: var(--primary); box-shadow: 0 0 0 2px rgba(43, 108, 176, 0.2); }
+        .options .option.selected::before { background-color: var(--primary); border-color: var(--primary); box-shadow: inset 0 0 0 3px white; }
+        
+        #submit-btn { margin-top: 30px; width: 100%; padding: 18px; font-size: 1.1rem; }
+        #results-container { display: none !important; } /* Hidden, replaced by modals */
+        
+        /* --- Result Pop-up/Modal Styles --- */
+        .result-modal { 
+            display: none; 
+            position: fixed; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            background-color: white; 
+            padding: 30px 40px; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
+            z-index: 1010; 
+            text-align: center; 
+            max-width: 500px; 
+            width: 90%;
+            animation: popIn 0.3s forwards;
+        }
+        .result-modal-success { border-top: 5px solid var(--success); }
+        .result-modal-fail { border-top: 5px solid var(--fail-color); }
+        .result-modal h3 { margin-bottom: 15px; font-size: 1.6rem; font-weight: 700; }
+        .result-modal p { margin-bottom: 25px; color: var(--gray); font-size: 1.1rem;}
+        .result-modal .modal-icon { font-size: 4rem; margin-bottom: 20px; }
+        .result-modal-success .modal-icon { color: var(--success); }
+        .result-modal-fail .modal-icon { color: var(--fail-color); }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* Message Box Styles (Proctoring/Tab Switch ONLY) */
+        .message-box { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 30px 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); z-index: 1005; text-align: center; border-top: 5px solid var(--primary); max-width: 500px; width: 90%; }
+        .message-box h3 { margin-bottom: 15px; font-size: 1.4rem;}
+        .message-box p { margin-bottom: 25px; color: var(--gray); font-size: 1.1rem;}
+        .message-box button { margin: 0 10px; }
+        .message-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); z-index: 1004; }
+        
+        /* FOOTER ALIGNMENT OVERRIDE */
+        footer { text-align: center; padding: 20px 0; background-color: #f7fafc; }
+        footer .exam-container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        footer p { 
+            text-align: center; 
+            width: 100%; 
+            margin: 0;
+            color: var(--gray);
+            font-size: 0.9rem;
         }
     </style>
 </head>
-<body>
-    <!-- Google Analytics Script (Retained) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-3ZZ3HGFM3Q');
-    </script>
-
-    <!-- ==============================================
-         HEADER: 3D Animated Nav (Requests 1 & 2) - Adjusted paths
-         ============================================== -->
-    <header>
-        <div class="container header-container">
-            <a href="../index.html" class="logo">
-                <img src="../images/logo.jpg" alt="InternAdda Logo" class="logo-img">
-                <span class="logo-text">InternAdda</span>
-            </a>
-
-            <nav class="nav-menu">
-                <a href="../index.html" class="nav-link">Home</a>
-                <a href="../courses/course.html" class="nav-link">Courses</a>
-                <a href="internship.html" class="nav-link">Internships</a>
-                <a href="../jobs.html" class="nav-link">Jobs</a>
-                <a href="../about.html" class="nav-link">About</a>
-                
-                <!-- TOOLS DROPDOWN -->
-                <div class="nav-item dropdown" id="toolsDropdown">
-                    <a href="#" class="nav-link dropdown-toggle">Tools <i class="fas fa-chevron-down dropdown-arrow"></i></a>
-                    <div class="dropdown-content">
-                        <a href="../tools/ats-score.html" class="dropdown-link"><i class="fas fa-chart-bar"></i> ATS Score</a>
-                        <a href="../tools/resume-builder.html" class="dropdown-link"><i class="fas fa-file-alt"></i> Resume Builder</a>
-                        <a href="../tools/interview-questions.html" class="dropdown-link"><i class="fas fa-question-circle"></i> Interview Question</a>
-                        <a href="../tools/cover-letter.html" class="dropdown-link"><i class="fas fa-envelope"></i> Cover Letter Generator</a>
-                        <a href="../tools/paraphraser.html" class="dropdown-link"><i class="fas fa-pen-nib"></i> Essay / Paraphraser Tool</a>
-                    </div>
-                </div>
-                
-                <!-- MORE DROPDOWN -->
-                <div class="nav-item dropdown" id="moreDropdown">
-                    <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
-                    <div class="dropdown-content">
-                        <a href="../contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
-                        <a href="../blog/index.html" class="dropdown-link"><i class="fas fa-newspaper"></i> Blog</a>
-                        <a href="../community/join.html" class="dropdown-link"><i class="fas fa-users"></i> Community</a>
-                        <a href="../community/partners.html" class="dropdown-link"><i class="fas fa-handshake"></i> Partners</a>
-                        <a href="../community/academy.html" class="dropdown-link"><i class="fas fa-university"></i> Offline Academy</a>
-                    </div>
-                </div>
-                
-                <!-- MOBILE ONLY LINKS -->
-                <a href="../tools/ats-score.html" class="nav-link mobile-only-link">ATS Score</a>
-                <a href="../tools/resume-builder.html" class="nav-link mobile-only-link">Resume Builder</a>
-                <a href="../tools/interview-questions.html" class="nav-link mobile-only-link">Interview Question</a>
-                <a href="../tools/cover-letter.html" class="nav-link mobile-only-link">Cover Letter Generator</a>
-                <a href="../tools/paraphraser.html" class="nav-link mobile-only-link">Essay / Paraphraser Tool</a>
-                <a href="../contact.html" class="nav-link mobile-only-link">Contact</a>
-                <a href="../blog/index.html" class="nav-link mobile-only-link">Blog</a>
-                <a href="../community/join.html" class="nav-link mobile-only-link">Community</a>
-                <a href="../community/partners.html" class="nav-link mobile-only-link">Partners</a>
-                <a href="../community/academy.html" class="nav-link mobile-only-link">Offline Academy</a>
-            </nav>
-
-            <div class="header-actions">
-                <div class="search-container">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="searchInput" class="search-input" placeholder="Search courses & domains...">
-                </div>
-                <!-- AUTH BUTTONS REMOVED -->
-            </div> 
-
-            <button class="hamburger-menu" id="hamburgerMenu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+<body> 
+    <div class="page-top-bar">
+        <div class="logo-container">
+            <i class="fas fa-graduation-cap"></i> <span class="logo-text">Internadda</span>
         </div>
-        <div id="searchResults" class="search-results-container container hidden"></div>
-    </header>
-
+        <div id="timer-proof">20:00</div>
+    </div>
     <main>
-        <section class="exam-section">
-            <div class="container">
-                <div class="exam-container">
-                    <div class="exam-header">
-                        <h1 class="exam-title">Python Development Practice Test (Free)</h1>
-                        <p>Evaluate your readiness for the Final Exam and Internship Placement</p>
-                    </div>
-
-                    <div class="next-step-cta">
-                        <i class="fas fa-graduation-cap"></i> 
-                        <strong>This is a free practice resource.</strong> Take your time, review your course material, and test your knowledge before attempting the paid Final Exam.
-                    </div>
-
-                    <div class="exam-info-box">
-                        <div class="info-item">
-                            <i class="far fa-clock" style="color: var(--secondary);"></i>
-                            <strong>Untimed</strong>
-                            <span>Practice at Your Own Pace</span>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-clipboard-list" style="color: var(--secondary);"></i>
-                            <strong>20</strong>
-                            <span>Practice Questions</span>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-info-circle" style="color: var(--secondary);"></i>
-                            <strong>No Score Recorded</strong>
-                            <span>Purely for Self-Assessment</span>
+        <section class="course-section">
+            <div class="exam-container">
+                <h1 style="font-size: 1.8rem; font-weight: 700; color: var(--dark); margin-bottom: 30px; text-align: center;">Python Dev & SWE Practice Test</h1>
+                
+                <div id="quiz-container">
+                    <div class="question-block" data-answer="c">
+                        <h3><strong>1</strong>What is the primary difference between a Python list and a tuple?</h3>
+                        <div class="options">
+                            <div class="option" data-value="a">Lists can store mixed data types, tuples cannot.</div>
+                            <div class="option" data-value="b">Tuples use square brackets [], lists use parentheses ().</div>
+                            <div class="option" data-value="c">Lists are mutable (changeable), tuples are immutable (unchangeable).</div>
+                            <div class="option" data-value="d">Lists are faster for iteration than tuples.</div>
                         </div>
                     </div>
+                    <div class="question-block" data-answer="b">
+                        <h3><strong>2</strong>What will the following Python code print?</h3>
+                        <pre>my_dict = {'a': 1, 'b': 2, 'c': 3}
+print(my_dict.get('d', 0))</pre>
+                        <div class="options">
+                            <div class="option" data-value="a">KeyError</div>
+                            <div class="option" data-value="b">0</div>
+                            <div class="option" data-value="c">None</div>
+                            <div class="option" data-value="d">False</div>
+                        </div>
+                    </div>
+                    <div class="question-block" data-answer="d">
+                        <h3><strong>3</strong>Which of the following is used to define a block of code (like in a function or loop) in Python?</h3>
+                        <div class="options">
+                            <div class="option" data-value="a">Curly braces {}</div>
+                            <div class="option" data-value="b">Parentheses ()</div>
+                            <div class="option" data-value="c">Semicolons ;</div>
+                            <div class="option" data-value="d">Indentation (spaces or tabs)</div>
+                        </div>
+                    </div>
+                    <div class="question-block" data-answer="a">
+                        <h3><strong>4</strong>What is the purpose of the `__init__` method in a Python class?</h3>
+                        <div class="options">
+                            <div class="option" data-value="a">It's the constructor, used to initialize object attributes when an object is created.</div>
+                            <div class="option" data-value="b">It defines how the object should be represented as a string.</div>
+                            <div class="option" data-value="c">It's called automatically when the object is destroyed (garbage collected).</div>
+                            <div class="option" data-value="d">It's used for inheriting methods from a parent class.</div>
+                        </div>
+                    </div>
+                    <div class="question-block" data-answer="c">
+                        <h3><strong>5</strong>How do you open a file named `data.txt` in Python for reading its content?</h3>
+                        <div class="options">
+                            <div class="option" data-value="a">`file = open("data.txt", "w")`</div>
+                            <div class="option" data-value="b">`file = open("data.txt", "a")`</div>
+                            <div class="option" data-value="c">`with open("data.txt", "r") as file:`</div>
+                            <div class="option" data-value="d">`read("data.txt")`</div>
+                        </div>
+                    </div>
+                    <div class="question-block" data-answer="b">
+                        <h3><strong>6</strong>What does the `*args` syntax in a Python function definition allow?</h3>
+                        <div class="options">
+                            <div class="option" data-value="a">Passing keyword arguments only.</div>
+                            <div class="option" data-value="b">Passing a variable number of positional arguments.</div>
+                            <div class="option" data-value="c">Defining default argument values.</div>
+                            <div class="option" data-value="d">Specifying the return type of the function.</div>
+                        </div>
+                    </div>
+                    <div class="question-block" data-answer="d">
+                        <h3><strong>7</strong>Which of the following is NOT a standard Python built-in data type?</h3>
+                        <div class="options">
+                            <div class="option" data-value="a">int</div>
+                            <div class="option" data-value="b">dict</div>
+                            <div class="option" data-value="c">list</div>
+                            <div class="option" data-value="d">array (standard arrays are typically from the `array` module or NumPy)</div>
+                        </div>
+                    </div>
+                    <div class="question-block" data-answer="a">
+                        <h3><strong>8</strong>What is the output of `list(range(1, 5))`?</h3>
+                        <div class="options">
+                            <div class="option" data-value="a">[1, 2, 3, 4]</div>
+                            <div class="option" data-value="b">[1, 2, 3, 4, 5]</div>
+                            <div class="option" data-value="c">[0, 1, 2, 3, 4]</div>
+                            <div class="option" data-value="d">(1, 2, 3, 4)</div>
+                        </div>
+                    </div>
+                    <div class="question-block" data-answer="c">
+                        <h3><strong>9</strong>What is the primary function of a `virtual environment` in Python development?</h3>
+                        <div class="options">
+                            <div class="option" data-value="a">To automatically format Python code according to PEP 8.</div>
+                            <div class="option" data-value="b">To speed up the execution of Python scripts.</div>
+                            <div class="option" data-value="c">To isolate project dependencies and avoid conflicts between different projects.</div>
+                            <div class="option" data-value="d">To provide an interactive Python shell (REPL).</div>
+                        </div>
+                    </div>
+                    <div class="question-block" data-answer="b">
+                        <h3><strong>10</strong>Which keyword is used to handle potential errors in a block of Python code?</h3>
+                        <div class="options">
+                            <div class="option" data-value="a">`catch`</div>
+                            <div class="option" data-value="b">`try` / `except`</div>
+                            <div class="option" data-value="c">`if error`</div>
+                            <div class="option" data-value="d">`handle`</div>
+                        </div>
+                    </div>
 
-                    <form id="pythonDevPracticeTestForm">
-                        
-                        <!-- Question 1: Data Structures -->
-                        <div class="question-card">
-                            <p>1. Which of the following Python data structures maintains element order and allows duplicate values?</p>
-                            <div class="options">
-                                <label><input type="radio" name="q1" value="A"> Set</label>
-                                <label><input type="radio" name="q1" value="B"> Dictionary</label>
-                                <label><input type="radio" name="q1" value="C"> List</label>
-                                <label><input type="radio" name="q1" value="D"> Tuple</label>
-                            </div>
-                        </div>
+                    <button class="btn btn-primary" id="submit-btn">Submit Practice Test</button>
 
-                        <!-- Question 2: Flow Control -->
-                        <div class="question-card">
-                            <p>2. What keyword is used to immediately exit a loop (e.g., `for` or `while`) in Python?</p>
-                            <div class="options">
-                                <label><input type="radio" name="q2" value="A"> `continue`</label>
-                                <label><input type="radio" name="q2" value="B"> `pass`</label>
-                                <label><input type="radio" name="q2" value="C"> `return`</label>
-                                <label><input type="radio" name="q2" value="D"> `break`</label>
-                            </div>
-                        </div>
-                        
-                        <!-- Question 3: Functions and Scope -->
-                        <div class="question-card">
-                            <p>3. In Python, what type of scope refers to variables defined within the immediate enclosing function?</p>
-                            <div class="options">
-                                <input type="text" name="q3" placeholder="Enter the scope type (e.g., Global, Local, Enclosing)">
-                            </div>
-                        </div>
-                        
-                         <!-- Question 4: File Handling -->
-                        <div class="question-card">
-                            <p>4. Which mode should be used when opening a file if you want to both read from the beginning and overwrite existing content?</p>
-                            <div class="options">
-                                <label><input type="radio" name="q4" value="A"> `'r+'`</label>
-                                <label><input type="radio" name="q4" value="B"> `'w'`</label>
-                                <label><input type="radio" name="q4" value="C"> `'a'`</label>
-                                <label><input type="radio" name="q4" value="D"> `'w+'`</label>
-                            </div>
-                        </div>
-                        
-                        <!-- Question 5: Object-Oriented Programming (OOP) -->
-                         <div class="question-card">
-                            <p>5. What term is used for the concept of bundling data and the methods that operate on that data into a single unit (the class)?</p>
-                            <div class="options">
-                                <label><input type="radio" name="q5" value="A"> Inheritance</label>
-                                <label><input type="radio" name="q5" value="B"> Polymorphism</label>
-                                <label><input type="radio" name="q5" value="C"> Abstraction</label>
-                                <label><input type="radio" name="q5" value="D"> Encapsulation</label>
-                            </div>
-                        </div>
-
-
-                        <!-- Add more questions here (omitted for brevity - placeholder for 20 questions) -->
-
-                        <div class="exam-submit-area">
-                            <p style="color: var(--gray); font-size: 1rem;">Once submitted, your answers will be reviewed locally for immediate feedback.</p>
-                            <button type="submit" class="btn btn-secondary btn-lg" id="submitPracticeButton" style="width: 300px; margin-top: 15px;">
-                                <i class="fas fa-check-double" style="margin-right: 10px;"></i> Review My Answers
-                            </button>
-                            <a href="python_dev_final_exam.html" class="btn btn-primary btn-lg" style="width: 300px; margin-top: 15px;">
-                                <i class="fas fa-rocket" style="margin-right: 10px;"></i> Proceed to Final Exam
-                            </a>
-                        </div>
-                    </form>
+                    <div id="results-container" class="hidden"></div>
                 </div>
             </div>
         </section>
+
+        <div id="successModal" class="result-modal result-modal-success">
+            <div class="modal-icon"><i class="fas fa-medal"></i></div>
+            <h3 id="successTitle">Great Job! You're Ready!</h3>
+            <p id="successScoreText"></p>
+            <button id="takeFinalExamBtn" class="btn btn-success btn-lg">Take Final Exam</button>
+        </div>
+
+        <div id="failModal" class="result-modal result-modal-fail">
+            <div class="modal-icon"><i class="fas fa-redo-alt"></i></div>
+            <h3 id="failTitle">Needs Improvement</h3>
+            <p id="failScoreText"></p>
+            <p>Don't worry! Try again after reviewing the course material.</p>
+            <button id="retryTestBtn" class="btn btn-primary">Retry Test</button>
+        </div>
+
+        <div id="messageOverlay" class="message-overlay"></div>
+        <div id="tabSwitchWarningBox" class="message-box">
+             <h3><i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i> Warning: Focus Lost</h3>
+             <p>You navigated away from the practice test tab. In a real exam, this could lead to disqualification. Click Resume to continue.</p>
+             <button id="resumeTestBtn" class="btn btn-primary">Resume Test</button>
+        </div>
+        <div id="testCancelledBox" class="message-box">
+             <h3><i class="fas fa-ban" style="color: #c53030;"></i> Practice Test Cancelled</h3>
+             <p>Multiple instances of navigating away from the test tab were detected. To maintain fairness simulation, this practice session has been cancelled.</p>
+             <button id="backToIntBtn" class="btn btn-outline">Back to Internships</button>
+        </div>
     </main>
 
-    <!-- ==============================================
-         FOOTER: Updated with Tools Column (Request 3) - Adjusted paths
-         ============================================== -->
     <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <div class="footer-logo">Internadda</div>
-                    <p class="footer-description">Transforming careers through learning, interning, and earning opportunities.</p>
-                    <div class="social-links">
-                        <a href="https://www.linkedin.com/company/internadda-india" target="_blank" class="social-link" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="https://www.youtube.com/@theinternadda" target="_blank" class="social-link" aria-label="YouTube">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                        <a href="https://www.instagram.com/internadda.india" target="_blank" class="social-link" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Learn</h3>
-                    <ul class="footer-links">
-                        <li><a href="../courses/course.html">Browse Courses</a></li>
-                        <li><a href="../courses/course.html">Free Courses</a></li>
-                        <li><a href="#">Paid Courses</a></li>
-                        <li><a href="#">Become an Instructor</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Intern</h3>
-                    <ul class="footer-links">
-                        <li><a href="internship.html">Find Internships</a></li>
-                        <li><a href="#">For Companies</a></li>
-                        <li><a href="#">Success Stories</a></li>
-                        <li><a href="#">Career Coaching</a></li>
-                    </ul>
-                </div>
-                
-                <!-- NEW TOOLS COLUMN (Request 3) -->
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Career Tools</h3>
-                    <ul class="footer-links">
-                        <li><a href="../tools/ats-score.html">ATS Score Checker</a></li>
-                        <li><a href="../tools/resume-builder.html">Resume Builder</a></li>
-                        <li><a href="../tools/interview-questions.html">Interview Prep</a></li>
-                        <li><a href="../tools/cover-letter.html">Cover Letter Gen</a></li>
-                        <li><a href="../tools/paraphraser.html">Essay Paraphraser</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">InternAdda</h3>
-                    <ul class="footer-links">
-                        <li><a href="../about.html">About Us</a></li>
-                        <li><a href="../contact.html">Contact Us</a></li>
-                        <li><a href="../terms.html">Terms & Conditions</a></li>
-                        <li><a href="../refund.html">Refund Policy</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Community</h3>
-                    <ul class="footer-links">
-                        <li><a href="../community/join.html">Join Community</a></li>
-                        <li><a href="../community/partners.html">Partners</a></li>
-                        <li><a href="../blog/index.html">Blog</a></li>
-                        <li><a href="../community/academy.html">Offline Academy</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>© 2025 Internadda. All rights reserved. | Developed by Internadda Team</p>
-            </div>
+        <div class="exam-container">
+            <p>© 2025 Internadda. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- NOTE: The global script.js is NOT included here. Exam-specific script included below. -->
     <script>
-        // Simple Client-side Exam Logic (Placeholder)
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('pythonDevPracticeTestForm');
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Get Elements ---
+            // NOTE: timerEl is now timer-proof
+            const timerEl = document.getElementById('timer-proof');
+            const submitBtn = document.getElementById('submit-btn');
+            const resultsContainer = document.getElementById('results-container');
+            const questions = document.querySelectorAll('.question-block');
+            const totalQuestions = questions.length;
+
+            const quizContainer = document.getElementById('quiz-container');
+
+            // New Result Pop-up Elements
+            const successModal = document.getElementById('successModal');
+            const successScoreText = document.getElementById('successScoreText');
+            const takeFinalExamBtn = document.getElementById('takeFinalExamBtn');
+            const failModal = document.getElementById('failModal');
+            const failScoreText = document.getElementById('failScoreText');
+            const retryTestBtn = document.getElementById('retryTestBtn'); 
+
+            // Proctoring Elements
+            const messageOverlay = document.getElementById('messageOverlay');
+            const tabSwitchWarningBox = document.getElementById('tabSwitchWarningBox');
+            const resumeTestBtn = document.getElementById('resumeTestBtn');
+            const testCancelledBox = document.getElementById('testCancelledBox');
+            const backToIntBtn = document.getElementById('backToIntBtn');
+
+            // --- State Variables ---
+            let examTimerInterval;
+            let tabSwitchCount = 0;
+            const MAX_TAB_SWITCHES = 2; // (1 = warning, 2 = cancel)
+            let testStartTime = 0;
+            const TOTAL_DURATION_SECONDS = 1200; // 20 minutes
+
+            // --- Helper: Format Time ---
+            function formatTime(seconds) {
+                const mins = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            }
+
+            // --- Timer Logic ---
+            const startInitialTest = () => {
+                startExamTimer(TOTAL_DURATION_SECONDS); 
+                testStartTime = Date.now(); 
+                submitBtn.style.display = 'block';
+                // Hide any visible modals on start
+                if(successModal) successModal.style.display = 'none';
+                if(failModal) failModal.style.display = 'none';
+                if(resultsContainer) resultsContainer.classList.add('hidden'); // Ensure old results are hidden
+            };
             
-            // This is a placeholder function for the practice test submission.
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    // In a real practice test, this would provide immediate, local feedback on answers.
-                    alert("Practice Test submitted! Review feature (local scoring/feedback) coming soon. For now, this confirms submission.");
+            function startExamTimer(startTimeInSeconds) {
+                let time = startTimeInSeconds;
+                if(timerEl) timerEl.textContent = formatTime(time);
+                if (examTimerInterval) clearInterval(examTimerInterval); 
+
+                examTimerInterval = setInterval(() => {
+                    if (document.hidden) return; 
+                    time--;
+                    if(timerEl) timerEl.textContent = formatTime(time);
+                    if (time <= 0) {
+                        clearInterval(examTimerInterval);
+                        if (!quizContainer.classList.contains('hidden') && submitBtn.style.display !== 'none') {
+                            submitTest(true); 
+                        }
+                    }
+                }, 1000);
+            }
+            
+            // --- Option Selection Logic (unchanged) ---
+            questions.forEach(question => {
+                const options = question.querySelectorAll('.options .option');
+                options.forEach(opt => {
+                    opt.addEventListener('click', () => {
+                        if (!quizContainer.classList.contains('hidden') && submitBtn.style.display !== 'none'){
+                            options.forEach(o => o.classList.remove('selected'));
+                            opt.classList.add('selected');
+                            question.dataset.selectedValue = opt.dataset.value;
+                        }
+                    });
+                });
+            });
+
+            // --- Submission Logic (Updated for Pop-ups and Redirection) ---
+            function submitTest(autoSubmitted = false) {
+                if (!autoSubmitted && !confirm("Submit your practice test?")) {
+                    return; 
+                }
+                clearInterval(examTimerInterval);
+                
+                let score = 0;
+                questions.forEach(question => {
+                    if (question.dataset.selectedValue === question.dataset.answer) {
+                        score++;
+                    }
+                    question.querySelectorAll('.options .option').forEach(opt => opt.style.pointerEvents = 'none');
+                });
+
+                const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
+                
+                // Hide main quiz content
+                quizContainer.classList.add('hidden'); 
+                submitBtn.style.display = 'none'; 
+                if(timerEl) timerEl.textContent = "Finished";
+
+                // Hide other potential popups
+                messageOverlay.style.display = 'none';
+                tabSwitchWarningBox.style.display = 'none';
+                testCancelledBox.style.display = 'none';
+
+                // Handle results based on percentage (50% threshold)
+                if (percentage >= 50) {
+                    // Success: >= 50%
+                    successScoreText.textContent = `You scored ${score} out of ${totalQuestions} (${percentage}%).`;
+                    messageOverlay.style.display = 'block';
+                    successModal.style.display = 'block';
+                } else {
+                    // Fail: < 50% (Only Retry button available)
+                    failScoreText.textContent = `You scored ${score} out of ${totalQuestions} (${percentage}%).`;
+                    messageOverlay.style.display = 'block';
+                    failModal.style.display = 'block';
+                }
+            }
+
+            // --- Cancellation Logic ---
+            function cancelTest() {
+                clearInterval(examTimerInterval);
+                
+                quizContainer.classList.add('hidden');
+                submitBtn.style.display = 'none';
+                if(timerEl) timerEl.textContent = "Cancelled";
+
+                messageOverlay.style.display = 'block';
+                testCancelledBox.style.display = 'block';
+                
+                tabSwitchWarningBox.style.display = 'none';
+                if(successModal) successModal.style.display = 'none';
+                if(failModal) failModal.style.display = 'none';
+            }
+
+
+            // --- Event Listeners ---
+
+            startInitialTest(); // Call start on DOM load
+
+            // Submit Button
+            submitBtn.addEventListener('click', () => submitTest(false)); 
+
+            // Final Exam Button Redirection (NEW URL: python)
+            if(takeFinalExamBtn) {
+                takeFinalExamBtn.addEventListener('click', () => {
+                    window.location.href = 'https://internadda.com/intern/payment_page_python';
                 });
             }
 
-            // Re-adding the header menu toggle logic since the global script is removed
-            const hamburgerMenu = document.getElementById('hamburgerMenu');
-            const navMenu = document.querySelector('.nav-menu');
-            
-            if (hamburgerMenu && navMenu) {
-                hamburgerMenu.addEventListener('click', () => {
-                    hamburgerMenu.classList.toggle('active');
-                    navMenu.classList.toggle('active');
-                    document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+            // Retry Test Button (For < 50% score) - AUTO REFRESH
+            if(retryTestBtn) {
+                retryTestBtn.addEventListener('click', () => {
+                    // Reload the page to start the test fresh
+                    window.location.reload(); 
                 });
             }
-        });
+
+
+            // Resume Button (from warning)
+            if(resumeTestBtn) {
+                resumeTestBtn.addEventListener('click', () => {
+                    tabSwitchWarningBox.style.display = 'none';
+                    messageOverlay.style.display = 'none';
+
+                    // Resume timers by calculating remaining time
+                    const elapsedMillis = Date.now() - testStartTime;
+                    const elapsedSeconds = Math.floor(elapsedMillis / 1000);
+                    const remainingTime = (TOTAL_DURATION_SECONDS - elapsedSeconds > 0) ? TOTAL_DURATION_SECONDS - elapsedSeconds : 0;
+
+                    startExamTimer(remainingTime); 
+                });
+            }
+
+            // Back to Internships Button (from cancellation)
+            if(backToIntBtn) {
+                backToIntBtn.addEventListener('click', () => {
+                    window.location.href = 'internship.html'; 
+                });
+            }
+
+
+            // Anti-Cheat: Tab Switch Detection
+            document.addEventListener('visibilitychange', () => {
+                if (!quizContainer.classList.contains('hidden') && submitBtn.style.display !== 'none' && document.hidden) {
+                    tabSwitchCount++;
+
+                    // Pause exam timer
+                    if (examTimerInterval) clearInterval(examTimerInterval);
+
+                    if (tabSwitchCount >= MAX_TAB_SWITCHES) {
+                        cancelTest();
+                    } else if (tabSwitchCount === 1) {
+                        messageOverlay.style.display = 'block';
+                        tabSwitchWarningBox.style.display = 'block';
+                    }
+                }
+            });
+
+        }); // End DOMContentLoaded
     </script>
 </body>
 </html>
