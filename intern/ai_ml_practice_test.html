@@ -1,432 +1,301 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI/ML Practice Test | Internadda Free Prep</title>
-    <meta name="description" content="Free practice test for the Artificial Intelligence and Machine Learning Internship qualification. Test your knowledge before attempting the Final Exam.">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Corrected path for nested file structure -->
-    <link rel="stylesheet" href="../style.css">
+// ---------------------------------------------
+// Website Main Script (Auth Removed, Nav & Carousel Reworked)
+// ---------------------------------------------
 
-    <link rel="icon" type="image/png" href="../images/favicon.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico">
+// --- FIREBASE / AUTH CODE COMPLETELY REMOVED ---
+// All logic related to user authentication, sign-up, login, profile dashboard, 
+// and modals has been eliminated based on Request 1.
 
-    <style>
-        /* Specific Styles for Exam Interface (Shared with other Exams) */
-        body {
-            background-color: #f7fafc;
-        }
-        main {
-            padding-top: 20px;
-            padding-bottom: 80px;
-        }
-        .exam-container {
-            max-width: 900px;
-            margin: 40px auto;
-            background-color: var(--white);
-            border-radius: 16px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-        }
-        .exam-header {
-            text-align: center;
-            border-bottom: 3px solid var(--secondary); /* Practice test uses secondary color */
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-        .exam-header h1 {
-            font-size: 2.5rem;
-            color: var(--secondary);
-            margin-bottom: 5px;
-        }
-        .exam-header p {
-            color: var(--dark);
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-        .exam-info-box {
-            display: flex;
-            justify-content: space-around;
-            gap: 20px;
-            margin-bottom: 30px;
-            padding: 15px;
-            background-color: #fce6ff; /* Lighter background for practice */
-            border-radius: 10px;
-            border: 1px solid #f0ccff;
-        }
-        .info-item {
-            text-align: center;
-        }
-        .info-item strong {
-            display: block;
-            font-size: 1.4rem;
-            color: var(--dark);
-        }
-        .info-item span {
-            font-size: 0.9rem;
-            color: var(--gray);
-        }
-        .question-card {
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 25px;
-        }
-        .question-card p {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 15px;
-        }
-        .options label {
-            display: block;
-            background-color: #f7fafc;
-            padding: 12px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 1px solid #e2e8f0;
-        }
-        .options label:hover {
-            background-color: #edf2f7;
-            border-color: var(--secondary);
-        }
-        .options input[type="radio"],
-        .options input[type="checkbox"] {
-            margin-right: 10px;
-            accent-color: var(--secondary);
-        }
-        .exam-submit-area {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid #e2e8f0;
-            margin-top: 30px;
-        }
-        .next-step-cta {
-            color: var(--primary);
-            background-color: #ebf8ff;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #cceeff;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
+// --- GLOBAL SEARCH DATA AND LOGIC ---
+
+// Utility function to get the correct path prefix for assets based on the current page depth
+function getRelativePath(targetPath) {
+    const currentPath = window.location.pathname;
+    const segments = currentPath.split('/').filter(p => p.length > 0);
+
+    // Check if the current path is inside a folder (e.g., /courses/ or /intern/etc.)
+    const depth = segments.length > 1 && currentPath.endsWith('/') ? segments.length - 1 : segments.length;
+
+    let prefix = '';
+    // Determine the necessary relative path prefix
+    if (depth >= 2) {
+        prefix = '../'.repeat(depth - 1);
+    }
+    
+    // Ensure the target path is root-relative for clean joining
+    const cleanTargetPath = targetPath.startsWith('/') ? targetPath.substring(1) : targetPath;
+    
+    return prefix + cleanTargetPath;
+}
+
+// Hardcoded data (used for search/listings)
+const allCourses = [
+    { type: 'course', title: 'Essential Data Science Intern Course', instructor: 'Lucky Kumar', image: '/images/Essential Data Science Intern Course.png', url: "https://courses.internadda.com/" },
+    { type: 'course', title: 'Generative AI & Prompt Engineering Masterclass', instructor: 'Lucky Kumar', image: '/images/Generative-AI-Prompt-Engineering-Masterclass.png', url: "https://courses.internadda.com/" },
+    { type: 'course', title: 'Ethical Hacking Mastery', instructor: 'Lucky Kumar', image: '/images/Ethical-Hacking-Mastery.png', url: "https://courses.internadda.com/" },
+    { type: 'course', title: 'Python Essentials for All', instructor: 'Lucky Kumar', image: '/images/Python-Essentials-for-All.png', url: "https://courses.internadda.com/" },
+    { type: 'course', title: 'Cloud & DevOps Essentials', instructor: 'Lucky Kumar', image: '/images/Cloud-DevOps-Essentials.png', url: "https://courses.internadda.com/" }
+];
+
+const allInternships = [
+    { type: 'internship', title: 'Data Science & Analytics', roles: 'Data Analyst, Data Scientist Intern', url: '/intern/internship.html#tests', image: '/images/test_data Science.png', practiceUrl: '/intern/data_science_practice_test.html', finalExamUrl: '/intern/payment_page_data_science.html' },
+    { type: 'internship', title: 'Artificial Intelligence & ML', roles: 'AI Intern, Machine Learning Intern', url: '/intern/internship.html#tests', image: '/images/test_Artificial Intelligence.png', practiceUrl: '/intern/ai_ml_practice_test.html', finalExamUrl: '/intern/payment_page_ai_ml.html' },
+    { type: 'internship', title: 'Python Dev & Software Eng', roles: 'Python Developer, Backend Developer', url: '/intern/internship.html#tests', image: '/images/test_Python Development.png', practiceUrl: '/intern/python_dev_practice_test.html', finalExamUrl: '/intern/payment_page_python.html' }
+    // Full list of 11 internship domains (kept for search completeness)
+    , { type: 'internship', title: 'Cloud Computing & DevOps', roles: 'Cloud Engineer, DevOps Intern', url: '/intern/internship.html#tests', image: '/images/test_Cloud Computing.png', practiceUrl: '/intern/cloud_devops_practice_test.html', finalExamUrl: '/intern/cloud_devops_final_exam.html' }
+    , { type: 'internship', title: 'Cybersecurity & Ethical Hacking', roles: 'Security Analyst, Pentester', url: '/intern/internship.html#tests', image: '/images/test_Cybersecurity & Ethical Hacking.png', practiceUrl: '/intern/cybersecurity_practice_test.html', finalExamUrl: '/intern/cybersecurity_final_exam.html' }
+    , { type: 'internship', title: 'Web & Mobile Development', roles: 'Frontend, React/Angular Dev', url: '/intern/internship.html#tests', image: '/images/test_Web & Mobile Development.png', practiceUrl: '/intern/web_mobile_practice_test.html', finalExamUrl: '/intern/web_mobile_final_exam.html' }
+    , { type: 'internship', title: 'UI/UX Design & Product Design', roles: 'UI/UX Designer, Product Intern', url: '/intern/internship.html#tests', image: '/images/test_UIUX Design & Product Design.png', practiceUrl: '/intern/uiux_practice_test.html', finalExamUrl: '/intern/uiux_final_exam.html' }
+    , { type: 'internship', title: 'Digital Marketing & Growth Hacking', roles: 'SEO, SEM, Social Media Intern', url: '/intern/internship.html#tests', image: '/images/test_Digital Marketing & Growth Hacking.png', practiceUrl: '/intern/digital_marketing_practice_test.html', finalExamUrl: '/intern/digital_marketing_final_exam.html' }
+    , { type: 'internship', title: 'Prompt Engineering & AI Innovation', roles: 'Prompt Engineer, AI Strategist', url: '/intern/internship.html#tests', image: '/images/test_Prompt Engineering.png', practiceUrl: '/intern/prompt_engineering_practice_test.html', finalExamUrl: '/intern/prompt_engineering_final_exam.html' }
+    , { type: 'internship', title: 'Game Development Internship', roles: 'Unity/Unreal Developer Intern', url: '/intern/internship.html#tests', image: '/images/test_Game Development.png', practiceUrl: '/intern/game_dev_practice_test.html', finalExamUrl: '/intern/game_dev_final_exam.html' }
+    , { type: 'internship', title: 'Blockchain & Web3 Dev / Fintech', roles: 'Solidity Developer, Fintech Analyst', url: '/intern/internship.html#tests', image: '/images/test_Blockchain & Web3.png', practiceUrl: '/intern/blockchain_practice_test.html', finalExamUrl: '/intern/blockchain_final_exam.html' }
+];
+
+const allSearchableItems = [...allCourses, ...allInternships];
+
+function renderSearchResults(query) {
+    const searchResultsContainer = document.getElementById('searchResults');
+    if (!searchResultsContainer) return;
+    const q = query.toLowerCase().trim();
+    searchResultsContainer.classList.add('hidden');
+    searchResultsContainer.innerHTML = '';
+
+    if (q.length < 2) return;
+
+    const results = allSearchableItems.filter(item => 
+        item.title.toLowerCase().includes(q) || 
+        (item.roles && item.roles.toLowerCase().includes(q))
+    ).slice(0, 8); // Limit to top 8 results
+
+    if (results.length === 0) {
+        searchResultsContainer.innerHTML = `<p style="padding: 10px 15px; color: var(--gray);">No courses or internships found for "${query}".</p>`;
+        searchResultsContainer.classList.remove('hidden');
+        return;
+    }
+
+    results.forEach(item => {
+        let itemHtml = '';
+        const courseUrl = getRelativePath(item.url);
         
-        /* Mobile adjustments */
-        @media (max-width: 768px) {
-            .exam-container {
-                padding: 20px;
-                margin: 20px auto;
-            }
-            .exam-header h1 {
-                font-size: 2rem;
-            }
-            .exam-info-box {
-                flex-direction: column;
-                gap: 10px;
-            }
+        if (item.type === 'course') {
+            const imgSrc = getRelativePath(item.image);
+            itemHtml = `
+                <a href="${courseUrl}" class="search-result-item course-result">
+                    <img src="${imgSrc}" alt="${item.title}" onerror="this.onerror=null;this.src='${getRelativePath('/images/logo.jpg')}'">
+                    <div>
+                        <h4>${item.title}</h4>
+                        <p>Course by ${item.instructor}</p>
+                    </div>
+                    <span class="badge free" style="flex-shrink: 0;">FREE</span>
+                </a>
+            `;
+        } else if (item.type === 'internship') {
+            const imgSrc = getRelativePath(item.image);
+            const practiceUrl = getRelativePath(item.practiceUrl);
+            const finalExamUrl = getRelativePath(item.finalExamUrl);
+            
+            itemHtml = `
+                <div class="search-result-item internship-result">
+                    <div>
+                        <img src="${imgSrc}" alt="${item.title}" style="height: 60px; width: 60px; object-fit: contain;" onerror="this.onerror=null;this.src='${getRelativePath('/images/logo.jpg')}'">
+                        <div>
+                            <h4><i class="fas fa-briefcase" style="margin-right: 5px; color: var(--primary);"></i> ${item.title} Internship</h4>
+                            <p>Roles: ${item.roles}</p>
+                        </div>
+                    </div>
+                    <div class="search-result-actions">
+                         <a href="${practiceUrl}" class="search-action-link btn btn-outline">Practice Test</a>
+                         <a href="${finalExamUrl}" class="search-action-link btn btn-primary">Final Exam</a>
+                    </div>
+                </div>
+            `;
         }
-    </style>
-</head>
-<body>
-    <!-- Google Analytics Script (Retained) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-3ZZ3HGFM3Q');
-    </script>
+        searchResultsContainer.innerHTML += itemHtml;
+    });
 
-    <!-- ==============================================
-         HEADER: 3D Animated Nav (Requests 1 & 2) - Adjusted paths
-         ============================================== -->
-    <header>
-        <div class="container header-container">
-            <a href="../index.html" class="logo">
-                <img src="../images/logo.jpg" alt="InternAdda Logo" class="logo-img">
-                <span class="logo-text">InternAdda</span>
-            </a>
-
-            <nav class="nav-menu">
-                <a href="../index.html" class="nav-link">Home</a>
-                <a href="../courses/course.html" class="nav-link">Courses</a>
-                <a href="internship.html" class="nav-link">Internships</a>
-                <a href="../jobs.html" class="nav-link">Jobs</a>
-                <a href="../about.html" class="nav-link">About</a>
-                
-                <!-- TOOLS DROPDOWN -->
-                <div class="nav-item dropdown" id="toolsDropdown">
-                    <a href="#" class="nav-link dropdown-toggle">Tools <i class="fas fa-chevron-down dropdown-arrow"></i></a>
-                    <div class="dropdown-content">
-                        <a href="../tools/ats-score.html" class="dropdown-link"><i class="fas fa-chart-bar"></i> ATS Score</a>
-                        <a href="../tools/resume-builder.html" class="dropdown-link"><i class="fas fa-file-alt"></i> Resume Builder</a>
-                        <a href="../tools/interview-questions.html" class="dropdown-link"><i class="fas fa-question-circle"></i> Interview Question</a>
-                        <a href="../tools/cover-letter.html" class="dropdown-link"><i class="fas fa-envelope"></i> Cover Letter Generator</a>
-                        <a href="../tools/paraphraser.html" class="dropdown-link"><i class="fas fa-pen-nib"></i> Essay / Paraphraser Tool</a>
-                    </div>
-                </div>
-                
-                <!-- MORE DROPDOWN -->
-                <div class="nav-item dropdown" id="moreDropdown">
-                    <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
-                    <div class="dropdown-content">
-                        <a href="../contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
-                        <a href="../blog/index.html" class="dropdown-link"><i class="fas fa-newspaper"></i> Blog</a>
-                        <a href="../community/join.html" class="dropdown-link"><i class="fas fa-users"></i> Community</a>
-                        <a href="../community/partners.html" class="dropdown-link"><i class="fas fa-handshake"></i> Partners</a>
-                        <a href="../community/academy.html" class="dropdown-link"><i class="fas fa-university"></i> Offline Academy</a>
-                    </div>
-                </div>
-                
-                <!-- MOBILE ONLY LINKS -->
-                <a href="../tools/ats-score.html" class="nav-link mobile-only-link">ATS Score</a>
-                <a href="../tools/resume-builder.html" class="nav-link mobile-only-link">Resume Builder</a>
-                <a href="../tools/interview-questions.html" class="nav-link mobile-only-link">Interview Question</a>
-                <a href="../tools/cover-letter.html" class="nav-link mobile-only-link">Cover Letter Generator</a>
-                <a href="../tools/paraphraser.html" class="nav-link mobile-only-link">Essay / Paraphraser Tool</a>
-                <a href="../contact.html" class="nav-link mobile-only-link">Contact</a>
-                <a href="../blog/index.html" class="nav-link mobile-only-link">Blog</a>
-                <a href="../community/join.html" class="nav-link mobile-only-link">Community</a>
-                <a href="../community/partners.html" class="nav-link mobile-only-link">Partners</a>
-                <a href="../community/academy.html" class="nav-link mobile-only-link">Offline Academy</a>
-            </nav>
-
-            <div class="header-actions">
-                <div class="search-container">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="searchInput" class="search-input" placeholder="Search courses & domains...">
-                </div>
-                <!-- AUTH BUTTONS REMOVED -->
-            </div> 
-
-            <button class="hamburger-menu" id="hamburgerMenu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-        <div id="searchResults" class="search-results-container container hidden"></div>
-    </header>
-
-    <main>
-        <section class="exam-section">
-            <div class="container">
-                <div class="exam-container">
-                    <div class="exam-header">
-                        <h1 class="exam-title">AI/ML Practice Test (Free)</h1>
-                        <p>Evaluate your readiness for the Final Exam and Internship Placement</p>
-                    </div>
-
-                    <div class="next-step-cta">
-                        <i class="fas fa-graduation-cap"></i> 
-                        <strong>This is a free practice resource.</strong> Take your time, review your course material, and test your knowledge before attempting the paid Final Exam.
-                    </div>
-
-                    <div class="exam-info-box">
-                        <div class="info-item">
-                            <i class="far fa-clock" style="color: var(--secondary);"></i>
-                            <strong>Untimed</strong>
-                            <span>Practice at Your Own Pace</span>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-clipboard-list" style="color: var(--secondary);"></i>
-                            <strong>20</strong>
-                            <span>Practice Questions</span>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-info-circle" style="color: var(--secondary);"></i>
-                            <strong>No Score Recorded</strong>
-                            <span>Purely for Self-Assessment</span>
-                        </div>
-                    </div>
-
-                    <form id="aiMlPracticeTestForm">
-                        
-                        <!-- Question 1: Multiple Choice (Core Concept) -->
-                        <div class="question-card">
-                            <p>1. Which type of Artificial Intelligence focuses on systems that can only perform specific, narrow tasks?</p>
-                            <div class="options">
-                                <label><input type="radio" name="q1" value="A"> Artificial General Intelligence (AGI)</label>
-                                <label><input type="radio" name="q1" value="B"> Artificial Narrow Intelligence (ANI)</label>
-                                <label><input type="radio" name="q1" value="C"> Artificial Super Intelligence (ASI)</label>
-                                <label><input type="radio" name="q1" value="D"> Deep Learning</label>
-                            </div>
-                        </div>
-
-                        <!-- Question 2: Multiple Selection (ML Process) -->
-                        <div class="question-card">
-                            <p>2. Select all common steps involved in the Machine Learning model training process:</p>
-                            <div class="options">
-                                <label><input type="checkbox" name="q2" value="A"> Feature Engineering</label>
-                                <label><input type="checkbox" name="q2" value="B"> Model Evaluation</label>
-                                <label><input type="checkbox" name="q2" value="C"> Data Augmentation</label>
-                                <label><input type="checkbox" name="q2" value="D"> BIOS Configuration</label>
-                            </div>
-                        </div>
-                        
-                        <!-- Question 3: Fill in the blank/Short Answer (Deep Learning) -->
-                        <div class="question-card">
-                            <p>3. In the context of Deep Learning, the technique used to combat **vanishing gradient** problems in recurrent networks is called _________.</p>
-                            <div class="options">
-                                <input type="text" name="q3" placeholder="Enter your answer (e.g., LSTM, ReLU)">
-                            </div>
-                        </div>
-                        
-                        <!-- Question 4: Multiple Choice (Evaluation Metric) -->
-                         <div class="question-card">
-                            <p>4. For a highly imbalanced classification dataset where the positive class is rare, which evaluation metric is generally preferred over accuracy?</p>
-                            <div class="options">
-                                <label><input type="radio" name="q4" value="A"> R-squared</label>
-                                <label><input type="radio" name="q4" value="B"> F1 Score</label>
-                                <label><input type="radio" name="q4" value="C"> Mean Absolute Error (MAE)</label>
-                                <label><input type="radio" name="q4" value="D"> P-value</label>
-                            </div>
-                        </div>
-                        
-                        <!-- Question 5: Multiple Choice (Supervised Learning) -->
-                         <div class="question-card">
-                            <p>5. Which of the following algorithms is an example of a **supervised learning** technique?</p>
-                            <div class="options">
-                                <label><input type="radio" name="q5" value="A"> K-Means Clustering</label>
-                                <label><input type="radio" name="q5" value="B"> Principal Component Analysis (PCA)</label>
-                                <label><input type="radio" name="q5" value="C"> Decision Tree Classification</label>
-                                <label><input type="radio" name="q5" value="D"> Association Rule Mining</label>
-                            </div>
-                        </div>
+    searchResultsContainer.classList.remove('hidden');
+}
 
 
-                        <!-- Add more questions here (omitted for brevity - placeholder for 20 questions) -->
+// --- Testimonial Carousel/Auto-Scroll Logic (Request 5) ---
 
-                        <div class="exam-submit-area">
-                            <p style="color: var(--gray); font-size: 1rem;">Once submitted, your answers will be reviewed locally for immediate feedback.</p>
-                            <button type="submit" class="btn btn-secondary btn-lg" id="submitPracticeButton" style="width: 300px; margin-top: 15px;">
-                                <i class="fas fa-check-double" style="margin-right: 10px;"></i> Review My Answers
-                            </button>
-                            <a href="ai_ml_final_exam.html" class="btn btn-primary btn-lg" style="width: 300px; margin-top: 15px;">
-                                <i class="fas fa-rocket" style="margin-right: 10px;"></i> Proceed to Final Exam
-                            </a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </main>
+function initTestimonialCarousel(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
 
-    <!-- ==============================================
-         FOOTER: Updated with Tools Column (Request 3) - Adjusted paths
-         ============================================== -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <div class="footer-logo">Internadda</div>
-                    <p class="footer-description">Transforming careers through learning, interning, and earning opportunities.</p>
-                    <div class="social-links">
-                        <a href="https://www.linkedin.com/company/internadda-india" target="_blank" class="social-link" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="https://www.youtube.com/@theinternadda" target="_blank" class="social-link" aria-label="YouTube">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                        <a href="https://www.instagram.com/internadda.india" target="_blank" class="social-link" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
+    // Check if enough original cards exist (assuming minimal 3 cards for carousel effect)
+    const originalCards = Array.from(container.children).filter(child => !child.classList.contains('cloned'));
+    
+    // If we already have duplicates (e.g., in index.html where they are added manually), just start scrolling
+    if (container.children.length > originalCards.length) {
+        startAutoScroll(container);
+        return;
+    }
 
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Learn</h3>
-                    <ul class="footer-links">
-                        <li><a href="../courses/course.html">Browse Courses</a></li>
-                        <li><a href="../courses/course.html">Free Courses</a></li>
-                        <li><a href="#">Paid Courses</a></li>
-                        <li><a href="#">Become an Instructor</a></li>
-                    </ul>
-                </div>
+    // Duplicate all children if less than 6 cards are present in total (for visual loop)
+    if (originalCards.length > 0 && originalCards.length < 6) {
+         originalCards.forEach(card => {
+             const clone = card.cloneNode(true);
+             clone.classList.add('cloned'); // Mark as clone to prevent re-duplication
+             container.appendChild(clone);
+         });
+    }
 
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Intern</h3>
-                    <ul class="footer-links">
-                        <li><a href="internship.html">Find Internships</a></li>
-                        <li><a href="#">For Companies</a></li>
-                        <li><a href="#">Success Stories</a></li>
-                        <li><a href="#">Career Coaching</a></li>
-                    </ul>
-                </div>
-                
-                <!-- NEW TOOLS COLUMN (Request 3) -->
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Career Tools</h3>
-                    <ul class="footer-links">
-                        <li><a href="../tools/ats-score.html">ATS Score Checker</a></li>
-                        <li><a href="../tools/resume-builder.html">Resume Builder</a></li>
-                        <li><a href="../tools/interview-questions.html">Interview Prep</a></li>
-                        <li><a href="../tools/cover-letter.html">Cover Letter Gen</a></li>
-                        <li><a href="../tools/paraphraser.html">Essay Paraphraser</a></li>
-                    </ul>
-                </div>
+    // Start auto-scrolling only if there are enough items for a carousel effect (3 original + 3 clone minimum)
+    if (container.children.length >= 3) {
+        startAutoScroll(container);
+    }
+}
 
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">InternAdda</h3>
-                    <ul class="footer-links">
-                        <li><a href="../about.html">About Us</a></li>
-                        <li><a href="../contact.html">Contact Us</a></li>
-                        <li><a href="../terms.html">Terms & Conditions</a></li>
-                        <li><a href="../refund.html">Refund Policy</a></li>
-                    </ul>
-                </div>
+function startAutoScroll(container) {
+    let animationFrame;
+    const scrollSpeed = 0.5; // pixels per requestAnimationFrame
+    const totalContentWidth = container.scrollWidth / 2; // Scroll width of the original content
 
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Community</h3>
-                    <ul class="footer-links">
-                        <li><a href="../community/join.html">Join Community</a></li>
-                        <li><a href="../community/partners.html">Partners</a></li>
-                        <li><a href="../blog/index.html">Blog</a></li>
-                        <li><a href="../community/academy.html">Offline Academy</a></li>
-                    </ul>
-                </div>
-            </div>
+    function autoScroll() {
+        // If scroll position reaches the end of the original content (start of the duplicates), reset
+        if (container.scrollLeft >= totalContentWidth) {
+            container.scrollLeft = 0;
+        }
+        container.scrollLeft += scrollSpeed;
+        animationFrame = requestAnimationFrame(autoScroll);
+    }
+    
+    // Stop scrolling if the user manually interacts (optional but improves UX)
+    container.addEventListener('mouseenter', () => cancelAnimationFrame(animationFrame));
+    container.addEventListener('touchstart', () => cancelAnimationFrame(animationFrame));
+    container.addEventListener('mouseleave', () => animationFrame = requestAnimationFrame(autoScroll));
+    container.addEventListener('touchend', () => animationFrame = requestAnimationFrame(autoScroll));
+    
+    animationFrame = requestAnimationFrame(autoScroll);
+}
 
-            <div class="footer-bottom">
-                <p>© 2025 Internadda. All rights reserved. | Developed by Internadda Team</p>
-            </div>
-        </div>
-    </footer>
 
-    <!-- NOTE: The global script.js is NOT included here. Exam-specific script included below. -->
-    <script>
-        // Simple Client-side Exam Logic (Placeholder)
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('aiMlPracticeTestForm');
-            
-            // This is a placeholder function for the practice test submission.
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    // In a real practice test, this would provide immediate, local feedback on answers.
-                    alert("Practice Test submitted! Review feature (local scoring/feedback) coming soon. For now, this confirms submission.");
-                });
-            }
+// --- Core DOM Initialization ---
 
-            // Re-adding the header menu toggle logic since the global script is removed
-            const hamburgerMenu = document.getElementById('hamburgerMenu');
-            const navMenu = document.querySelector('.nav-menu');
-            
-            if (hamburgerMenu && navMenu) {
-                hamburgerMenu.addEventListener('click', () => {
-                    hamburgerMenu.classList.toggle('active');
-                    navMenu.classList.toggle('active');
-                    document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
-                });
-            }
+document.addEventListener('DOMContentLoaded', function() {
+    
+    const hamburgerMenu = document.getElementById('hamburgerMenu');
+    const navMenu = document.querySelector('.nav-menu');
+    const searchInput = document.getElementById('searchInput');
+    const searchResultsContainer = document.getElementById('searchResults');
+    
+    // 1. Hamburger Menu Toggle Logic (Request 2)
+    if (hamburgerMenu && navMenu) {
+        hamburgerMenu.addEventListener('click', () => {
+            hamburgerMenu.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            // Prevent body scroll when mobile menu is open
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
         });
-    </script>
-</body>
-</html>
+        
+        // Close menu if a link is clicked
+        navMenu.querySelectorAll('a.nav-link:not(.dropdown-toggle), .dropdown-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 1024) {
+                    hamburgerMenu.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+    }
+
+    // 2. Desktop & Mobile Dropdown Logic (Handles both Tools and More)
+    const allDropdownContainers = document.querySelectorAll('.nav-item.dropdown');
+    
+    allDropdownContainers.forEach(dropdownContainer => {
+        const toggle = dropdownContainer.querySelector('.dropdown-toggle');
+        const content = dropdownContainer.querySelector('.dropdown-content');
+        const arrow = dropdownContainer.querySelector('.dropdown-arrow');
+        
+        if (toggle && content) {
+            toggle.addEventListener('click', function(event) {
+                const isMobile = window.innerWidth <= 1024;
+                const isVisible = content.style.display === 'block';
+                
+                if (!isMobile) {
+                    // --- DESKTOP LOGIC ---
+                    event.preventDefault(); 
+                    
+                    // Close all other open dropdowns first
+                    document.querySelectorAll('.nav-item.dropdown .dropdown-content').forEach(otherContent => {
+                        if (otherContent !== content) {
+                            otherContent.style.display = 'none';
+                            const otherArrow = otherContent.closest('.nav-item.dropdown').querySelector('.dropdown-arrow');
+                            if (otherArrow) otherArrow.style.transform = 'rotate(0deg)';
+                        }
+                    });
+
+                    // Toggle the clicked dropdown
+                    content.style.display = isVisible ? 'none' : 'block';
+                    if (arrow) {
+                        arrow.style.transform = isVisible ? 'rotate(0deg)' : 'rotate(180deg)';
+                    }
+                    event.stopPropagation();
+                } else {
+                    // --- MOBILE LOGIC ---
+                    event.preventDefault();
+                    // Toggle the clicked dropdown content display inline in the mobile menu
+                    content.style.display = isVisible ? 'none' : 'block';
+                    if (arrow) {
+                        arrow.style.transform = isVisible ? 'rotate(0deg)' : 'rotate(180deg)';
+                    }
+                    // Prevent the mobile menu closure if clicking a dropdown toggle
+                    event.stopPropagation();
+                }
+            });
+        }
+    });
+    
+    // Close desktop dropdowns when clicking anywhere else 
+    document.addEventListener('click', function(event) {
+         if (window.innerWidth > 1024) {
+             document.querySelectorAll('.nav-item.dropdown .dropdown-content').forEach(content => {
+                 const parentDropdown = content.closest('.nav-item.dropdown');
+                 // Check if the click is outside the dropdown container itself
+                 if (parentDropdown && !parentDropdown.contains(event.target)) {
+                     content.style.display = 'none';
+                     const arrow = parentDropdown.querySelector('.dropdown-arrow');
+                     if (arrow) arrow.style.transform = 'rotate(0deg)';
+                 }
+             });
+         }
+    });
+
+    // 3. Desktop Search Functionality
+     if (searchInput && searchResultsContainer) {
+         searchInput.addEventListener('input', (e) => {
+             renderSearchResults(e.target.value);
+         });
+
+         // Close search results when clicking anywhere outside
+         document.addEventListener('click', (e) => {
+             if (!searchInput.contains(e.target) && !searchResultsContainer.contains(e.target)) {
+                 searchResultsContainer.classList.add('hidden');
+             }
+         });
+     }
+     
+    // 4. Global Scroll Animation for Header
+     const headerElement = document.querySelector('header');
+     if (headerElement) {
+         window.addEventListener('scroll', function() {
+             if (window.scrollY > 50) {
+                 headerElement.classList.add('scrolled');
+             } else {
+                 headerElement.classList.remove('scrolled');
+             }
+         });
+     }
+
+    // 5. Initialize Testimonial Carousels (Request 5)
+    initTestimonialCarousel('testimonialsGrid');
+    initTestimonialCarousel('internshipTestimonialsGrid');
+    
+    // 6. Partner Marquee Fix (Request 7 & 8)
+    // The visual fix relies primarily on CSS keyframes and duplicating the content in HTML.
+    // The script only ensures the container is present and the animation is running via CSS.
+    
+});
