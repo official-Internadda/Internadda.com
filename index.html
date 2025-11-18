@@ -3,256 +3,250 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Internadda | The Future of Career Growth</title>
+    <title>Internadda — Learn, Intern & Earn</title>
+    <meta name="description" content="Access free courses and land paid internships with top companies like Google and Microsoft.">
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
 
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+</head>
+
+<body>
+    <div class="bg-blob" style="top: -10%; left: -10%;"></div>
+    <div class="bg-blob" style="bottom: 10%; right: -10%; background: radial-gradient(circle, rgba(14, 165, 233, 0.15), transparent 70%);"></div>
 
     <header>
-        <div class="container header-inner">
-            <a href="#" class="brand">
-                <img src="images/logo.jpg" alt="Internadda Logo" class="brand-logo">
-                <span class="brand-name">Internadda</span>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <img src="images/logo.jpg" alt="InternAdda Logo" class="logo-img">
+                <span class="logo-text">InternAdda</span>
             </a>
 
             <nav class="nav-desktop">
-                <a href="#" class="nav-link active">Home</a>
+                <a href="/index.html" class="nav-link active">Home</a>
                 <a href="https://courses.internadda.com/" class="nav-link">Courses</a>
                 <a href="/intern/internship.html" class="nav-link">Internships</a>
                 <a href="/jobs.html" class="nav-link">Jobs</a>
+                
+                <div class="nav-item dropdown">
+                    <span class="nav-link dropdown-toggle">Tools <i class="fas fa-chevron-down" style="font-size: 0.7em;"></i></span>
+                    <div class="dropdown-content">
+                        <a href="#" class="dropdown-link"><i class="fas fa-chart-bar"></i> ATS Score</a>
+                        <a href="#" class="dropdown-link"><i class="fas fa-file-alt"></i> Resume Builder</a>
+                        <a href="#" class="dropdown-link"><i class="fas fa-question-circle"></i> Interview Prep</a>
+                        <a href="#" class="dropdown-link"><i class="fas fa-pen-nib"></i> AI Writer</a>
+                    </div>
+                </div>
+                
+                <div class="nav-item dropdown">
+                    <span class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down" style="font-size: 0.7em;"></i></span>
+                    <div class="dropdown-content">
+                        <a href="/about.html" class="dropdown-link">About Us</a>
+                        <a href="/contact.html" class="dropdown-link">Contact</a>
+                        <a href="/community/join.html" class="dropdown-link">Community</a>
+                        <a href="/community/academy.html" class="dropdown-link">Offline Academy</a>
+                    </div>
+                </div>
             </nav>
 
             <div class="header-actions">
-                <a href="intern/internship.html" class="btn btn-primary">Get Started</a>
-                <button class="hamburger" id="hamburger">
+                <a href="intern/internship.html" class="btn btn-primary desktop-only">Get Started</a>
+                
+                <button class="hamburger-menu" id="hamburgerMenu">
                     <span></span><span></span><span></span>
                 </button>
+            </div> 
+        </div>
+
+        <div class="mobile-nav-overlay" id="mobileNav">
+            <div class="mobile-nav-content">
+                <a href="/index.html" class="mobile-link">Home</a>
+                <a href="https://courses.internadda.com/" class="mobile-link">Courses</a>
+                <a href="/intern/internship.html" class="mobile-link">Internships</a>
+                <a href="/jobs.html" class="mobile-link">Jobs</a>
+                <hr style="border: 0; border-top: 1px solid #eee; width: 100%; margin: 10px 0;">
+                <span class="mobile-label">Career Tools</span>
+                <a href="#" class="mobile-sublink">ATS Checker</a>
+                <a href="#" class="mobile-sublink">Resume Builder</a>
+                <a href="#" class="mobile-sublink">Interview Prep</a>
+                <span class="mobile-label">Company</span>
+                <a href="/about.html" class="mobile-sublink">About Us</a>
+                <a href="/contact.html" class="mobile-sublink">Contact</a>
+                <div style="margin-top: 20px;">
+                    <a href="intern/internship.html" class="btn btn-primary" style="width: 100%; justify-content: center;">Get Started</a>
+                </div>
             </div>
         </div>
-        
-        <nav class="nav-mobile" id="mobileNav">
-            <a href="#" class="nav-link">Home</a>
-            <a href="https://courses.internadda.com/" class="nav-link">Courses</a>
-            <a href="/intern/internship.html" class="nav-link">Internships</a>
-            <a href="/jobs.html" class="nav-link">Jobs</a>
-            <a href="/contact.html" class="nav-link">Contact</a>
-        </nav>
     </header>
 
     <main>
-        <section class="hero-section">
-            <div class="container hero-grid">
-                <div class="hero-text">
-                    <span class="hero-tag">🚀 #1 Platform for Student Careers</span>
-                    <h1 class="hero-title">Learn Skills.<br>Get <span class="text-gradient">Hired.</span></h1>
-                    <p class="hero-desc">
-                        Stop waiting for opportunities. Build them. Access free premium courses, get certified, and land high-paying internships with top global companies.
+        <section class="hero">
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <div class="badge-pill">
+                        <span class="pulse-dot"></span> #1 Platform for Student Careers
+                    </div>
+                    
+                    <h1 class="hero-heading">Launch Your Career.<br><span>Intern with Giants.</span></h1>
+                    <p class="hero-description">
+                        Don't just learn. <strong>Get Hired.</strong> Access premium courses for free, pass our skill test, and secure a paid internship up to <strong>₹50k/month</strong>.
                     </p>
                     
-                    <div class="hero-btns">
-                        <a href="https://courses.internadda.com/" class="btn btn-primary">Browse Courses</a>
-                        <a href="intern/internship.html" class="btn btn-outline">Find Internships</a>
-                    </div>
-
-                    <div class="hero-stats">
-                        <div class="stat">
-                            <h4>100+</h4>
-                            <p>Courses</p>
-                        </div>
-                        <div class="stat">
-                            <h4>10k+</h4>
-                            <p>Placed</p>
-                        </div>
-                        <div class="stat">
-                            <h4>4.9</h4>
-                            <p>Rating</p>
-                        </div>
+                    <div class="hero-cta">
+                        <a href="https://courses.internadda.com/" class="btn btn-primary btn-lg">Explore Courses <i class="fas fa-arrow-right"></i></a>
+                        <a href="intern/internship.html" class="btn btn-outline btn-lg">View Internships</a>
                     </div>
                 </div>
 
                 <div class="hero-image">
-                    <div class="hero-image-wrapper">
-                        <img src="images/slide1.png" alt="Internadda Dashboard">
+                    <div class="hero-image-slider" id="heroImageSlider">
+                        <div class="slider-wrapper">
+                            <img src="images/slide1.png" class="slide hero-img active">
+                            <img src="images/slide2.png" class="slide hero-img">
+                            <img src="images/slide3.png" class="slide hero-img">
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="marquee-section">
-            <div class="marquee-container">
-                <div class="marquee-track">
-                    <img src="images/compan1.jpg" class="partner-logo" alt="Partner">
-                    <img src="images/compan2.jpg" class="partner-logo" alt="Partner">
-                    <img src="images/compan3.jpg" class="partner-logo" alt="Partner">
-                    <img src="images/compan1.jpg" class="partner-logo" alt="Partner">
-                    <img src="images/compan2.jpg" class="partner-logo" alt="Partner">
-                    <img src="images/compan3.jpg" class="partner-logo" alt="Partner">
-                    <img src="images/compan1.jpg" class="partner-logo" alt="Partner">
-                    <img src="images/compan2.jpg" class="partner-logo" alt="Partner">
+        <section class="partner-logo-section">
+            <div class="container">
+                <p class="marquee-title">OUR STUDENTS INTERN AT TOP GLOBAL COMPANIES</p>
+                <div class="logo-marquee-container">
+                    <div class="logo-marquee">
+                        <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google"></div>
+                        <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg" alt="Microsoft"></div>
+                        <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon"></div>
+                        <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Infosys_logo.svg" alt="Infosys"></div>
+                        <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Tata_Consultancy_Services_Logo.svg" alt="TCS"></div>
+                        <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Intel_logo_%282020%2C_light_blue%29.svg" alt="Intel"></div>
+                        <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Kaggle_logo.png" alt="Kaggle"></div>
+                        
+                        <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google"></div>
+                        <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg" alt="Microsoft"></div>
+                        <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon"></div>
+                        <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Infosys_logo.svg" alt="Infosys"></div>
+                        <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Tata_Consultancy_Services_Logo.svg" alt="TCS"></div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="features-section">
+        <section class="value-prop">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">The Career Accelerator</h2>
-                    <p class="section-subtitle">A proven three-step framework designed to take you from student to professional in record time.</p>
+                    <h2 class="section-title">The Career Acceleration Framework</h2>
+                    <p class="section-subtitle">A proven methodology to take you from beginner to professional.</p>
                 </div>
 
-                <div class="grid-3">
-                    <div class="card">
-                        <div class="icon-box">
-                            <i class="fas fa-book-open"></i>
-                        </div>
-                        <h3>1. Master Skills</h3>
-                        <p style="color: var(--neutral-600);">Access free, industry-standard courses designed by experts. Learn Python, Data Science, and AI without paying a rupee.</p>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="icon-box">
-                            <i class="fas fa-certificate"></i>
-                        </div>
-                        <h3>2. Get Certified</h3>
-                        <p style="color: var(--neutral-600);">Prove your worth. Pass our rigorous skill assessments to earn a verified certificate that employers trust.</p>
+                <div class="value-cards">
+                    <div class="value-card">
+                        <div class="value-icon"><i class="fas fa-laptop-code"></i></div>
+                        <h3 class="value-title">1. Master Skills</h3>
+                        <p class="value-description">Stop learning theory. Access free, project-based courses designed by industry experts.</p>
                     </div>
 
-                    <div class="card">
-                        <div class="icon-box">
-                            <i class="fas fa-briefcase"></i>
-                        </div>
-                        <h3>3. Get Hired</h3>
-                        <p style="color: var(--neutral-600);">Skip the resume queue. Successful candidates get direct interview opportunities for paid internships.</p>
+                    <div class="value-card">
+                        <div class="value-icon"><i class="fas fa-briefcase"></i></div>
+                        <h3 class="value-title">2. Secure Internship</h3>
+                        <p class="value-description">Prove your worth through our standardized skill tests and unlock paid internships.</p>
+                    </div>
+
+                    <div class="value-card">
+                        <div class="value-icon"><i class="fas fa-wallet"></i></div>
+                        <h3 class="value-title">3. Earn & Grow</h3>
+                        <p class="value-description">Start earning a stipend immediately. Convert internships into full-time offers.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="courses-section" style="background-color: var(--neutral-100);">
+        <section class="courses">
             <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">Trending Courses</h2>
-                    <p class="section-subtitle">Start your journey with our most popular programs.</p>
-                </div>
-
-                <div class="grid-3">
-                    <a href="https://courses.internadda.com/" class="card course-card">
-                        <div class="course-img-container">
-                            <img src="images/Essential Data Science Intern Course.png" class="course-img" alt="DS Course">
-                        </div>
-                        <div class="course-body">
-                            <div class="course-meta">
-                                <span class="tag tag-free">Free</span>
-                                <span class="rating"><i class="fas fa-star"></i> 4.9</span>
-                            </div>
-                            <h3 class="course-title">Data Science Intern Course</h3>
-                            <p style="font-size: 0.9rem; color: var(--neutral-600);">Master Python, SQL, and Tableau basics to secure your first analyst role.</p>
-                        </div>
-                    </a>
-
-                    <a href="https://courses.internadda.com/" class="card course-card">
-                        <div class="course-img-container">
-                            <img src="images/Generative-AI-Prompt-Engineering-Masterclass.png" class="course-img" alt="AI Course">
-                        </div>
-                        <div class="course-body">
-                            <div class="course-meta">
-                                <span class="tag tag-free">Free</span>
-                                <span class="rating"><i class="fas fa-star"></i> 4.8</span>
-                            </div>
-                            <h3 class="course-title">Generative AI Masterclass</h3>
-                            <p style="font-size: 0.9rem; color: var(--neutral-600);">Learn Prompt Engineering and dominate the future of AI tools.</p>
-                        </div>
-                    </a>
-
-                    <a href="https://courses.internadda.com/" class="card course-card">
-                        <div class="course-img-container">
-                            <img src="images/Python-Essentials-for-All.png" class="course-img" alt="Python Course">
-                        </div>
-                        <div class="course-body">
-                            <div class="course-meta">
-                                <span class="tag tag-free">Free</span>
-                                <span class="rating"><i class="fas fa-star"></i> 5.0</span>
-                            </div>
-                            <h3 class="course-title">Python Essentials</h3>
-                            <p style="font-size: 0.9rem; color: var(--neutral-600);">The absolute beginner's guide to the world's most popular language.</p>
-                        </div>
-                    </a>
-                </div>
-
-                <div style="text-align: center; margin-top: var(--space-2xl);">
-                    <a href="https://courses.internadda.com/" class="btn btn-outline">View All Courses</a>
-                </div>
-            </div>
-        </section>
-
-        <section style="padding: var(--space-section) 0;">
-            <div class="container">
-                <div class="card" style="background: var(--primary-900); color: white; text-align: center; border: none; padding: var(--space-3xl);">
-                    <h2 style="color: white; font-size: 2.5rem; margin-bottom: var(--space-md);">Ready to Launch?</h2>
-                    <p style="color: var(--neutral-400); margin-bottom: var(--space-xl); max-width: 600px; margin-left: auto; margin-right: auto;">
-                        Join 10,000+ students who have already started their career journey with Internadda.
-                    </p>
+                <div class="courses-header">
                     <div>
-                        <a href="intern/internship.html" class="btn btn-white">Start Assessment</a>
+                        <h2 class="section-title" style="margin-bottom: 5px;">Trending Skills</h2>
+                        <p style="color: var(--text-muted);">Top rated courses to get you hired this month.</p>
                     </div>
+                    <a href="https://courses.internadda.com/" class="btn btn-transparent">View Library <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="courses-grid">
+                   <a href="https://courses.internadda.com/" class="course-card">
+                        <div class="course-image">
+                            <img src="images/Essential Data Science Intern Course.png" alt="Data Science Course" onerror="this.src='images/no_image.png'">
+                        </div>
+                        <div class="course-content">
+                            <h3 class="course-title">Data Science Intern Course</h3>
+                            <p class="course-author">Instructor: Lucky Kumar</p>
+                            <div class="course-footer">
+                                <div class="course-rating">
+                                    <span class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                                    <span>4.9</span>
+                                </div>
+                                <span class="badge free">FREE ACCESS</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="https://courses.internadda.com/" class="course-card">
+                         <div class="course-image">
+                             <img src="images/Generative-AI-Prompt-Engineering-Masterclass.png" alt="Generative AI Course" onerror="this.src='images/no_image.png'">
+                         </div>
+                         <div class="course-content">
+                             <h3 class="course-title">Generative AI & Prompt Engineering</h3>
+                             <p class="course-author">Instructor: Lucky Kumar</p>
+                             <div class="course-footer">
+                                <div class="course-rating">
+                                    <span class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span>
+                                    <span>4.7</span>
+                                </div>
+                                 <span class="badge free">FREE ACCESS</span>
+                             </div>
+                         </div>
+                     </a>
                 </div>
             </div>
         </section>
 
+        <section class="cta-section">
+            <div class="container">
+                <h2 class="cta-title">Your Future Starts Now</h2>
+                <p class="cta-description">Join a community of 10,000+ learners. Start learning, get certified, and get hired.</p>
+                <div class="cta-buttons">
+                    <a href="intern/internship.html" class="btn btn-light btn-lg">Get Started</a>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer>
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <h3>Internadda</h3>
-                    <p>Empowering the next generation of tech leaders through accessible education and real-world opportunities.</p>
+                    <div class="footer-logo">InternAdda</div>
+                    <p class="footer-description">Empowering the next generation of tech leaders.</p>
                 </div>
-                
-                <div>
-                    <h4 class="footer-heading">Platform</h4>
-                    <ul class="footer-links">
-                        <li><a href="https://courses.internadda.com/">Courses</a></li>
-                        <li><a href="/intern/internship.html">Internships</a></li>
-                        <li><a href="/jobs.html">Jobs</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="footer-heading">Tools</h4>
-                    <ul class="footer-links">
-                        <li><a href="/tools/resume-builder.html">Resume Builder</a></li>
-                        <li><a href="/tools/ats-score.html">ATS Checker</a></li>
-                        <li><a href="/tools/interview-questions.html">Interview Prep</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="footer-heading">Company</h4>
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">Company</h3>
                     <ul class="footer-links">
                         <li><a href="/about.html">About Us</a></li>
                         <li><a href="/contact.html">Contact</a></li>
-                        <li><a href="/terms.html">Terms & Privacy</a></li>
+                        <li><a href="/terms.html">Terms</a></li>
                     </ul>
                 </div>
             </div>
-
             <div class="footer-bottom">
-                <p>&copy; 2025 Internadda. Made with <i class="fas fa-heart" style="color: #ef4444;"></i> in India.</p>
+                <p>© 2025 Internadda. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
