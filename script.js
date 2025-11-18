@@ -141,12 +141,12 @@ function initMobileMenu() {
 
 // --- Search Functionality ---
 const allSearchableItems = [
-    { type: 'course', title: 'Data Science Intern Course', url: "/courses/courses/Essential%20Data%20Science%20Intern%20Course.html", img: "images/Essential Data Science Intern Course.png" },
+    { type: 'course', title: 'Data Science Intern Course', url: "/courses/courses/Essential%20Data%20Science%20Intern%20Course.html", img: "images/Essential%20Data%20Science%20Intern%20Course.png" },
     { type: 'course', title: 'Generative AI Masterclass', url: "/courses/courses/Generative-AI-Prompt-Engineering-Masterclass.html", img: "images/Generative-AI-Prompt-Engineering-Masterclass.png" },
     { type: 'course', title: 'Python Essentials', url: "/courses/courses/Python-Essentials-for-All.html", img: "images/Python-Essentials-for-All.png" },
-    { type: 'internship', title: 'Data Science Internship', url: '/intern/internship.html', img: "images/test_data Science.png" },
-    { type: 'internship', title: 'AI & ML Internship', url: '/intern/internship.html', img: "images/test_Artificial Intelligence.png" },
-    { type: 'internship', title: 'Web Development Internship', url: '/intern/internship.html', img: "images/test_Web & Mobile Development.png" }
+    { type: 'internship', title: 'Data Science Internship', url: '/intern/internship.html', img: "images/test_data%20Science.png" },
+    { type: 'internship', title: 'AI & ML Internship', url: '/intern/internship.html', img: "images/test_Artificial%20Intelligence.png" },
+    { type: 'internship', title: 'Web Development Internship', url: '/intern/internship.html', img: "images/test_Web%20%26%20Mobile%20Development.png" }
 ];
 
 function initSearch() {
