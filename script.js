@@ -1,4 +1,3 @@
-// official-internadda/internadda.com/Internadda.com-42eb2d6d091fd8be3671c44c0b78359624cb4d47/script.js
 // ---------------------------------------------
 // Website Main Script (Auth Removed, Nav & Carousel Reworked)
 // ---------------------------------------------
