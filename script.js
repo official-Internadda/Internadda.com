@@ -1,310 +1,382 @@
-/**
- * INTERNADDA 2.0 - MASTERPIECE ENGINE
- * Powered by GSAP & ScrollTrigger
- */
+// ---------------------------------------------
+// Website Main Script (Auth Removed, Nav & Carousel Reworked)
+// ---------------------------------------------
 
-document.addEventListener('DOMContentLoaded', () => {
+// --- FIREBASE / AUTH CODE COMPLETELY REMOVED ---
+
+// --- GLOBAL SEARCH DATA AND LOGIC (Request 5) ---
+
+// Utility function to get the correct path prefix for assets based on the current page depth
+function getRelativePath(targetPath) {
+    const currentPath = window.location.pathname;
+    const segments = currentPath.split('/').filter(p => p.length > 0);
+
+    // Check if the current path is inside a folder (e.g., /courses/ or /intern/etc.)
+    const depth = segments.length > 1 && currentPath.endsWith('/') ? segments.length - 1 : segments.length;
+
+    let prefix = '';
+    // Determine the necessary relative path prefix
+    if (depth >= 2) {
+        prefix = '../'.repeat(depth - 1);
+    }
     
-    // Register GSAP ScrollTrigger
-    if (typeof gsap !== 'undefined') {
-        gsap.registerPlugin(ScrollTrigger);
-        
-        // Initialize Animations
-        initHeroAnimations();
-        initScrollReveals();
-        initParallaxEffects();
+    // Ensure the target path is root-relative for clean joining
+    const cleanTargetPath = targetPath.startsWith('/') ? targetPath.substring(1) : targetPath;
+    
+    return prefix + cleanTargetPath;
+}
+
+// Hardcoded data for search
+const allSearchableItems = [
+    // Courses (Kept for broad search but de-prioritized in logic)
+    { type: 'course', title: 'Essential Data Science Intern Course', instructor: 'Lucky Kumar', image: '/images/Essential Data Science Intern Course.png', url: "/courses/courses/Essential%20Data%20Science%20Intern%20Course.html" },
+    { type: 'course', title: 'Generative AI & Prompt Engineering Masterclass', instructor: 'Lucky Kumar', image: '/images/Generative-AI-Prompt-Engineering-Masterclass.png', url: "/courses/courses/Generative-AI-Prompt-Engineering-Masterclass.html" },
+    { type: 'course', title: 'Ethical Hacking Mastery', instructor: 'Lucky Kumar', image: '/images/Ethical-Hacking-Mastery.png', url: "/courses/courses/Ethical-Hacking-Mastery.html" },
+    { type: 'course', title: 'Python Essentials for All', instructor: 'Lucky Kumar', image: '/images/Python-Essentials-for-All.png', url: "/courses/courses/Python-Essentials-for-All.html" },
+    
+    // Internships (Priority items for search results)
+    { type: 'internship', title: 'Data Science & Analytics', roles: 'Data Analyst, Data Scientist Intern', url: '/intern/internship.html#tests', image: '/images/test_data Science.png', practiceUrl: '/intern/data_science_practice_test.html', finalExamUrl: '/intern/payment_page_data_science.html' },
+    { type: 'internship', title: 'Artificial Intelligence & ML', roles: 'AI Intern, Machine Learning Intern', url: '/intern/internship.html#tests', image: '/images/test_Artificial Intelligence.png', practiceUrl: '/intern/ai_ml_practice_test.html', finalExamUrl: '/intern/payment_page_ai_ml.html' },
+    { type: 'internship', title: 'Python Dev & Software Eng', roles: 'Python Developer, Backend Developer', url: '/intern/internship.html#tests', image: '/images/test_Python Development.png', practiceUrl: '/intern/python_dev_practice_test.html', finalExamUrl: '/intern/payment_page_python.html' },
+    { type: 'internship', title: 'Cloud Computing & DevOps', roles: 'Cloud Engineer, DevOps Intern', url: '/intern/internship.html#tests', image: '/images/test_Cloud Computing.png', practiceUrl: '#', finalExamUrl: '#' },
+    { type: 'internship', title: 'Cybersecurity & Ethical Hacking', roles: 'Security Analyst, Pentester', url: '/intern/internship.html#tests', image: '/images/test_Cybersecurity & Ethical Hacking.png', practiceUrl: '#', finalExamUrl: '#' },
+    { type: 'internship', title: 'Web & Mobile Development', roles: 'Frontend, React/Angular Dev', url: '/intern/internship.html#tests', image: '/images/test_Web & Mobile Development.png', practiceUrl: '#', finalExamUrl: '#' },
+    { type: 'internship', title: 'UI/UX Design & Product Design', roles: 'UI/UX Designer, Product Intern', url: '/intern/internship.html#tests', image: '/images/test_UIUX Design & Product Design.png', practiceUrl: '#', finalExamUrl: '#' },
+    { type: 'internship', title: 'Digital Marketing & Growth Hacking', roles: 'SEO, SEM, Social Media Intern', url: '/intern/internship.html#tests', image: '/images/test_Digital Marketing & Growth Hacking.png', practiceUrl: '#', finalExamUrl: '#' }
+];
+
+function renderSearchResults(query) {
+    const searchResultsContainer = document.getElementById('searchResults');
+    if (!searchResultsContainer) return;
+
+    const q = query.toLowerCase().trim();
+
+    // --- Redirect condition for quick actions ---
+    if (q === "all courses") {
+        window.location.href = getRelativePath('/courses/course.html');
+        return;
+    }
+    if (q === "all internships" || q === "internships") {
+        window.location.href = getRelativePath('/intern/internship.html');
+        return;
     }
 
-    // Initialize UI & Functionality
-    initGlobalUI();
-    initMarqueeInteraction();
-    initSearchSystem();
+    searchResultsContainer.classList.add('hidden');
+    searchResultsContainer.innerHTML = '';
 
+    if (q.length < 2) return;
+
+    // MODIFIED: Filter to only include 'internship' types and limit results
+    const displayResults = allSearchableItems.filter(item =>
+        (item.type === 'internship') &&
+        (item.title.toLowerCase().includes(q) || (item.roles && item.roles.toLowerCase().includes(q)))
+    ).slice(0, 8);
+    
+    // --- Removed redundant interleaving logic as we only show internships now ---
+
+    if (displayResults.length === 0) {
+        // MODIFIED: Updated message to reflect search only for internships
+        searchResultsContainer.innerHTML = `<p style="padding: 10px 15px; color: var(--gray);">No related internships found for "${query}".</p>`;
+        searchResultsContainer.classList.remove('hidden');
+        return;
+    }
+
+    displayResults.forEach(item => {
+        let itemHtml = '';
+        const baseItemUrl = getRelativePath(item.url);
+
+        if (item.type === 'course') {
+            const imgSrc = getRelativePath(item.image);
+            itemHtml = `
+                <a href="${baseItemUrl}" class="search-result-item course-result">
+                    <img src="${imgSrc}" alt="${item.title}" onerror="this.onerror=null;this.src='${getRelativePath('/images/logo.jpg')}'">
+                    <div>
+                        <h4>${item.title}</h4>
+                        <p>Course by ${item.instructor}</p>
+                    </div>
+                    <span class="badge free" style="flex-shrink: 0;">FREE</span>
+                </a>
+            `;
+        } else if (item.type === 'internship') {
+            const imgSrc = getRelativePath(item.image);
+            // Handle '#' links correctly by generating a link to '#' for unimplemented practice/exam links
+            const practiceUrl = item.practiceUrl === '#' ? '#' : getRelativePath(item.practiceUrl);
+            const finalExamUrl = item.finalExamUrl === '#' ? '#' : getRelativePath(item.finalExamUrl);
+            const isDisabled = item.practiceUrl === '#' && item.finalExamUrl === '#';
+
+            itemHtml = `
+                <div class="search-result-item internship-result">
+                    <div>
+                        <img src="${imgSrc}" alt="${item.title}" style="height: 60px; width: 60px; object-fit: contain;" onerror="this.onerror=null;this.src='${getRelativePath('/images/logo.jpg')}'">
+                        <div>
+                            <h4><i class="fas fa-briefcase" style="margin-right: 5px; color: var(--primary);"></i> ${item.title} Internship</h4>
+                            <p>Roles: ${item.roles}</p>
+                        </div>
+                    </div>
+                    <div class="search-result-actions">
+                         <a href="${practiceUrl}" class="search-action-link btn btn-transparent ${isDisabled ? 'disabled' : ''}">${item.practiceUrl === '#' ? 'Practice (Soon)' : 'Practice Test'}</a>
+                         <a href="${finalExamUrl}" class="search-action-link btn btn-primary ${isDisabled ? 'disabled' : ''}">${item.finalExamUrl === '#' ? 'Final Exam (Soon)' : 'Final Exam'}</a>
+                    </div>
+                </div>
+            `;
+        }
+
+        searchResultsContainer.innerHTML += itemHtml;
+    });
+
+    searchResultsContainer.classList.remove('hidden');
+}
+
+// ✅ Ensures redirect also happens when user presses Enter
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                const q = searchInput.value.toLowerCase().trim();
+                if (q === "all courses" || q === "courses") {
+                    window.location.href = getRelativePath('/courses/course.html');
+                    event.preventDefault();
+                } else if (q === "all internships" || q === "internships") {
+                    window.location.href = getRelativePath('/intern/internship.html');
+                    event.preventDefault();
+                }
+            }
+        });
+    }
 });
 
 
-/* ==========================================================================
-   1. GLOBAL UI (Header & Mobile Menu)
-   ========================================================================== */
-function initGlobalUI() {
-    // --- Sticky Header Glass Effect ---
-    const header = document.querySelector('header');
+// --- Testimonial Carousel/Auto-Scroll Logic (FIXED for seamless loop) ---
+
+function initTestimonialCarousel(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    // Remove existing clones before re-initializing
+    container.querySelectorAll('.cloned').forEach(clone => clone.remove());
+
+    const originalCards = Array.from(container.children).filter(child => !child.classList.contains('cloned'));
+    const visibleCardCount = 2; // Approximate number of cards visible on a large screen
     
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 20) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-    });
-
-    // --- Mobile Menu Toggle ---
-    const hamburger = document.getElementById('hamburger');
-    const mobileNav = document.getElementById('mobileNav');
-    
-    if (hamburger && mobileNav) {
-        hamburger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const isActive = hamburger.classList.contains('active');
-            
-            if (isActive) {
-                closeMobileMenu();
-            } else {
-                openMobileMenu();
-            }
-        });
-
-        // Close menu when clicking a link inside it
-        const mobileLinks = mobileNav.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', closeMobileMenu);
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (mobileNav.classList.contains('active') && !mobileNav.contains(e.target) && !hamburger.contains(e.target)) {
-                closeMobileMenu();
-            }
-        });
+    // Duplicate enough cards to guarantee seamless looping
+    if (originalCards.length > 0 && originalCards.length > visibleCardCount) {
+         for (let i = 0; i < originalCards.length; i++) {
+             const clone = originalCards[i].cloneNode(true);
+             clone.classList.add('cloned'); // Mark as clone
+             
+             // Update image source for clones (optional, to represent unique students)
+             // This supports the user request to use student images for the visual scroll
+             const img = clone.querySelector('.author-avatar');
+             if (img) {
+                 // Cycle through placeholder student images (assuming student1.png to studentX.png)
+                 const studentIndex = (originalCards.length + i) % 6 + 1; // Cycle through 1 to 6
+                 img.src = getRelativePath(`/images/student${studentIndex}.png`); 
+                 img.onerror = function() { this.onerror=null; this.src=getRelativePath('/images/no_image.png'); };
+             }
+             
+             container.appendChild(clone);
+         }
     }
 
-    function openMobileMenu() {
-        hamburger.classList.add('active');
-        mobileNav.style.display = 'flex';
-        mobileNav.classList.add('active');
+    // Start auto-scrolling only if there are items
+    if (container.children.length > originalCards.length) {
+        startAutoScroll(container, originalCards.length);
+    }
+}
+
+function startAutoScroll(container, originalCount) {
+    // Clear previous animation frames if they exist
+    if (container.autoScrollRAF) {
+        cancelAnimationFrame(container.autoScrollRAF);
+    }
+    
+    // FIX: Increased speed from 0.5 to 1.0 for visible movement and continuous scroll
+    let scrollSpeed = 1.0; // pixels per requestAnimationFrame
+    let currentScroll = container.scrollLeft;
+    
+    // Calculate the width of the original content block. This is the reset point.
+    function getOriginalContentWidth() {
+         let totalWidth = 0;
+         const originalChildren = Array.from(container.children).slice(0, originalCount);
+         if (originalChildren.length === 0) return 0;
+         
+         // Measure first card's width + its margin-right/gap
+         const firstCardRect = originalChildren[0].getBoundingClientRect();
+         const containerStyle = window.getComputedStyle(container);
+         const gap = parseFloat(containerStyle.gap) || 36;
+         
+         const singleCardFullWidth = firstCardRect.width + gap;
+         
+         // Total width of the original set excluding the last item's gap
+         totalWidth = (singleCardFullWidth * originalCount) - gap;
+         
+         return totalWidth;
+    }
+
+    function autoScroll() {
+        const resetPoint = getOriginalContentWidth();
         
-        if (typeof gsap !== 'undefined') {
-            // Animate In (Slide Down)
-            gsap.fromTo(mobileNav, 
-                { height: 0, opacity: 0 },
-                { height: 'auto', opacity: 1, duration: 0.4, ease: "power2.out" }
-            );
-            
-            // Stagger links entrance
-            gsap.fromTo(".mobile-nav .nav-link", 
-                { x: -20, opacity: 0 }, 
-                { x: 0, opacity: 1, stagger: 0.05, delay: 0.1 }
-            );
+        // FIX: Check against resetPoint minus scrollSpeed for smoother loop boundary detection
+        if (container.scrollLeft >= resetPoint - scrollSpeed) {
+            // Snap back to the visual start point (scroll position 0) instantly
+            container.scrollLeft = 0;
         }
-    }
-
-    function closeMobileMenu() {
-        hamburger.classList.remove('active');
-        mobileNav.classList.remove('active');
         
-        if (typeof gsap !== 'undefined') {
-            // Animate Out (Slide Up)
-            gsap.to(mobileNav, { 
-                height: 0, 
-                opacity: 0, 
-                duration: 0.3, 
-                onComplete: () => mobileNav.style.display = 'none' 
-            });
-        } else {
-            mobileNav.style.display = 'none';
-        }
+        container.scrollLeft += scrollSpeed;
+        container.autoScrollRAF = requestAnimationFrame(autoScroll);
     }
-}
-
-
-/* ==========================================================================
-   2. CINEMATIC HERO ENTRANCE
-   ========================================================================== */
-function initHeroAnimations() {
-    const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
-
-    // 1. Hero Text & Elements Staggered Reveal
-    tl.from(".hero-tag", { y: 20, opacity: 0, duration: 0.8, delay: 0.2 })
-      .from(".hero-title", { y: 50, opacity: 0, duration: 1, skewY: 2 }, "-=0.6")
-      .from(".hero-desc", { y: 20, opacity: 0, duration: 1 }, "-=0.8")
-      .from(".hero-btns a", { y: 20, opacity: 0, duration: 0.8, stagger: 0.1 }, "-=0.8")
-      .from(".stat", { y: 20, opacity: 0, duration: 0.8, stagger: 0.1 }, "-=0.6");
-
-    // 2. Hero Image Reveal (3D Tilt Entrance)
-    gsap.from(".hero-image-wrapper", {
-        x: 50,
-        opacity: 0,
-        rotationY: 10,
-        scale: 0.9,
-        duration: 1.5,
-        ease: "power2.out",
-        delay: 0.5
-    });
-}
-
-
-/* ==========================================================================
-   3. SCROLL REVEALS ("Bento" Cards & Sections)
-   ========================================================================== */
-function initScrollReveals() {
     
-    // Animate Section Headers (Fade Up)
-    gsap.utils.toArray('.section-header').forEach(header => {
-        gsap.from(header, {
-            scrollTrigger: {
-                trigger: header,
-                start: "top 85%", // Triggers when top of element hits 85% viewport height
-                toggleActions: "play none none reverse"
-            },
-            y: 40,
-            opacity: 0,
-            duration: 1,
-            ease: "power3.out"
-        });
-    });
-
-    // Animate Cards (Grid Items) - Staggered Ripple Effect
-    const grids = document.querySelectorAll('.grid-3, .grid-4, .footer-grid');
-    
-    grids.forEach(grid => {
-        const cards = Array.from(grid.children);
-        if(cards.length > 0) {
-            gsap.from(cards, {
-                scrollTrigger: {
-                    trigger: grid,
-                    start: "top 85%"
-                },
-                y: 50,
-                opacity: 0,
-                duration: 0.8,
-                stagger: 0.15,
-                ease: "back.out(1.2)"
-            });
+    // Stop scrolling if the user manually interacts (improves UX)
+    const stopScroll = () => cancelAnimationFrame(container.autoScrollRAF);
+    const resumeScroll = () => {
+        if (!container.isScrollingPaused) {
+            container.autoScrollRAF = requestAnimationFrame(autoScroll);
         }
-    });
+    };
+
+    container.addEventListener('mouseenter', stopScroll);
+    container.addEventListener('touchstart', stopScroll);
+    container.addEventListener('mouseleave', resumeScroll);
+    container.addEventListener('touchend', resumeScroll);
+    
+    container.autoScrollRAF = requestAnimationFrame(autoScroll);
 }
 
 
-/* ==========================================================================
-   4. INTERACTIVE EFFECTS (Parallax & Hover)
-   ========================================================================== */
-function initParallaxEffects() {
-    // 1. Floating Background Blobs (Mouse Movement)
-    document.addEventListener("mousemove", (e) => {
-        const x = (e.clientX - window.innerWidth / 2) * 0.02;
-        const y = (e.clientY - window.innerHeight / 2) * 0.02;
+// --- Core DOM Initialization ---
 
-        gsap.to(".blob-1", { x: x, y: y, duration: 2, ease: "power1.out" });
-        gsap.to(".blob-2", { x: -x, y: -y, duration: 2, ease: "power1.out" });
-    });
-
-    // 2. Hero Image 3D Tilt on Mouseover
-    const heroImg = document.querySelector('.hero-image-wrapper');
-    if (heroImg) {
-        heroImg.addEventListener('mousemove', (e) => {
-            const rect = heroImg.getBoundingClientRect();
-            const x = (e.clientX - rect.left - rect.width / 2) / 20;
-            const y = (e.clientY - rect.top - rect.height / 2) / 20;
-
-            gsap.to(heroImg, {
-                rotationY: x,
-                rotationX: -y,
-                transformPerspective: 1000,
-                duration: 0.5,
-                ease: "power1.out"
-            });
-        });
-
-        heroImg.addEventListener('mouseleave', () => {
-            gsap.to(heroImg, {
-                rotationY: 0,
-                rotationX: 0,
-                duration: 1,
-                ease: "elastic.out(1, 0.5)"
-            });
-        });
-    }
-}
-
-
-/* ==========================================================================
-   5. MARQUEE CONTROL (Infinite Logos)
-   ========================================================================== */
-function initMarqueeInteraction() {
-    const marqueeTrack = document.querySelector('.marquee-track');
-    if (!marqueeTrack) return;
-
-    // Clone content for seamless infinite scroll
-    const content = marqueeTrack.innerHTML;
-    marqueeTrack.innerHTML += content; // Duplicate logos
-
-    // Pause on hover for better UX
-    const marqueeContainer = document.querySelector('.marquee-container');
-    if (marqueeContainer) {
-        marqueeContainer.addEventListener('mouseenter', () => {
-            marqueeTrack.style.animationPlayState = 'paused';
-        });
-        marqueeContainer.addEventListener('mouseleave', () => {
-            marqueeTrack.style.animationPlayState = 'running';
-        });
-    }
-}
-
-/* ==========================================================================
-   6. SEARCH SYSTEM
-   ========================================================================== */
-function initSearchSystem() {
+document.addEventListener('DOMContentLoaded', function() {
+    
+    const hamburgerMenu = document.getElementById('hamburgerMenu');
+    const navMenu = document.querySelector('.nav-menu');
     const searchInput = document.getElementById('searchInput');
-    const searchResults = document.getElementById('searchResults');
-
-    if (!searchInput || !searchResults) return;
-
-    const searchData = [
-        { title: 'Data Science Intern Course', type: 'Course', url: 'https://courses.internadda.com/' },
-        { title: 'Python Essentials', type: 'Course', url: 'https://courses.internadda.com/' },
-        { title: 'Generative AI Masterclass', type: 'Course', url: 'https://courses.internadda.com/' },
-        { title: 'Data Science Internship', type: 'Internship', url: 'intern/internship.html' },
-        { title: 'AI & ML Internship', type: 'Internship', url: 'intern/internship.html' },
-        { title: 'Web Development Internship', type: 'Internship', url: 'intern/internship.html' },
-        { title: 'Cybersecurity Internship', type: 'Internship', url: 'intern/internship.html' }
-    ];
-
-    searchInput.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase().trim();
-        searchResults.innerHTML = '';
+    const searchResultsContainer = document.getElementById('searchResults');
+    
+    // 1. Hamburger Menu Toggle Logic
+    if (hamburgerMenu && navMenu) {
+        hamburgerMenu.addEventListener('click', () => {
+            hamburgerMenu.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            // Prevent body scroll when mobile menu is open
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+        });
         
-        if (query.length < 2) {
-            searchResults.classList.add('hidden');
-            return;
-        }
-
-        const results = searchData.filter(item => item.title.toLowerCase().includes(query));
-        
-        if (results.length > 0) {
-            searchResults.classList.remove('hidden');
-            
-            // Animate Results Container
-            if (typeof gsap !== 'undefined') {
-                gsap.fromTo(searchResults, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.2 });
-            }
-            
-            results.forEach(item => {
-                const div = document.createElement('a');
-                div.href = item.url;
-                div.className = 'search-result-item';
-                div.innerHTML = `
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <div style="width:32px; height:32px; background:#f1f5f9; border-radius:6px; display:flex; align-items:center; justify-content:center;">
-                            <i class="fas ${item.type === 'Course' ? 'fa-book-open' : 'fa-briefcase'}" style="color:var(--secondary); font-size:14px;"></i>
-                        </div>
-                        <div>
-                            <h4 style="margin:0; font-size:0.9rem; color:var(--primary); font-weight:600;">${item.title}</h4>
-                            <p style="margin:0; font-size:0.75rem; color:var(--text-muted);">${item.type}</p>
-                        </div>
-                    </div>
-                `;
-                searchResults.appendChild(div);
+        // Close menu if a link is clicked
+        navMenu.querySelectorAll('a.nav-link:not(.dropdown-toggle), .dropdown-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 1024) {
+                    hamburgerMenu.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
             });
-        } else {
-            searchResults.innerHTML = `<div style="padding:12px; color:var(--text-muted); font-size:0.85rem;">No results found.</div>`;
-            searchResults.classList.remove('hidden');
+        });
+    }
+
+    // 2. Desktop & Mobile Dropdown Logic (Handles both Tools and More)
+    const allDropdownContainers = document.querySelectorAll('.nav-item.dropdown');
+    
+    allDropdownContainers.forEach(dropdownContainer => {
+        const toggle = dropdownContainer.querySelector('.dropdown-toggle');
+        const content = dropdownContainer.querySelector('.dropdown-content');
+        const arrow = dropdownContainer.querySelector('.dropdown-arrow');
+        
+        if (toggle && content) {
+            toggle.addEventListener('click', function(event) {
+                const isMobile = window.innerWidth <= 1024;
+                const isVisible = content.style.display === 'block';
+                
+                if (!isMobile) {
+                    // --- DESKTOP LOGIC ---
+                    event.preventDefault(); 
+                    
+                    // Close all other open dropdowns first
+                    document.querySelectorAll('.nav-item.dropdown .dropdown-content').forEach(otherContent => {
+                        if (otherContent !== content) {
+                            otherContent.style.display = 'none';
+                            const otherArrow = otherContent.closest('.nav-item.dropdown').querySelector('.dropdown-arrow');
+                            if (otherArrow) otherArrow.style.transform = 'rotate(0deg)';
+                        }
+                    });
+
+                    // Toggle the clicked dropdown
+                    content.style.display = isVisible ? 'none' : 'block';
+                    if (arrow) {
+                        arrow.style.transform = isVisible ? 'rotate(0deg)' : 'rotate(180deg)';
+                    }
+                    event.stopPropagation();
+                } else {
+                    // --- MOBILE LOGIC ---
+                    event.preventDefault();
+                    // Toggle the clicked dropdown content display inline in the mobile menu
+                    content.style.display = isVisible ? 'none' : 'block';
+                    if (arrow) {
+                        arrow.style.transform = isVisible ? 'rotate(0deg)' : 'rotate(180deg)';
+                    }
+                    // Prevent the mobile menu closure if clicking a dropdown toggle
+                    event.stopPropagation();
+                }
+            });
         }
+    });
+    
+    // Close desktop dropdowns when clicking anywhere else 
+    document.addEventListener('click', function(event) {
+         if (window.innerWidth > 1024) {
+             document.querySelectorAll('.nav-item.dropdown .dropdown-content').forEach(content => {
+                 const parentDropdown = content.closest('.nav-item.dropdown');
+                 // Check if the click is outside the dropdown container itself
+                 if (parentDropdown && !parentDropdown.contains(event.target)) {
+                     content.style.display = 'none';
+                     const arrow = parentDropdown.querySelector('.dropdown-arrow');
+                     if (arrow) arrow.style.transform = 'rotate(0deg)';
+                 }
+             });
+         }
     });
 
-    // Close on outside click
-    document.addEventListener('click', (e) => {
-        if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
-            searchResults.classList.add('hidden');
-        }
+    // 3. Desktop Search Functionality
+     if (searchInput && searchResultsContainer) {
+         searchInput.addEventListener('input', (e) => {
+             renderSearchResults(e.target.value);
+         });
+
+         // Close search results when clicking anywhere outside
+         document.addEventListener('click', (e) => {
+             // The CSS fix (.hidden { pointer-events: none !important; }) ensures that 
+             // even when searchResultsContainer is visible, if the click is outside, 
+             // the container quickly hides itself without blocking clicks on the main page.
+             if (!searchInput.contains(e.target) && !searchResultsContainer.contains(e.target)) {
+                 searchResultsContainer.classList.add('hidden');
+             }
+         });
+     }
+     
+    // 4. Global Scroll Animation for Header
+     const headerElement = document.querySelector('header');
+     if (headerElement) {
+         window.addEventListener('scroll', function() {
+             if (window.scrollY > 50) {
+                 headerElement.classList.add('scrolled');
+             } else {
+                 headerElement.classList.remove('scrolled');
+             }
+         });
+     }
+
+    // 5. Initialize Testimonial Carousels
+    initTestimonialCarousel('testimonialsGrid');
+    initTestimonialCarousel('internshipTestimonialsGrid');
+    
+    // 6. Re-initialize carousel on window resize to fix dimensions
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            initTestimonialCarousel('testimonialsGrid');
+            initTestimonialCarousel('internshipTestimonialsGrid');
+        }, 250);
     });
-}
+    
+});
