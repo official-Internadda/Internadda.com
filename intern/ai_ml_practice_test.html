@@ -1,303 +1,398 @@
-// ---------------------------------------------
-// Website Main Script (Auth Removed, Nav & Carousel Reworked)
-// ---------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & ML Practice Test — Internadda</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-// --- FIREBASE / AUTH CODE COMPLETELY REMOVED ---
-// All logic related to user authentication, sign-up, login, profile dashboard, 
-// and modals has been eliminated based on Request 1.
+    <link rel="stylesheet" href="../style.css">
 
-// --- GLOBAL SEARCH DATA AND LOGIC ---
+    <style>
+        :root {
+            --primary: #4c51bf; /* Deeper Indigo/Violet */
+            --dark: #1a202c;
+            --gray: #4a5568;
+            --warning: #f6ad55; /* More vibrant orange */
+            --success: #38a169;
+            --light: #f7fafc;
+            --accent: #38a169;
+            --hover-light: #f0f4ff;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --transition: all 0.25s ease-in-out;
+            --fail-color: #e53e3e; /* Red for failure */
+        }
 
-// Utility function to get the correct path prefix for assets based on the current page depth
-function getRelativePath(targetPath) {
-    const currentPath = window.location.pathname;
-    const segments = currentPath.split('/').filter(p => p.length > 0);
+        /* --- New Top Bar Styles (Replaces Header) --- */
+        .page-top-bar { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 15px 30px; 
+            background: #fff; 
+            box-shadow: var(--shadow);
+        }
+        .page-top-bar .logo-container {
+            display: flex;
+            align-items: center;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .page-top-bar .logo-container i {
+            margin-right: 8px;
+            color: var(--warning); 
+        }
+        #timer-proof { /* New ID for the visible timer */
+            font-size: 1.4rem; 
+            font-weight: 700; 
+            color: var(--primary); 
+            background-color: #eef2f7; 
+            padding: 6px 12px; 
+            border-radius: 6px; 
+        }
+        /* --- End Top Bar Styles --- */
 
-    // Check if the current path is inside a folder (e.g., /courses/ or /intern/etc.)
-    const depth = segments.length > 1 && currentPath.endsWith('/') ? segments.length - 1 : segments.length;
 
-    let prefix = '';
-    // Determine the necessary relative path prefix
-    if (depth >= 2) {
-        prefix = '../'.repeat(depth - 1);
-    }
-    
-    // Ensure the target path is root-relative for clean joining
-    const cleanTargetPath = targetPath.startsWith('/') ? targetPath.substring(1) : targetPath;
-    
-    return prefix + cleanTargetPath;
-}
+        .exam-container { max-width: 900px; margin: 40px auto; position: relative; }
+        .exam-header { display: none; } /* Hide old exam header */
+        #timer { display: none; } /* Hide old timer */
+        .hidden { display: none !important; }
 
-// Hardcoded data (used for search/listings)
-const allCourses = [
-    { type: 'course', title: 'Essential Data Science Intern Course', instructor: 'Lucky Kumar', image: '/images/Essential Data Science Intern Course.png', url: "https://courses.internadda.com/" },
-    { type: 'course', title: 'Generative AI & Prompt Engineering Masterclass', instructor: 'Lucky Kumar', image: '/images/Generative-AI-Prompt-Engineering-Masterclass.png', url: "https://courses.internadda.com/" },
-    { type: 'course', title: 'Ethical Hacking Mastery', instructor: 'Lucky Kumar', image: '/images/Ethical-Hacking-Mastery.png', url: "https://courses.internadda.com/" },
-    { type: 'course', title: 'Python Essentials for All', instructor: 'Lucky Kumar', image: '/images/Python-Essentials-for-All.png', url: "https://courses.internadda.com/" },
-    { type: 'course', title: 'Cloud & DevOps Essentials', instructor: 'Lucky Kumar', image: '/images/Cloud-DevOps-Essentials.png', url: "https://courses.internadda.com/" }
-];
-
-const allInternships = [
-    { type: 'internship', title: 'Data Science & Analytics', roles: 'Data Analyst, Data Scientist Intern', url: '/intern/internship.html#tests', image: '/images/test_data Science.png', practiceUrl: '/intern/data_science_practice_test.html', finalExamUrl: '/intern/payment_page_data_science.html' },
-    { type: 'internship', title: 'Artificial Intelligence & ML', roles: 'AI Intern, Machine Learning Intern', url: '/intern/internship.html#tests', image: '/images/test_Artificial Intelligence.png', practiceUrl: '/intern/ai_ml_practice_test.html', finalExamUrl: '/intern/payment_page_ai_ml.html' },
-    { type: 'internship', title: 'Python Dev & Software Eng', roles: 'Python Developer, Backend Developer', url: '/intern/internship.html#tests', image: '/images/test_Python Development.png', practiceUrl: '/intern/python_dev_practice_test.html', finalExamUrl: '/intern/payment_page_python.html' }
-    // Full list of 11 internship domains (kept for search completeness)
-    , { type: 'internship', title: 'Cloud Computing & DevOps', roles: 'Cloud Engineer, DevOps Intern', url: '/intern/internship.html#tests', image: '/images/test_Cloud Computing.png', practiceUrl: '/intern/cloud_devops_practice_test.html', finalExamUrl: '/intern/cloud_devops_final_exam.html' }
-    , { type: 'internship', title: 'Cybersecurity & Ethical Hacking', roles: 'Security Analyst, Pentester', url: '/intern/internship.html#tests', image: '/images/test_Cybersecurity & Ethical Hacking.png', practiceUrl: '/intern/cybersecurity_practice_test.html', finalExamUrl: '/intern/cybersecurity_final_exam.html' }
-    , { type: 'internship', title: 'Web & Mobile Development', roles: 'Frontend, React/Angular Dev', url: '/intern/internship.html#tests', image: '/images/test_Web & Mobile Development.png', practiceUrl: '/intern/web_mobile_practice_test.html', finalExamUrl: '/intern/web_mobile_final_exam.html' }
-    , { type: 'internship', title: 'UI/UX Design & Product Design', roles: 'UI/UX Designer, Product Intern', url: '/intern/internship.html#tests', image: '/images/test_UIUX Design & Product Design.png', practiceUrl: '/intern/uiux_practice_test.html', finalExamUrl: '/intern/uiux_final_exam.html' }
-    , { type: 'internship', title: 'Digital Marketing & Growth Hacking', roles: 'SEO, SEM, Social Media Intern', url: '/intern/internship.html#tests', image: '/images/test_Digital Marketing & Growth Hacking.png', practiceUrl: '/intern/digital_marketing_practice_test.html', finalExamUrl: '/intern/digital_marketing_final_exam.html' }
-    , { type: 'internship', title: 'Prompt Engineering & AI Innovation', roles: 'Prompt Engineer, AI Strategist', url: '/intern/internship.html#tests', image: '/images/test_Prompt Engineering.png', practiceUrl: '/intern/prompt_engineering_practice_test.html', finalExamUrl: '/intern/prompt_engineering_final_exam.html' }
-    , { type: 'internship', title: 'Game Development Internship', roles: 'Unity/Unreal Developer Intern', url: '/intern/internship.html#tests', image: '/images/test_Game Development.png', practiceUrl: '/intern/game_dev_practice_test.html', finalExamUrl: '/intern/game_dev_final_exam.html' }
-    , { type: 'internship', title: 'Blockchain & Web3 Dev / Fintech', roles: 'Solidity Developer, Fintech Analyst', url: '/intern/internship.html#tests', image: '/images/test_Blockchain & Web3.png', practiceUrl: '/intern/blockchain_practice_test.html', finalExamUrl: '/intern/blockchain_final_exam.html' }
-];
-
-const allSearchableItems = [...allCourses, ...allInternships];
-
-function renderSearchResults(query) {
-    const searchResultsContainer = document.getElementById('searchResults');
-    if (!searchResultsContainer) return;
-    const q = query.toLowerCase().trim();
-    searchResultsContainer.classList.add('hidden');
-    searchResultsContainer.innerHTML = '';
-
-    if (q.length < 2) return;
-
-    const results = allSearchableItems.filter(item => 
-        item.title.toLowerCase().includes(q) || 
-        (item.roles && item.roles.toLowerCase().includes(q))
-    ).slice(0, 8); // Limit to top 8 results
-
-    if (results.length === 0) {
-        searchResultsContainer.innerHTML = `<p style="padding: 10px 15px; color: var(--gray);">No courses or internships found for "${query}".</p>`;
-        searchResultsContainer.classList.remove('hidden');
-        return;
-    }
-
-    results.forEach(item => {
-        let itemHtml = '';
-        const courseUrl = getRelativePath(item.url);
+        /* Quiz Container Styles */
+        #quiz-container { background: #fff; padding: 40px; border-radius: 12px; box-shadow: var(--shadow); }
+        .question-block { margin-bottom: 35px; border-bottom: 1px solid #e2e8f0; padding-bottom: 25px; }
+        .question-block:last-child { border-bottom: none; margin-bottom: 0; }
+        .question-block h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 20px; line-height: 1.6; }
+        .question-block h3 strong { display: inline-block; background: var(--primary); color: white; border-radius: 50%; width: 30px; height: 30px; line-height: 30px; text-align: center; margin-right: 12px; font-size: 1rem; }
+        .options .option { background-color: var(--light); padding: 16px 20px; border: 1px solid #e2e8f0; border-radius: 10px; cursor: pointer; transition: var(--transition); margin-bottom: 10px; font-weight: 500; display: flex; align-items: center; gap: 12px; }
+        .options .option::before { content: ''; display: inline-block; width: 18px; height: 18px; border: 2px solid var(--gray); border-radius: 50%; transition: all 0.2s ease; flex-shrink: 0; }
+        .options .option:hover { background-color: #eef2f7; border-color: #cbd5e0; }
+        .options .option:hover::before { border-color: var(--primary); }
+        .options .option.selected { background-color: #ebf8ff; color: var(--primary); border-color: var(--primary); box-shadow: 0 0 0 2px rgba(43, 108, 176, 0.2); }
+        .options .option.selected::before { background-color: var(--primary); border-color: var(--primary); box-shadow: inset 0 0 0 3px white; }
+        #submit-btn { margin-top: 30px; width: 100%; padding: 18px; font-size: 1.1rem; }
+        #results-container { display: none !important; } /* Hide old results container */
         
-        if (item.type === 'course') {
-            const imgSrc = getRelativePath(item.image);
-            itemHtml = `
-                <a href="${courseUrl}" class="search-result-item course-result">
-                    <img src="${imgSrc}" alt="${item.title}" onerror="this.onerror=null;this.src='${getRelativePath('/images/logo.jpg')}'">
-                    <div>
-                        <h4>${item.title}</h4>
-                        <p>Course by ${item.instructor}</p>
-                    </div>
-                    <span class="badge free" style="flex-shrink: 0;">FREE</span>
-                </a>
-            `;
-        } else if (item.type === 'internship') {
-            const imgSrc = getRelativePath(item.image);
-            const practiceUrl = getRelativePath(item.practiceUrl);
-            const finalExamUrl = getRelativePath(item.finalExamUrl);
-            
-            itemHtml = `
-                <div class="search-result-item internship-result">
-                    <div>
-                        <img src="${imgSrc}" alt="${item.title}" style="height: 60px; width: 60px; object-fit: contain;" onerror="this.onerror=null;this.src='${getRelativePath('/images/logo.jpg')}'">
-                        <div>
-                            <h4><i class="fas fa-briefcase" style="margin-right: 5px; color: var(--primary);"></i> ${item.title} Internship</h4>
-                            <p>Roles: ${item.roles}</p>
-                        </div>
-                    </div>
-                    <div class="search-result-actions">
-                         <a href="${practiceUrl}" class="search-action-link btn btn-outline">Practice Test</a>
-                         <a href="${finalExamUrl}" class="search-action-link btn btn-primary">Final Exam</a>
-                    </div>
+        /* --- Result Pop-up/Modal Styles --- */
+        .result-modal { 
+            display: none; 
+            position: fixed; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            background-color: white; 
+            padding: 30px 40px; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
+            z-index: 1010; 
+            text-align: center; 
+            max-width: 500px; 
+            width: 90%;
+            animation: popIn 0.3s forwards;
+        }
+        .result-modal-success { border-top: 5px solid var(--success); }
+        .result-modal-fail { border-top: 5px solid var(--fail-color); }
+        .result-modal h3 { margin-bottom: 15px; font-size: 1.6rem; font-weight: 700; }
+        .result-modal p { margin-bottom: 25px; color: var(--gray); font-size: 1.1rem;}
+        .result-modal .modal-icon { font-size: 4rem; margin-bottom: 20px; }
+        .result-modal-success .modal-icon { color: var(--success); }
+        .result-modal-fail .modal-icon { color: var(--fail-color); }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+        /* --- End Result Pop-up/Modal Styles --- */
+
+
+        /* Message Box Styles (Proctoring/Tab Switch ONLY) */
+        .message-box { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 30px 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); z-index: 1005; text-align: center; border-top: 5px solid var(--primary); max-width: 500px; width: 90%; }
+        .message-box h3 { margin-bottom: 15px; font-size: 1.4rem;}
+        .message-box p { margin-bottom: 25px; color: var(--gray); font-size: 1.1rem;}
+        .message-box button { margin: 0 10px; }
+        .message-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); z-index: 1004; }
+
+        /* FOOTER CENTERING STYLE */
+        footer { padding: 20px 0; background-color: #f7fafc; }
+        footer .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        footer .footer-bottom p {
+             text-align: center;
+             margin: 0;
+             font-size: 0.9rem;
+             color: var(--gray);
+        }
+    </style>
+</head>
+<body> <div class="page-top-bar">
+        <div class="logo-container">
+            <i class="fas fa-graduation-cap"></i> <span class="logo-text">Internadda</span>
+        </div>
+        <div id="timer-proof">20:00</div>
+    </div>
+    
+    <main>
+        <section class="course-section">
+            <div class="exam-container">
+                <div class="exam-header" style="display: none;">
+                    <h1>AI & Machine Learning Practice Test</h1>
+                    <div id="timer">20:00</div>
                 </div>
-            `;
-        }
-        searchResultsContainer.innerHTML += itemHtml;
-    });
 
-    searchResultsContainer.classList.remove('hidden');
-}
+                <div id="quiz-container">
+                    <div class="question-block" data-answer="b"><h3><strong>1</strong>Which type of machine learning uses labeled data to train models?</h3><div class="options"><div class="option" data-value="a">Unsupervised Learning</div><div class="option" data-value="b">Supervised Learning</div><div class="option" data-value="c">Reinforcement Learning</div><div class="option" data-value="d">Semi-supervised Learning</div></div></div>
+                    <div class="question-block" data-answer="a"><h3><strong>2</strong>What is the primary goal of a classification algorithm?</h3><div class="options"><div class="option" data-value="a">To assign data points to predefined categories.</div><div class="option" data-value="b">To predict a continuous numerical value.</div><div class="option" data-value="c">To find hidden structures or groups in data.</div><div class="option" data-value="d">To learn through trial and error based on rewards.</div></div></div>
+                    <div class="question-block" data-answer="d"><h3><strong>3</strong>Which algorithm is commonly used for clustering (grouping similar data points)?</h3><div class="options"><div class="option" data-value="a">Linear Regression</div><div class="option" data-value="b">Support Vector Machine (SVM)</div><div class="option" data-value="c">Decision Tree</div><div class="option" data-value="d">K-Means</div></div></div>
+                    <div class="question-block" data-answer="c"><h3><strong>4</strong>In Natural Language Processing (NLP), what does 'tokenization' mean?</h3><div class="options"><div class="option" data-value="a">Translating text from one language to another.</div><div class="option" data-value="b">Summarizing a long piece of text.</div><div class="option" data-value="c">Breaking down text into smaller units like words or sentences.</div><div class="option" data-value="d">Identifying the sentiment (positive/negative) of text.</div></div></div>
+                    <div class="question-block" data-answer="b"><h3><strong>5</strong>What is 'Overfitting' in the context of machine learning models?</h3><div class="options"><div class="option" data-value="a">The model is too simple and cannot capture the underlying patterns.</div><div class="option" data-value="b">The model learns the training data too well, including noise, and performs poorly on new data.</div><div class="option" data-value="c">The model fails to converge during training.</div><div class="option" data-value="d">The dataset used for training is too small.</div></div></div>
+                    <div class="question-block" data-answer="a"><h3><strong>6</strong>Which Python library is fundamental for numerical computing and underlies many ML libraries like TensorFlow and PyTorch?</h3><div class="options"><div class="option" data-value="a">NumPy</div><div class="option" data-value="b">Pandas</div><div class="option" data-value="c">Matplotlib</div><div class="option" data-value="d">Scikit-learn</div></div></div>
+                    <div class="question-block" data-answer="d"><h3><strong>7</strong>What does a 'Confusion Matrix' help visualize in a classification problem?</h3><div class="options"><div class="option" data-value="a">The correlation between different features.</div><div class="option" data-value="b">The distribution of data points in clusters.</div><div class="option" data-value="c">The feature importance scores.</div><div class="option" data-value="d">The performance of the model in terms of true positives, true negatives, false positives, and false negatives.</div></div></div>
+                    <div class="question-block" data-answer="c"><h3><strong>8</strong>Which activation function is commonly used in the output layer of a binary classification neural network?</h3><div class="options"><div class="option" data-value="a">ReLU (Rectified Linear Unit)</div><div class="option" data-value="b">Tanh (Hyperbolic Tangent)</div><div class="option" data-value="c">Sigmoid</div><div class="option" data-value="d">Linear</div></div></div>
+                    <div class="question-block" data-answer="b"><h3><strong>9</strong>What is the primary advantage of using a 'Validation Set' during model training?</h3><div class="options"><div class="option" data-value="a">To increase the training speed.</div><div class="option" data-value="b">To tune hyperparameters and prevent overfitting on the test set.</div><div class="option" data-value="c">To visualize the final results.</div><div class="option" data-value="d">To perform feature engineering.</div></div></div>
+                    <div class="question-block" data-answer="a"><h3><strong>10</strong>Gradient Descent is an algorithm commonly used for what purpose in machine learning?</h3><div class="options"><div class="option" data-value="a">Optimizing the model's parameters by minimizing a loss function.</div><div class="option" data-value="b">Splitting the data into training and testing sets.</div><div class="option" data-value="c">Selecting the most important features.</div><div class="option" data-value="d">Evaluating the model's accuracy.</div></div></div>
+
+                    <button class="btn btn-primary" id="submit-btn">Submit Practice Test</button>
+
+                    <div id="results-container" class="hidden"></div>
+                </div>
+            </div>
+        </section>
+
+        <div id="successModal" class="result-modal result-modal-success">
+            <div class="modal-icon"><i class="fas fa-medal"></i></div>
+            <h3 id="successTitle">Great Job! You're Ready!</h3>
+            <p id="successScoreText"></p>
+            <button id="takeFinalExamBtn" class="btn btn-success btn-lg">Take Final Exam</button>
+        </div>
+
+        <div id="failModal" class="result-modal result-modal-fail">
+            <div class="modal-icon"><i class="fas fa-redo-alt"></i></div>
+            <h3 id="failTitle">Needs Improvement</h3>
+            <p id="failScoreText"></p>
+            <p>Don't worry! Try again after reviewing the course material.</p>
+            <button id="retryTestBtn" class="btn btn-primary">Retry Test</button>
+        </div>
+
+        <div id="messageOverlay" class="message-overlay"></div>
+        <div id="tabSwitchWarningBox" class="message-box">
+             <h3><i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i> Warning: Focus Lost</h3>
+             <p>You navigated away from the practice test tab. In a real exam, this could lead to disqualification. Click Resume to continue.</p>
+             <button id="resumeTestBtn" class="btn btn-primary">Resume Test</button>
+        </div>
+        <div id="testCancelledBox" class="message-box">
+             <h3><i class="fas fa-ban" style="color: #c53030;"></i> Practice Test Cancelled</h3>
+             <p>Multiple instances of navigating away from the test tab were detected. To maintain fairness simulation, this practice session has been cancelled.</p>
+             <button id="backToIntBtn" class="btn btn-outline">Back to Internships</button>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+           <div class="footer-bottom">
+               <p>© 2025 Internadda. All rights reserved.</p>
+           </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Get Elements ---
+            // Updated timerEl to point to the new visible timer ID
+            const timerEl = document.getElementById('timer-proof'); 
+            const submitBtn = document.getElementById('submit-btn');
+            const questions = document.querySelectorAll('.question-block');
+            const totalQuestions = questions.length;
+            const quizContainer = document.getElementById('quiz-container');
+
+            // New Result Pop-up Elements
+            const successModal = document.getElementById('successModal');
+            const successScoreText = document.getElementById('successScoreText');
+            const takeFinalExamBtn = document.getElementById('takeFinalExamBtn');
+            const failModal = document.getElementById('failModal');
+            const failScoreText = document.getElementById('failScoreText');
+            const retryTestBtn = document.getElementById('retryTestBtn'); 
+
+            // Proctoring Elements
+            const messageOverlay = document.getElementById('messageOverlay');
+            const tabSwitchWarningBox = document.getElementById('tabSwitchWarningBox');
+            const resumeTestBtn = document.getElementById('resumeTestBtn');
+            const testCancelledBox = document.getElementById('testCancelledBox');
+            const backToIntBtn = document.getElementById('backToIntBtn');
+
+            // --- State Variables ---
+            let examTimerInterval;
+            let tabSwitchCount = 0;
+            const MAX_TAB_SWITCHES = 2; 
+            let testStartTime = 0; 
+            const TOTAL_DURATION_SECONDS = 1200; // 20 minutes
+
+            // --- Helper: Format Time ---
+            function formatTime(seconds) {
+                const mins = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            }
+
+            // --- Timer Logic ---
+            function startExamTimer(startTimeInSeconds) {
+                let time = startTimeInSeconds;
+                if(timerEl) timerEl.textContent = formatTime(time);
+                if (examTimerInterval) clearInterval(examTimerInterval); 
+
+                examTimerInterval = setInterval(() => {
+                    if (document.hidden) return; 
+                    time--;
+                    if(timerEl) timerEl.textContent = formatTime(time);
+                    if (time <= 0) {
+                        clearInterval(examTimerInterval);
+                        if (!quizContainer.classList.contains('hidden') && submitBtn.style.display !== 'none') {
+                            submitTest(true); 
+                        }
+                    }
+                }, 1000);
+            }
+
+            // --- Initial Test Start (Moved from outside DOMContentLoaded) ---
+            const startInitialTest = () => {
+                startExamTimer(TOTAL_DURATION_SECONDS); 
+                testStartTime = Date.now(); 
+                submitBtn.style.display = 'block';
+                successModal.style.display = 'none';
+                failModal.style.display = 'none';
+            };
 
 
-// --- Testimonial Carousel/Auto-Scroll Logic (Request 5) ---
-
-function initTestimonialCarousel(containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-
-    // Check if enough original cards exist (assuming minimal 3 cards for carousel effect)
-    const originalCards = Array.from(container.children).filter(child => !child.classList.contains('cloned'));
-    
-    // If we already have duplicates (e.g., in index.html where they are added manually), just start scrolling
-    if (container.children.length > originalCards.length) {
-        startAutoScroll(container);
-        return;
-    }
-
-    // Duplicate all children if less than 6 cards are present in total (for visual loop)
-    if (originalCards.length > 0 && originalCards.length < 6) {
-         originalCards.forEach(card => {
-             const clone = card.cloneNode(true);
-             clone.classList.add('cloned'); // Mark as clone to prevent re-duplication
-             container.appendChild(clone);
-         });
-    }
-
-    // Start auto-scrolling only if there are enough items for a carousel effect (3 original + 3 clone minimum)
-    if (container.children.length >= 3) {
-        startAutoScroll(container);
-    }
-}
-
-function startAutoScroll(container) {
-    let animationFrame;
-    const scrollSpeed = 0.5; // pixels per requestAnimationFrame
-    const totalContentWidth = container.scrollWidth / 2; // Scroll width of the original content
-
-    function autoScroll() {
-        // If scroll position reaches the end of the original content (start of the duplicates), reset
-        if (container.scrollLeft >= totalContentWidth) {
-            container.scrollLeft = 0;
-        }
-        container.scrollLeft += scrollSpeed;
-        animationFrame = requestAnimationFrame(autoScroll);
-    }
-    
-    // Stop scrolling if the user manually interacts (optional but improves UX)
-    container.addEventListener('mouseenter', () => cancelAnimationFrame(animationFrame));
-    container.addEventListener('touchstart', () => cancelAnimationFrame(animationFrame));
-    container.addEventListener('mouseleave', () => animationFrame = requestAnimationFrame(autoScroll));
-    container.addEventListener('touchend', () => animationFrame = requestAnimationFrame(autoScroll));
-    
-    animationFrame = requestAnimationFrame(autoScroll);
-}
-
-
-// --- Core DOM Initialization ---
-
-document.addEventListener('DOMContentLoaded', function() {
-    
-    const hamburgerMenu = document.getElementById('hamburgerMenu');
-    const navMenu = document.querySelector('.nav-menu');
-    const searchInput = document.getElementById('searchInput');
-    const searchResultsContainer = document.getElementById('searchResults');
-    
-    // 1. Hamburger Menu Toggle Logic (Request 2)
-    if (hamburgerMenu && navMenu) {
-        hamburgerMenu.addEventListener('click', () => {
-            hamburgerMenu.classList.toggle('active');
-            navMenu.classList.toggle('active');
-            // Prevent body scroll when mobile menu is open
-            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
-        });
-        
-        // Close menu if a link is clicked
-        navMenu.querySelectorAll('a.nav-link:not(.dropdown-toggle), .dropdown-link').forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 1024) {
-                    hamburgerMenu.classList.remove('active');
-                    navMenu.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                }
-            });
-        });
-    }
-
-    // 2. Desktop & Mobile Dropdown Logic (Handles both Tools and More)
-    const allDropdownContainers = document.querySelectorAll('.nav-item.dropdown');
-    
-    allDropdownContainers.forEach(dropdownContainer => {
-        const toggle = dropdownContainer.querySelector('.dropdown-toggle');
-        const content = dropdownContainer.querySelector('.dropdown-content');
-        const arrow = dropdownContainer.querySelector('.dropdown-arrow');
-        
-        if (toggle && content) {
-            toggle.addEventListener('click', function(event) {
-                const isMobile = window.innerWidth <= 1024;
-                const isVisible = content.style.display === 'block';
-                
-                if (!isMobile) {
-                    // --- DESKTOP LOGIC ---
-                    event.preventDefault(); 
-                    
-                    // Close all other open dropdowns first
-                    document.querySelectorAll('.nav-item.dropdown .dropdown-content').forEach(otherContent => {
-                        if (otherContent !== content) {
-                            otherContent.style.display = 'none';
-                            const otherArrow = otherContent.closest('.nav-item.dropdown').querySelector('.dropdown-arrow');
-                            if (otherArrow) otherArrow.style.transform = 'rotate(0deg)';
+            // --- Option Selection Logic ---
+            questions.forEach(question => {
+                const options = question.querySelectorAll('.options .option');
+                options.forEach(opt => {
+                    opt.addEventListener('click', () => {
+                        if (!quizContainer.classList.contains('hidden') && submitBtn.style.display !== 'none'){
+                            options.forEach(o => o.classList.remove('selected'));
+                            opt.classList.add('selected');
+                            question.dataset.selectedValue = opt.dataset.value;
                         }
                     });
+                });
+            });
 
-                    // Toggle the clicked dropdown
-                    content.style.display = isVisible ? 'none' : 'block';
-                    if (arrow) {
-                        arrow.style.transform = isVisible ? 'rotate(0deg)' : 'rotate(180deg)';
+            // --- Submission Logic (Updated for Pop-ups and Redirection) ---
+            function submitTest(autoSubmitted = false) {
+                if (!autoSubmitted && !confirm("Submit your practice test?")) {
+                    return; 
+                }
+                clearInterval(examTimerInterval);
+                
+                let score = 0;
+
+                questions.forEach(question => {
+                    if (question.dataset.selectedValue === question.dataset.answer) {
+                        score++;
                     }
-                    event.stopPropagation();
+                    question.querySelectorAll('.options .option').forEach(opt => opt.style.pointerEvents = 'none');
+                });
+
+                const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
+                
+                // Hide main quiz content
+                quizContainer.classList.add('hidden'); 
+                submitBtn.style.display = 'none'; 
+                if(timerEl) timerEl.textContent = "Finished";
+
+                // Hide other potential popups
+                messageOverlay.style.display = 'none';
+                tabSwitchWarningBox.style.display = 'none';
+                testCancelledBox.style.display = 'none';
+
+                // Handle results based on percentage (50% threshold)
+                if (percentage >= 50) {
+                    // Success: >= 50%
+                    successScoreText.textContent = `You scored ${score} out of ${totalQuestions} (${percentage}%).`;
+                    messageOverlay.style.display = 'block';
+                    successModal.style.display = 'block';
                 } else {
-                    // --- MOBILE LOGIC ---
-                    event.preventDefault();
-                    // Toggle the clicked dropdown content display inline in the mobile menu
-                    content.style.display = isVisible ? 'none' : 'block';
-                    if (arrow) {
-                        arrow.style.transform = isVisible ? 'rotate(0deg)' : 'rotate(180deg)';
+                    // Fail: < 50% (Only Retry button available)
+                    failScoreText.textContent = `You scored ${score} out of ${totalQuestions} (${percentage}%).`;
+                    messageOverlay.style.display = 'block';
+                    failModal.style.display = 'block';
+                }
+            }
+
+            // --- Cancellation Logic ---
+            function cancelTest() {
+                clearInterval(examTimerInterval);
+                
+                quizContainer.classList.add('hidden'); 
+                submitBtn.style.display = 'none'; 
+                if(timerEl) timerEl.textContent = "Cancelled";
+
+                // Show cancellation message
+                messageOverlay.style.display = 'block';
+                testCancelledBox.style.display = 'block';
+                // Hide other popups
+                tabSwitchWarningBox.style.display = 'none';
+                successModal.style.display = 'none'; 
+                failModal.style.display = 'none';
+            }
+
+
+            // --- Event Listeners ---
+
+            startInitialTest(); // Call start on DOM load
+
+            // Submit Button
+            submitBtn.addEventListener('click', () => submitTest(false)); 
+
+            // Final Exam Button Redirection (NEW URL)
+            takeFinalExamBtn.addEventListener('click', () => {
+                window.location.href = 'https://internadda.com/intern/payment_page_ai_ml';
+            });
+
+            // Retry Test Button (For < 50% score) - AUTO REFRESH
+            retryTestBtn.addEventListener('click', () => {
+                // Reload the page to start the test fresh
+                window.location.reload(); 
+            });
+
+
+            // Resume Button (from warning)
+            resumeTestBtn.addEventListener('click', () => {
+                tabSwitchWarningBox.style.display = 'none';
+                messageOverlay.style.display = 'none';
+
+                // Resume timers by calculating remaining time
+                const elapsedMillis = Date.now() - testStartTime;
+                const elapsedSeconds = Math.floor(elapsedMillis / 1000);
+                const remainingTime = (TOTAL_DURATION_SECONDS - elapsedSeconds > 0) ? TOTAL_DURATION_SECONDS - elapsedSeconds : 0;
+
+                startExamTimer(remainingTime); 
+            });
+
+            // Back to Internships Button (from cancellation)
+            backToIntBtn.addEventListener('click', () => {
+                window.location.href = 'internship.html';
+            });
+
+
+            // Anti-Cheat: Tab Switch Detection
+            document.addEventListener('visibilitychange', () => {
+                if (!quizContainer.classList.contains('hidden') && submitBtn.style.display !== 'none' && document.hidden) {
+                    tabSwitchCount++;
+
+                    if (examTimerInterval) clearInterval(examTimerInterval);
+                    
+                    if (tabSwitchCount >= MAX_TAB_SWITCHES) {
+                        cancelTest();
+                    } else if (tabSwitchCount === 1) {
+                        messageOverlay.style.display = 'block';
+                        tabSwitchWarningBox.style.display = 'block';
                     }
-                    // Prevent the mobile menu closure if clicking a dropdown toggle
-                    event.stopPropagation();
                 }
             });
-        }
-    });
-    
-    // Close desktop dropdowns when clicking anywhere else 
-    document.addEventListener('click', function(event) {
-         if (window.innerWidth > 1024) {
-             document.querySelectorAll('.nav-item.dropdown .dropdown-content').forEach(content => {
-                 const parentDropdown = content.closest('.nav-item.dropdown');
-                 // Check if the click is outside the dropdown container itself
-                 if (parentDropdown && !parentDropdown.contains(event.target)) {
-                     content.style.display = 'none';
-                     const arrow = parentDropdown.querySelector('.dropdown-arrow');
-                     if (arrow) arrow.style.transform = 'rotate(0deg)';
-                 }
-             });
-         }
-    });
 
-    // 3. Desktop Search Functionality
-     if (searchInput && searchResultsContainer) {
-         searchInput.addEventListener('input', (e) => {
-             renderSearchResults(e.target.value);
-         });
-
-         // Close search results when clicking anywhere outside
-         document.addEventListener('click', (e) => {
-             if (!searchInput.contains(e.target) && !searchResultsContainer.contains(e.target)) {
-                 searchResultsContainer.classList.add('hidden');
-             }
-         });
-     }
-     
-    // 4. Global Scroll Animation for Header
-     const headerElement = document.querySelector('header');
-     if (headerElement) {
-         window.addEventListener('scroll', function() {
-             if (window.scrollY > 50) {
-                 headerElement.classList.add('scrolled');
-             } else {
-                 headerElement.classList.remove('scrolled');
-             }
-         });
-     }
-
-    // 5. Initialize Testimonial Carousels (Request 5)
-    initTestimonialCarousel('testimonialsGrid');
-    initTestimonialCarousel('internshipTestimonialsGrid');
-    
-    // 6. Partner Marquee Fix (Request 7 & 8)
-    // The visual fix relies primarily on CSS keyframes and duplicating the content in HTML.
-    // The script only ensures the container is present and the animation is running via CSS.
-    
-});
-
-                    
+        }); // End DOMContentLoaded
+    </script>
+</body>
+</html>
