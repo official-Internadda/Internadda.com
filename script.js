@@ -1,16 +1,16 @@
-// ---------------------------------------------
-// Internadda Masterpiece UI Script v2.0
-// ---------------------------------------------
+// ==========================================================================
+// INTERNADDA MASTERPIECE UI LOGIC v3.0
+// ==========================================================================
 
 document.addEventListener('DOMContentLoaded', function() {
     
-    /* ============================
-       1. SCROLL ANIMATIONS (Intersection Observer)
-       ============================ */
+    /* ----------------------------------------------------------------------
+       1. SCROLL ANIMATIONS (The "Fade Up" Effect)
+       ---------------------------------------------------------------------- */
     const observerOptions = {
         root: null,
         rootMargin: '0px',
-        threshold: 0.1 // Trigger when 10% of the element is visible
+        threshold: 0.1 // Trigger when 10% of element is visible
     };
 
     const observer = new IntersectionObserver((entries, observer) => {
@@ -22,19 +22,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, observerOptions);
 
-    // Target all elements with the 'fade-up' class
+    // Target all elements with .fade-up class
     document.querySelectorAll('.fade-up').forEach(el => {
         observer.observe(el);
     });
 
 
-    /* ============================
+    /* ----------------------------------------------------------------------
        2. STICKY GLASS HEADER
-       ============================ */
+       ---------------------------------------------------------------------- */
     const header = document.getElementById('main-header');
     
     function handleScroll() {
-        if (window.scrollY > 50) {
+        if (window.scrollY > 20) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
@@ -44,191 +44,198 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', handleScroll);
 
 
-    /* ============================
-       3. MOBILE MENU & DROPDOWNS
-       ============================ */
-    const hamburgerMenu = document.getElementById('hamburgerMenu');
+    /* ----------------------------------------------------------------------
+       3. MOBILE NAVIGATION & DROPDOWNS
+       ---------------------------------------------------------------------- */
+    const hamburger = document.getElementById('hamburgerMenu');
     const navMenu = document.getElementById('navMenu');
+    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
 
-    if (hamburgerMenu && navMenu) {
-        hamburgerMenu.addEventListener('click', () => {
-            hamburgerMenu.classList.toggle('active');
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
-            // Prevent body scrolling when menu is open
-            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+            
+            // Lock body scroll when menu is open
+            if (navMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
         });
 
-        // Mobile Dropdown Toggles
-        const dropdowns = document.querySelectorAll('.dropdown-toggle');
-        dropdowns.forEach(toggle => {
+        // Handle Mobile Dropdown Clicks
+        dropdownToggles.forEach(toggle => {
             toggle.addEventListener('click', (e) => {
+                // Only activate click toggle on mobile screens
                 if (window.innerWidth <= 1024) {
                     e.preventDefault();
-                    e.stopPropagation();
+                    e.stopPropagation(); // Prevent bubbling
+                    
                     const content = toggle.nextElementSibling;
                     const isVisible = content.style.display === 'block';
                     
-                    // Reset others
-                    document.querySelectorAll('.dropdown-content').forEach(d => d.style.display = 'none');
+                    // Close all other open dropdowns first
+                    document.querySelectorAll('.dropdown-content').forEach(c => {
+                        if (c !== content) c.style.display = 'none';
+                    });
                     
-                    // Toggle current
+                    // Toggle current dropdown
                     content.style.display = isVisible ? 'none' : 'block';
-                    content.style.position = 'static';
-                    content.style.boxShadow = 'none';
-                    content.style.paddingLeft = '20px';
-                    content.style.animation = 'none';
                 }
             });
         });
     }
 
 
-    /* ============================
-       4. GLOBAL SEARCH LOGIC
-       ============================ */
-    const searchInput = document.getElementById('searchInput');
-    const searchResultsContainer = document.getElementById('searchResults');
+    /* ----------------------------------------------------------------------
+       4. HERO IMAGE SLIDER (Auto-Play & Dots)
+       ---------------------------------------------------------------------- */
+    const sliderWrapper = document.querySelector('.slider-wrapper');
+    if (sliderWrapper) {
+        const dots = document.querySelectorAll('.dot');
+        const totalSlides = dots.length;
+        let currentIndex = 0;
+        let slideInterval;
 
-    // Data for search
-    const allSearchableItems = [
-        // Courses
-        { type: 'course', title: 'Essential Data Science Intern Course', instructor: 'Lucky Kumar', image: 'images/Essential Data Science Intern Course.png', url: "courses/courses/Essential Data Science Intern Course.html" },
-        { type: 'course', title: 'Generative AI & Prompt Engineering', instructor: 'Lucky Kumar', image: 'images/Generative-AI-Prompt-Engineering-Masterclass.png', url: "courses/courses/Generative-AI-Prompt-Engineering-Masterclass.html" },
-        { type: 'course', title: 'Python Essentials for All', instructor: 'Lucky Kumar', image: 'images/Python-Essentials-for-All.png', url: "courses/courses/Python-Essentials-for-All.html" },
-        { type: 'course', title: 'Ethical Hacking Mastery', instructor: 'Lucky Kumar', image: 'images/Ethical-Hacking-Mastery.png', url: "courses/courses/Ethical-Hacking-Mastery.html" },
+        const updateSlider = () => {
+            sliderWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        };
+
+        const nextSlide = () => {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            updateSlider();
+        };
+
+        // Start Auto-play
+        slideInterval = setInterval(nextSlide, 5000);
+
+        // Manual Navigation (Clicking dots)
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                clearInterval(slideInterval); // Reset timer on manual click
+                currentIndex = index;
+                updateSlider();
+                slideInterval = setInterval(nextSlide, 5000); // Restart timer
+            });
+        });
+    }
+
+
+    /* ----------------------------------------------------------------------
+       5. TESTIMONIAL AUTO-SCROLLER
+       ---------------------------------------------------------------------- */
+    const testimonialContainer = document.querySelector('.testimonial-scroller');
+    
+    if (testimonialContainer) {
+        // Clone items to create an infinite loop effect
+        const items = Array.from(testimonialContainer.children);
+        items.forEach(item => {
+            const clone = item.cloneNode(true);
+            testimonialContainer.appendChild(clone);
+        });
+
+        let scrollPos = 0;
+        const speed = 0.5; // Pixels per frame
+        let isHovered = false;
+
+        function autoScrollTestimonials() {
+            if (!isHovered) {
+                scrollPos += speed;
+                // Reset scroll when we reach halfway (end of original set)
+                if (scrollPos >= testimonialContainer.scrollWidth / 2) {
+                    scrollPos = 0;
+                }
+                testimonialContainer.scrollLeft = scrollPos;
+            }
+            requestAnimationFrame(autoScrollTestimonials);
+        }
+
+        // Start scrolling
+        requestAnimationFrame(autoScrollTestimonials);
+
+        // Pause on hover for readability
+        testimonialContainer.addEventListener('mouseenter', () => isHovered = true);
+        testimonialContainer.addEventListener('mouseleave', () => {
+            isHovered = false;
+            scrollPos = testimonialContainer.scrollLeft; // Sync position
+        });
         
-        // Internships
-        { type: 'internship', title: 'Data Science & Analytics', roles: 'Data Analyst, Data Scientist Intern', url: 'intern/internship.html', image: 'images/test_data Science.png', practiceUrl: 'intern/data_science_practice_test.html', finalExamUrl: 'intern/payment_page_data_science.html' },
-        { type: 'internship', title: 'Artificial Intelligence & ML', roles: 'AI Intern, Machine Learning Intern', url: 'intern/internship.html', image: 'images/test_Artificial Intelligence.png', practiceUrl: 'intern/ai_ml_practice_test.html', finalExamUrl: 'intern/payment_page_ai_ml.html' },
-        { type: 'internship', title: 'Python Dev & Software Eng', roles: 'Python Developer, Backend Developer', url: 'intern/internship.html', image: 'images/test_Python Development.png', practiceUrl: 'intern/python_dev_practice_test.html', finalExamUrl: 'intern/payment_page_python.html' },
-        { type: 'internship', title: 'Web & Mobile Development', roles: 'Frontend, React/Angular Dev', url: 'intern/internship.html', image: 'images/test_Web & Mobile Development.png' }
+        // Handle touch events
+        testimonialContainer.addEventListener('touchstart', () => isHovered = true);
+        testimonialContainer.addEventListener('touchend', () => isHovered = false);
+    }
+
+
+    /* ----------------------------------------------------------------------
+       6. GLOBAL SEARCH FUNCTIONALITY
+       ---------------------------------------------------------------------- */
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+
+    // Database of searchable content
+    const searchData = [
+        { title: 'Data Science Intern Course', url: 'courses/courses/Essential Data Science Intern Course.html', type: 'Course' },
+        { title: 'Python Essentials for All', url: 'courses/courses/Python-Essentials-for-All.html', type: 'Course' },
+        { title: 'Generative AI Masterclass', url: 'courses/courses/Generative-AI-Prompt-Engineering-Masterclass.html', type: 'Course' },
+        { title: 'Ethical Hacking Mastery', url: 'courses/courses/Ethical-Hacking-Mastery.html', type: 'Course' },
+        { title: 'Data Science Internship', url: 'intern/internship.html', type: 'Internship' },
+        { title: 'Web Development Internship', url: 'intern/internship.html', type: 'Internship' },
+        { title: 'Python Developer Internship', url: 'intern/internship.html', type: 'Internship' },
+        { title: 'AI & ML Internship', url: 'intern/internship.html', type: 'Internship' },
+        { title: 'ATS Score Checker', url: 'https://check-ats.internadda.com/', type: 'Tool' },
+        { title: 'Resume Builder', url: 'https://cv-builder.internadda.com/', type: 'Tool' }
     ];
 
-    function renderSearchResults(query) {
-        if (!searchResultsContainer) return;
-
-        const q = query.toLowerCase().trim();
-        searchResultsContainer.innerHTML = '';
-
-        if (q.length < 2) {
-            searchResultsContainer.classList.add('hidden');
-            return;
-        }
-
-        // Filter results
-        const displayResults = allSearchableItems.filter(item =>
-            item.title.toLowerCase().includes(q) || 
-            (item.roles && item.roles.toLowerCase().includes(q))
-        ).slice(0, 6);
-
-        if (displayResults.length === 0) {
-            searchResultsContainer.innerHTML = `<p style="padding: 15px; color: var(--gray); font-size: 0.9rem;">No results found for "${query}".</p>`;
-            searchResultsContainer.classList.remove('hidden');
-            return;
-        }
-
-        // Build HTML
-        displayResults.forEach(item => {
-            let itemHtml = '';
-            
-            if (item.type === 'course') {
-                itemHtml = `
-                    <a href="${item.url}" class="search-result-item course-result" style="text-decoration:none; color:inherit;">
-                        <img src="${item.image}" alt="${item.title}" onerror="this.onerror=null;this.src='images/logo.jpg'">
-                        <div>
-                            <h4>${item.title}</h4>
-                            <p style="font-size: 0.8rem; color: #64748B;">Course by ${item.instructor}</p>
-                        </div>
-                    </a>
-                `;
-            } else if (item.type === 'internship') {
-                const practiceUrl = item.practiceUrl ? item.practiceUrl : '#';
-                const finalUrl = item.finalExamUrl ? item.finalExamUrl : '#';
-                
-                itemHtml = `
-                    <div class="search-result-item internship-result">
-                        <div style="display:flex; align-items:center; gap:12px;">
-                            <img src="${item.image}" alt="${item.title}" style="width:40px; height:40px; object-fit:contain;">
-                            <div>
-                                <h4>${item.title}</h4>
-                                <p style="font-size: 0.8rem; color: #64748B;">${item.roles}</p>
-                            </div>
-                        </div>
-                        <div class="search-result-actions">
-                             <a href="${practiceUrl}" class="btn btn-outline" style="font-size:0.75rem; padding:4px 10px;">Practice</a>
-                             <a href="${finalUrl}" class="btn btn-primary" style="font-size:0.75rem; padding:4px 10px;">Exam</a>
-                        </div>
-                    </div>
-                `;
-            }
-            searchResultsContainer.innerHTML += itemHtml;
-        });
-
-        searchResultsContainer.classList.remove('hidden');
-    }
-
-    if (searchInput) {
+    if (searchInput && searchResults) {
         searchInput.addEventListener('input', (e) => {
-            renderSearchResults(e.target.value);
+            const query = e.target.value.toLowerCase().trim();
+            searchResults.innerHTML = '';
+
+            if (query.length > 1) {
+                const filtered = searchData.filter(item => item.title.toLowerCase().includes(query));
+                
+                if (filtered.length > 0) {
+                    searchResults.classList.remove('hidden');
+                    filtered.forEach(item => {
+                        const div = document.createElement('div');
+                        div.className = 'search-result-item';
+                        // Using flexbox inline styles for the result item layout
+                        div.innerHTML = `
+                            <a href="${item.url}" style="display:block; width:100%; text-decoration:none; color: inherit;">
+                                <h4 style="margin:0; font-size:0.95rem;">${item.title}</h4>
+                                <p style="margin:0; font-size:0.8rem; color:#64748B;">${item.type}</p>
+                            </a>
+                        `;
+                        searchResults.appendChild(div);
+                    });
+                } else {
+                    searchResults.innerHTML = '<div style="padding:12px; color:#64748B; text-align:center;">No results found.</div>';
+                    searchResults.classList.remove('hidden');
+                }
+            } else {
+                searchResults.classList.add('hidden');
+            }
         });
-        
-        // Hide on click outside
+
+        // Hide search results when clicking outside
         document.addEventListener('click', (e) => {
-            if (!searchInput.contains(e.target) && !searchResultsContainer.contains(e.target)) {
-                searchResultsContainer.classList.add('hidden');
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.classList.add('hidden');
+            }
+        });
+        
+        // Handle "Enter" key redirection for quick access
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const val = searchInput.value.toLowerCase();
+                if (val.includes('course')) window.location.href = 'courses/course.html';
+                else if (val.includes('intern')) window.location.href = 'intern/internship.html';
             }
         });
     }
-
-
-    /* ============================
-       5. TESTIMONIAL AUTO-SCROLL
-       ============================ */
-    function initTestimonialCarousel(containerId) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-
-        // Clone items for infinite loop effect if not already cloned
-        if (!container.classList.contains('initialized')) {
-            const items = Array.from(container.children);
-            items.forEach(item => {
-                const clone = item.cloneNode(true);
-                container.appendChild(clone);
-            });
-            container.classList.add('initialized');
-        }
-
-        let scrollAmount = 0;
-        const scrollSpeed = 0.8; // Speed of marquee
-
-        function autoScroll() {
-            scrollAmount += scrollSpeed;
-            // Reset when halfway (end of original items)
-            if (scrollAmount >= container.scrollWidth / 2) {
-                scrollAmount = 0;
-            }
-            container.scrollLeft = scrollAmount;
-            requestAnimationFrame(autoScroll);
-        }
-
-        // Pause on hover
-        let animationId = requestAnimationFrame(autoScroll);
-        
-        container.addEventListener('mouseenter', () => cancelAnimationFrame(animationId));
-        container.addEventListener('mouseleave', () => {
-            scrollAmount = container.scrollLeft; // Resume from current pos
-            animationId = requestAnimationFrame(autoScroll);
-        });
-        
-        // Allow touch scrolling to override auto-scroll temporarily
-        container.addEventListener('touchstart', () => cancelAnimationFrame(animationId));
-        container.addEventListener('touchend', () => {
-            scrollAmount = container.scrollLeft;
-            animationId = requestAnimationFrame(autoScroll);
-        });
-    }
-
-    // Initialize Carousel
-    initTestimonialCarousel('testimonialsGrid');
 
 });
