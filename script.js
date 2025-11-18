@@ -1,255 +1,320 @@
 /**
- * INTERNADDA 2.0 - CORE JAVASCRIPT
- * Modern, Performance-Optimized, and Modular.
+ * INTERNADDA 2.0 - MASTERPIECE EDITION
+ * Powered by GSAP & ScrollTrigger
+ * * Features:
+ * - Cinematic Hero Entrance
+ * - Smooth Scroll Reveals
+ * - Magnetic Button Hover Effects
+ * - 3D Mouse Parallax
+ * - Infinite Marquee Control
+ * - Advanced Search Functionality
  */
 
+// Register GSAP Plugins
+gsap.registerPlugin(ScrollTrigger);
+
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. Initialize Core UI (Menu, Search)
     initGlobalUI();
     initSearchSystem();
-    initHeroSlider();
-    initInfiniteMarquees();
-    initScrollAnimations();
+    
+    // 2. Initialize "Masterpiece" Animations
+    initHeroAnimations();
+    initSmoothScrollReveals();
+    initParallaxEffects();
+    initMagneticButtons();
+    initMarqueeInteraction();
+    
+    // 3. Initialize Carousels
+    initTestimonialCarousel();
 });
 
+
 /* ==========================================================================
-   1. GLOBAL UI (Header, Mobile Menu, Dropdowns)
+   1. CINEMATIC HERO ENTRANCE
+   ========================================================================== */
+function initHeroAnimations() {
+    const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+
+    // Header: Drop down smoothly
+    tl.from("header", {
+        y: -100,
+        opacity: 0,
+        duration: 1.2,
+        delay: 0.2
+    })
+    
+    // Hero Heading: Reveal text with a skew effect
+    .from(".hero-heading", {
+        y: 100,
+        opacity: 0,
+        skewY: 5,
+        duration: 1.2,
+        stagger: 0.1
+    }, "-=0.8")
+    
+    // Description: Fade up
+    .from(".hero-description", {
+        y: 30,
+        opacity: 0,
+        duration: 1
+    }, "-=1.0")
+    
+    // Buttons & Stats: Staggered entry
+    .from([".hero-cta", ".hero-stats"], {
+        y: 30,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2
+    }, "-=0.8")
+    
+    // Hero Image: 3D rotation reveal
+    .from(".hero-image-slider", {
+        x: 100,
+        opacity: 0,
+        scale: 0.8,
+        rotationY: 15,
+        duration: 1.5,
+        ease: "power2.out"
+    }, "-=1.2");
+}
+
+
+/* ==========================================================================
+   2. SCROLL REVEALS (BUTTERY SMOOTH)
+   ========================================================================== */
+function initSmoothScrollReveals() {
+    // Animate Section Headers
+    gsap.utils.toArray('.section-header').forEach(header => {
+        gsap.from(header, {
+            scrollTrigger: {
+                trigger: header,
+                start: "top 85%",
+                toggleActions: "play none none reverse"
+            },
+            y: 50,
+            opacity: 0,
+            duration: 1.2,
+            ease: "power3.out"
+        });
+    });
+
+    // Value Cards (Bento Grid) - Staggered Popup
+    gsap.from(".value-card", {
+        scrollTrigger: {
+            trigger: ".value-cards",
+            start: "top 80%"
+        },
+        y: 60,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.15,
+        ease: "back.out(1.2)"
+    });
+
+    // Course Cards - Floating Entry
+    gsap.utils.toArray('.course-card').forEach((card, i) => {
+        gsap.from(card, {
+            scrollTrigger: {
+                trigger: card,
+                start: "top 90%"
+            },
+            y: 50,
+            opacity: 0,
+            scale: 0.95,
+            duration: 0.8,
+            delay: i * 0.1, // Waterfall effect
+            ease: "power2.out"
+        });
+    });
+    
+    // CTA Section - Parallax Background
+    gsap.to(".cta-section::before", {
+        scrollTrigger: {
+            trigger: ".cta-section",
+            scrub: true
+        },
+        y: -50,
+        scale: 1.1
+    });
+}
+
+
+/* ==========================================================================
+   3. MOUSE PARALLAX & 3D EFFECTS (The "Wow" Factor)
+   ========================================================================== */
+function initParallaxEffects() {
+    // Move Background Blobs gently with mouse
+    document.addEventListener("mousemove", (e) => {
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+
+        gsap.to(".bg-blob", {
+            x: (mouseX - window.innerWidth / 2) * 0.05,
+            y: (mouseY - window.innerHeight / 2) * 0.05,
+            duration: 2, // Laggy float feel
+            ease: "power2.out"
+        });
+    });
+
+    // 3D Tilt Effect for Hero Image
+    const heroImg = document.getElementById('heroImageSlider');
+    if (heroImg) {
+        heroImg.addEventListener('mousemove', (e) => {
+            const { left, top, width, height } = heroImg.getBoundingClientRect();
+            const x = (e.clientX - left - width / 2) / 25;
+            const y = (e.clientY - top - height / 2) / 25;
+
+            gsap.to(heroImg, {
+                rotationY: x,
+                rotationX: -y,
+                transformPerspective: 1000,
+                duration: 0.4,
+                ease: "power1.out"
+            });
+        });
+        
+        heroImg.addEventListener('mouseleave', () => {
+            gsap.to(heroImg, {
+                rotationY: 0,
+                rotationX: 0,
+                duration: 1,
+                ease: "elastic.out(1, 0.5)"
+            });
+        });
+    }
+}
+
+
+/* ==========================================================================
+   4. MAGNETIC BUTTONS
+   ========================================================================== */
+function initMagneticButtons() {
+    const buttons = document.querySelectorAll('.btn-primary, .btn-outline');
+    
+    buttons.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const { left, top, width, height } = btn.getBoundingClientRect();
+            const x = (e.clientX - left - width / 2) * 0.3; // Strength
+            const y = (e.clientY - top - height / 2) * 0.3;
+
+            gsap.to(btn, {
+                x: x,
+                y: y,
+                duration: 0.3,
+                ease: "power2.out"
+            });
+        });
+
+        btn.addEventListener('mouseleave', () => {
+            gsap.to(btn, { 
+                x: 0, 
+                y: 0, 
+                duration: 0.6, 
+                ease: "elastic.out(1, 0.3)" 
+            });
+        });
+    });
+}
+
+
+/* ==========================================================================
+   5. MARQUEE INTERACTION
+   ========================================================================== */
+function initMarqueeInteraction() {
+    const marquee = document.querySelector('.logo-marquee-container');
+    if (!marquee) return;
+
+    // Slow down on hover
+    marquee.addEventListener('mouseenter', () => {
+        gsap.to('.logo-marquee', { timeScale: 0.2, duration: 1 });
+    });
+    
+    marquee.addEventListener('mouseleave', () => {
+        gsap.to('.logo-marquee', { timeScale: 1, duration: 1 });
+    });
+}
+
+
+/* ==========================================================================
+   6. GLOBAL UI & UTILITIES
    ========================================================================== */
 function initGlobalUI() {
-    const header = document.querySelector('header');
-    const hamburger = document.getElementById('hamburgerMenu');
-    const navMenu = document.querySelector('.nav-menu');
-    const dropdowns = document.querySelectorAll('.nav-item.dropdown');
-
-    // A. Glassmorphism Header Scroll Effect (Performance Optimized)
-    let lastScrollY = window.scrollY;
-    let ticking = false;
-
+    // Header Glass Effect on Scroll
     window.addEventListener('scroll', () => {
-        lastScrollY = window.scrollY;
-        if (!ticking) {
-            window.requestAnimationFrame(() => {
-                if (lastScrollY > 20) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
-                ticking = false;
-            });
-            ticking = true;
+        const header = document.querySelector('header');
+        if (window.scrollY > 20) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
         }
     });
 
-    // B. Mobile Menu Toggle
-    if (hamburger && navMenu) {
-        hamburger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            hamburger.classList.toggle('active');
-            navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
-            navMenu.classList.toggle('active');
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (navMenu.classList.contains('active') && !navMenu.contains(e.target) && !hamburger.contains(e.target)) {
-                hamburger.classList.remove('active');
+    // Mobile Menu Animation
+    const hamburger = document.getElementById('hamburgerMenu');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if(hamburger && navMenu) {
+        hamburger.addEventListener('click', () => {
+            const isActive = hamburger.classList.toggle('active');
+            
+            if (isActive) {
+                navMenu.classList.add('active');
+                // Animate menu items in
+                gsap.fromTo(".nav-link", 
+                    { x: -20, opacity: 0 },
+                    { x: 0, opacity: 1, stagger: 0.05, duration: 0.3, delay: 0.1 }
+                );
+            } else {
                 navMenu.classList.remove('active');
-                navMenu.style.display = 'none'; // Reset for desktop resize safety
             }
         });
     }
-
-    // C. Mobile Dropdown Interaction
-    // On mobile, we need to tap to open dropdowns since there is no hover.
+    
+    // Mobile Dropdowns (Tap to Open)
+    const dropdowns = document.querySelectorAll('.nav-item.dropdown');
     dropdowns.forEach(group => {
         const toggle = group.querySelector('.dropdown-toggle');
         const content = group.querySelector('.dropdown-content');
-
         if (toggle && content) {
             toggle.addEventListener('click', (e) => {
                 if (window.innerWidth <= 1024) {
-                    e.preventDefault(); // Prevent link navigation on first tap
-                    e.stopPropagation();
-                    
-                    // Close other open dropdowns
-                    dropdowns.forEach(other => {
-                        if (other !== group) {
-                            const otherContent = other.querySelector('.dropdown-content');
-                            if(otherContent) {
-                                otherContent.style.display = 'none';
-                                otherContent.style.opacity = '0';
-                            }
-                        }
-                    });
-
-                    // Toggle current
+                    e.preventDefault();
                     const isVisible = content.style.display === 'block';
+                    // Close others
+                    document.querySelectorAll('.dropdown-content').forEach(d => d.style.display = 'none');
+                    // Toggle current
                     content.style.display = isVisible ? 'none' : 'block';
-                    content.style.opacity = isVisible ? '0' : '1';
-                    content.style.visibility = isVisible ? 'hidden' : 'visible';
-                    content.style.transform = isVisible ? 'translateY(10px)' : 'translateY(0)';
                 }
             });
         }
     });
 }
 
-/* ==========================================================================
-   2. SEARCH SYSTEM (Preserved & Refined)
-   ========================================================================== */
-// Utility: Handle relative paths for GitHub Pages / Subfolders
-function getRelativePath(targetPath) {
-    const currentPath = window.location.pathname;
-    const segments = currentPath.split('/').filter(p => p.length > 0);
-    const depth = segments.length > 1 && currentPath.endsWith('/') ? segments.length - 1 : segments.length;
-    let prefix = (depth >= 2) ? '../'.repeat(depth - 1) : '';
-    const cleanTargetPath = targetPath.startsWith('/') ? targetPath.substring(1) : targetPath;
-    return prefix + cleanTargetPath;
-}
-
-const searchData = [
-    // Courses
-    { type: 'course', title: 'Essential Data Science Intern Course', instructor: 'Lucky Kumar', image: '/images/Essential Data Science Intern Course.png', url: "https://courses.internadda.com/" },
-    { type: 'course', title: 'Generative AI & Prompt Engineering', instructor: 'Lucky Kumar', image: '/images/Generative-AI-Prompt-Engineering-Masterclass.png', url: "https://courses.internadda.com/" },
-    { type: 'course', title: 'Python Essentials for All', instructor: 'Lucky Kumar', image: '/images/Python-Essentials-for-All.png', url: "https://courses.internadda.com/" },
-    { type: 'course', title: 'Ethical Hacking Mastery', instructor: 'Lucky Kumar', image: '/images/Ethical-Hacking-Mastery.png', url: "https://courses.internadda.com/" },
+// Testimonial Infinite Scroll Logic
+function initTestimonialCarousel() {
+    const container = document.getElementById('testimonialsGrid');
+    if (!container) return;
     
-    // Internships
-    { type: 'internship', title: 'Data Science & Analytics', roles: 'Data Analyst, Scientist', url: '/intern/internship.html', image: '/images/test_data Science.png', practiceUrl: '/intern/data_science_practice_test.html', finalExamUrl: '/intern/payment_page_data_science.html' },
-    { type: 'internship', title: 'Artificial Intelligence & ML', roles: 'AI Engineer, ML Intern', url: '/intern/internship.html', image: '/images/test_Artificial Intelligence.png', practiceUrl: '/intern/ai_ml_practice_test.html', finalExamUrl: '/intern/payment_page_ai_ml.html' },
-    { type: 'internship', title: 'Python Development', roles: 'Backend Developer', url: '/intern/internship.html', image: '/images/test_Python Development.png', practiceUrl: '/intern/python_dev_practice_test.html', finalExamUrl: '/intern/payment_page_python.html' },
-    { type: 'internship', title: 'Web & Mobile Development', roles: 'Frontend, React Native', url: '/intern/internship.html', image: '/images/test_Web & Mobile Development.png', practiceUrl: '#', finalExamUrl: '#' }
-];
-
-function initSearchSystem() {
-    const input = document.getElementById('searchInput');
-    const container = document.getElementById('searchResults');
-
-    if (!input || !container) return;
-
-    input.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase().trim();
-        container.innerHTML = '';
-        container.classList.add('hidden');
-
-        // Quick Navigation Shortcuts
-        if (query === 'courses') { window.location.href = getRelativePath('/courses/course.html'); return; }
-        if (query === 'internships') { window.location.href = getRelativePath('/intern/internship.html'); return; }
-
-        if (query.length < 2) return;
-
-        const results = searchData.filter(item => 
-            item.title.toLowerCase().includes(query) || 
-            (item.roles && item.roles.toLowerCase().includes(query))
-        ).slice(0, 6);
-
-        if (results.length === 0) {
-            container.innerHTML = `<div style="padding:12px; color:var(--text-muted); font-size:0.9rem;">No results found for "${query}"</div>`;
-        } else {
-            results.forEach(item => {
-                const imgPath = getRelativePath(item.image);
-                // Check if item is internship to determine links
-                let html = '';
-                if (item.type === 'course') {
-                    html = `
-                    <a href="${item.url}" class="search-result-item">
-                        <img src="${imgPath}" onerror="this.src='${getRelativePath('/images/logo.jpg')}'">
-                        <div>
-                            <h4>${item.title}</h4>
-                            <p>Course • ${item.instructor}</p>
-                        </div>
-                    </a>`;
-                } else {
-                    const pUrl = item.practiceUrl === '#' ? '#' : getRelativePath(item.practiceUrl);
-                    const fUrl = item.finalExamUrl === '#' ? '#' : getRelativePath(item.finalExamUrl);
-                    html = `
-                    <div class="search-result-item" style="display:block;">
-                        <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
-                            <img src="${imgPath}" onerror="this.src='${getRelativePath('/images/logo.jpg')}'">
-                            <div>
-                                <h4>${item.title}</h4>
-                                <p>Internship • ${item.roles}</p>
-                            </div>
-                        </div>
-                        <div style="display:flex; gap:8px; padding-left:60px;">
-                             <a href="${pUrl}" class="btn btn-transparent" style="padding:4px 12px; font-size:0.75rem;">Practice</a>
-                             <a href="${fUrl}" class="btn btn-primary" style="padding:4px 12px; font-size:0.75rem;">Exam</a>
-                        </div>
-                    </div>`;
-                }
-                container.innerHTML += html;
-            });
-        }
-        container.classList.remove('hidden');
-    });
-
-    // Close on click outside
-    document.addEventListener('click', (e) => {
-        if (!input.contains(e.target) && !container.contains(e.target)) {
-            container.classList.add('hidden');
-        }
-    });
-}
-
-/* ==========================================================================
-   3. HERO SLIDER (Auto-Fade)
-   ========================================================================== */
-function initHeroSlider() {
-    const wrapper = document.querySelector('.slider-wrapper');
-    const slides = document.querySelectorAll('.slide');
-    if (!wrapper || slides.length === 0) return;
-
-    let currentIndex = 0;
-    const totalSlides = slides.length;
-
-    function slide() {
-        currentIndex = (currentIndex + 1) % totalSlides;
-        // Use CSS transform for hardware accelerated animation
-        wrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
-    }
-
-    setInterval(slide, 5000);
-}
-
-/* ==========================================================================
-   4. INFINITE SCROLLING (Testimonials & Partners)
-   ========================================================================== */
-function initInfiniteMarquees() {
-    // 1. Initialize Testimonial Carousel
-    const tContainer = document.getElementById('testimonialsGrid');
-    if (tContainer) setupInfiniteScroll(tContainer, 1.0); // Speed 1.0
-
-    // 2. Initialize Internship Page Testimonials (if present)
-    const iContainer = document.getElementById('internshipTestimonialsGrid');
-    if (iContainer) setupInfiniteScroll(iContainer, 1.0);
-}
-
-function setupInfiniteScroll(container, speed) {
-    // Clone content to ensure seamless loop
-    const originalContent = Array.from(container.children);
-    
-    // If not enough content to scroll, don't animate
-    if(originalContent.length < 2) return;
-
-    // Append clones
-    originalContent.forEach(item => {
+    // Clone items for seamless loop
+    const items = Array.from(container.children);
+    items.forEach(item => {
         const clone = item.cloneNode(true);
-        clone.classList.add('cloned');
         container.appendChild(clone);
     });
-
+    
+    // Auto Scroll
     let scrollPos = 0;
-    let isPaused = false;
-
-    // Pause on hover
-    container.addEventListener('mouseenter', () => isPaused = true);
-    container.addEventListener('mouseleave', () => isPaused = false);
-    container.addEventListener('touchstart', () => isPaused = true);
-    container.addEventListener('touchend', () => isPaused = false);
-
+    let speed = 1;
+    let isHovered = false;
+    
+    container.addEventListener('mouseenter', () => isHovered = true);
+    container.addEventListener('mouseleave', () => isHovered = false);
+    
     function animate() {
-        if (!isPaused) {
+        if (!isHovered) {
             scrollPos += speed;
-            // Reset logic: if we've scrolled past half the width (the original set)
+            // Reset when half is scrolled (seamless point)
             if (scrollPos >= container.scrollWidth / 2) {
                 scrollPos = 0;
             }
@@ -257,36 +322,71 @@ function setupInfiniteScroll(container, speed) {
         }
         requestAnimationFrame(animate);
     }
-    requestAnimationFrame(animate);
+    animate();
 }
 
+
 /* ==========================================================================
-   5. SCROLL REVEAL ANIMATIONS
+   7. SEARCH SYSTEM (Functional)
    ========================================================================== */
-function initScrollAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px"
-    };
+function initSearchSystem() {
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = "1";
-                entry.target.style.transform = "translateY(0)";
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
+    if (!searchInput || !searchResults) return;
 
-    // Select elements to animate: Sections, Cards, Hero content
-    const animatedElements = document.querySelectorAll('.value-card, .course-card, .testimonial-card, .section-header, .hero-content');
+    const searchData = [
+        { title: 'Data Science Intern Course', type: 'Course', url: 'https://courses.internadda.com/' },
+        { title: 'Python Essentials', type: 'Course', url: 'https://courses.internadda.com/' },
+        { title: 'Generative AI Masterclass', type: 'Course', url: 'https://courses.internadda.com/' },
+        { title: 'Data Science Internship', type: 'Internship', url: 'intern/internship.html' },
+        { title: 'AI & ML Internship', type: 'Internship', url: 'intern/internship.html' },
+        { title: 'Web Development Internship', type: 'Internship', url: 'intern/internship.html' },
+        { title: 'Cybersecurity Internship', type: 'Internship', url: 'intern/internship.html' }
+    ];
 
-    animatedElements.forEach(el => {
-        // Set initial state via JS so CSS doesn't hide them if JS fails
-        el.style.opacity = "0";
-        el.style.transform = "translateY(20px)";
-        el.style.transition = "opacity 0.6s ease-out, transform 0.6s ease-out";
-        observer.observe(el);
+    searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        searchResults.innerHTML = '';
+        
+        if (query.length < 2) {
+            searchResults.classList.add('hidden');
+            return;
+        }
+
+        const results = searchData.filter(item => item.title.toLowerCase().includes(query));
+        
+        if (results.length > 0) {
+            searchResults.classList.remove('hidden');
+            // GSAP Animate Results In
+            gsap.fromTo(searchResults, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.2 });
+            
+            results.forEach(item => {
+                const div = document.createElement('a');
+                div.href = item.url;
+                div.className = 'search-result-item';
+                div.innerHTML = `
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <div style="width:32px; height:32px; background:#f1f5f9; border-radius:6px; display:flex; align-items:center; justify-content:center;">
+                            <i class="fas ${item.type === 'Course' ? 'fa-book-open' : 'fa-briefcase'}" style="color:var(--secondary); font-size:14px;"></i>
+                        </div>
+                        <div>
+                            <h4 style="margin:0; font-size:0.95rem; color:var(--primary);">${item.title}</h4>
+                            <p style="margin:0; font-size:0.75rem; color:var(--text-muted);">${item.type}</p>
+                        </div>
+                    </div>
+                `;
+                searchResults.appendChild(div);
+            });
+        } else {
+            searchResults.classList.add('hidden');
+        }
+    });
+
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+            searchResults.classList.add('hidden');
+        }
     });
 }
