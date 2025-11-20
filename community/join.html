@@ -3,215 +3,265 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join the Community | Internadda - Connect & Collaborate</title>
-    <meta name="description" content="Join the Internadda community! Connect with peers, ask questions, find study groups, and collaborate on projects to accelerate your career growth.">
+    <title>Join Community | Internadda</title>
+    <meta name="description" content="Join the Internadda community to connect with learners, mentors, and industry experts.">
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Main Stylesheet (Points to root style.css) -->
     <link rel="stylesheet" href="../style.css">
-
-    <link rel="icon" type="image/png" href="../images/favicon.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico">
     
+    <!-- Favicon -->
+    <link rel="icon" href="../images/favicon.ico">
+
     <style>
-        .page-header {
-            background-color: #fce6ff; /* Vibrant pink/purple background for community */
+        /* Page Specific Styles */
+        .community-hero {
+            background: linear-gradient(135deg, #f8faff 0%, #ffffff 100%);
+            padding: 80px 0;
+            text-align: center;
+            border-bottom: 1px solid #f1f5f9;
         }
-        .community-grid {
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #1a202c;
+            margin-bottom: 20px;
+        }
+        
+        .page-title span { color: #4338ca; }
+
+        .page-subtitle {
+            color: #64748b;
+            font-size: 1.15rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        .benefits-section {
+            padding: 80px 0;
+        }
+
+        .benefits-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            gap: 40px;
         }
-        .community-card {
-            background-color: var(--white);
-            padding: 30px;
+
+        .benefit-card {
+            background: white;
+            border: 1px solid #e2e8f0;
             border-radius: 16px;
+            padding: 30px;
             text-align: center;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            border-top: 6px solid var(--secondary);
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: transform 0.3s;
         }
-        .community-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(159, 122, 234, 0.4);
-            border-top-color: var(--primary);
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+            border-color: #cbd5e0;
         }
-        .community-icon {
-            font-size: 3.5rem;
-            color: var(--secondary);
-            margin-bottom: 20px;
-            display: inline-block;
-            transition: transform 0.3s ease;
+
+        .benefit-icon {
+            width: 60px;
+            height: 60px;
+            background: #e0e7ff;
+            color: #4338ca;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 20px;
         }
-        .community-card:hover .community-icon {
-            transform: rotateY(360deg);
-            color: var(--primary);
-        }
-        .community-card h3 {
-            font-size: 1.6rem;
-            color: var(--dark);
+
+        .benefit-title {
+            font-size: 1.25rem;
+            font-weight: 700;
             margin-bottom: 10px;
+            color: #1a202c;
         }
-        .community-card p {
-            color: var(--gray);
-            margin-bottom: 25px;
+
+        .benefit-text {
+            color: #64748b;
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
-        .community-card .btn {
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
+
+        .cta-section {
+            background: #0f172a;
+            padding: 80px 0;
+            text-align: center;
+            color: white;
         }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .cta-text {
+            color: #cbd5e0;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            font-size: 1.1rem;
+        }
+
+        .community-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            margin: 10px;
+        }
+
+        .btn-discord {
+            background: #5865F2;
+            color: white;
+        }
+        .btn-discord:hover { background: #4752c4; transform: translateY(-2px); }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+        }
+        .btn-whatsapp:hover { background: #1da851; transform: translateY(-2px); }
         
-        .cta-section .btn-light {
-             background-color: var(--white);
-             color: var(--secondary);
-             border-color: var(--secondary);
+        .btn-telegram {
+            background: #0088cc;
+            color: white;
         }
-        .cta-section .btn-light:hover {
-             background-color: var(--secondary);
-             color: var(--white);
-        }
-        
+        .btn-telegram:hover { background: #0077b5; transform: translateY(-2px); }
+
         @media (max-width: 768px) {
-            .community-grid {
-                gap: 20px;
-            }
+            .page-title { font-size: 2.2rem; }
+            .cta-buttons { display: flex; flex-direction: column; gap: 15px; padding: 0 20px; }
+            .community-btn { width: 100%; justify-content: center; margin: 0; }
         }
     </style>
 </head>
 <body>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-3ZZ3HGFM3Q');
-    </script>
 
+    <!-- =========================================
+       HEADER / NAVIGATION
+       ========================================= -->
     <header>
-        <div class="container header-container">
+        <div class="container nav-container">
+            <!-- Logo -->
             <a href="../index.html" class="logo">
-                <img src="../images/logo.jpg" alt="InternAdda Logo" class="logo-img">
-                <span class="logo-text">InternAdda</span>
+                <img src="../images/logo.jpg" alt="Internadda Logo" style="height: 40px; border-radius: 8px;">
+                <span>Intern<span style="color: #4338ca;">adda</span></span>
             </a>
 
-            <nav class="nav-menu">
-                <a href="/index.html" class="nav-link">Home</a>
-                <a href="https://courses.internadda.com/" class="nav-link">Courses</a>
-                <a href="/intern/internship.html" class="nav-link">Internships</a>
-                <a href="/jobs.html" class="nav-link">Jobs</a>
-                <a href="/about.html" class="nav-link">About</a>
+            <!-- Navigation Links -->
+            <nav class="nav-links">
+                <!-- Home Link -->
+                <a href="../index.html" class="nav-item">
+                    <i class="fas fa-home"></i> Home
+                </a>
+
+                <!-- Main Items with Icons -->
+                <a href="https://courses.internadda.com/" class="nav-item">
+                    <i class="fas fa-laptop-code"></i> Courses
+                </a>
+                <a href="../intern/internship.html" class="nav-item">
+                    <i class="fas fa-briefcase"></i> Internships
+                </a>
+                <a href="../about.html" class="nav-item">
+                    <i class="fas fa-info-circle"></i> About Us
+                </a>
                 
-                <div class="nav-item dropdown" id="toolsDropdown">
-                    <a href="#" class="nav-link dropdown-toggle">Tools <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                <!-- DROPDOWN MENU -->
+                <div class="dropdown nav-item">
+                    <span>
+                        <i class="fas fa-th-large" style="margin-right: 8px; color: #4338ca; background: #e0e7ff; width: 32px; height: 32px; line-height: 32px; text-align: center; border-radius: 50%; font-size: 1rem; display: none;"></i> 
+                        More <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 4px;"></i>
+                    </span>
                     <div class="dropdown-content">
                         <a href="https://check-ats.internadda.com/" class="dropdown-link"><i class="fas fa-chart-bar"></i> ATS Score</a>
                         <a href="https://cv-builder.internadda.com/" class="dropdown-link"><i class="fas fa-file-alt"></i> Resume Builder</a>
                         <a href="https://interview-preparation.internadda.com/" class="dropdown-link"><i class="fas fa-question-circle"></i> Interview Question</a>
                         <a href="https://letter-builder.internadda.com/" class="dropdown-link"><i class="fas fa-envelope"></i> Cover Letter Generator</a>
-                        <a href="https://ai-paraphraser.internadda.com" class="dropdown-link"><i class="fas fa-pen-nib"></i> Essay / Paraphraser Tool</a>
-                    </div>
-                </div>
-                
-                <div class="nav-item dropdown" id="moreDropdown">
-                    <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
-                    <div class="dropdown-content">
-                        <a href="/contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
-                        <a href="https://blog-internadda.blogspot.com/" class="dropdown-link"><i class="fas fa-newspaper"></i> Blog</a>
-                        <a href="/community/join.html" class="dropdown-link"><i class="fas fa-users"></i> Community</a>
-                        <a href="/community/partners.html" class="dropdown-link"><i class="fas fa-handshake"></i> Partners</a>
-                        <a href="/community/academy.html" class="dropdown-link"><i class="fas fa-university"></i> Offline Academy</a>
+                        <a href="../contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
+                        <a href="https://blog.internadda.com/" class="dropdown-link"><i class="fas fa-blog"></i> Blog</a>
                     </div>
                 </div>
             </nav>
 
-            <div class="header-actions">
-                <div class="search-container">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="searchInput" class="search-input" placeholder="Search courses & domains...">
-                </div>
-                </div> 
-
-            <button class="hamburger-menu" id="hamburgerMenu">
-                <span></span>
-                <span></span>
-                <span></span>
+            <!-- Mobile Menu Button (Hamburger) -->
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
             </button>
         </div>
-        <div id="searchResults" class="search-results-container container hidden"></div>
     </header>
 
     <main>
-        <section class="page-header">
+        <!-- HERO -->
+        <section class="community-hero">
             <div class="container">
-                <h1 class="section-title">Join the Internadda Community</h1>
-                <p class="section-subtitle">Connect, collaborate, and grow your career network with thousands of ambitious students.</p>
+                <h1 class="page-title">Join India's Fastest Growing <br><span>Student Community</span></h1>
+                <p class="page-subtitle">Connect with like-minded peers, get mentorship from industry experts, and stay updated with the latest internship opportunities.</p>
             </div>
         </section>
 
-        <section class="content-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">Essential Channels for Growth</h2>
-                    <p class="section-subtitle">Jump into our vibrant student channels for discussions, Q&A, and exclusive content.</p>
+        <!-- BENEFITS -->
+        <section class="benefits-section container">
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-network-wired"></i></div>
+                    <h3 class="benefit-title">Networking</h3>
+                    <p class="benefit-text">Connect with thousands of students from top colleges across India. Build your professional network early.</p>
                 </div>
-
-                <div class="community-grid">
-                    
-                    <div class="community-card">
-                        <i class="fab fa-whatsapp community-icon" style="color: #25D366;"></i>
-                        <h3>WhatsApp Channel (Official)</h3>
-                        <p>Get instant updates on new internship openings, course launches, and urgent career news directly from our team.</p>
-                        <a href="YOUR_WHATSAPP_CHANNEL_LINK" target="_blank" class="btn btn-primary" style="background-color: #25D366; border-color: #25D366;">
-                            <i class="fab fa-whatsapp"></i> Join Channel Now
-                        </a>
-                    </div>
-
-                    <div class="community-card">
-                        <i class="fab fa-linkedin-in community-icon" style="color: #0077B5;"></i>
-                        <h3>LinkedIn Group (Professional)</h3>
-                        <p>Network with alumni, connect professionally with recruiting partners, and showcase your achievements in a professional setting.</p>
-                        <a href="https://www.linkedin.com/company/internadda-india" target="_blank" class="btn btn-primary" style="background-color: #0077B5; border-color: #0077B5;">
-                            <i class="fab fa-linkedin-in"></i> Join LinkedIn Group
-                        </a>
-                    </div>
-                    
-                    <div class="community-card">
-                        <i class="fas fa-users-cog community-icon" style="color: var(--secondary);"></i>
-                        <h3>Private Mentorship Group</h3>
-                        <p>Join a closed community for personalized guidance, project troubleshooting, and one-on-one sessions with domain experts.</p>
-                        <a href="YOUR_MENTORSHIP_GROUP_LINK" target="_blank" class="btn btn-primary">
-                            <i class="fas fa-lock"></i> Request Access
-                        </a>
-                    </div>
-
-                    <div class="community-card">
-                        <i class="fab fa-instagram community-icon" style="color: #E1306C;"></i>
-                        <h3>Instagram Feed (Success Stories)</h3>
-                        <p>Follow us for daily motivational content, behind-the-scenes looks, and feature highlights of our latest student success stories.</p>
-                        <a href="https://www.instagram.com/internadda.india" target="_blank" class="btn btn-primary" style="background-color: #E1306C; border-color: #E1306C;">
-                            <i class="fab fa-instagram"></i> Follow on Instagram
-                        </a>
-                    </div>
-                    
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <h3 class="benefit-title">Mentorship</h3>
+                    <p class="benefit-text">Get guidance from industry professionals who have walked the path you aspire to take.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-briefcase"></i></div>
+                    <h3 class="benefit-title">Exclusive Opportunities</h3>
+                    <p class="benefit-text">Get early access to internship listings, hackathons, and exclusive webinars.</p>
                 </div>
             </div>
         </section>
 
-        <section class="cta-section" style="background-color: #f0f4f8;">
+        <!-- CTA SECTION -->
+        <section class="cta-section">
             <div class="container">
-                <h2 class="cta-title" style="color: var(--primary);">Why Community Matters?</h2>
-                <p class="cta-description" style="color: var(--dark);">Learning is amplified when shared. Our community provides the support system you need to overcome technical hurdles and stay motivated.</p>
+                <h2 class="cta-title">Ready to Level Up?</h2>
+                <p class="cta-text">Choose your preferred platform to join the conversation. We are active everywhere!</p>
+                
                 <div class="cta-buttons">
-                    <a href="https://courses.internadda.com/" class="btn btn-transparent btn-lg" style="border-color: var(--primary); color: var(--primary);">Explore Free Courses</a>
-                    <a href="/intern/internship.html" class="btn btn-secondary btn-lg">Find Internship Opportunities</a>
+                    <a href="#" class="community-btn btn-whatsapp">
+                        <i class="fab fa-whatsapp"></i> Join WhatsApp Group
+                    </a>
+                    <a href="#" class="community-btn btn-telegram">
+                        <i class="fab fa-telegram-plane"></i> Join Telegram Channel
+                    </a>
+                    <a href="#" class="community-btn btn-discord">
+                        <i class="fab fa-discord"></i> Join Discord Server
+                    </a>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- =========================================
+       FOOTER
+       ========================================= -->
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -244,7 +294,7 @@
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Intern</h3>
                     <ul class="footer-links">
-                        <li><a href="/intern/internship.html">Find Internships</a></li>
+                        <li><a href="../intern/internship.html">Find Internships</a></li>
                         <li><a href="#">For Companies</a></li>
                         <li><a href="#">Success Stories</a></li>
                         <li><a href="#">Career Coaching</a></li>
@@ -258,27 +308,26 @@
                         <li><a href="https://cv-builder.internadda.com/">Resume Builder</a></li>
                         <li><a href="https://interview-preparation.internadda.com">Interview Prep</a></li>
                         <li><a href="https://letter-builder.internadda.com/">Cover Letter Gen</a></li>
-                        <li><a href="https://ai-paraphraser.internadda.com">Essay Paraphraser</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">InternAdda</h3>
                     <ul class="footer-links">
-                        <li><a href="/about.html">About Us</a></li>
-                        <li><a href="/contact.html">Contact Us</a></li>
-                        <li><a href="/terms.html">Terms & Conditions</a></li>
-                        <li><a href="/refund.html">Refund Policy</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact Us</a></li>
+                        <li><a href="../terms.html">Terms & Conditions</a></li>
+                        <li><a href="../refund.html">Refund Policy</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Community</h3>
                     <ul class="footer-links">
-                        <li><a href="/community/join.html">Join Community</a></li>
-                        <li><a href="/community/partners.html">Partners</a></li>
-                        <li><a href="https://blog-internadda.blogspot.com/">Blog</a></li>
-                        <li><a href="/community/academy.html">Offline Academy</a></li>
+                        <li><a href="join.html">Join Community</a></li>
+                        <li><a href="partners.html">Partners</a></li>
+                        <li><a href="https://blog.internadda.com/">Blog</a></li>
+                        <li><a href="academy.html">Offline Academy</a></li>
                     </ul>
                 </div>
             </div>
@@ -289,6 +338,7 @@
         </div>
     </footer>
 
+    <!-- JavaScript -->
     <script src="../script.js"></script>
 </body>
 </html>
