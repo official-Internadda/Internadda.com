@@ -83,6 +83,13 @@ header {
     color: #4a5568;
     position: relative;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Gap for desktop icons if visible */
+}
+
+.nav-item i {
+    display: none; /* Hide icons on desktop by default for clean look, show on mobile */
 }
 
 .nav-item:hover { color: var(--primary); }
@@ -346,9 +353,10 @@ header {
 .light-fade::before { left: 0; background: linear-gradient(to right, #fff 10%, transparent 100%); }
 .light-fade::after { right: 0; background: linear-gradient(to left, #fff 10%, transparent 100%); }
 
-.dark-fade { background: var(--dark-bg); }
-.dark-fade::before { left: 0; background: linear-gradient(to right, var(--dark-bg) 10%, transparent 100%); }
-.dark-fade::after { right: 0; background: linear-gradient(to left, var(--dark-bg) 10%, transparent 100%); }
+/* Dark Fade matched to new gradient background */
+.dark-fade { background: transparent; }
+.dark-fade::before { left: 0; background: linear-gradient(to right, #0b0f19 10%, transparent 100%); }
+.dark-fade::after { right: 0; background: linear-gradient(to left, #1e1b4b 10%, transparent 100%); }
 
 .marquee-track {
     display: flex;
@@ -383,20 +391,23 @@ header {
 }
 
 /* =========================================
-   5. DARK TESTIMONIALS
+   5. PREMIUM TESTIMONIALS (Matched Color)
    ========================================= */
 .testimonials-dark {
-    background-color: var(--dark-bg);
+    /* Deep Indigo/Slate Gradient to match brand #4338ca */
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
     padding: 100px 0;
     color: white;
+    position: relative;
 }
 
 .testimonials-dark .section-title { font-size: 2.5rem; font-weight: 700; color: white; margin-bottom: 10px; }
 .testimonials-dark .section-subtitle { color: #94a3b8; font-size: 1.1rem; margin-bottom: 60px; }
 
 .testimonial-card-dark {
-    background-color: var(--dark-card);
-    border: 1px solid #334155;
+    background: rgba(255, 255, 255, 0.05); /* Glassmorphism effect */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
     padding: 30px;
     min-width: 380px;
@@ -406,14 +417,15 @@ header {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     white-space: normal;
 }
 
 .testimonial-card-dark:hover {
     transform: translateY(-5px);
-    border-color: #4c51bf;
+    border-color: var(--secondary);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .quote-text { font-style: italic; line-height: 1.6; color: #cbd5e0; flex-grow: 1; }
@@ -424,7 +436,7 @@ header {
     gap: 15px;
     margin-top: auto;
     padding-top: 15px;
-    border-top: 1px solid #334155;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .user-info img {
@@ -432,18 +444,18 @@ header {
     height: 48px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #4c51bf;
+    border: 2px solid var(--secondary);
 }
 
 .user-details h4 { margin: 0; font-size: 1rem; color: white; }
-.user-details span { font-size: 0.85rem; color: #64748b; }
+.user-details span { font-size: 0.85rem; color: #94a3b8; }
 
 
 /* =========================================
-   6. FOOTER STYLES (NEW PREMIUM LOOK)
+   6. FOOTER STYLES
    ========================================= */
 footer {
-    background-color: #0f172a; /* Dark Slate */
+    background-color: #0f172a;
     color: #cbd5e0;
     padding: 80px 0 20px;
     font-size: 0.95rem;
@@ -451,14 +463,12 @@ footer {
 
 .footer-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr; /* Brand gets double width */
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
     gap: 40px;
     margin-bottom: 60px;
 }
 
-.footer-brand {
-    padding-right: 20px;
-}
+.footer-brand { padding-right: 20px; }
 
 .footer-logo {
     font-size: 1.8rem;
@@ -475,10 +485,7 @@ footer {
     max-width: 300px;
 }
 
-.social-links {
-    display: flex;
-    gap: 15px;
-}
+.social-links { display: flex; gap: 15px; }
 
 .social-link {
     width: 40px;
@@ -498,10 +505,7 @@ footer {
     transform: translateY(-3px);
 }
 
-.footer-links-column {
-    display: flex;
-    flex-direction: column;
-}
+.footer-links-column { display: flex; flex-direction: column; }
 
 .footer-links-title {
     color: white;
@@ -511,9 +515,7 @@ footer {
     letter-spacing: 0.5px;
 }
 
-.footer-links li {
-    margin-bottom: 12px;
-}
+.footer-links li { margin-bottom: 12px; }
 
 .footer-links a {
     color: #94a3b8;
@@ -522,7 +524,7 @@ footer {
 
 .footer-links a:hover {
     color: var(--secondary);
-    padding-left: 5px; /* Subtle slide effect */
+    padding-left: 5px;
 }
 
 .footer-bottom {
@@ -535,16 +537,12 @@ footer {
 
 
 /* =========================================
-   7. RESPONSIVE / MOBILE MENU
+   7. RESPONSIVE / MOBILE OPTIMIZATION
    ========================================= */
 @media (max-width: 1024px) {
     .hero-heading { font-size: 3rem; }
     .hero-image-wrapper { max-width: 400px; }
-    
-    /* Adjust Footer Grid for Tablets */
-    .footer-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
+    .footer-grid { grid-template-columns: repeat(3, 1fr); }
     .footer-brand { grid-column: span 3; text-align: center; padding: 0;}
     .footer-description { margin: 0 auto 25px; }
     .social-links { justify-content: center; }
@@ -563,15 +561,29 @@ footer {
     .marquee-track { gap: 30px; }
     .testimonial-card-dark { min-width: 300px; }
 
-    /* MOBILE FOOTER */
+    /* ---------------------------------------------------
+       MOBILE FOOTER (2 COLUMNS - LEFT/RIGHT)
+       --------------------------------------------------- */
     .footer-grid {
-        grid-template-columns: 1fr; /* Stack everything */
-        gap: 30px;
-        text-align: center;
+        grid-template-columns: 1fr 1fr; /* 2 Columns */
+        gap: 40px 20px; /* Row Gap 40px, Col Gap 20px */
+        text-align: left; /* Standard Align */
     }
-    .footer-brand { grid-column: span 1; }
     
-    /* PREMIUM MOBILE NAVIGATION */
+    .footer-brand {
+        grid-column: span 2; /* Brand takes full width at top */
+        text-align: center;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        padding-bottom: 30px;
+        margin-bottom: 10px;
+    }
+    
+    /* Ensure branding is centered, but links are left-aligned grid */
+    .footer-brand .footer-description { margin: 0 auto 20px; }
+
+    /* ---------------------------------------------------
+       PREMIUM MOBILE NAVIGATION (COLORFUL & CENTERED)
+       --------------------------------------------------- */
     .mobile-menu-btn { display: block; z-index: 1002; }
 
     .nav-links {
@@ -580,40 +592,53 @@ footer {
         left: 0;
         width: 100%;
         height: calc(100vh - 80px);
-        /* Colorful / Premium Background */
-        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        /* Colorful Gradient Background */
+        background: linear-gradient(180deg, #ffffff 0%, #f0f4ff 100%);
         flex-direction: column;
-        align-items: center; /* Center items */
-        padding: 40px 20px;
+        align-items: center;
+        padding: 30px 20px;
         transform: translateX(100%);
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: -10px 0 30px rgba(0,0,0,0.05);
         gap: 0;
         overflow-y: auto;
     }
 
-    .nav-links.active {
-        transform: translateX(0);
+    .nav-links.active { transform: translateX(0); }
+
+    /* Icons visible on mobile */
+    .nav-item i {
+        display: inline-block;
+        margin-right: 8px;
+        color: var(--primary);
+        font-size: 1.1rem;
+        background: #e0e7ff;
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        text-align: center;
+        border-radius: 50%;
     }
 
-    /* Items in Mobile Menu */
+    /* List Items styling */
     .nav-links > a, 
     .nav-links > div.dropdown {
-        width: 100%;
+        width: 80%; /* Not full edge-to-edge, looks cleaner */
         text-align: center;
-        padding: 20px 0;
-        border-bottom: 1px solid #e2e8f0; /* Separator Line */
-        font-size: 1.2rem;
+        padding: 15px 0;
+        /* Short Separator Line */
+        border-bottom: 1px solid rgba(0,0,0,0.06);
+        font-size: 1.1rem;
         font-weight: 600;
         color: #334155;
+        display: flex;
+        align-items: center;
+        justify-content: center; /* Centered */
     }
 
-    /* Remove border from last item if needed */
-    .nav-links > div.dropdown:last-child {
-        border-bottom: none;
-    }
+    /* Remove border from last item */
+    .nav-links > div.dropdown:last-child { border-bottom: none; }
 
-    /* Mobile Dropdown Styling */
+    /* Dropdown Content Mobile */
     .dropdown-content {
         position: static;
         display: none;
@@ -621,22 +646,23 @@ footer {
         border: none;
         padding: 10px 0;
         width: 100%;
-        background: transparent;
+        background: rgba(255,255,255,0.5); /* Slight distinct bg */
         margin-top: 10px;
-        text-align: center;
+        border-radius: 12px;
     }
     
     .dropdown-content::before { display: none; }
 
     .dropdown-content a {
-        justify-content: center; /* Center Dropdown items too */
+        justify-content: center;
         padding: 12px 0;
-        font-size: 1rem;
+        font-size: 0.95rem;
         color: #64748b;
     }
     
-    /* Make "More" indicator clearer */
+    /* Make "More" label centered flex */
     .dropdown > span {
+        width: 100%;
         justify-content: center;
     }
 }
