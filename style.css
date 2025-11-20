@@ -40,7 +40,6 @@ body {
 /* Helper classes */
 .hidden {
     display: none !important;
-    /* 🔥 CRITICAL FIX: Prevents hidden elements (like search results overlay) from blocking clicks below them */
     pointer-events: none !important; 
 }
 
@@ -476,7 +475,6 @@ header.scrolled {
 .testimonials-grid {
     display: flex;
     overflow-x: hidden;
-    /* REMOVED: scroll-snap-type: x mandatory; for smooth scroll */
     padding-bottom: 20px;
     gap: 36px;
     width: 100%;
@@ -489,20 +487,16 @@ header.scrolled {
 
 .testimonial-card {
     flex-shrink: 0;
-    /* CHANGED: Fixed width for consistent marquee look */
     min-width: 250px; 
     height: 150px; 
     background: var(--white);
     border-radius: 18px;
-    padding: 30px; /* Reduced padding */
+    padding: 30px; 
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    /* REMOVED: scroll-snap-align: start; */
-    border-left: none; /* Removed left bar */
-    border-bottom: 3px solid var(--secondary); /* Added bottom bar for flair */
+    border-left: none;
+    border-bottom: 3px solid var(--secondary); 
     transform-style: preserve-3d;
-    
-    /* NEW: Center content for logo-like feel */
     display: flex; 
     align-items: center;
     justify-content: center;
@@ -512,29 +506,28 @@ header.scrolled {
     transform: perspective(1000px) translateY(-15px) rotateX(3deg);
     box-shadow: 0 20px 40px rgba(43, 108, 176, 0.2);
     border-left-color: var(--primary);
-    border-bottom-color: var(--primary); /* Hover effect on new border */
+    border-bottom-color: var(--primary);
 }
 
-/* NEW: Hide testimonial text to focus on image/name (user request) */
 .testimonial-content p.testimonial-text {
     display: none; 
 }
 .testimonial-text::before {
-    display: none; /* Hide large quote mark */
+    display: none;
 }
 
 .testimonial-author {
     display: flex;
-    flex-direction: column; /* Stack vertically for logo style */
+    flex-direction: column; 
     align-items: center;
-    gap: 8px; /* Reduced gap */
+    gap: 8px; 
     margin-top: 0;
     z-index: 2;
     position: relative;
     width: 100%;
 }
 .author-avatar {
-    width: 80px; /* Increased size for focus */
+    width: 80px; 
     height: 80px;
     border-radius: 50%;
     object-fit: cover;
@@ -544,12 +537,12 @@ header.scrolled {
 }
 .author-name {
     font-weight: 700;
-    font-size: 1rem; /* Smaller name */
+    font-size: 1rem; 
     color: var(--primary);
 }
 .author-role {
     color: var(--gray);
-    font-size: 0.8rem; /* Smaller role */
+    font-size: 0.8rem; 
 }
 
 
@@ -631,7 +624,7 @@ header.scrolled {
 .partner-logo-section {
     padding: 40px 0;
     background-color: #f7fafc;
-    overflow: hidden; /* Crucial for marquee effect */
+    overflow: hidden; 
 }
 
 .logo-marquee-container {
@@ -644,17 +637,18 @@ header.scrolled {
 
 .logo-marquee {
     display: flex;
-    animation: scroll-left 30s linear infinite; /* Adjust time for speed */
+    /* Replaced with JS-controlled animation mostly, but keep fallback */
+    animation: scroll-left 30s linear infinite;
 }
 
 .logo-item {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0 40px; /* Reduced padding slightly for tighter grouping */
+    padding: 0 40px; 
     height: 90px;
-    filter: none; /* Set logos to full color by default */
-    opacity: 1; /* Full opacity by default */
+    filter: none; 
+    opacity: 1; 
     transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
     flex-shrink: 0;
     position: relative;
@@ -664,25 +658,30 @@ header.scrolled {
     height: 60px;
     width: 60px;
     border-radius: 50%;
-    box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.1); /* Subtle initial shadow */
+    box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.1); 
     transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
     object-fit: contain;
 }
 
 .logo-item:hover {
-    opacity: 1; /* Already 1 */
-    filter: none; /* Already none */
+    opacity: 1; 
+    filter: none; 
 }
 
 .logo-item:hover img {
-    transform: scale(1.18) rotate(2deg); /* Enhanced hover effect */
-    box-shadow: 0 0 0 5px var(--secondary), 0 12px 30px rgba(159, 122, 234, 0.8); /* Purple glow */
+    transform: scale(1.18) rotate(2deg); 
+    box-shadow: 0 0 0 5px var(--secondary), 0 12px 30px rgba(159, 122, 234, 0.8); 
 }
 
-/* Re-defined Marquee Animation to fix scroll issue (Request 7) */
 @keyframes scroll-left {
     from { transform: translateX(0%); }
     to { transform: translateX(-100%); }
+}
+
+/* 1. Infinite Scroll Animation Keyframes (Global) */
+@keyframes scroll-continuous {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* Moves half way (the length of one original set) */
 }
 
 
@@ -1388,10 +1387,10 @@ footer {
     min-height: 40px;
 }
 .test-card-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
     position: relative; /* <-- ADD THIS */
     z-index: 2;         /* <-- ADD THIS */
 }
@@ -1597,58 +1596,78 @@ footer {
     }
 }
 
+/* 2. Mobile Optimizations */
 @media (max-width: 768px) {
-    .container { padding: 0 16px; }
-
-    /* Further Global Typography Scaling for Smaller Screens */
-    .section-title {
-        font-size: 1.6rem; 
+    /* A. Sticky Header Fix */
+    header {
+        position: sticky !important; /* Forces stickiness */
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background-color: var(--white); /* Ensures content doesn't show through */
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Distinct shadow for separation */
     }
+    
+    /* Fix for menu overflow when header is sticky */
+    .nav-menu.active {
+        position: fixed; /* Detach from sticky header */
+        top: 70px; /* Height of header */
+        bottom: 0;
+        overflow-y: auto; /* Scrollable menu if tall */
+        max-height: calc(100vh - 70px);
+    }
+
+    /* B. Standardized Mobile Typography (Comfortable Reading) */
+    html {
+        font-size: 15px; /* Sets base rem size slightly smaller */
+    }
+
     .hero-heading {
-        font-size: 2.0rem; 
-    }
-    .hero-description, .section-subtitle {
-        font-size: 1.0rem; 
-    }
-    .value-title {
-        font-size: 1.3rem;
-    }
-    .value-card {
-        padding: 30px 20px;
-    }
-    .test-card h3 {
-        font-size: 1.3rem; /* Smallest card heading size */
+        font-size: 2.2rem; /* Reduced from massive sizes */
+        line-height: 1.2;
+        margin-bottom: 15px;
     }
 
-    /* Testimonial card sizing for mobile carousel (Request 1) */
-    .testimonials-grid {
-        gap: 20px;
-        padding: 0 16px 20px 16px;
-        margin-left: -16px;
-        width: calc(100% + 32px);
-        -webkit-overflow-scrolling: touch; 
-    }
-    .testimonial-card {
-        width: 85vw;
-        max-width: 400px;
-        margin: 0;
-    }
-    .testimonial-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+    .section-title {
+        font-size: 1.8rem; /* Standard headers */
+        margin-bottom: 10px;
     }
 
-    /* Team Section Fixes */
-    .team-grid {
-        grid-template-columns: 1fr;
+    .section-subtitle {
+        font-size: 1rem;
+        line-height: 1.5;
     }
-    .team-member:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+    
+    p {
+        font-size: 1rem;
+        line-height: 1.6;
     }
 
-    /* Partner Marquee Fix */
-    .logo-item {
-        padding: 0 30px;
+    /* C. Mobile UI Enhancements */
+    .container {
+        padding: 0 20px; /* Consistent edge spacing */
+    }
+
+    .btn-lg {
+        width: 100%; /* Full width buttons are easier to tap on mobile */
+        justify-content: center;
+        margin-bottom: 10px;
+        font-size: 16px;
+        padding: 12px;
+    }
+    
+    .hero-cta {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    /* Fix spacing between stacked sections */
+    .section-header {
+        margin-bottom: 30px;
+    }
+    
+    .course-card, .job-card, .testimonial-card {
+        margin-bottom: 20px; /* Better separation */
     }
 }
