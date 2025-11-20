@@ -23,24 +23,36 @@
     <!-- =========================================
        HEADER / NAVIGATION
        ========================================= -->
-    <header style="background: #fff; border-bottom: 1px solid #f1f5f9; position: sticky; top: 0; z-index: 1000;">
-        <div class="container" style="display: flex; justify-content: space-between; align-items: center; height: 80px;">
+    <header>
+        <div class="container nav-container">
             <!-- Logo -->
-            <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 10px;">
+            <a href="index.html" class="logo">
                 <img src="images/logo.jpg" alt="Internadda Logo" style="height: 40px; border-radius: 8px;">
-                <span style="font-weight: 800; font-size: 1.4rem; color: #1a202c; letter-spacing: -0.5px;">Intern<span style="color: #4338ca;">adda</span></span>
+                <span>Intern<span style="color: #4338ca;">adda</span></span>
             </a>
 
-            <!-- Desktop Nav -->
-            <nav class="nav-links" style="display: flex; gap: 30px;">
-                <a href="courses/course.html" style="font-weight: 500; color: #4a5568; transition: color 0.2s;">Courses</a>
-                <a href="intern/internship.html" style="font-weight: 500; color: #4a5568; transition: color 0.2s;">Internships</a>
-                <a href="community/join.html" style="font-weight: 500; color: #4a5568; transition: color 0.2s;">Community</a>
-                <a href="about.html" style="font-weight: 500; color: #4a5568; transition: color 0.2s;">About Us</a>
+            <!-- Navigation Links -->
+            <nav class="nav-links">
+                <a href="courses/course.html" class="nav-item">Courses</a>
+                <a href="intern/internship.html" class="nav-item">Internships</a>
+                <a href="about.html" class="nav-item">About Us</a>
+                
+                <!-- DROPDOWN MENU -->
+                <div class="dropdown nav-item">
+                    <span>More <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 4px;"></i></span>
+                    <div class="dropdown-content">
+                        <a href="#"><i class="fas fa-chart-line"></i> ATS Score Check</a>
+                        <a href="#"><i class="fas fa-user-tie"></i> Interview Prep</a>
+                        <a href="#"><i class="fas fa-file-alt"></i> Resume Builder</a>
+                        <a href="#"><i class="fas fa-envelope-open-text"></i> Cover Letter Maker</a>
+                        <a href="blog/index.html"><i class="fas fa-blog"></i> Blog</a>
+                        <a href="contact.html"><i class="fas fa-headset"></i> Contact Us</a>
+                    </div>
+                </div>
             </nav>
 
-            <!-- Mobile Menu Button -->
-            <button class="mobile-menu-btn" style="display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer;">
+            <!-- Mobile Menu Button (Hamburger) -->
+            <button class="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
@@ -48,29 +60,24 @@
 
     <main>
         <!-- =========================================
-           HERO SECTION (New Design)
+           HERO SECTION
            ========================================= -->
         <section class="hero">
             <div class="container hero-container">
                 <div class="hero-content">
-                    <!-- Badge -->
                     <div class="hero-badge">
                         <i class="fas fa-rocket"></i> Launch Your Career
                     </div>
                     
-                    <!-- Heading -->
                     <h1 class="hero-heading">India’s Adda for <br><span>Internships</span></h1>
                     
-                    <!-- Description -->
                     <p class="hero-description">The perfect launchpad for your career. Gain in-demand skills through <strong>free courses</strong> and secure paid internships (up to ₹50K/month) with top companies.</p>
                     
-                    <!-- CTA Buttons -->
                     <div class="hero-cta">
                         <a href="courses/course.html" class="btn btn-primary">Explore Courses</a>
                         <a href="intern/internship.html" class="btn btn-transparent">Find Internships</a>
                     </div>
 
-                    <!-- Stats -->
                     <div class="hero-stats">
                         <div class="stat-item">
                             <span class="stat-value">100+</span>
@@ -88,11 +95,8 @@
                 </div>
 
                 <div class="hero-image">
-                    <!-- 3D Image Wrapper -->
                     <div class="hero-image-wrapper">
                         <img src="images/slide2.png" alt="Student Learning" style="width: 100%; height: auto; display: block;">
-                        
-                        <!-- Floating Badges -->
                         <div class="floating-badge badge-top">
                             <i class="fas fa-check-circle" style="color: #48bb78;"></i>
                             <span>Placement Guaranteed</span>
@@ -107,17 +111,16 @@
         </section>
 
         <!-- =========================================
-           PARTNER MARQUEE (White Blur Effect)
+           PARTNER MARQUEE (Full Color)
            ========================================= -->
         <section class="partner-logo-section">
             <div class="container" style="text-align: center; margin-bottom: 30px;">
                 <p style="color: #718096; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; font-size: 0.9rem;">Trusted by Top Companies</p>
             </div>
             
-            <!-- "light-fade" adds white blur on sides -->
             <div class="marquee-section light-fade" id="companyMarquee">
                 <div class="marquee-track">
-                    <!-- Logos (Using placeholders based on typical tech stack) -->
+                    <!-- Logos -->
                     <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google"></div>
                     <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft"></div>
                     <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon"></div>
@@ -126,13 +129,12 @@
                     <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Adobe_Corporate_logo.svg" alt="Adobe"></div>
                     <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Accenture.svg" alt="Accenture"></div>
                     <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM"></div>
-                    <!-- You can add your local images here if preferred e.g. src="images/compan1.jpg" -->
                 </div>
             </div>
         </section>
 
         <!-- =========================================
-           FEATURED COURSES GRID (Standard)
+           FEATURED COURSES
            ========================================= -->
         <section style="padding: 80px 0; background: #fff;">
             <div class="container">
@@ -142,8 +144,7 @@
                 </div>
 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-                    
-                    <!-- Course Card 1 -->
+                    <!-- Cards as before -->
                     <div style="border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; transition: transform 0.3s;">
                         <img src="images/Python-Essentials-for-All.png" alt="Python" style="width: 100%; height: 200px; object-fit: cover;">
                         <div style="padding: 24px;">
@@ -153,8 +154,6 @@
                             <a href="courses/courses/Python-Essentials-for-All.html" style="color: #4338ca; font-weight: 600; display: flex; align-items: center; gap: 8px;">View Course <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
-
-                    <!-- Course Card 2 -->
                     <div style="border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; transition: transform 0.3s;">
                         <img src="images/Ethical-Hacking-Mastery.png" alt="Hacking" style="width: 100%; height: 200px; object-fit: cover;">
                         <div style="padding: 24px;">
@@ -164,8 +163,6 @@
                             <a href="courses/courses/Ethical-Hacking-Mastery.html" style="color: #dc2626; font-weight: 600; display: flex; align-items: center; gap: 8px;">View Course <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
-
-                    <!-- Course Card 3 -->
                     <div style="border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; transition: transform 0.3s;">
                         <img src="images/Essential Data Science Intern Course.png" alt="Data Science" style="width: 100%; height: 200px; object-fit: cover;">
                         <div style="padding: 24px;">
@@ -175,13 +172,12 @@
                             <a href="courses/courses/Essential Data Science Intern Course.html" style="color: #059669; font-weight: 600; display: flex; align-items: center; gap: 8px;">View Course <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
 
         <!-- =========================================
-           TESTIMONIALS SECTION (Dark Mode + Blur)
+           TESTIMONIALS
            ========================================= -->
         <section class="testimonials-dark">
             <div class="container" style="text-align: center; margin-bottom: 50px;">
@@ -189,12 +185,10 @@
                 <p class="section-subtitle">See what our students achieved.</p>
             </div>
 
-            <!-- "dark-fade" adds navy blur on sides -->
             <div class="marquee-section dark-fade" id="studentMarquee">
                 <div class="marquee-track">
-                    <!-- Review 1 -->
                     <div class="testimonial-card-dark">
-                        <p class="quote-text">"Internadda helped me crack a FAANG interview! The structured path and practice tests were exactly what I needed to build confidence."</p>
+                        <p class="quote-text">"Internadda helped me crack a FAANG interview! The structured path and practice tests were exactly what I needed."</p>
                         <div class="user-info">
                             <img src="images/no_image.png" alt="Ravi">
                             <div class="user-details">
@@ -203,7 +197,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Review 2 -->
                     <div class="testimonial-card-dark">
                         <p class="quote-text">"The Python course is gold. Highly recommended for anyone starting their dev journey. The projects are very practical."</p>
                         <div class="user-info">
@@ -214,7 +207,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Review 3 -->
                     <div class="testimonial-card-dark">
                         <p class="quote-text">"Got my first stipend within 2 months. The practical approach is unmatched compared to college theory."</p>
                         <div class="user-info">
@@ -225,7 +217,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Review 4 -->
                     <div class="testimonial-card-dark">
                         <p class="quote-text">"The mentorship program was fantastic. I learned more about Agile and DevOps in 3 weeks than I did in a whole semester."</p>
                         <div class="user-info">
@@ -254,17 +245,21 @@
                 <h4 style="font-weight: 600; margin-bottom: 20px;">Quick Links</h4>
                 <ul style="display: flex; flex-direction: column; gap: 10px; color: #cbd5e0;">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About Us</a></li>
                     <li><a href="courses/course.html">Courses</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="intern/internship.html">Internships</a></li>
                 </ul>
             </div>
+            <!-- NEW RESOURCES COLUMN -->
             <div>
-                <h4 style="font-weight: 600; margin-bottom: 20px;">Legal</h4>
+                <h4 style="font-weight: 600; margin-bottom: 20px;">Resources</h4>
                 <ul style="display: flex; flex-direction: column; gap: 10px; color: #cbd5e0;">
-                    <li><a href="privacy.html">Privacy Policy</a></li>
-                    <li><a href="terms.html">Terms of Service</a></li>
-                    <li><a href="refund.html">Refund Policy</a></li>
+                    <li><a href="#">ATS Score Check</a></li>
+                    <li><a href="#">Interview Prep</a></li>
+                    <li><a href="#">Resume Builder</a></li>
+                    <li><a href="#">Cover Letter Maker</a></li>
+                    <li><a href="blog/index.html">Blog</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
                 </ul>
             </div>
             <div>
