@@ -93,19 +93,35 @@ header {
     display: inline-block;
 }
 
+/* The "More" Label - Click Trigger */
+.dropdown > span {
+    display: flex;
+    align-items: center;
+    cursor: pointer; /* Shows it's clickable */
+    user-select: none; /* Prevents highlighting text on click */
+    padding: 5px 0;
+}
+
 .dropdown-content {
     display: none; /* Hidden by default */
     position: absolute;
     background-color: #ffffff;
-    min-width: 220px;
+    min-width: 260px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     border-radius: 12px;
     border: 1px solid #e2e8f0;
     z-index: 1001;
-    top: 140%; /* Spacing from parent */
+    top: 140%; 
     right: 0;
     padding: 8px 0;
     animation: slideUp 0.2s ease-out;
+}
+
+/* CRITICAL: Only show when 'active' class is added by JS.
+   Removed :hover rule to ensure click-to-close works reliably.
+*/
+.dropdown.active .dropdown-content {
+    display: block;
 }
 
 /* Small triangle/arrow for dropdown */
@@ -135,11 +151,6 @@ header {
 .dropdown-content a:hover {
     background-color: #f8fafc;
     color: var(--primary);
-}
-
-/* Show dropdown on hover */
-.dropdown:hover .dropdown-content {
-    display: block;
 }
 
 /* Mobile Menu Button */
@@ -315,7 +326,7 @@ header {
 }
 
 /* =========================================
-   4. INFINITE MARQUEE (NO GRAYSCALE)
+   4. INFINITE MARQUEE
    ========================================= */
 .marquee-section {
     width: 100%;
@@ -362,12 +373,11 @@ header {
     border-bottom: 1px solid #f1f5f9;
 }
 
-/* UPDATED LOGO STYLES: No Grayscale */
 .logo-item img {
     height: 45px;
     width: auto;
-    opacity: 1; /* Full opacity */
-    filter: none; /* Remove grayscale */
+    opacity: 1;
+    filter: none;
     transition: transform 0.3s ease;
 }
 
@@ -445,23 +455,23 @@ header {
 
     .nav-links {
         position: fixed;
-        top: 80px; /* Height of header */
+        top: 80px;
         left: 0;
         width: 100%;
         height: calc(100vh - 80px);
         background: white;
         flex-direction: column;
-        align-items: flex-start; /* Left align items */
+        align-items: flex-start;
         padding: 30px 20px;
-        transform: translateX(100%); /* Hidden to right */
+        transform: translateX(100%);
         transition: transform 0.3s ease-in-out;
         box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        gap: 0; /* Reset gap */
+        gap: 0;
         overflow-y: auto;
     }
 
     .nav-links.active {
-        transform: translateX(0); /* Slide in */
+        transform: translateX(0);
     }
 
     .nav-links > a, 
@@ -474,8 +484,8 @@ header {
 
     /* Mobile Dropdown */
     .dropdown-content {
-        position: static; /* Regular flow for mobile */
-        display: none; /* Hidden initially */
+        position: static;
+        display: none; /* Hidden initially, shown by .active */
         box-shadow: none;
         border: none;
         padding-left: 20px;
@@ -485,12 +495,7 @@ header {
         margin-top: 10px;
     }
     
-    /* Hide the hover arrow on mobile */
     .dropdown-content::before { display: none; }
-
-    .dropdown:hover .dropdown-content {
-        display: block; /* Show on tap/hover */
-    }
 
     /* Hero Mobile */
     .hero-container { flex-direction: column; text-align: center; gap: 40px; }
