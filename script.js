@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // ==============================================
     // 1. INFINITE MARQUEE LOGIC
     // ==============================================
-    // This function duplicates the marquee items to create a seamless loop.
     function setupMarquee(elementId) {
         const container = document.getElementById(elementId);
         if (!container) return;
@@ -20,23 +19,53 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Initialize marquees
     setupMarquee('companyMarquee');
     setupMarquee('studentMarquee');
 
 
     // ==============================================
-    // 2. MOBILE MENU TOGGLE
+    // 2. DROPDOWN TOGGLE (CLICK BEHAVIOR)
+    // ==============================================
+    // Handles opening/closing "More" on click for Desktop & Mobile
+    const dropdown = document.querySelector('.dropdown');
+    if (dropdown) {
+        const trigger = dropdown.querySelector('span'); // The "More" text label
+        
+        // Toggle on click
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent immediate closing from document listener
+            dropdown.classList.toggle('active');
+        });
+
+        // Close when clicking inside the dropdown links
+        const dropdownLinks = dropdown.querySelectorAll('a');
+        dropdownLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                dropdown.classList.remove('active');
+            });
+        });
+
+        // Close when clicking anywhere outside
+        document.addEventListener('click', (e) => {
+            if (!dropdown.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+    }
+
+
+    // ==============================================
+    // 3. MOBILE MENU TOGGLE
     // ==============================================
     const menuBtn = document.querySelector('.mobile-menu-btn');
     const navLinks = document.querySelector('.nav-links');
     
     if (menuBtn && navLinks) {
-        // Toggle menu on hamburger click
-        menuBtn.addEventListener('click', () => {
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent conflict with document click
             navLinks.classList.toggle('active');
             
-            // Animate the burger icon (bars to X)
+            // Animate icon
             const icon = menuBtn.querySelector('i');
             if (navLinks.classList.contains('active')) {
                 icon.classList.remove('fa-bars');
@@ -47,22 +76,17 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Close menu when clicking a regular link
-        // (This ensures the menu slides back when a user navigates)
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                // Don't close if clicking the "More" dropdown placeholder
-                if(link.getAttribute('href') === '#') return; 
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (navLinks.classList.contains('active') && 
+                !navLinks.contains(e.target) && 
+                !menuBtn.contains(e.target)) {
                 
                 navLinks.classList.remove('active');
-                
-                // Reset icon back to bars
                 const icon = menuBtn.querySelector('i');
-                if (icon) {
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                }
-            });
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
         });
     }
 });
