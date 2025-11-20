@@ -3,74 +3,66 @@ document.addEventListener('DOMContentLoaded', function() {
     // ==============================================
     // 1. INFINITE MARQUEE LOGIC
     // ==============================================
-    // This function duplicates the content inside the marquee track
-    // to create a seamless infinite loop without gaps.
+    // This function duplicates the marquee items to create a seamless loop.
     function setupMarquee(elementId) {
         const container = document.getElementById(elementId);
-        if (!container) return; // specific marquee not found
+        if (!container) return;
 
         const track = container.querySelector('.marquee-track');
         if (!track) return;
 
-        // Check if we already have enough content to scroll
-        // If content is short, we might need to clone multiple times, 
-        // but one clone is usually enough for standard screens.
         const items = Array.from(track.children);
         
-        // Clone original items and append them to the end
+        // Clone original items and append them to the end for smooth loop
         items.forEach(item => {
             const clone = item.cloneNode(true);
             track.appendChild(clone);
         });
     }
 
-    // Initialize the Company Logo Marquee
+    // Initialize marquees
     setupMarquee('companyMarquee');
-
-    // Initialize the Student Testimonials Marquee
     setupMarquee('studentMarquee');
 
 
     // ==============================================
-    // 2. MOBILE MENU TOGGLE (Standard Logic)
+    // 2. MOBILE MENU TOGGLE
     // ==============================================
-    const menuBtn = document.querySelector('.mobile-menu-btn'); // Hamburger button
-    const navLinks = document.querySelector('.nav-links');      // Navigation menu
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
     
     if (menuBtn && navLinks) {
+        // Toggle menu on hamburger click
         menuBtn.addEventListener('click', () => {
-            // Toggle the 'active' class to show/hide menu
             navLinks.classList.toggle('active');
             
-            // Optional: specific animation class for the button itself
-            menuBtn.classList.toggle('open');
+            // Animate the burger icon (bars to X)
+            const icon = menuBtn.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
         });
 
-        // Close menu when clicking a link
+        // Close menu when clicking a regular link
+        // (This ensures the menu slides back when a user navigates)
         navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
+            link.addEventListener('click', (e) => {
+                // Don't close if clicking the "More" dropdown placeholder
+                if(link.getAttribute('href') === '#') return; 
+                
                 navLinks.classList.remove('active');
-                menuBtn.classList.remove('open');
+                
+                // Reset icon back to bars
+                const icon = menuBtn.querySelector('i');
+                if (icon) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
             });
         });
     }
-
-    // ==============================================
-    // 3. SMOOTH SCROLL FOR ANCHOR LINKS
-    // ==============================================
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                e.preventDefault();
-                targetElement.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-
 });
