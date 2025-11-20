@@ -3,229 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms & Conditions | Internadda - User Agreement</title>
-    <meta name="description" content="Read Internadda's Terms and Conditions regarding the use of our website, courses, intellectual property rights, and user responsibilities.">
+    <title>Terms & Conditions | Internadda</title>
+    <meta name="description" content="Read the terms and conditions for using Internadda's services.">
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Main Stylesheet -->
     <link rel="stylesheet" href="style.css">
-
-    <link rel="icon" type="image/png" href="images/favicon.png">
-    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
     
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico">
+
     <style>
-        /* Reusing policy styles for consistency */
-        .page-header {
-            background-color: #fffae6; /* Soft yellow/neutral for agreement/terms */
+        /* Page Specific Styles */
+        .terms-hero {
+            background: linear-gradient(135deg, #f8faff 0%, #ffffff 100%);
+            padding: 60px 0;
+            text-align: center;
+            border-bottom: 1px solid #f1f5f9;
         }
-        .policy-content {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 0;
-        }
-        .policy-content h2 {
-            font-size: 2.2rem;
-            color: var(--primary);
-            margin-top: 30px;
-            margin-bottom: 15px;
-            border-bottom: 2px solid var(--secondary);
-            padding-bottom: 5px;
-        }
-        .policy-content h3 {
-            font-size: 1.6rem;
-            color: var(--secondary);
-            margin-top: 25px;
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1a202c;
             margin-bottom: 10px;
         }
-        .policy-content p {
-            margin-bottom: 20px;
-            color: var(--dark);
-            line-height: 1.7;
-            font-size: 1.05rem;
+
+        .last-updated {
+            color: #64748b;
+            font-size: 0.95rem;
         }
-        .policy-content ul, .policy-content ol {
-            padding-left: 25px;
-            list-style-type: disc;
-            margin-bottom: 20px;
-            color: var(--dark);
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 0 20px;
         }
-        .policy-content ol {
-             list-style-type: decimal;
+
+        .terms-section {
+            margin-bottom: 40px;
         }
-        .policy-content li {
-            margin-bottom: 8px;
-            line-height: 1.6;
-        }
-        .policy-content strong {
+
+        .terms-heading {
+            font-size: 1.5rem;
             font-weight: 700;
-            color: var(--dark);
+            color: #1a202c;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
+        
+        .terms-heading i { color: #4338ca; font-size: 1.2rem; }
+
+        .terms-text {
+            color: #4a5568;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .terms-list {
+            list-style: disc;
+            padding-left: 25px;
+            margin-top: 15px;
+            color: #4a5568;
+        }
+
+        .terms-list li { margin-bottom: 10px; }
+
+        .contact-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 50px;
+            text-align: center;
+        }
+        
+        .contact-box a { color: #4338ca; font-weight: 600; text-decoration: underline; }
     </style>
 </head>
 <body>
-    <!-- Google Analytics Script (Retained) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-3ZZ3HGFM3Q');
-    </script>
 
-    <!-- ==============================================
-         HEADER: 3D Animated Nav (Requests 1 & 2)
-         ============================================== -->
+    <!-- =========================================
+       HEADER / NAVIGATION
+       ========================================= -->
     <header>
-        <div class="container header-container">
+        <div class="container nav-container">
+            <!-- Logo -->
             <a href="index.html" class="logo">
-                <img src="images/logo.jpg" alt="InternAdda Logo" class="logo-img">
-                <span class="logo-text">InternAdda</span>
+                <img src="images/logo.jpg" alt="Internadda Logo" style="height: 40px; border-radius: 8px;">
+                <span>Intern<span style="color: #4338ca;">adda</span></span>
             </a>
 
-            <nav class="nav-menu">
-                <a href="/index.html" class="nav-link">Home</a>
-                <a href="/courses/course.html" class="nav-link">Courses</a>
-                <a href="/intern/internship.html" class="nav-link">Internships</a>
-                <a href="/jobs.html" class="nav-link">Jobs</a>
-                <a href="/about.html" class="nav-link">About</a>
+            <!-- Navigation Links -->
+            <nav class="nav-links">
+                <!-- Home Link -->
+                <a href="index.html" class="nav-item">
+                    <i class="fas fa-home"></i> Home
+                </a>
+
+                <!-- Main Items with Icons -->
+                <a href="https://courses.internadda.com/" class="nav-item">
+                    <i class="fas fa-laptop-code"></i> Courses
+                </a>
+                <a href="intern/internship.html" class="nav-item">
+                    <i class="fas fa-briefcase"></i> Internships
+                </a>
+                <a href="about.html" class="nav-item">
+                    <i class="fas fa-info-circle"></i> About Us
+                </a>
                 
-                <!-- TOOLS DROPDOWN -->
-                <div class="nav-item dropdown" id="toolsDropdown">
-                    <a href="#" class="nav-link dropdown-toggle">Tools <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                <!-- DROPDOWN MENU -->
+                <div class="dropdown nav-item">
+                    <span>
+                        <i class="fas fa-th-large" style="margin-right: 8px; color: #4338ca; background: #e0e7ff; width: 32px; height: 32px; line-height: 32px; text-align: center; border-radius: 50%; font-size: 1rem; display: none;"></i> 
+                        More <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 4px;"></i>
+                    </span>
                     <div class="dropdown-content">
-                        <a href="/tools/ats-score.html" class="dropdown-link"><i class="fas fa-chart-bar"></i> ATS Score</a>
-                        <a href="/tools/resume-builder.html" class="dropdown-link"><i class="fas fa-file-alt"></i> Resume Builder</a>
-                        <a href="/tools/interview-questions.html" class="dropdown-link"><i class="fas fa-question-circle"></i> Interview Question</a>
-                        <a href="/tools/cover-letter.html" class="dropdown-link"><i class="fas fa-envelope"></i> Cover Letter Generator</a>
-                        <a href="/tools/paraphraser.html" class="dropdown-link"><i class="fas fa-pen-nib"></i> Essay / Paraphraser Tool</a>
+                        <a href="https://check-ats.internadda.com/" class="dropdown-link"><i class="fas fa-chart-bar"></i> ATS Score</a>
+                        <a href="https://cv-builder.internadda.com/" class="dropdown-link"><i class="fas fa-file-alt"></i> Resume Builder</a>
+                        <a href="https://interview-preparation.internadda.com/" class="dropdown-link"><i class="fas fa-question-circle"></i> Interview Question</a>
+                        <a href="https://letter-builder.internadda.com/" class="dropdown-link"><i class="fas fa-envelope"></i> Cover Letter Generator</a>
+                        <a href="contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
+                        <a href="https://blog.internadda.com/" class="dropdown-link"><i class="fas fa-blog"></i> Blog</a>
                     </div>
                 </div>
-                
-                <!-- MORE DROPDOWN -->
-                <div class="nav-item dropdown" id="moreDropdown">
-                    <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
-                    <div class="dropdown-content">
-                        <a href="/contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
-                        <a href="/blog/index.html" class="dropdown-link"><i class="fas fa-newspaper"></i> Blog</a>
-                        <a href="/community/join.html" class="dropdown-link"><i class="fas fa-users"></i> Community</a>
-                        <a href="/community/partners.html" class="dropdown-link"><i class="fas fa-handshake"></i> Partners</a>
-                        <a href="/community/academy.html" class="dropdown-link"><i class="fas fa-university"></i> Offline Academy</a>
-                    </div>
-                </div>
-                
-                <!-- MOBILE ONLY LINKS -->
-                <a href="/tools/ats-score.html" class="nav-link mobile-only-link">ATS Score</a>
-                <a href="/tools/resume-builder.html" class="nav-link mobile-only-link">Resume Builder</a>
-                <a href="/tools/interview-questions.html" class="nav-link mobile-only-link">Interview Question</a>
-                <a href="/tools/cover-letter.html" class="nav-link mobile-only-link">Cover Letter Generator</a>
-                <a href="/tools/paraphraser.html" class="nav-link mobile-only-link">Essay / Paraphraser Tool</a>
-                <a href="/contact.html" class="nav-link mobile-only-link">Contact</a>
-                <a href="/blog/index.html" class="nav-link mobile-only-link">Blog</a>
-                <a href="/community/join.html" class="nav-link mobile-only-link">Community</a>
-                <a href="/community/partners.html" class="nav-link mobile-only-link">Partners</a>
-                <a href="/community/academy.html" class="nav-link mobile-only-link">Offline Academy</a>
             </nav>
 
-            <div class="header-actions">
-                <div class="search-container">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="searchInput" class="search-input" placeholder="Search courses & domains...">
-                </div>
-                <!-- AUTH BUTTONS REMOVED -->
-            </div> 
-
-            <button class="hamburger-menu" id="hamburgerMenu">
-                <span></span>
-                <span></span>
-                <span></span>
+            <!-- Mobile Menu Button (Hamburger) -->
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
             </button>
         </div>
-        <div id="searchResults" class="search-results-container container hidden"></div>
     </header>
 
     <main>
-        <!-- Page Header -->
-        <section class="page-header">
+        <!-- HERO -->
+        <section class="terms-hero">
             <div class="container">
-                <h1 class="section-title">Terms & Conditions</h1>
-                <p class="section-subtitle">The agreement governing your use of Internadda's platform and services.</p>
+                <h1 class="page-title">Terms & Conditions</h1>
+                <p class="last-updated">Last Updated: November 2025</p>
             </div>
         </section>
 
-        <!-- Policy Content -->
-        <section class="content-section">
-            <div class="container">
-                <div class="policy-content">
-                    <p>Welcome to Internadda! These Terms and Conditions ("Terms") govern your use of the Internadda website, courses, placement assistance, career tools, and related services (collectively, the "Service"). By accessing or using the Service, you agree to be bound by these Terms.</p>
-                    <p><strong>Last Updated: November 8, 2025</strong></p>
-
-                    <h2>1. Use of the Service</h2>
-                    
-                    <h3>A. Eligibility and Access</h3>
-                    <p>The Service is intended for individuals seeking career development and internship opportunities. You must be at least 18 years old or have permission from a parent or legal guardian to use the Service. Access to the platform is provided freely for course content, while certain services (like Final Exams) require payment.</p>
-
-                    <h3>B. User Conduct</h3>
-                    <p>You agree not to use the Service for any unlawful purpose or in any way that interrupts, damages, or impairs the service. Prohibited activities include, but are not limited to:</p>
-                    <ul>
-                        <li>Sharing course videos, quiz answers, or Final Exam questions/solutions publicly.</li>
-                        <li>Attempting to gain unauthorized access to any portion of the Service.</li>
-                        <li>Using automated means (bots, scraping tools) to access the Service or collect data.</li>
-                        <li>Harassing, abusing, or harming other users or Internadda personnel.</li>
-                    </ul>
-
-                    <h2>2. Intellectual Property Rights (IPR)</h2>
-                    
-                    <h3>A. Internadda Content</h3>
-                    <p>All content included in the Service, such as text, graphics, logos, images, course materials, video lectures, assessments, and the underlying software, is the property of Internadda or its content suppliers and is protected by copyright and intellectual property laws. You are granted a non-exclusive, non-transferable license to access and use the content **only for your personal, non-commercial educational purposes.**</p>
-
-                    <h3>B. Restrictions</h3>
-                    <p>You may not reproduce, redistribute, transmit, assign, sell, broadcast, rent, share, modify, or transfer any content without explicit written permission from Internadda.</p>
-
-                    <h2>3. Internship Placement and Final Exams</h2>
-                    
-                    <h3>A. Final Exam Payment</h3>
-                    <p>The **Final Exam** is a paid assessment. Payment for the Final Exam grants you a single attempt at the certification test. Please refer to our separate **Refund Policy** for specific terms regarding refunds for failed or incomplete exams.</p>
-
-                    <h3>B. Placement Guarantee</h3>
-                    <p>Internadda commits to providing **placement opportunities** to candidates who successfully pass the Final Exam and meet all partner criteria. However, we do not guarantee employment or placement, as the final selection decision rests solely with our corporate partners based on their specific recruitment needs and interview processes.</p>
-                    
-                    <h3>C. User Obligations in Placement</h3>
-                    <p>You agree to provide accurate and truthful information in your resume and interviews during the placement process. Any misrepresentation will result in immediate disqualification from the program.</p>
-
-                    <h2>4. Limitation of Liability</h2>
-                    <p>To the maximum extent permitted by applicable law, Internadda shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, use, goodwill, or other intangible losses, resulting from (i) your access to or use of, or inability to access or use, the Service; (ii) any conduct or content of any third party on the Service; (iii) any content obtained from the Service; and (iv) unauthorized access, use, or alteration of your transmissions or content.</p>
-
-                    <h2>5. Termination</h2>
-                    <p>We may terminate or suspend your access to the Service immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach these Terms. Upon termination, your right to use the Service will immediately cease. If you wish to terminate these Terms, you may simply discontinue using the Service.</p>
-
-                    <h2>6. Governing Law</h2>
-                    <p>These Terms shall be governed and construed in accordance with the laws of **India**, without regard to its conflict of law provisions. You agree to submit to the exclusive jurisdiction of the courts located in **New Delhi, India** to resolve any legal matter arising from these Terms.</p>
-                    
-                    <h2>7. Changes to Terms</h2>
-                    <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. We will provide reasonable notice of any material changes. By continuing to access or use our Service after those revisions become effective, you agree to be bound by the revised terms.</p>
-
-                    <p style="margin-top: 30px; font-style: italic; color: var(--gray);">For questions regarding these Terms, please contact us at <a href="mailto:support@internadda.com">support@internadda.com</a>.</p>
-
-                </div>
+        <!-- CONTENT -->
+        <section class="content-wrapper">
+            
+            <div class="terms-section">
+                <h2 class="terms-heading"><i class="fas fa-gavel"></i> 1. Introduction</h2>
+                <p class="terms-text">
+                    Welcome to Internadda. By accessing our website and using our services, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you must not use our services.
+                </p>
             </div>
-        </section>
 
-        <!-- CTA Section -->
-        <section class="cta-section">
-            <div class="container">
-                <h2 class="cta-title">Start Your Career Journey Today</h2>
-                <p class="cta-description">By using our platform, you agree to these terms and are ready to **Learn, Intern, and Earn**.</p>
-                <div class="cta-buttons">
-                    <a href="courses/course.html" class="btn btn-light btn-lg">Explore Courses</a>
-                </div>
+            <div class="terms-section">
+                <h2 class="terms-heading"><i class="fas fa-user-shield"></i> 2. User Accounts</h2>
+                <p class="terms-text">
+                    To access certain features of the platform, you may be required to create an account. You agree to:
+                </p>
+                <ul class="terms-list">
+                    <li>Provide accurate and complete information during registration.</li>
+                    <li>Maintain the security of your account credentials.</li>
+                    <li>Notify us immediately of any unauthorized use of your account.</li>
+                </ul>
             </div>
+
+            <div class="terms-section">
+                <h2 class="terms-heading"><i class="fas fa-book-open"></i> 3. Course Content</h2>
+                <p class="terms-text">
+                    All course materials provided on Internadda are for educational purposes only. While we strive for accuracy, we do not guarantee that the content is entirely error-free or up-to-date at all times.
+                </p>
+            </div>
+
+            <div class="terms-section">
+                <h2 class="terms-heading"><i class="fas fa-briefcase"></i> 4. Internship Programs</h2>
+                <p class="terms-text">
+                    Internship opportunities listed on our platform are subject to availability. We act as a bridge between students and companies but do not guarantee placement. Selection is based solely on merit and the specific requirements of the hiring partner.
+                </p>
+            </div>
+
+            <div class="terms-section">
+                <h2 class="terms-heading"><i class="fas fa-ban"></i> 5. Prohibited Activities</h2>
+                <p class="terms-text">
+                    Users are prohibited from:
+                </p>
+                <ul class="terms-list">
+                    <li>Sharing course materials illegally or for commercial gain.</li>
+                    <li>Attempting to hack or disrupt our services.</li>
+                    <li>Posting harmful, offensive, or misleading content.</li>
+                </ul>
+            </div>
+
+            <div class="terms-section">
+                <h2 class="terms-heading"><i class="fas fa-sync-alt"></i> 6. Updates to Terms</h2>
+                <p class="terms-text">
+                    We reserve the right to modify these terms at any time. Continued use of the platform after changes constitutes acceptance of the new terms.
+                </p>
+            </div>
+
+            <div class="contact-box">
+                <h3>Questions?</h3>
+                <p>If you have any questions about these Terms, please contact us at <a href="mailto:legal@internadda.com">legal@internadda.com</a></p>
+            </div>
+
         </section>
     </main>
 
-    <!-- ==============================================
-         FOOTER: Updated with Tools Column (Request 3)
-         ============================================== -->
+    <!-- =========================================
+       FOOTER
+       ========================================= -->
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -248,8 +240,8 @@
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Learn</h3>
                     <ul class="footer-links">
-                        <li><a href="/courses/course.html">Browse Courses</a></li>
-                        <li><a href="/courses/course.html">Free Courses</a></li>
+                        <li><a href="https://courses.internadda.com/">Browse Courses</a></li>
+                        <li><a href="https://courses.internadda.com/">Free Courses</a></li>
                         <li><a href="#">Paid Courses</a></li>
                         <li><a href="#">Become an Instructor</a></li>
                     </ul>
@@ -258,42 +250,40 @@
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Intern</h3>
                     <ul class="footer-links">
-                        <li><a href="/intern/internship.html">Find Internships</a></li>
+                        <li><a href="intern/internship.html">Find Internships</a></li>
                         <li><a href="#">For Companies</a></li>
                         <li><a href="#">Success Stories</a></li>
                         <li><a href="#">Career Coaching</a></li>
                     </ul>
                 </div>
                 
-                <!-- NEW TOOLS COLUMN (Request 3) -->
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Career Tools</h3>
                     <ul class="footer-links">
-                        <li><a href="/tools/ats-score.html">ATS Score Checker</a></li>
-                        <li><a href="/tools/resume-builder.html">Resume Builder</a></li>
-                        <li><a href="/tools/interview-questions.html">Interview Prep</a></li>
-                        <li><a href="/tools/cover-letter.html">Cover Letter Gen</a></li>
-                        <li><a href="/tools/paraphraser.html">Essay Paraphraser</a></li>
+                        <li><a href="https://check-ats.internadda.com/">ATS Score Checker</a></li>
+                        <li><a href="https://cv-builder.internadda.com/">Resume Builder</a></li>
+                        <li><a href="https://interview-preparation.internadda.com">Interview Prep</a></li>
+                        <li><a href="https://letter-builder.internadda.com/">Cover Letter Gen</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">InternAdda</h3>
                     <ul class="footer-links">
-                        <li><a href="/about.html">About Us</a></li>
-                        <li><a href="/contact.html">Contact Us</a></li>
-                        <li><a href="/terms.html">Terms & Conditions</a></li>
-                        <li><a href="/refund.html">Refund Policy</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="refund.html">Refund Policy</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Community</h3>
                     <ul class="footer-links">
-                        <li><a href="/community/join.html">Join Community</a></li>
-                        <li><a href="/community/partners.html">Partners</a></li>
-                        <li><a href="/blog/index.html">Blog</a></li>
-                        <li><a href="/community/academy.html">Offline Academy</a></li>
+                        <li><a href="community/join.html">Join Community</a></li>
+                        <li><a href="community/partners.html">Partners</a></li>
+                        <li><a href="https://blog.internadda.com/">Blog</a></li>
+                        <li><a href="community/academy.html">Offline Academy</a></li>
                     </ul>
                 </div>
             </div>
@@ -304,6 +294,7 @@
         </div>
     </footer>
 
+    <!-- JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>
