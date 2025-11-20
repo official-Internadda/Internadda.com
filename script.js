@@ -1,58 +1,73 @@
 // ---------------------------------------------
-// Internadda Main Script
+// Internadda Main Script (Masterpiece Edition)
 // ---------------------------------------------
 
 document.addEventListener('DOMContentLoaded', function() {
     
-    // 1. Element Selection
+    // =========================================
+    // 1. ELEMENT SELECTION
+    // =========================================
     const hamburgerMenu = document.getElementById('hamburgerMenu');
     const navMenu = document.querySelector('.nav-menu');
+    const header = document.querySelector('header');
     const searchInput = document.getElementById('searchInput');
     const searchResultsContainer = document.getElementById('searchResults');
-    
-    // 2. Mobile Menu Toggle
+
+    // =========================================
+    // 2. MOBILE MENU TOGGLE (Robust Logic)
+    // =========================================
     if (hamburgerMenu && navMenu) {
+        // Toggle Menu on Hamburger Click
         hamburgerMenu.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent clicks from bubbling
-            
-            const isActive = navMenu.classList.contains('active');
-            
-            if (isActive) {
+            e.stopPropagation(); // Prevent event bubbling
+            toggleMenu();
+        });
+
+        // Close Menu when clicking ANY link inside it
+        const navLinks = navMenu.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
                 closeMenu();
-            } else {
-                openMenu();
-            }
+            });
         });
 
-        // Close menu when a link is clicked
-        navMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', closeMenu);
-        });
-
-        // Close menu when clicking outside
+        // Close Menu when clicking outside
         document.addEventListener('click', (e) => {
-            if (navMenu.classList.contains('active') && 
-                !navMenu.contains(e.target) && 
-                !hamburgerMenu.contains(e.target)) {
+            const isClickInsideMenu = navMenu.contains(e.target);
+            const isClickOnButton = hamburgerMenu.contains(e.target);
+            
+            // If menu is open AND click is outside menu AND click is not on button
+            if (navMenu.classList.contains('active') && !isClickInsideMenu && !isClickOnButton) {
                 closeMenu();
             }
         });
+    }
+
+    function toggleMenu() {
+        const isActive = navMenu.classList.contains('active');
+        if (isActive) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
     }
 
     function openMenu() {
         navMenu.classList.add('active');
         hamburgerMenu.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Lock scroll
+        document.body.style.overflow = 'hidden'; // Disable scrolling on background
     }
 
     function closeMenu() {
         navMenu.classList.remove('active');
         hamburgerMenu.classList.remove('active');
-        document.body.style.overflow = 'auto'; // Unlock scroll
+        document.body.style.overflow = 'auto'; // Re-enable scrolling
     }
 
 
-    // 3. Dropdown Logic (Mobile & Desktop Compatibility)
+    // =========================================
+    // 3. DROPDOWN LOGIC (Mobile & Desktop)
+    // =========================================
     const dropdowns = document.querySelectorAll('.nav-item.dropdown');
     
     dropdowns.forEach(dropdown => {
@@ -61,132 +76,186 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (toggle && content) {
             toggle.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
+                // On mobile/touch, we need to prevent the link from navigating immediately
+                // so the user can see the dropdown
+                if (window.innerWidth <= 1024) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Close other open dropdowns first (optional, keeps UI clean)
+                    dropdowns.forEach(other => {
+                        if (other !== dropdown) {
+                            other.querySelector('.dropdown-content').classList.remove('show');
+                        }
+                    });
 
-                // Close other open dropdowns first
-                dropdowns.forEach(other => {
-                    if (other !== dropdown) {
-                        other.querySelector('.dropdown-content').classList.remove('show');
-                    }
-                });
-
-                // Toggle current
-                content.classList.toggle('show');
+                    // Toggle visibility class
+                    content.classList.toggle('show');
+                }
             });
+            
+            // Desktop Hover Logic is handled by CSS usually, but for click-based interaction:
+            // You can add logic here if you want click-to-open on desktop too.
         }
     });
 
-    // Global click to close dropdowns
-    document.addEventListener('click', () => {
-        document.querySelectorAll('.dropdown-content').forEach(d => d.classList.remove('show'));
+    // Global click to close all dropdowns
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.nav-item.dropdown')) {
+            document.querySelectorAll('.dropdown-content').forEach(d => d.classList.remove('show'));
+        }
     });
 
 
-    // 4. Infinite Scroll (Smooth Loop)
+    // =========================================
+    // 4. INFINITE SCROLL ENGINE
+    // =========================================
+    
+    /**
+     * sets up smooth infinite scrolling for a container
+     * @param {string} containerId - ID of the element
+     * @param {number} speed - Pixels per frame (0.5 slow, 2 fast)
+     */
     function setupInfiniteScroll(containerId, speed = 1) {
         const container = document.getElementById(containerId);
         if (!container) return;
 
-        // Clone items for loop
+        // 1. Duplicate Content
         const items = Array.from(container.children);
-        if(items.length === 0) return;
+        // If empty, do nothing
+        if (items.length === 0) return;
 
+        // Clone items to fill the scroll track
         items.forEach(item => {
             const clone = item.cloneNode(true);
+            clone.setAttribute('aria-hidden', 'true'); // Accessibility
             container.appendChild(clone);
         });
 
+        // 2. Animation Loop
         let scrollPos = 0;
+        
         function animate() {
             scrollPos += speed;
-            // Reset when half way (original width)
+            
+            // The container now has 2x the content. 
+            // When we scroll past the width of the *original* content (scrollWidth / 2),
+            // we reset position to 0 to create the seamless loop illusion.
             if (scrollPos >= container.scrollWidth / 2) {
                 scrollPos = 0;
             }
+            
             container.scrollLeft = scrollPos;
             requestAnimationFrame(animate);
         }
+        
+        // Start the animation
         requestAnimationFrame(animate);
     }
 
-    // Init Scrolls
-    setupInfiniteScroll('partnerLogoMarquee', 0.5); // Slower logos
-    
-    // Only scroll testimonials on desktop if needed, or let CSS snap handle it
-    // For this masterpiece version, we'll auto-scroll lightly
-    const testimonialGrid = document.getElementById('testimonialsGrid');
-    if(testimonialGrid && window.innerWidth > 768) {
-       setupInfiniteScroll('testimonialsGrid', 0.8); 
+    // Initialize Scrollers
+    // Ensure these IDs exist in your HTML
+    setupInfiniteScroll('partnerLogoMarquee', 0.6); // Slow speed for partners
+    setupInfiniteScroll('testimonialsGrid', 0.8);   // Medium speed for testimonials
+
+
+    // =========================================
+    // 5. HEADER SCROLL EFFECT
+    // =========================================
+    if (header) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
     }
 
 
-    // 5. Header Scroll Effect
-    const header = document.querySelector('header');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 20) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-    });
-    
-    
-    // 6. Search Logic
+    // =========================================
+    // 6. SEARCH FUNCTIONALITY
+    // =========================================
     if (searchInput && searchResultsContainer) {
-        const items = [
-             { title: 'Data Science Intern Course', url: 'courses/courses/Essential%20Data%20Science%20Intern%20Course.html', role: 'Data Science' },
-             { title: 'Generative AI Masterclass', url: 'courses/courses/Generative-AI-Prompt-Engineering-Masterclass.html', role: 'AI & ML' },
-             { title: 'Python Essentials', url: 'courses/courses/Python-Essentials-for-All.html', role: 'Development' },
-             { title: 'Data Analyst Internship', url: 'intern/internship.html', role: 'Internship' }
+        
+        // Helper to fix paths if not at root
+        function getPath(path) {
+             // Simple logic: assume files are relative to root
+             return path.startsWith('/') ? path : '/' + path; 
+        }
+
+        // Hardcoded Data
+        const searchItems = [
+             { title: 'Data Science Intern Course', url: 'courses/courses/Essential%20Data%20Science%20Intern%20Course.html', role: 'Course' },
+             { title: 'Generative AI Masterclass', url: 'courses/courses/Generative-AI-Prompt-Engineering-Masterclass.html', role: 'Course' },
+             { title: 'Python Essentials', url: 'courses/courses/Python-Essentials-for-All.html', role: 'Course' },
+             { title: 'Data Analyst Internship', url: 'intern/internship.html', role: 'Internship' },
+             { title: 'Web Development Internship', url: 'intern/internship.html', role: 'Internship' }
         ];
 
         searchInput.addEventListener('input', (e) => {
-            const val = e.target.value.toLowerCase();
+            const val = e.target.value.toLowerCase().trim();
+            
+            // Clear results if empty
             if(val.length < 2) {
                 searchResultsContainer.classList.add('hidden');
                 return;
             }
             
-            searchResultsContainer.innerHTML = '';
-            const filtered = items.filter(item => item.title.toLowerCase().includes(val));
+            // Shortcuts
+            if (val === "courses") { window.location.href = getPath('courses/course.html'); return; }
+            if (val === "internships") { window.location.href = getPath('intern/internship.html'); return; }
+
+            // Filter Items
+            const filtered = searchItems.filter(item => item.title.toLowerCase().includes(val));
             
+            searchResultsContainer.innerHTML = ''; // Clear previous
+
             if(filtered.length > 0) {
                 filtered.forEach(item => {
                     const div = document.createElement('div');
                     div.className = 'search-result-item';
+                    // Add link logic
                     div.innerHTML = `
-                        <div>
-                            <h4>${item.title}</h4>
-                            <p>${item.role}</p>
-                        </div>
-                        <div class="search-result-actions">
-                            <a href="${item.url}" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.75rem;">Go</a>
-                        </div>
+                        <a href="${getPath(item.url)}" style="display:flex; justify-content:space-between; width:100%; align-items:center;">
+                            <div>
+                                <h4>${item.title}</h4>
+                                <p>${item.role}</p>
+                            </div>
+                            <i class="fas fa-chevron-right" style="font-size:0.8rem; color:#ccc;"></i>
+                        </a>
                     `;
                     searchResultsContainer.appendChild(div);
                 });
                 searchResultsContainer.classList.remove('hidden');
             } else {
-                searchResultsContainer.classList.add('hidden');
+                searchResultsContainer.innerHTML = '<div style="padding:10px; color:#666;">No results found.</div>';
+                searchResultsContainer.classList.remove('hidden');
             }
         });
         
+        // Hide results on outside click
         document.addEventListener('click', (e) => {
-            if(!searchInput.contains(e.target)) searchResultsContainer.classList.add('hidden');
+            if(!searchInput.contains(e.target) && !searchResultsContainer.contains(e.target)) {
+                searchResultsContainer.classList.add('hidden');
+            }
         });
     }
-    
-    // 7. Hero Image Slider Logic
+
+    // =========================================
+    // 7. HERO IMAGE SLIDER (Auto-play)
+    // =========================================
     const sliderWrapper = document.querySelector('.slider-wrapper');
-    if(sliderWrapper) {
+    if (sliderWrapper) {
         const slides = document.querySelectorAll('.slide');
-        let currentSlide = 0;
-        
-        setInterval(() => {
-            currentSlide = (currentSlide + 1) % slides.length;
-            sliderWrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
-        }, 4000);
+        // Only run if we have slides
+        if (slides.length > 1) {
+            let currentSlide = 0;
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                sliderWrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+            }, 4000); // Change every 4 seconds
+        }
     }
 
 });
