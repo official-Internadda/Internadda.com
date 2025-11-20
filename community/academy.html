@@ -3,239 +3,258 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Offline Academy | Internadda - In-Person Career Training</title>
-    <meta name="description" content="Explore Internadda's Offline Academy programs offering intensive, in-person training, project mentorship, and enhanced placement assistance.">
+    <title>Offline Academy | Internadda</title>
+    <meta name="description" content="Join Internadda's Offline Academy for intensive, in-person training and career mentorship.">
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Main Stylesheet (Points to root style.css) -->
     <link rel="stylesheet" href="../style.css">
-
-    <link rel="icon" type="image/png" href="../images/favicon.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico">
     
+    <!-- Favicon -->
+    <link rel="icon" href="../images/favicon.ico">
+
     <style>
-        .page-header {
-            background-color: #e6f0ff; /* Light blue/gray for institutional/academic feel */
+        /* Page Specific Styles */
+        .academy-hero {
+            background: linear-gradient(135deg, #f8faff 0%, #ffffff 100%);
+            padding: 80px 0;
+            text-align: center;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #1a202c;
+            margin-bottom: 20px;
         }
         
-        .academy-intro {
-            background-color: var(--white);
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            margin-bottom: 50px;
-            border-top: 5px solid var(--primary);
+        .page-title span { color: #4338ca; }
+
+        .page-subtitle {
+            color: #64748b;
+            font-size: 1.15rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
         }
-        
-        .feature-grid {
+
+        .features-section {
+            padding: 80px 0;
+        }
+
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-            text-align: left;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
         }
-        
-        .feature-item {
-            background-color: #f7fafc;
-            padding: 25px;
-            border-radius: 12px;
-            transition: all 0.3s ease;
+
+        .feature-card {
+            background: white;
             border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 30px;
+            transition: transform 0.3s;
         }
-        .feature-item:hover {
+
+        .feature-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            border-color: var(--secondary);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+            border-color: #cbd5e0;
         }
-        
-        .feature-item i {
-            font-size: 2rem;
-            color: var(--secondary);
-            margin-bottom: 15px;
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: #e0e7ff;
+            color: #4338ca;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
         }
-        
-        .feature-item strong {
-            display: block;
-            font-size: 1.2rem;
-            color: var(--dark);
-            margin-bottom: 5px;
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #1a202c;
         }
-        
-        .academy-locations {
-            margin-top: 50px;
+
+        .feature-text {
+            color: #64748b;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .location-section {
+            background: #f8fafc;
+            padding: 80px 0;
             text-align: center;
         }
-        
+
         .location-card {
-            background-color: var(--white);
-            padding: 25px;
-            border-radius: 12px;
-            margin-top: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            display: inline-block;
-            min-width: 300px;
-            border: 1px solid #e2e8f0;
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            max-width: 600px;
+            margin: 0 auto;
         }
-        
-        .location-card h4 {
-            font-size: 1.4rem;
-            color: var(--primary);
-            margin-bottom: 10px;
+
+        .location-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 15px;
+        }
+
+        .location-address {
+            color: #4a5568;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .academy-btn {
+            display: inline-block;
+            background: #4338ca;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .academy-btn:hover {
+            background: #3730a3;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(67, 56, 202, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .page-title { font-size: 2.2rem; }
         }
     </style>
 </head>
 <body>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-3ZZ3HGFM3Q');
-    </script>
 
+    <!-- =========================================
+       HEADER / NAVIGATION
+       ========================================= -->
     <header>
-        <div class="container header-container">
+        <div class="container nav-container">
+            <!-- Logo -->
             <a href="../index.html" class="logo">
-                <img src="../images/logo.jpg" alt="InternAdda Logo" class="logo-img">
-                <span class="logo-text">InternAdda</span>
+                <img src="../images/logo.jpg" alt="Internadda Logo" style="height: 40px; border-radius: 8px;">
+                <span>Intern<span style="color: #4338ca;">adda</span></span>
             </a>
 
-            <nav class="nav-menu">
-                <a href="/index.html" class="nav-link">Home</a>
-                <a href="https://courses.internadda.com/" class="nav-link">Courses</a>
-                <a href="/intern/internship.html" class="nav-link">Internships</a>
-                <a href="/jobs.html" class="nav-link">Jobs</a>
-                <a href="/about.html" class="nav-link">About</a>
+            <!-- Navigation Links -->
+            <nav class="nav-links">
+                <!-- Home Link -->
+                <a href="../index.html" class="nav-item">
+                    <i class="fas fa-home"></i> Home
+                </a>
+
+                <!-- Main Items with Icons -->
+                <a href="https://courses.internadda.com/" class="nav-item">
+                    <i class="fas fa-laptop-code"></i> Courses
+                </a>
+                <a href="../intern/internship.html" class="nav-item">
+                    <i class="fas fa-briefcase"></i> Internships
+                </a>
+                <a href="../about.html" class="nav-item">
+                    <i class="fas fa-info-circle"></i> About Us
+                </a>
                 
-                <div class="nav-item dropdown" id="toolsDropdown">
-                    <a href="#" class="nav-link dropdown-toggle">Tools <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                <!-- DROPDOWN MENU -->
+                <div class="dropdown nav-item">
+                    <span>
+                        <i class="fas fa-th-large" style="margin-right: 8px; color: #4338ca; background: #e0e7ff; width: 32px; height: 32px; line-height: 32px; text-align: center; border-radius: 50%; font-size: 1rem; display: none;"></i> 
+                        More <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 4px;"></i>
+                    </span>
                     <div class="dropdown-content">
                         <a href="https://check-ats.internadda.com/" class="dropdown-link"><i class="fas fa-chart-bar"></i> ATS Score</a>
                         <a href="https://cv-builder.internadda.com/" class="dropdown-link"><i class="fas fa-file-alt"></i> Resume Builder</a>
                         <a href="https://interview-preparation.internadda.com/" class="dropdown-link"><i class="fas fa-question-circle"></i> Interview Question</a>
                         <a href="https://letter-builder.internadda.com/" class="dropdown-link"><i class="fas fa-envelope"></i> Cover Letter Generator</a>
-                        <a href="https://ai-paraphraser.internadda.com" class="dropdown-link"><i class="fas fa-pen-nib"></i> Essay / Paraphraser Tool</a>
-                    </div>
-                </div>
-                
-                <div class="nav-item dropdown" id="moreDropdown">
-                    <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
-                    <div class="dropdown-content">
-                        <a href="/contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
-                        <a href="https://blog-internadda.blogspot.com/" class="dropdown-link"><i class="fas fa-newspaper"></i> Blog</a>
-                        <a href="/community/join.html" class="dropdown-link"><i class="fas fa-users"></i> Community</a>
-                        <a href="/community/partners.html" class="dropdown-link"><i class="fas fa-handshake"></i> Partners</a>
-                        <a href="/community/academy.html" class="dropdown-link"><i class="fas fa-university"></i> Offline Academy</a>
+                        <a href="../contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
+                        <a href="https://blog.internadda.com/" class="dropdown-link"><i class="fas fa-blog"></i> Blog</a>
                     </div>
                 </div>
             </nav>
 
-            <div class="header-actions">
-                <div class="search-container">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="searchInput" class="search-input" placeholder="Search courses & domains...">
-                </div>
-                </div> 
-
-            <button class="hamburger-menu" id="hamburgerMenu">
-                <span></span>
-                <span></span>
-                <span></span>
+            <!-- Mobile Menu Button (Hamburger) -->
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
             </button>
         </div>
-        <div id="searchResults" class="search-results-container container hidden"></div>
     </header>
 
     <main>
-        <section class="page-header">
+        <!-- HERO -->
+        <section class="academy-hero">
             <div class="container">
-                <h1 class="section-title">Internadda Offline Academy</h1>
-                <p class="section-subtitle">Experience our intensive career programs with <strong>in-person mentorship</strong> and guaranteed placement support.</p>
+                <h1 class="page-title">Internadda <span>Offline Academy</span></h1>
+                <p class="page-subtitle">Experience immersive learning with our in-person training programs. Master skills with hands-on guidance from experts.</p>
             </div>
         </section>
 
-        <section class="content-section">
-            <div class="container">
-                <div class="academy-intro">
-                    <h2 class="section-title" style="text-align: center; color: var(--primary); margin-bottom: 25px;">Beyond Online Learning</h2>
-                    <p style="font-size: 1.1rem; color: var(--dark); text-align: center; max-width: 900px; margin: 0 auto 30px;">The Offline Academy offers a structured, face-to-face learning environment, combining our industry-relevant curriculum with dedicated project guidance, hands-on labs, and personalized career counseling.</p>
-                    
-                    <div style="text-align: center;">
-                         <a href="../contact.html" class="btn btn-secondary btn-lg">Request Program Brochure</a>
-                    </div>
+        <!-- FEATURES GRID -->
+        <section class="features-section container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <h3 class="feature-title">Expert-Led Training</h3>
+                    <p class="feature-text">Learn directly from industry veterans with years of experience in top tech companies.</p>
                 </div>
-
-                <div class="section-header" style="margin-bottom: 40px;">
-                    <h2 class="section-title">Key Program Features</h2>
-                    <p class="section-subtitle">Why choose the personalized experience of our Offline Academy.</p>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-laptop-code"></i></div>
+                    <h3 class="feature-title">Hands-on Labs</h3>
+                    <p class="feature-text">Access our state-of-the-art computer labs for practical coding and project work.</p>
                 </div>
-
-                <div class="feature-grid">
-                    <div class="feature-item">
-                        <i class="fas fa-user-tie"></i>
-                        <strong>Dedicated Mentors</strong>
-                        <p style="font-size: 0.95rem; color: var(--gray);">One-on-one sessions with industry experts for personalized guidance and project reviews.</p>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-project-diagram"></i>
-                        <strong>Real-World Projects</strong>
-                        <p style="font-size: 0.95rem; color: var(--gray);">Work in collaborative teams on complex, portfolio-worthy projects required by top companies.</p>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-microchip"></i>
-                        <strong>Modern Lab Access</strong>
-                        <p style="font-size: 0.95rem; color: var(--gray);">Full access to state-of-the-art computational facilities and specialized software labs.</p>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-certificate"></i>
-                        <strong>Guaranteed Placement Support</strong>
-                        <p style="font-size: 0.95rem; color: var(--gray);">Enhanced interview preparation, resume optimization, and direct placement opportunities.</p>
-                    </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-user-friends"></i></div>
+                    <h3 class="feature-title">Collaborative Environment</h3>
+                    <p class="feature-text">Work in teams, participate in hackathons, and build real-world projects together.</p>
                 </div>
-            </div>
-        </section>
-        
-        <section class="content-section" style="background-color: #f0f4f8;">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">Academy Locations</h2>
-                    <p class="section-subtitle">Expanding soon, currently offering programs in our primary hub.</p>
-                </div>
-                
-                <div class="academy-locations">
-                    <div class="location-card">
-                        <i class="fas fa-map-marked-alt" style="color: var(--primary); font-size: 2rem;"></i>
-                        <h4>New Delhi, India (Main Campus)</h4>
-                        <p style="color: var(--gray);">Sector 62, Noida, NCR</p>
-                        <p style="font-size: 0.9rem; color: var(--accent);">Enrollment open for Data Science & AI cohorts.</p>
-                    </div>
-                    
-                    <div class="location-card" style="opacity: 0.6; margin-left: 30px; display: inline-block;">
-                        <i class="fas fa-map-marked-alt" style="color: var(--gray); font-size: 2rem;"></i>
-                        <h4>Bangalore, India (Coming Soon)</h4>
-                        <p style="color: var(--gray);">Launch expected Q3 2025</p>
-                        <a href="../contact.html" style="font-size: 0.9rem; font-weight: 600;">Notify Me</a>
-                    </div>
-                </div>
-
-                <div style="text-align: center; margin-top: 50px;">
-                    <a href="/community/join.html" class="btn btn-transparent">Join our Online Community while you wait</a>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-briefcase"></i></div>
+                    <h3 class="feature-title">Placement Assistance</h3>
+                    <p class="feature-text">Dedicated career support, resume building workshops, and interview preparation.</p>
                 </div>
             </div>
         </section>
 
-        <section class="cta-section">
+        <!-- LOCATION & CTA -->
+        <section class="location-section">
             <div class="container">
-                <h2 class="cta-title">Start Your Career Journey Today</h2>
-                <p class="cta-description">Whether online or offline, we provide the pathway for you to **Learn, Intern, and Earn**.</p>
-                <div class="cta-buttons">
-                    <a href="/intern/internship.html" class="btn btn-light btn-lg">Explore Internships</a>
+                <div class="location-card">
+                    <h2 class="location-title">Visit Our Campus</h2>
+                    <p class="location-address">
+                        Internadda Academy<br>
+                        123, Tech Park, Sector 62<br>
+                        Noida, Uttar Pradesh - 201301
+                    </p>
+                    <a href="../contact.html" class="academy-btn">Enquire Now</a>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- =========================================
+       FOOTER
+       ========================================= -->
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -268,7 +287,7 @@
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Intern</h3>
                     <ul class="footer-links">
-                        <li><a href="/intern/internship.html">Find Internships</a></li>
+                        <li><a href="../intern/internship.html">Find Internships</a></li>
                         <li><a href="#">For Companies</a></li>
                         <li><a href="#">Success Stories</a></li>
                         <li><a href="#">Career Coaching</a></li>
@@ -282,27 +301,26 @@
                         <li><a href="https://cv-builder.internadda.com/">Resume Builder</a></li>
                         <li><a href="https://interview-preparation.internadda.com">Interview Prep</a></li>
                         <li><a href="https://letter-builder.internadda.com/">Cover Letter Gen</a></li>
-                        <li><a href="https://ai-paraphraser.internadda.com">Essay Paraphraser</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">InternAdda</h3>
                     <ul class="footer-links">
-                        <li><a href="/about.html">About Us</a></li>
-                        <li><a href="/contact.html">Contact Us</a></li>
-                        <li><a href="/terms.html">Terms & Conditions</a></li>
-                        <li><a href="/refund.html">Refund Policy</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact Us</a></li>
+                        <li><a href="../terms.html">Terms & Conditions</a></li>
+                        <li><a href="../refund.html">Refund Policy</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Community</h3>
                     <ul class="footer-links">
-                        <li><a href="/community/join.html">Join Community</a></li>
-                        <li><a href="/community/partners.html">Partners</a></li>
-                        <li><a href="https://blog-internadda.blogspot.com/">Blog</a></li>
-                        <li><a href="/community/academy.html">Offline Academy</a></li>
+                        <li><a href="join.html">Join Community</a></li>
+                        <li><a href="partners.html">Partners</a></li>
+                        <li><a href="https://blog.internadda.com/">Blog</a></li>
+                        <li><a href="academy.html">Offline Academy</a></li>
                     </ul>
                 </div>
             </div>
@@ -313,6 +331,7 @@
         </div>
     </footer>
 
+    <!-- JavaScript -->
     <script src="../script.js"></script>
 </body>
 </html>
