@@ -298,6 +298,14 @@ header {
     transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
 }
 
+/* SLIDER IMAGE TRANSITION */
+.slider-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: opacity 0.5s ease-in-out; /* Smooth fade */
+}
+
 .floating-badge {
     position: absolute;
     background: white;
@@ -387,14 +395,14 @@ header {
 }
 
 /* =========================================
-   5. FEATURED COURSES (NEW STYLES)
+   5. FEATURED COURSES
    ========================================= */
 .course-card {
     border: 1px solid #e2e8f0;
     border-radius: 16px;
     overflow: hidden;
     transition: transform 0.3s;
-    position: relative; /* Needed for absolute positioning of badge */
+    position: relative; 
     background: white;
 }
 
@@ -403,7 +411,6 @@ header {
     box-shadow: 0 10px 20px rgba(0,0,0,0.05);
 }
 
-/* Free Tag Badge */
 .badge-free {
     position: absolute;
     top: 15px;
@@ -418,7 +425,6 @@ header {
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-/* Meta info row (Time & Rating) */
 .course-meta {
     display: flex;
     align-items: center;
