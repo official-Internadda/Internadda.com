@@ -33,7 +33,11 @@
 
             <!-- Navigation Links -->
             <nav class="nav-links">
-                <!-- Main Items with Icons (Visible in Mobile Menu via CSS) -->
+                <!-- NEW: Home Link -->
+                <a href="index.html" class="nav-item">
+                    <i class="fas fa-home"></i> Home
+                </a>
+
                 <a href="https://courses.internadda.com/" class="nav-item">
                     <i class="fas fa-laptop-code"></i> Courses
                 </a>
@@ -71,7 +75,7 @@
 
     <main>
         <!-- =========================================
-           HERO SECTION
+           HERO SECTION (WITH SLIDER)
            ========================================= -->
         <section class="hero">
             <div class="container hero-container">
@@ -107,7 +111,9 @@
 
                 <div class="hero-image">
                     <div class="hero-image-wrapper">
-                        <img src="images/slide2.png" alt="Student Learning" style="width: 100%; height: auto; display: block;">
+                        <!-- SLIDER IMAGE (Handled by Script.js) -->
+                        <img id="hero-slider" src="images/slide1.png" alt="Student Learning" class="slider-img">
+                        
                         <div class="floating-badge badge-top">
                             <i class="fas fa-check-circle" style="color: #48bb78;"></i>
                             <span>Placement Guaranteed</span>
@@ -144,7 +150,7 @@
         </section>
 
         <!-- =========================================
-           FEATURED COURSES
+           FEATURED COURSES (UPDATED UI)
            ========================================= -->
         <section style="padding: 80px 0; background: #fff;">
             <div class="container">
@@ -155,27 +161,31 @@
 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
                     
-                    <!-- Course Card 1 -->
+                    <!-- Course Card 1: Python -->
                     <div class="course-card">
                         <div style="position: relative;">
                             <img src="images/Python-Essentials-for-All.png" alt="Python" style="width: 100%; height: 200px; object-fit: cover;">
+                            <!-- Free Badge -->
                             <span class="badge-free">Free</span>
                         </div>
                         <div style="padding: 24px;">
                             <span style="background: #ebf4ff; color: #4c51bf; font-size: 0.8rem; font-weight: 600; padding: 4px 12px; border-radius: 20px;">Development</span>
                             <h3 style="font-size: 1.25rem; font-weight: 700; margin: 12px 0 8px; color: #1a202c;">Python Essentials</h3>
                             
+                            <!-- Meta Data: Time & Rating -->
                             <div class="course-meta">
                                 <span><i class="far fa-clock"></i> 4 Weeks</span>
                                 <span><i class="fas fa-star" style="color: #fbbf24;"></i> 4.8</span>
                             </div>
 
                             <p style="color: #718096; font-size: 0.95rem; margin-bottom: 20px;">Master the basics of Python programming from scratch.</p>
+                            
+                            <!-- Redirect Link -->
                             <a href="https://courses.internadda.com/" style="color: #4338ca; font-weight: 600; display: flex; align-items: center; gap: 8px;">View Course <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
 
-                    <!-- Course Card 2 -->
+                    <!-- Course Card 2: Hacking -->
                     <div class="course-card">
                         <div style="position: relative;">
                             <img src="images/Ethical-Hacking-Mastery.png" alt="Hacking" style="width: 100%; height: 200px; object-fit: cover;">
@@ -195,7 +205,7 @@
                         </div>
                     </div>
 
-                    <!-- Course Card 3 -->
+                    <!-- Course Card 3: Data Science -->
                     <div class="course-card">
                         <div style="position: relative;">
                             <img src="images/Essential Data Science Intern Course.png" alt="Data Science" style="width: 100%; height: 200px; object-fit: cover;">
@@ -210,7 +220,7 @@
                                 <span><i class="fas fa-star" style="color: #fbbf24;"></i> 4.7</span>
                             </div>
 
-                            <p style="color: #718096; font-size: 0.95rem; margin-bottom: 20px;">Analyze data patterns and build predictive models.</p>
+                            <p style="color: #718096; font-size: 0.95rem; margin-bottom: 20px;">Analyze data and build predictive models.</p>
                             <a href="https://courses.internadda.com/" style="color: #059669; font-weight: 600; display: flex; align-items: center; gap: 8px;">View Course <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
