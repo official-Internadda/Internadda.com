@@ -4,214 +4,217 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Refund Policy | Internadda</title>
-    <meta name="description" content="Read Internadda's Refund Policy regarding paid services, including Final Exam fees and any premium courses offered.">
+    <meta name="description" content="Read Internadda's Refund Policy regarding our courses and internship programs.">
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Main Stylesheet -->
     <link rel="stylesheet" href="style.css">
-
-    <link rel="icon" type="image/png" href="images/favicon.png">
-    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
     
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico">
+
     <style>
-        .page-header {
-            background-color: #fcebeb; /* Soft red/pink for important policy notices */
+        /* Page Specific Styles */
+        .refund-hero {
+            background: linear-gradient(135deg, #f8faff 0%, #ffffff 100%);
+            padding: 60px 0;
+            text-align: center;
+            border-bottom: 1px solid #f1f5f9;
         }
-        .policy-content {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 0;
-        }
-        .policy-content h2 {
-            font-size: 2.2rem;
-            color: var(--primary);
-            margin-top: 30px;
-            margin-bottom: 15px;
-            border-bottom: 2px solid var(--secondary);
-            padding-bottom: 5px;
-        }
-        .policy-content h3 {
-            font-size: 1.6rem;
-            color: var(--secondary);
-            margin-top: 25px;
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1a202c;
             margin-bottom: 10px;
         }
-        .policy-content p {
-            margin-bottom: 20px;
-            color: var(--dark);
-            line-height: 1.7;
-            font-size: 1.05rem;
+
+        .last-updated {
+            color: #64748b;
+            font-size: 0.95rem;
         }
-        .policy-content ul {
-            padding-left: 25px;
-            list-style-type: disc;
-            margin-bottom: 20px;
-            color: var(--dark);
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 0 20px;
         }
-        .policy-content li {
-            margin-bottom: 8px;
-            line-height: 1.6;
+
+        .policy-section {
+            margin-bottom: 40px;
         }
-        .policy-content strong {
+
+        .policy-heading {
+            font-size: 1.5rem;
             font-weight: 700;
-            color: var(--dark);
+            color: #1a202c;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
+        
+        .policy-heading i { color: #4338ca; font-size: 1.2rem; }
+
+        .policy-text {
+            color: #4a5568;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .policy-list {
+            list-style: disc;
+            padding-left: 25px;
+            margin-top: 15px;
+            color: #4a5568;
+        }
+
+        .policy-list li { margin-bottom: 10px; }
+
+        .contact-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 50px;
+            text-align: center;
+        }
+        
+        .contact-box a { color: #4338ca; font-weight: 600; text-decoration: underline; }
     </style>
 </head>
 <body>
-    <!-- Google Analytics Script (Retained) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-3ZZ3HGFM3Q');
-    </script>
 
-    <!-- ==============================================
-         HEADER: 3D Animated Nav (Requests 1 & 2)
-         ============================================== -->
+    <!-- =========================================
+       HEADER / NAVIGATION
+       ========================================= -->
     <header>
-        <div class="container header-container">
+        <div class="container nav-container">
+            <!-- Logo -->
             <a href="index.html" class="logo">
-                <img src="images/logo.jpg" alt="InternAdda Logo" class="logo-img">
-                <span class="logo-text">InternAdda</span>
+                <img src="images/logo.jpg" alt="Internadda Logo" style="height: 40px; border-radius: 8px;">
+                <span>Intern<span style="color: #4338ca;">adda</span></span>
             </a>
 
-            <nav class="nav-menu">
-                <a href="/index.html" class="nav-link">Home</a>
-                <a href="/courses/course.html" class="nav-link">Courses</a>
-                <a href="/intern/internship.html" class="nav-link">Internships</a>
-                <a href="/jobs.html" class="nav-link">Jobs</a>
-                <a href="/about.html" class="nav-link">About</a>
+            <!-- Navigation Links -->
+            <nav class="nav-links">
+                <!-- Home Link -->
+                <a href="index.html" class="nav-item">
+                    <i class="fas fa-home"></i> Home
+                </a>
+
+                <!-- Main Items with Icons -->
+                <a href="https://courses.internadda.com/" class="nav-item">
+                    <i class="fas fa-laptop-code"></i> Courses
+                </a>
+                <a href="intern/internship.html" class="nav-item">
+                    <i class="fas fa-briefcase"></i> Internships
+                </a>
+                <a href="about.html" class="nav-item">
+                    <i class="fas fa-info-circle"></i> About Us
+                </a>
                 
-                <!-- TOOLS DROPDOWN -->
-                <div class="nav-item dropdown" id="toolsDropdown">
-                    <a href="#" class="nav-link dropdown-toggle">Tools <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                <!-- DROPDOWN MENU -->
+                <div class="dropdown nav-item">
+                    <span>
+                        <i class="fas fa-th-large" style="margin-right: 8px; color: #4338ca; background: #e0e7ff; width: 32px; height: 32px; line-height: 32px; text-align: center; border-radius: 50%; font-size: 1rem; display: none;"></i> 
+                        More <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 4px;"></i>
+                    </span>
                     <div class="dropdown-content">
-                        <a href="/tools/ats-score.html" class="dropdown-link"><i class="fas fa-chart-bar"></i> ATS Score</a>
-                        <a href="/tools/resume-builder.html" class="dropdown-link"><i class="fas fa-file-alt"></i> Resume Builder</a>
-                        <a href="/tools/interview-questions.html" class="dropdown-link"><i class="fas fa-question-circle"></i> Interview Question</a>
-                        <a href="/tools/cover-letter.html" class="dropdown-link"><i class="fas fa-envelope"></i> Cover Letter Generator</a>
-                        <a href="/tools/paraphraser.html" class="dropdown-link"><i class="fas fa-pen-nib"></i> Essay / Paraphraser Tool</a>
+                        <a href="https://check-ats.internadda.com/" class="dropdown-link"><i class="fas fa-chart-bar"></i> ATS Score</a>
+                        <a href="https://cv-builder.internadda.com/" class="dropdown-link"><i class="fas fa-file-alt"></i> Resume Builder</a>
+                        <a href="https://interview-preparation.internadda.com/" class="dropdown-link"><i class="fas fa-question-circle"></i> Interview Question</a>
+                        <a href="https://letter-builder.internadda.com/" class="dropdown-link"><i class="fas fa-envelope"></i> Cover Letter Generator</a>
+                        <a href="contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
+                        <a href="https://blog.internadda.com/" class="dropdown-link"><i class="fas fa-blog"></i> Blog</a>
                     </div>
                 </div>
-                
-                <!-- MORE DROPDOWN -->
-                <div class="nav-item dropdown" id="moreDropdown">
-                    <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
-                    <div class="dropdown-content">
-                        <a href="/contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
-                        <a href="/blog/index.html" class="dropdown-link"><i class="fas fa-newspaper"></i> Blog</a>
-                        <a href="/community/join.html" class="dropdown-link"><i class="fas fa-users"></i> Community</a>
-                        <a href="/community/partners.html" class="dropdown-link"><i class="fas fa-handshake"></i> Partners</a>
-                        <a href="/community/academy.html" class="dropdown-link"><i class="fas fa-university"></i> Offline Academy</a>
-                    </div>
-                </div>
-                
-                <!-- MOBILE ONLY LINKS -->
-                <a href="/tools/ats-score.html" class="nav-link mobile-only-link">ATS Score</a>
-                <a href="/tools/resume-builder.html" class="nav-link mobile-only-link">Resume Builder</a>
-                <a href="/tools/interview-questions.html" class="nav-link mobile-only-link">Interview Question</a>
-                <a href="/tools/cover-letter.html" class="nav-link mobile-only-link">Cover Letter Generator</a>
-                <a href="/tools/paraphraser.html" class="nav-link mobile-only-link">Essay / Paraphraser Tool</a>
-                <a href="/contact.html" class="nav-link mobile-only-link">Contact</a>
-                <a href="/blog/index.html" class="nav-link mobile-only-link">Blog</a>
-                <a href="/community/join.html" class="nav-link mobile-only-link">Community</a>
-                <a href="/community/partners.html" class="nav-link mobile-only-link">Partners</a>
-                <a href="/community/academy.html" class="nav-link mobile-only-link">Offline Academy</a>
             </nav>
 
-            <div class="header-actions">
-                <div class="search-container">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="searchInput" class="search-input" placeholder="Search courses & domains...">
-                </div>
-                <!-- AUTH BUTTONS REMOVED -->
-            </div> 
-
-            <button class="hamburger-menu" id="hamburgerMenu">
-                <span></span>
-                <span></span>
-                <span></span>
+            <!-- Mobile Menu Button (Hamburger) -->
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
             </button>
         </div>
-        <div id="searchResults" class="search-results-container container hidden"></div>
     </header>
 
     <main>
-        <!-- Page Header -->
-        <section class="page-header">
+        <!-- HERO -->
+        <section class="refund-hero">
             <div class="container">
-                <h1 class="section-title">Refund Policy</h1>
-                <p class="section-subtitle">Transparent guidelines regarding fees, payments, and refund eligibility for all paid services.</p>
+                <h1 class="page-title">Refund Policy</h1>
+                <p class="last-updated">Last Updated: November 2025</p>
             </div>
         </section>
 
-        <!-- Policy Content -->
-        <section class="content-section">
-            <div class="container">
-                <div class="policy-content">
-                    <p>This Refund Policy applies to all paid services offered by Internadda, including but not limited to, Final Exam fees for internship qualification and any future premium paid courses. By making a payment, you agree to the terms outlined below.</p>
-
-                    <h2>1. Final Exam Fees (Internship Qualification)</h2>
-                    <p>The Final Exam is a paid service designed to rigorously assess your skills for guaranteed internship placement opportunities with our partner companies. The following refund conditions apply to the Final Exam fee:</p>
-                    <ul>
-                        <li><strong>Non-Refundable:</strong> The Final Exam fee is **strictly non-refundable** once the payment is successfully processed and the exam is accessible to the user (i.e., the user has started or attempted the exam).</li>
-                        <li><strong>Access:</strong> The fee covers the attempt to take the high-stakes qualification test. Since the entire value is derived from the testing opportunity and the potential for placement, the fee cannot be refunded if the exam has been initiated or if the user fails to pass.</li>
-                        <li><strong>Technical Issues:</strong> If a technical issue on Internadda’s side prevents a user from accessing or completing the exam, we will offer a free re-attempt or, if a re-attempt is not feasible, a full refund of the fee paid for that specific exam attempt.</li>
-                    </ul>
-                    
-                    <h3>2. Paid Courses or Premium Content</h3>
-                    <p>For any paid educational courses or premium content purchased directly through the Internadda platform, the following refund conditions apply:</p>
-                    <ul>
-                        <li><strong>7-Day Money-Back Guarantee:</strong> You may request a full refund within **7 days** of the original purchase date, **provided** that you have consumed less than 10% of the course content (measured by video time or lesson completion).</li>
-                        <li><strong>Ineligible for Refund:</strong> A refund request will be rejected if:
-                            <ul>
-                                <li>The request is made after the 7-day period.</li>
-                                <li>More than 10% of the course content has been accessed or downloaded.</li>
-                                <li>A Certificate of Completion has been generated or issued for the course.</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    
-                    <h3>3. Refund Processing</h3>
-                    <p>All eligible refunds will be processed within **10-14 business days** from the date the refund request is officially approved by the Internadda team. The refund will be credited back to the original payment method used during the purchase (e.g., Credit Card, UPI, Net Banking).</p>
-                    
-                    <p>Please note that depending on your bank or payment gateway, it may take additional time for the refunded amount to reflect in your account statement.</p>
-                    
-                    <h3>4. How to Request a Refund</h3>
-                    <p>To request a refund, please contact our support team immediately with the following information:</p>
-                    <ol>
-                        <li>Your full name and registered email address.</li>
-                        <li>The exact name of the product or exam purchased.</li>
-                        <li>Date of purchase.</li>
-                        <li>Reason for the refund request.</li>
-                    </ol>
-                    <p>Email your request to: **support@internadda.com**</p>
-                    
-                    <p style="margin-top: 30px; font-style: italic; color: var(--gray);">Internadda reserves the right to modify this policy at any time, effective upon posting of the updated policy on this page.</p>
-
-                </div>
+        <!-- CONTENT -->
+        <section class="content-wrapper">
+            
+            <div class="policy-section">
+                <h2 class="policy-heading"><i class="fas fa-info-circle"></i> 1. Overview</h2>
+                <p class="policy-text">
+                    At Internadda, we are committed to providing high-quality educational content and internship opportunities. We want you to be satisfied with your purchase. However, due to the digital nature of our products and services, we have a specific refund policy outlined below.
+                </p>
             </div>
-        </section>
 
-        <!-- CTA Section -->
-        <section class="cta-section">
-            <div class="container">
-                <h2 class="cta-title">Need to Get in Touch?</h2>
-                <p class="cta-description">If you have questions about a payment or need support, our team is here to help.</p>
-                <div class="cta-buttons">
-                    <a href="contact.html" class="btn btn-light btn-lg">Contact Support</a>
-                </div>
+            <div class="policy-section">
+                <h2 class="policy-heading"><i class="fas fa-laptop-code"></i> 2. Online Courses</h2>
+                <p class="policy-text">
+                    Most of our courses are offered free of charge. For any paid courses or certification programs:
+                </p>
+                <ul class="policy-list">
+                    <li>Refund requests must be made within <strong>7 days</strong> of purchase.</li>
+                    <li>A refund will only be issued if less than <strong>20%</strong> of the course content has been accessed or completed.</li>
+                    <li>Once a certificate has been issued, no refunds will be granted.</li>
+                </ul>
             </div>
+
+            <div class="policy-section">
+                <h2 class="policy-heading"><i class="fas fa-briefcase"></i> 3. Internship Programs</h2>
+                <p class="policy-text">
+                    Fees paid for guaranteed internship programs or premium placement services are generally non-refundable, except in the following cases:
+                </p>
+                <ul class="policy-list">
+                    <li>If Internadda fails to provide the promised internship opportunity within the specified timeframe.</li>
+                    <li>If the program is cancelled by Internadda before the start date.</li>
+                </ul>
+            </div>
+
+            <div class="policy-section">
+                <h2 class="policy-heading"><i class="fas fa-exclamation-triangle"></i> 4. Non-Refundable Items</h2>
+                <p class="policy-text">
+                    The following items are strictly non-refundable:
+                </p>
+                <ul class="policy-list">
+                    <li>Resume building services once the first draft has been delivered.</li>
+                    <li>Personalized career coaching sessions that have already taken place.</li>
+                    <li>Administrative fees or registration charges.</li>
+                </ul>
+            </div>
+
+            <div class="policy-section">
+                <h2 class="policy-heading"><i class="fas fa-money-check-alt"></i> 5. Processing of Refunds</h2>
+                <p class="policy-text">
+                    Approved refunds will be processed within <strong>7-10 business days</strong> to the original payment method. Please note that your bank or credit card issuer may take additional time to post the refund to your account.
+                </p>
+            </div>
+
+            <div class="contact-box">
+                <h3>Need Assistance?</h3>
+                <p>If you believe you are eligible for a refund or have questions about a charge, please contact our support team at <a href="mailto:payments@internadda.com">payments@internadda.com</a></p>
+            </div>
+
         </section>
     </main>
 
-    <!-- ==============================================
-         FOOTER: Updated with Tools Column (Request 3)
-         ============================================== -->
+    <!-- =========================================
+       FOOTER
+       ========================================= -->
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -234,8 +237,8 @@
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Learn</h3>
                     <ul class="footer-links">
-                        <li><a href="/courses/course.html">Browse Courses</a></li>
-                        <li><a href="/courses/course.html">Free Courses</a></li>
+                        <li><a href="https://courses.internadda.com/">Browse Courses</a></li>
+                        <li><a href="https://courses.internadda.com/">Free Courses</a></li>
                         <li><a href="#">Paid Courses</a></li>
                         <li><a href="#">Become an Instructor</a></li>
                     </ul>
@@ -244,42 +247,40 @@
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Intern</h3>
                     <ul class="footer-links">
-                        <li><a href="/intern/internship.html">Find Internships</a></li>
+                        <li><a href="intern/internship.html">Find Internships</a></li>
                         <li><a href="#">For Companies</a></li>
                         <li><a href="#">Success Stories</a></li>
                         <li><a href="#">Career Coaching</a></li>
                     </ul>
                 </div>
                 
-                <!-- NEW TOOLS COLUMN (Request 3) -->
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Career Tools</h3>
                     <ul class="footer-links">
-                        <li><a href="/tools/ats-score.html">ATS Score Checker</a></li>
-                        <li><a href="/tools/resume-builder.html">Resume Builder</a></li>
-                        <li><a href="/tools/interview-questions.html">Interview Prep</a></li>
-                        <li><a href="/tools/cover-letter.html">Cover Letter Gen</a></li>
-                        <li><a href="/tools/paraphraser.html">Essay Paraphraser</a></li>
+                        <li><a href="https://check-ats.internadda.com/">ATS Score Checker</a></li>
+                        <li><a href="https://cv-builder.internadda.com/">Resume Builder</a></li>
+                        <li><a href="https://interview-preparation.internadda.com">Interview Prep</a></li>
+                        <li><a href="https://letter-builder.internadda.com/">Cover Letter Gen</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">InternAdda</h3>
                     <ul class="footer-links">
-                        <li><a href="/about.html">About Us</a></li>
-                        <li><a href="/contact.html">Contact Us</a></li>
-                        <li><a href="/terms.html">Terms & Conditions</a></li>
-                        <li><a href="/refund.html">Refund Policy</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="refund.html">Refund Policy</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">Community</h3>
                     <ul class="footer-links">
-                        <li><a href="/community/join.html">Join Community</a></li>
-                        <li><a href="/community/partners.html">Partners</a></li>
-                        <li><a href="/blog/index.html">Blog</a></li>
-                        <li><a href="/community/academy.html">Offline Academy</a></li>
+                        <li><a href="community/join.html">Join Community</a></li>
+                        <li><a href="community/partners.html">Partners</a></li>
+                        <li><a href="https://blog.internadda.com/">Blog</a></li>
+                        <li><a href="community/academy.html">Offline Academy</a></li>
                     </ul>
                 </div>
             </div>
@@ -290,6 +291,7 @@
         </div>
     </footer>
 
+    <!-- JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>
