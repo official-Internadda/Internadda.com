@@ -1,10 +1,8 @@
 // ---------------------------------------------
-// Website Main Script (Auth Removed, Nav & Carousel Reworked)
+// Website Main Script (Optimized for Mobile & Performance)
 // ---------------------------------------------
 
-// --- FIREBASE / AUTH CODE COMPLETELY REMOVED ---
-
-// --- GLOBAL SEARCH DATA AND LOGIC (Request 5) ---
+// --- GLOBAL SEARCH DATA AND LOGIC ---
 
 // Utility function to get the correct path prefix for assets based on the current page depth
 function getRelativePath(targetPath) {
@@ -28,13 +26,13 @@ function getRelativePath(targetPath) {
 
 // Hardcoded data for search
 const allSearchableItems = [
-    // Courses (Kept for broad search but de-prioritized in logic)
+    // Courses
     { type: 'course', title: 'Essential Data Science Intern Course', instructor: 'Lucky Kumar', image: '/images/Essential Data Science Intern Course.png', url: "/courses/courses/Essential%20Data%20Science%20Intern%20Course.html" },
     { type: 'course', title: 'Generative AI & Prompt Engineering Masterclass', instructor: 'Lucky Kumar', image: '/images/Generative-AI-Prompt-Engineering-Masterclass.png', url: "/courses/courses/Generative-AI-Prompt-Engineering-Masterclass.html" },
     { type: 'course', title: 'Ethical Hacking Mastery', instructor: 'Lucky Kumar', image: '/images/Ethical-Hacking-Mastery.png', url: "/courses/courses/Ethical-Hacking-Mastery.html" },
     { type: 'course', title: 'Python Essentials for All', instructor: 'Lucky Kumar', image: '/images/Python-Essentials-for-All.png', url: "/courses/courses/Python-Essentials-for-All.html" },
     
-    // Internships (Priority items for search results)
+    // Internships
     { type: 'internship', title: 'Data Science & Analytics', roles: 'Data Analyst, Data Scientist Intern', url: '/intern/internship.html#tests', image: '/images/test_data Science.png', practiceUrl: '/intern/data_science_practice_test.html', finalExamUrl: '/intern/payment_page_data_science.html' },
     { type: 'internship', title: 'Artificial Intelligence & ML', roles: 'AI Intern, Machine Learning Intern', url: '/intern/internship.html#tests', image: '/images/test_Artificial Intelligence.png', practiceUrl: '/intern/ai_ml_practice_test.html', finalExamUrl: '/intern/payment_page_ai_ml.html' },
     { type: 'internship', title: 'Python Dev & Software Eng', roles: 'Python Developer, Backend Developer', url: '/intern/internship.html#tests', image: '/images/test_Python Development.png', practiceUrl: '/intern/python_dev_practice_test.html', finalExamUrl: '/intern/payment_page_python.html' },
@@ -66,16 +64,13 @@ function renderSearchResults(query) {
 
     if (q.length < 2) return;
 
-    // MODIFIED: Filter to only include 'internship' types and limit results
+    // Filter to only include 'internship' types and limit results
     const displayResults = allSearchableItems.filter(item =>
         (item.type === 'internship') &&
         (item.title.toLowerCase().includes(q) || (item.roles && item.roles.toLowerCase().includes(q)))
     ).slice(0, 8);
-    
-    // --- Removed redundant interleaving logic as we only show internships now ---
 
     if (displayResults.length === 0) {
-        // MODIFIED: Updated message to reflect search only for internships
         searchResultsContainer.innerHTML = `<p style="padding: 10px 15px; color: var(--gray);">No related internships found for "${query}".</p>`;
         searchResultsContainer.classList.remove('hidden');
         return;
@@ -83,23 +78,9 @@ function renderSearchResults(query) {
 
     displayResults.forEach(item => {
         let itemHtml = '';
-        const baseItemUrl = getRelativePath(item.url);
-
-        if (item.type === 'course') {
+        
+        if (item.type === 'internship') {
             const imgSrc = getRelativePath(item.image);
-            itemHtml = `
-                <a href="${baseItemUrl}" class="search-result-item course-result">
-                    <img src="${imgSrc}" alt="${item.title}" onerror="this.onerror=null;this.src='${getRelativePath('/images/logo.jpg')}'">
-                    <div>
-                        <h4>${item.title}</h4>
-                        <p>Course by ${item.instructor}</p>
-                    </div>
-                    <span class="badge free" style="flex-shrink: 0;">FREE</span>
-                </a>
-            `;
-        } else if (item.type === 'internship') {
-            const imgSrc = getRelativePath(item.image);
-            // Handle '#' links correctly by generating a link to '#' for unimplemented practice/exam links
             const practiceUrl = item.practiceUrl === '#' ? '#' : getRelativePath(item.practiceUrl);
             const finalExamUrl = item.finalExamUrl === '#' ? '#' : getRelativePath(item.finalExamUrl);
             const isDisabled = item.practiceUrl === '#' && item.finalExamUrl === '#';
@@ -120,131 +101,70 @@ function renderSearchResults(query) {
                 </div>
             `;
         }
-
+        // Courses are excluded from search results per previous requirement logic
+        
         searchResultsContainer.innerHTML += itemHtml;
     });
 
     searchResultsContainer.classList.remove('hidden');
 }
 
-// ✅ Ensures redirect also happens when user presses Enter
-document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('searchInput');
-    if (searchInput) {
-        searchInput.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                const q = searchInput.value.toLowerCase().trim();
-                if (q === "all courses" || q === "courses") {
-                    window.location.href = getRelativePath('/courses/course.html');
-                    event.preventDefault();
-                } else if (q === "all internships" || q === "internships") {
-                    window.location.href = getRelativePath('/intern/internship.html');
-                    event.preventDefault();
-                }
-            }
-        });
-    }
-});
 
+// --- OPTIMIZED INFINITE SCROLL LOGIC ---
 
-// --- Testimonial Carousel/Auto-Scroll Logic (FIXED for seamless loop) ---
-
-function initTestimonialCarousel(containerId) {
+/**
+ * Sets up a smooth, continuous infinite scroll for a container.
+ * Automatically clones content to ensure a seamless loop.
+ * @param {string} containerId - The ID of the container to scroll.
+ * @param {number} speed - Scroll speed in pixels per frame (default: 1).
+ */
+function setupInfiniteScroll(containerId, speed = 1) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    // Remove existing clones before re-initializing
-    container.querySelectorAll('.cloned').forEach(clone => clone.remove());
-
-    const originalCards = Array.from(container.children).filter(child => !child.classList.contains('cloned'));
-    const visibleCardCount = 2; // Approximate number of cards visible on a large screen
+    // 1. Duplicate Content for Seamless Looping
+    // Clone the existing children and append them to the end
+    const originalContent = Array.from(container.children);
     
-    // Duplicate enough cards to guarantee seamless looping
-    if (originalCards.length > 0 && originalCards.length > visibleCardCount) {
-         for (let i = 0; i < originalCards.length; i++) {
-             const clone = originalCards[i].cloneNode(true);
-             clone.classList.add('cloned'); // Mark as clone
-             
-             // Update image source for clones (optional, to represent unique students)
-             // This supports the user request to use student images for the visual scroll
-             const img = clone.querySelector('.author-avatar');
-             if (img) {
-                 // Cycle through placeholder student images (assuming student1.png to studentX.png)
-                 const studentIndex = (originalCards.length + i) % 6 + 1; // Cycle through 1 to 6
-                 img.src = getRelativePath(`/images/student${studentIndex}.png`); 
-                 img.onerror = function() { this.onerror=null; this.src=getRelativePath('/images/no_image.png'); };
-             }
-             
-             container.appendChild(clone);
-         }
-    }
+    // Only activate if there is content to scroll
+    if (originalContent.length === 0) return;
 
-    // Start auto-scrolling only if there are items
-    if (container.children.length > originalCards.length) {
-        startAutoScroll(container, originalCards.length);
-    }
-}
+    originalContent.forEach(item => {
+        const clone = item.cloneNode(true);
+        clone.classList.add('cloned-item'); // Mark as clone if styling needed
+        container.appendChild(clone);
+    });
 
-function startAutoScroll(container, originalCount) {
-    // Clear previous animation frames if they exist
-    if (container.autoScrollRAF) {
-        cancelAnimationFrame(container.autoScrollRAF);
-    }
+    // 2. Configure Container Styles via JS to ensure functionality
+    container.style.display = 'flex';
+    container.style.flexWrap = 'nowrap';
+    container.style.overflowX = 'hidden'; // Hide native scrollbar
     
-    // FIX: Increased speed from 0.5 to 1.0 for visible movement and continuous scroll
-    let scrollSpeed = 1.0; // pixels per requestAnimationFrame
-    let currentScroll = container.scrollLeft;
+    // 3. Animation Loop
+    let scrollPos = 0;
     
-    // Calculate the width of the original content block. This is the reset point.
-    function getOriginalContentWidth() {
-         let totalWidth = 0;
-         const originalChildren = Array.from(container.children).slice(0, originalCount);
-         if (originalChildren.length === 0) return 0;
-         
-         // Measure first card's width + its margin-right/gap
-         const firstCardRect = originalChildren[0].getBoundingClientRect();
-         const containerStyle = window.getComputedStyle(container);
-         const gap = parseFloat(containerStyle.gap) || 36;
-         
-         const singleCardFullWidth = firstCardRect.width + gap;
-         
-         // Total width of the original set excluding the last item's gap
-         totalWidth = (singleCardFullWidth * originalCount) - gap;
-         
-         return totalWidth;
-    }
-
-    function autoScroll() {
-        const resetPoint = getOriginalContentWidth();
+    function animate() {
+        scrollPos += speed;
         
-        // FIX: Check against resetPoint minus scrollSpeed for smoother loop boundary detection
-        if (container.scrollLeft >= resetPoint - scrollSpeed) {
-            // Snap back to the visual start point (scroll position 0) instantly
-            container.scrollLeft = 0;
+        // The scrollable width is now roughly double the original content width.
+        // Once we've scrolled past the first set of items (half the total scrollWidth),
+        // we instantly reset to 0. Because the cloned items are identical, this is invisible.
+        const resetThreshold = container.scrollWidth / 2;
+        
+        if (scrollPos >= resetThreshold) {
+            scrollPos = 0;
         }
         
-        container.scrollLeft += scrollSpeed;
-        container.autoScrollRAF = requestAnimationFrame(autoScroll);
+        container.scrollLeft = scrollPos;
+        requestAnimationFrame(animate);
     }
     
-    // Stop scrolling if the user manually interacts (improves UX)
-    const stopScroll = () => cancelAnimationFrame(container.autoScrollRAF);
-    const resumeScroll = () => {
-        if (!container.isScrollingPaused) {
-            container.autoScrollRAF = requestAnimationFrame(autoScroll);
-        }
-    };
-
-    container.addEventListener('mouseenter', stopScroll);
-    container.addEventListener('touchstart', stopScroll);
-    container.addEventListener('mouseleave', resumeScroll);
-    container.addEventListener('touchend', resumeScroll);
-    
-    container.autoScrollRAF = requestAnimationFrame(autoScroll);
+    // Start the loop
+    requestAnimationFrame(animate);
 }
 
 
-// --- Core DOM Initialization ---
+// --- CORE INITIALIZATION ---
 
 document.addEventListener('DOMContentLoaded', function() {
     
@@ -253,7 +173,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('searchInput');
     const searchResultsContainer = document.getElementById('searchResults');
     
-    // 1. Hamburger Menu Toggle Logic
+    // 1. Infinite Scroll Initializations
+    // Initialize Testimonial Carousels
+    setupInfiniteScroll('testimonialsGrid', 1); 
+    setupInfiniteScroll('internshipTestimonialsGrid', 1);
+    
+    // Initialize Partner Logos
+    // Ensure your HTML container has id="partnerLogoMarquee"
+    const partnerMarquee = document.querySelector('.logo-marquee');
+    if (partnerMarquee) {
+        if (!partnerMarquee.id) partnerMarquee.id = 'partnerLogoMarquee';
+        setupInfiniteScroll('partnerLogoMarquee', 0.8); // Slightly slower for logos
+    }
+
+
+    // 2. Hamburger Menu Toggle
     if (hamburgerMenu && navMenu) {
         hamburgerMenu.addEventListener('click', () => {
             hamburgerMenu.classList.toggle('active');
@@ -274,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // 2. Desktop & Mobile Dropdown Logic (Handles both Tools and More)
+    // 3. Desktop & Mobile Dropdown Logic
     const allDropdownContainers = document.querySelectorAll('.nav-item.dropdown');
     
     allDropdownContainers.forEach(dropdownContainer => {
@@ -285,13 +219,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (toggle && content) {
             toggle.addEventListener('click', function(event) {
                 const isMobile = window.innerWidth <= 1024;
-                const isVisible = content.style.display === 'block';
                 
+                // Close other dropdowns first (Desktop only behavior mostly)
                 if (!isMobile) {
-                    // --- DESKTOP LOGIC ---
-                    event.preventDefault(); 
-                    
-                    // Close all other open dropdowns first
                     document.querySelectorAll('.nav-item.dropdown .dropdown-content').forEach(otherContent => {
                         if (otherContent !== content) {
                             otherContent.style.display = 'none';
@@ -299,34 +229,26 @@ document.addEventListener('DOMContentLoaded', function() {
                             if (otherArrow) otherArrow.style.transform = 'rotate(0deg)';
                         }
                     });
-
-                    // Toggle the clicked dropdown
-                    content.style.display = isVisible ? 'none' : 'block';
-                    if (arrow) {
-                        arrow.style.transform = isVisible ? 'rotate(0deg)' : 'rotate(180deg)';
-                    }
-                    event.stopPropagation();
-                } else {
-                    // --- MOBILE LOGIC ---
-                    event.preventDefault();
-                    // Toggle the clicked dropdown content display inline in the mobile menu
-                    content.style.display = isVisible ? 'none' : 'block';
-                    if (arrow) {
-                        arrow.style.transform = isVisible ? 'rotate(0deg)' : 'rotate(180deg)';
-                    }
-                    // Prevent the mobile menu closure if clicking a dropdown toggle
-                    event.stopPropagation();
                 }
+
+                // Toggle current
+                const isVisible = content.style.display === 'block';
+                content.style.display = isVisible ? 'none' : 'block';
+                if (arrow) {
+                    arrow.style.transform = isVisible ? 'rotate(0deg)' : 'rotate(180deg)';
+                }
+                
+                event.preventDefault();
+                event.stopPropagation();
             });
         }
     });
     
-    // Close desktop dropdowns when clicking anywhere else 
+    // Close dropdowns when clicking outside (Desktop)
     document.addEventListener('click', function(event) {
          if (window.innerWidth > 1024) {
              document.querySelectorAll('.nav-item.dropdown .dropdown-content').forEach(content => {
                  const parentDropdown = content.closest('.nav-item.dropdown');
-                 // Check if the click is outside the dropdown container itself
                  if (parentDropdown && !parentDropdown.contains(event.target)) {
                      content.style.display = 'none';
                      const arrow = parentDropdown.querySelector('.dropdown-arrow');
@@ -336,24 +258,35 @@ document.addEventListener('DOMContentLoaded', function() {
          }
     });
 
-    // 3. Desktop Search Functionality
+    // 4. Search Functionality
      if (searchInput && searchResultsContainer) {
          searchInput.addEventListener('input', (e) => {
              renderSearchResults(e.target.value);
          });
+         
+         // Enter key support
+         searchInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                const q = searchInput.value.toLowerCase().trim();
+                if (q === "all courses" || q === "courses") {
+                    window.location.href = getRelativePath('/courses/course.html');
+                    event.preventDefault();
+                } else if (q === "all internships" || q === "internships") {
+                    window.location.href = getRelativePath('/intern/internship.html');
+                    event.preventDefault();
+                }
+            }
+        });
 
-         // Close search results when clicking anywhere outside
+         // Close search results when clicking outside
          document.addEventListener('click', (e) => {
-             // The CSS fix (.hidden { pointer-events: none !important; }) ensures that 
-             // even when searchResultsContainer is visible, if the click is outside, 
-             // the container quickly hides itself without blocking clicks on the main page.
              if (!searchInput.contains(e.target) && !searchResultsContainer.contains(e.target)) {
                  searchResultsContainer.classList.add('hidden');
              }
          });
      }
      
-    // 4. Global Scroll Animation for Header
+    // 5. Header Scroll Animation
      const headerElement = document.querySelector('header');
      if (headerElement) {
          window.addEventListener('scroll', function() {
@@ -364,19 +297,4 @@ document.addEventListener('DOMContentLoaded', function() {
              }
          });
      }
-
-    // 5. Initialize Testimonial Carousels
-    initTestimonialCarousel('testimonialsGrid');
-    initTestimonialCarousel('internshipTestimonialsGrid');
-    
-    // 6. Re-initialize carousel on window resize to fix dimensions
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-            initTestimonialCarousel('testimonialsGrid');
-            initTestimonialCarousel('internshipTestimonialsGrid');
-        }, 250);
-    });
-    
 });
