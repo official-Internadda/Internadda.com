@@ -85,11 +85,11 @@ header {
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 8px; /* Gap for desktop icons if visible */
+    gap: 8px;
 }
 
 .nav-item i {
-    display: none; /* Hide icons on desktop by default for clean look, show on mobile */
+    display: none; 
 }
 
 .nav-item:hover { color: var(--primary); }
@@ -100,7 +100,6 @@ header {
     display: inline-block;
 }
 
-/* The "More" Label - Click Trigger */
 .dropdown > span {
     display: flex;
     align-items: center;
@@ -110,7 +109,7 @@ header {
 }
 
 .dropdown-content {
-    display: none; /* Hidden by default */
+    display: none; 
     position: absolute;
     background-color: #ffffff;
     min-width: 260px;
@@ -128,7 +127,6 @@ header {
     display: block;
 }
 
-/* Small triangle/arrow for dropdown */
 .dropdown-content::before {
     content: "";
     position: absolute;
@@ -157,7 +155,6 @@ header {
     color: var(--primary);
 }
 
-/* Mobile Menu Button */
 .mobile-menu-btn {
     display: none;
     background: none;
@@ -353,7 +350,6 @@ header {
 .light-fade::before { left: 0; background: linear-gradient(to right, #fff 10%, transparent 100%); }
 .light-fade::after { right: 0; background: linear-gradient(to left, #fff 10%, transparent 100%); }
 
-/* Dark Fade matched to new gradient background */
 .dark-fade { background: transparent; }
 .dark-fade::before { left: 0; background: linear-gradient(to right, #0b0f19 10%, transparent 100%); }
 .dark-fade::after { right: 0; background: linear-gradient(to left, #1e1b4b 10%, transparent 100%); }
@@ -391,10 +387,62 @@ header {
 }
 
 /* =========================================
-   5. PREMIUM TESTIMONIALS (Matched Color)
+   5. FEATURED COURSES (NEW STYLES)
+   ========================================= */
+.course-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.3s;
+    position: relative; /* Needed for absolute positioning of badge */
+    background: white;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+/* Free Tag Badge */
+.badge-free {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #22c55e; /* Green */
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    z-index: 2;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Meta info row (Time & Rating) */
+.course-meta {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 10px 0;
+    font-size: 0.9rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.course-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.course-meta i {
+    font-size: 0.9rem;
+}
+
+/* =========================================
+   6. PREMIUM TESTIMONIALS
    ========================================= */
 .testimonials-dark {
-    /* Deep Indigo/Slate Gradient to match brand #4338ca */
     background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
     padding: 100px 0;
     color: white;
@@ -405,7 +453,7 @@ header {
 .testimonials-dark .section-subtitle { color: #94a3b8; font-size: 1.1rem; margin-bottom: 60px; }
 
 .testimonial-card-dark {
-    background: rgba(255, 255, 255, 0.05); /* Glassmorphism effect */
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
@@ -450,9 +498,8 @@ header {
 .user-details h4 { margin: 0; font-size: 1rem; color: white; }
 .user-details span { font-size: 0.85rem; color: #94a3b8; }
 
-
 /* =========================================
-   6. FOOTER STYLES
+   7. FOOTER STYLES
    ========================================= */
 footer {
     background-color: #0f172a;
@@ -535,9 +582,8 @@ footer {
     font-size: 0.9rem;
 }
 
-
 /* =========================================
-   7. RESPONSIVE / MOBILE OPTIMIZATION
+   8. RESPONSIVE
    ========================================= */
 @media (max-width: 1024px) {
     .hero-heading { font-size: 3rem; }
@@ -549,7 +595,6 @@ footer {
 }
 
 @media (max-width: 768px) {
-    /* HERO & SECTIONS ADJUSTMENTS */
     .hero-container { flex-direction: column; text-align: center; gap: 40px; }
     .hero-heading { font-size: 2.5rem; }
     .hero-cta { justify-content: center; flex-direction: column; }
@@ -561,29 +606,22 @@ footer {
     .marquee-track { gap: 30px; }
     .testimonial-card-dark { min-width: 300px; }
 
-    /* ---------------------------------------------------
-       MOBILE FOOTER (2 COLUMNS - LEFT/RIGHT)
-       --------------------------------------------------- */
+    /* Footer Mobile */
     .footer-grid {
-        grid-template-columns: 1fr 1fr; /* 2 Columns */
-        gap: 40px 20px; /* Row Gap 40px, Col Gap 20px */
-        text-align: left; /* Standard Align */
+        grid-template-columns: 1fr 1fr; 
+        gap: 40px 20px; 
+        text-align: left; 
     }
-    
     .footer-brand {
-        grid-column: span 2; /* Brand takes full width at top */
+        grid-column: span 2; 
         text-align: center;
         border-bottom: 1px solid rgba(255,255,255,0.05);
         padding-bottom: 30px;
         margin-bottom: 10px;
     }
-    
-    /* Ensure branding is centered, but links are left-aligned grid */
     .footer-brand .footer-description { margin: 0 auto 20px; }
 
-    /* ---------------------------------------------------
-       PREMIUM MOBILE NAVIGATION (COLORFUL & CENTERED)
-       --------------------------------------------------- */
+    /* Mobile Menu */
     .mobile-menu-btn { display: block; z-index: 1002; }
 
     .nav-links {
@@ -592,7 +630,6 @@ footer {
         left: 0;
         width: 100%;
         height: calc(100vh - 80px);
-        /* Colorful Gradient Background */
         background: linear-gradient(180deg, #ffffff 0%, #f0f4ff 100%);
         flex-direction: column;
         align-items: center;
@@ -605,7 +642,6 @@ footer {
 
     .nav-links.active { transform: translateX(0); }
 
-    /* Icons visible on mobile */
     .nav-item i {
         display: inline-block;
         margin-right: 8px;
@@ -619,26 +655,22 @@ footer {
         border-radius: 50%;
     }
 
-    /* List Items styling */
     .nav-links > a, 
     .nav-links > div.dropdown {
-        width: 80%; /* Not full edge-to-edge, looks cleaner */
+        width: 80%; 
         text-align: center;
         padding: 15px 0;
-        /* Short Separator Line */
         border-bottom: 1px solid rgba(0,0,0,0.06);
         font-size: 1.1rem;
         font-weight: 600;
         color: #334155;
         display: flex;
         align-items: center;
-        justify-content: center; /* Centered */
+        justify-content: center; 
     }
 
-    /* Remove border from last item */
     .nav-links > div.dropdown:last-child { border-bottom: none; }
 
-    /* Dropdown Content Mobile */
     .dropdown-content {
         position: static;
         display: none;
@@ -646,7 +678,7 @@ footer {
         border: none;
         padding: 10px 0;
         width: 100%;
-        background: rgba(255,255,255,0.5); /* Slight distinct bg */
+        background: rgba(255,255,255,0.5); 
         margin-top: 10px;
         border-radius: 12px;
     }
@@ -660,7 +692,6 @@ footer {
         color: #64748b;
     }
     
-    /* Make "More" label centered flex */
     .dropdown > span {
         width: 100%;
         justify-content: center;
