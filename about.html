@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Internadda Blog | Learn, Intern & Earn</title>
-    <meta name="description" content="India's best platform for internships and free courses. Read our latest blog posts.">
+    <title>About Us | Internadda</title>
+    <meta name="description" content="Learn about Internadda's mission to empower students with skills and internships.">
     
     <!-- Google Fonts (Inter) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -12,369 +12,402 @@
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
     
-    <!-- Tailwind Config -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            50: '#eff6ff',
-                            100: '#e0e7ff',
-                            500: '#4f46e5',
-                            600: '#4338ca',
-                            700: '#3730a3',
-                            900: '#1e1b4b',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico">
 
     <style>
-        .group:hover .group-hover\:block { display: block; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        /* Clean link hover effect similar to modern navbars */
-        .nav-link {
-            color: #4b5563; /* Gray-600 */
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.2s;
+        /* Page Specific Styles */
+        .about-hero {
+            background: linear-gradient(135deg, #f8faff 0%, #ffffff 100%);
+            padding: 80px 0;
+            text-align: center;
+            border-bottom: 1px solid #f1f5f9;
         }
-        .nav-link:hover {
-            color: #4338ca; /* Brand color */
+
+        .about-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #1a202c;
+            margin-bottom: 20px;
+        }
+        
+        .about-title span { color: #4338ca; }
+
+        .about-lead {
+            font-size: 1.15rem;
+            color: #64748b;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        /* Mission Vision Grid */
+        .mv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+
+        .mv-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .mv-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        }
+
+        .mv-icon {
+            width: 70px;
+            height: 70px;
+            background: #e0e7ff;
+            color: #4338ca;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin: 0 auto 25px;
+        }
+
+        .mv-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #1a202c;
+        }
+
+        .mv-text {
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        /* Team Section */
+        .team-section {
+            background: #f8fafc;
+            padding: 80px 0;
+        }
+
+        .section-head {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .team-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            text-align: center;
+            padding-bottom: 20px;
+        }
+
+        .team-card:hover { transform: translateY(-5px); }
+
+        .team-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-bottom: 4px solid #4338ca;
+        }
+
+        .team-info {
+            padding: 20px;
+        }
+
+        .team-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 5px;
+        }
+
+        .team-role {
+            color: #4338ca;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .team-bio {
+            font-size: 0.9rem;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        /* Story Section */
+        .story-section {
+            padding: 80px 0;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .story-content { flex: 1; }
+        .story-img { flex: 1; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+
+        @media (max-width: 768px) {
+            .about-title { font-size: 2.2rem; }
+            .story-section { flex-direction: column-reverse; }
+            .story-img { width: 100%; }
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen font-sans">
+<body>
 
-    <!-- HEADER / NAVIGATION (Matches Screenshot) -->
-    <header class="bg-white sticky top-0 z-50 pt-2 pb-2">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                
-                <!-- Logo Section -->
-                <a href="index.html" class="flex items-center gap-2">
-                    <!-- Logo Image as requested -->
-                    <img src="logo.jpg" alt="InternAdda" class="h-10 object-contain">
+    <!-- =========================================
+       HEADER / NAVIGATION
+       ========================================= -->
+    <header>
+        <div class="container nav-container">
+            <!-- Logo -->
+            <a href="index.html" class="logo">
+                <img src="images/logo.jpg" alt="Internadda Logo" style="height: 40px; border-radius: 8px;">
+                <span>Intern<span style="color: #4338ca;">adda</span></span>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="nav-links">
+                <!-- Home Link -->
+                <a href="index.html" class="nav-item">
+                    <i class="fas fa-home"></i> Home
                 </a>
 
-                <!-- Desktop Navigation (Clean, No Icons) -->
-                <nav class="hidden lg:flex items-center gap-8">
-                    <a href="index.html" class="nav-link">Home</a>
-                    <a href="https://courses.internadda.com/" class="nav-link">Courses</a>
-                    <a href="intern/internship.html" class="nav-link">Internships</a>
-                    <a href="about.html" class="nav-link">About Us</a>
-                    
-                    <!-- "More" Dropdown -->
-                    <div class="relative group">
-                        <button class="nav-link flex items-center gap-1 focus:outline-none">
-                            More <i class="fas fa-chevron-down text-xs pt-1"></i>
-                        </button>
-                        <!-- Dropdown Menu -->
-                        <div class="absolute top-full right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-100 hidden group-hover:block animate-fade-in py-2 z-50">
-                            <a href="https://check-ats.internadda.com/" class="block px-4 py-2 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">ATS Score</a>
-                            <a href="https://cv-builder.internadda.com/" class="block px-4 py-2 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">Resume Builder</a>
-                            <a href="https://interview-preparation.internadda.com/" class="block px-4 py-2 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">Interview Question</a>
-                            <a href="https://letter-builder.internadda.com/" class="block px-4 py-2 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">Cover Letter Gen</a>
-                            <a href="https://blog-internadda.blogspot.com/" class="block px-4 py-2 text-sm text-brand-600 bg-brand-50 font-medium">Blog</a>
-                        </div>
+                <!-- Main Items with Icons -->
+                <a href="https://courses.internadda.com/" class="nav-item">
+                    <i class="fas fa-laptop-code"></i> Courses
+                </a>
+                <a href="intern/internship.html" class="nav-item">
+                    <i class="fas fa-briefcase"></i> Internships
+                </a>
+                <a href="about.html" class="nav-item" style="color: #4338ca;"> <!-- Active Link -->
+                    <i class="fas fa-info-circle"></i> About Us
+                </a>
+                
+                <!-- DROPDOWN MENU -->
+                <div class="dropdown nav-item">
+                    <span>
+                        <i class="fas fa-th-large" style="margin-right: 8px; color: #4338ca; background: #e0e7ff; width: 32px; height: 32px; line-height: 32px; text-align: center; border-radius: 50%; font-size: 1rem; display: none;"></i> 
+                        More <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 4px;"></i>
+                    </span>
+                    <div class="dropdown-content">
+                        <a href="https://check-ats.internadda.com/" class="dropdown-link"><i class="fas fa-chart-bar"></i> ATS Score</a>
+                        <a href="https://cv-builder.internadda.com/" class="dropdown-link"><i class="fas fa-file-alt"></i> Resume Builder</a>
+                        <a href="https://interview-preparation.internadda.com/" class="dropdown-link"><i class="fas fa-question-circle"></i> Interview Question</a>
+                        <a href="https://letter-builder.internadda.com/" class="dropdown-link"><i class="fas fa-envelope"></i> Cover Letter Generator</a>
+                        <a href="https://ai-paraphraser.internadda.com" class="dropdown-link"><i class="fas fa-pen-nib"></i> Essay / Paraphraser Tool</a>
+                        <a href="contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
+                        <a href="https://blog.internadda.com/" class="dropdown-link"><i class="fas fa-blog"></i> Blog</a>
                     </div>
-                </nav>
-
-                <!-- Mobile Menu Button -->
-                <div class="flex items-center lg:hidden">
-                    <button id="mobile-menu-btn" class="text-gray-500 hover:text-brand-600 p-2 text-xl">
-                        <i class="fas fa-bars"></i>
-                    </button>
                 </div>
-            </div>
-        </div>
-        
-        <!-- Mobile Menu Panel -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 absolute w-full shadow-lg z-40">
-            <div class="px-4 pt-2 pb-4 space-y-1">
-                <a href="index.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-gray-50 rounded-md">Home</a>
-                <a href="https://courses.internadda.com/" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-gray-50 rounded-md">Courses</a>
-                <a href="intern/internship.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-gray-50 rounded-md">Internships</a>
-                <a href="about.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-gray-50 rounded-md">About Us</a>
-            </div>
+            </nav>
+
+            <!-- Mobile Menu Button (Hamburger) -->
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
-    <main class="flex-grow">
-        
-        <!-- Hero Section -->
-        <section class="relative bg-white overflow-hidden border-b border-gray-100">
-            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center relative z-10">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-50 text-brand-600 text-sm font-semibold mb-6 border border-brand-100">
-                    <i class="fas fa-rocket"></i> <span>InternAdda Blog</span>
+    <main>
+        <!-- HERO -->
+        <section class="about-hero">
+            <div class="container">
+                <h1 class="about-title">Empowering <span>Future Leaders</span></h1>
+                <p class="about-lead">We are bridging the gap between academic learning and industry requirements. Our mission is to make quality education and career opportunities accessible to everyone.</p>
+            </div>
+        </section>
+
+        <!-- MISSION & VISION -->
+        <section class="container">
+            <div class="mv-grid">
+                <div class="mv-card">
+                    <div class="mv-icon"><i class="fas fa-rocket"></i></div>
+                    <h3 class="mv-title">Our Mission</h3>
+                    <p class="mv-text">To provide free, high-quality courses and paid internship opportunities to students across India, ensuring financial independence and career readiness.</p>
                 </div>
-                <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-4 leading-tight">
-                    Empowering <span class="text-brand-600">Careers</span>
-                </h1>
-                <p class="max-w-2xl mx-auto text-lg text-slate-600">
-                    Explore our latest insights, educational resources, and community stories.
+                <div class="mv-card">
+                    <div class="mv-icon"><i class="fas fa-eye"></i></div>
+                    <h3 class="mv-title">Our Vision</h3>
+                    <p class="mv-text">To be India's leading platform for student upskilling, creating a world where talent meets opportunity without barriers.</p>
+                </div>
+                <div class="mv-card">
+                    <div class="mv-icon"><i class="fas fa-users"></i></div>
+                    <h3 class="mv-title">Our Community</h3>
+                    <p class="mv-text">A thriving ecosystem of 10,000+ learners, mentors, and industry experts collaborating to build the future of tech.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- OUR STORY -->
+        <section class="story-section container">
+            <div class="story-content">
+                <span style="color: #4338ca; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Our Journey</span>
+                <h2 style="font-size: 2.2rem; font-weight: 800; margin: 15px 0 20px; color: #1a202c;">From a Dorm Room to a Movement</h2>
+                <p style="color: #64748b; line-height: 1.8; margin-bottom: 20px;">
+                    Internadda started with a simple observation: students were graduating with degrees but without the practical skills companies needed. 
+                </p>
+                <p style="color: #64748b; line-height: 1.8;">
+                    What began as a small WhatsApp group sharing internship updates has now grown into a comprehensive Ed-Tech platform. We believe that education should be free and internships should be paid. That's the core philosophy that drives every decision we make.
                 </p>
             </div>
+            <div class="story-img">
+                <!-- Placeholder for a team or office photo -->
+                <img src="images/slide3.png" alt="Our Team working" style="width: 100%; height: auto; display: block;">
+            </div>
         </section>
 
-        <!-- 1. LATEST ARTICLES (4 Items) -->
-        <section class="py-16 bg-slate-50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex items-center justify-between mb-10">
-                    <h2 class="text-3xl font-bold text-slate-900 border-l-4 border-brand-600 pl-3">Latest Updates</h2>
-                    <a href="#" class="text-brand-600 font-medium hover:underline">View All <i class="fas fa-arrow-right ml-1"></i></a>
+        <!-- TEAM SECTION -->
+        <section class="team-section">
+            <div class="container">
+                <div class="section-head">
+                    <h2 style="font-size: 2.5rem; font-weight: 800; color: #1a202c;">Meet The Team</h2>
+                    <p style="color: #64748b;">The passionate minds behind Internadda.</p>
                 </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Item 1 -->
-                    <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 border border-gray-100 group">
-                        <div class="h-40 overflow-hidden bg-gray-100">
-                             <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=400&q=80" alt="Internship" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+
+                <div class="team-grid">
+                    <!-- Founder -->
+                    <div class="team-card">
+                        <img src="images/founder.jpg" alt="Founder" class="team-img">
+                        <div class="team-info">
+                            <h3 class="team-name">Vikash Kumar</h3>
+                            <span class="team-role">Founder & CEO</span>
+                            <p class="team-bio">Visionary leader passionate about democratizing education and student empowerment.</p>
                         </div>
-                        <div class="p-5">
-                            <span class="text-xs font-semibold text-brand-600 uppercase tracking-wide">Internship</span>
-                            <h3 class="text-lg font-bold text-slate-800 mt-2 mb-2 leading-snug group-hover:text-brand-600 transition-colors">Summer 2025 Internship Drive</h3>
-                            <p class="text-slate-500 text-sm line-clamp-2">Top companies are hiring now. Here is a list of the best opportunities.</p>
+                    </div>
+
+                    <!-- Co-Founder -->
+                    <div class="team-card">
+                        <img src="images/Co-Founder.jpg" alt="Co-Founder" class="team-img">
+                        <div class="team-info">
+                            <h3 class="team-name">Amit Singh</h3>
+                            <span class="team-role">Co-Founder</span>
+                            <p class="team-bio">Driving operations and partnerships to bring the best opportunities to our students.</p>
                         </div>
-                    </article>
+                    </div>
+
+                    <!-- CTO -->
+                    <div class="team-card">
+                        <img src="images/cto.jpg" alt="CTO" class="team-img">
+                        <div class="team-info">
+                            <h3 class="team-name">Rahul Sharma</h3>
+                            <span class="team-role">Chief Technology Officer</span>
+                            <p class="team-bio">The tech wizard ensuring a seamless learning experience on our platform.</p>
+                        </div>
+                    </div>
                     
-                    <!-- Item 2 -->
-                    <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 border border-gray-100 group">
-                        <div class="h-40 overflow-hidden bg-gray-100">
-                             <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=400&q=80" alt="Resume" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                     <!-- COO -->
+                    <div class="team-card">
+                        <img src="images/coo.jpg" alt="COO" class="team-img">
+                        <div class="team-info">
+                            <h3 class="team-name">Sneha Gupta</h3>
+                            <span class="team-role">Chief Operating Officer</span>
+                            <p class="team-bio">Managing day-to-day operations and ensuring student success.</p>
                         </div>
-                        <div class="p-5">
-                            <span class="text-xs font-semibold text-green-600 uppercase tracking-wide">Career Tips</span>
-                            <h3 class="text-lg font-bold text-slate-800 mt-2 mb-2 leading-snug group-hover:text-brand-600 transition-colors">ATS-Proof Your Resume</h3>
-                            <p class="text-slate-500 text-sm line-clamp-2">How to format your resume to beat the bots and get hired.</p>
-                        </div>
-                    </article>
-
-                    <!-- Item 3 -->
-                    <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 border border-gray-100 group">
-                        <div class="h-40 overflow-hidden bg-gray-100">
-                             <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=400&q=80" alt="Webinar" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        </div>
-                        <div class="p-5">
-                            <span class="text-xs font-semibold text-purple-600 uppercase tracking-wide">Events</span>
-                            <h3 class="text-lg font-bold text-slate-800 mt-2 mb-2 leading-snug group-hover:text-brand-600 transition-colors">Live Webinar: Crack FAANG</h3>
-                            <p class="text-slate-500 text-sm line-clamp-2">Join our expert panel this weekend for an exclusive session.</p>
-                        </div>
-                    </article>
-
-                    <!-- Item 4 -->
-                    <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 border border-gray-100 group">
-                        <div class="h-40 overflow-hidden bg-gray-100">
-                             <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=400&q=80" alt="Success" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        </div>
-                        <div class="p-5">
-                            <span class="text-xs font-semibold text-orange-600 uppercase tracking-wide">Stories</span>
-                            <h3 class="text-lg font-bold text-slate-800 mt-2 mb-2 leading-snug group-hover:text-brand-600 transition-colors">Student Success Stories</h3>
-                            <p class="text-slate-500 text-sm line-clamp-2">Read how Rahul secured a PPO at Microsoft through InternAdda.</p>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2. EDUCATIONAL SECTION -->
-        <section class="py-16 bg-white border-t border-gray-100">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-slate-900">Educational Resources</h2>
-                    <p class="text-slate-500 mt-3">Boost your skills with our curated learning tracks.</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Edu Card 1 -->
-                    <div class="bg-brand-50 rounded-2xl p-8 text-center hover:-translate-y-1 transition-transform duration-300 border border-brand-100">
-                        <div class="w-16 h-16 mx-auto bg-white rounded-full flex items-center justify-center shadow-sm mb-4 text-brand-600 text-2xl">
-                            <i class="fas fa-code"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-2">Full Stack Development</h3>
-                        <p class="text-slate-600 text-sm mb-6">Master HTML, CSS, JS, and Backend technologies.</p>
-                        <a href="#" class="inline-block px-6 py-2 bg-brand-600 text-white rounded-full text-sm font-medium hover:bg-brand-700 transition-colors">Start Learning</a>
-                    </div>
-
-                    <!-- Edu Card 2 -->
-                    <div class="bg-blue-50 rounded-2xl p-8 text-center hover:-translate-y-1 transition-transform duration-300 border border-blue-100">
-                        <div class="w-16 h-16 mx-auto bg-white rounded-full flex items-center justify-center shadow-sm mb-4 text-blue-600 text-2xl">
-                            <i class="fas fa-database"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-2">Data Science</h3>
-                        <p class="text-slate-600 text-sm mb-6">Learn Python, SQL, and Machine Learning basics.</p>
-                        <a href="#" class="inline-block px-6 py-2 bg-blue-600 text-white rounded-full text-sm font-medium hover:bg-blue-700 transition-colors">Start Learning</a>
-                    </div>
-
-                    <!-- Edu Card 3 -->
-                    <div class="bg-purple-50 rounded-2xl p-8 text-center hover:-translate-y-1 transition-transform duration-300 border border-purple-100">
-                        <div class="w-16 h-16 mx-auto bg-white rounded-full flex items-center justify-center shadow-sm mb-4 text-purple-600 text-2xl">
-                            <i class="fas fa-paint-brush"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-2">UI/UX Design</h3>
-                        <p class="text-slate-600 text-sm mb-6">Master Figma and design principles for modern apps.</p>
-                        <a href="#" class="inline-block px-6 py-2 bg-purple-600 text-white rounded-full text-sm font-medium hover:bg-purple-700 transition-colors">Start Learning</a>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- 3. ABOUT INTERNADDA -->
-        <section class="py-16 bg-slate-900 text-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <div>
-                        <h2 class="text-3xl md:text-4xl font-bold mb-6">About <span class="text-brand-500">InternAdda</span></h2>
-                        <p class="text-gray-300 mb-6 leading-relaxed text-lg">
-                            InternAdda is India's fastest-growing student community dedicated to bridging the gap between academic learning and industry requirements. We provide a platform where students can find meaningful internships, access high-quality free educational content, and prepare for their dream careers.
-                        </p>
-                        <ul class="space-y-4 mb-8">
-                            <li class="flex items-center gap-3"><i class="fas fa-check-circle text-brand-500"></i> 100% Verified Internships</li>
-                            <li class="flex items-center gap-3"><i class="fas fa-check-circle text-brand-500"></i> Free Industry-Standard Courses</li>
-                            <li class="flex items-center gap-3"><i class="fas fa-check-circle text-brand-500"></i> Dedicated Mentorship Support</li>
-                        </ul>
-                        <a href="about.html" class="inline-block px-8 py-3 border border-white rounded-lg hover:bg-white hover:text-slate-900 transition-all font-medium">Learn More About Us</a>
-                    </div>
-                    <div class="relative">
-                        <div class="absolute -inset-4 bg-brand-600 rounded-xl blur-lg opacity-30"></div>
-                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Team Collaboration" class="relative rounded-xl shadow-2xl w-full">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4. MEMBER BIO (Team Section) -->
-        <section class="py-16 bg-slate-50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-slate-900">Meet Our Team</h2>
-                    <p class="text-slate-500 mt-3">The minds behind InternAdda's success.</p>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <!-- Member 1 -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&h=150&q=80" alt="Member" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-brand-50">
-                        <h4 class="text-lg font-bold text-slate-900">Amit Verma</h4>
-                        <p class="text-brand-600 text-sm font-medium mb-2">Founder & CEO</p>
-                        <p class="text-gray-500 text-xs">Passionate about democratizing education for everyone.</p>
-                    </div>
-
-                    <!-- Member 2 -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow">
-                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80" alt="Member" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-brand-50">
-                        <h4 class="text-lg font-bold text-slate-900">Sneha Gupta</h4>
-                        <p class="text-brand-600 text-sm font-medium mb-2">Head of Operations</p>
-                        <p class="text-gray-500 text-xs">Ensuring smooth delivery of courses and internships.</p>
-                    </div>
-
-                    <!-- Member 3 -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow">
-                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80" alt="Member" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-brand-50">
-                        <h4 class="text-lg font-bold text-slate-900">Rahul Singh</h4>
-                        <p class="text-brand-600 text-sm font-medium mb-2">Tech Lead</p>
-                        <p class="text-gray-500 text-xs">Building the robust platform that powers InternAdda.</p>
-                    </div>
-
-                    <!-- Member 4 -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow">
-                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&h=150&q=80" alt="Member" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-brand-50">
-                        <h4 class="text-lg font-bold text-slate-900">Priya Das</h4>
-                        <p class="text-brand-600 text-sm font-medium mb-2">Community Manager</p>
-                        <p class="text-gray-500 text-xs">Connecting students and mentors across India.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-slate-900 text-gray-400 py-12 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
-                <!-- Brand Column -->
-                <div class="col-span-1 sm:col-span-2 lg:col-span-1">
-                    <div class="flex items-center mb-4 text-white text-xl font-bold">Internadda</div>
-                    <p class="text-sm mb-6 leading-relaxed">Transforming careers through learning, interning, and earning opportunities.</p>
-                    <div class="flex space-x-4">
-                        <a href="https://www.linkedin.com/company/internadda-india" target="_blank" class="h-8 w-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-brand-600 hover:text-white transition-all"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://www.youtube.com/@theinternadda" target="_blank" class="h-8 w-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-red-600 hover:text-white transition-all"><i class="fab fa-youtube"></i></a>
-                        <a href="https://www.instagram.com/internadda.india" target="_blank" class="h-8 w-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-pink-600 hover:text-white transition-all"><i class="fab fa-instagram"></i></a>
+    <!-- =========================================
+       FOOTER
+       ========================================= -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">Internadda</div>
+                    <p class="footer-description">Transforming careers through learning, interning, and earning opportunities.</p>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/company/internadda-india" target="_blank" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@theinternadda" target="_blank" class="social-link" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://www.instagram.com/internadda.india" target="_blank" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
                     </div>
                 </div>
-                <!-- Learn -->
-                <div>
-                    <h3 class="text-white font-semibold mb-4 uppercase text-sm tracking-wider">Learn</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="https://courses.internadda.com/" class="hover:text-brand-500 transition-colors">Browse Courses</a></li>
-                        <li><a href="https://courses.internadda.com/" class="hover:text-brand-500 transition-colors">Free Courses</a></li>
-                        <li><a href="#" class="hover:text-brand-500 transition-colors">Paid Courses</a></li>
-                        <li><a href="#" class="hover:text-brand-500 transition-colors">Become an Instructor</a></li>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">Learn</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://courses.internadda.com/">Browse Courses</a></li>
+                        <li><a href="https://courses.internadda.com/">Free Courses</a></li>
+                        <li><a href="#">Paid Courses</a></li>
+                        <li><a href="#">Become an Instructor</a></li>
                     </ul>
                 </div>
-                <!-- Intern -->
-                <div>
-                    <h3 class="text-white font-semibold mb-4 uppercase text-sm tracking-wider">Intern</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="intern/internship.html" class="hover:text-brand-500 transition-colors">Find Internships</a></li>
-                        <li><a href="#" class="hover:text-brand-500 transition-colors">For Companies</a></li>
-                        <li><a href="#" class="hover:text-brand-500 transition-colors">Success Stories</a></li>
-                        <li><a href="#" class="hover:text-brand-500 transition-colors">Career Coaching</a></li>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">Intern</h3>
+                    <ul class="footer-links">
+                        <li><a href="intern/internship.html">Find Internships</a></li>
+                        <li><a href="#">For Companies</a></li>
+                        <li><a href="#">Success Stories</a></li>
+                        <li><a href="#">Career Coaching</a></li>
                     </ul>
                 </div>
-                <!-- Tools -->
-                <div>
-                    <h3 class="text-white font-semibold mb-4 uppercase text-sm tracking-wider">Career Tools</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="https://check-ats.internadda.com/" class="hover:text-brand-500 transition-colors">ATS Score Checker</a></li>
-                        <li><a href="https://cv-builder.internadda.com/" class="hover:text-brand-500 transition-colors">Resume Builder</a></li>
-                        <li><a href="https://interview-preparation.internadda.com" class="hover:text-brand-500 transition-colors">Interview Prep</a></li>
-                        <li><a href="https://letter-builder.internadda.com/" class="hover:text-brand-500 transition-colors">Cover Letter Gen</a></li>
+                
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">Career Tools</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://check-ats.internadda.com/">ATS Score Checker</a></li>
+                        <li><a href="https://cv-builder.internadda.com/">Resume Builder</a></li>
+                        <li><a href="https://interview-preparation.internadda.com">Interview Prep</a></li>
+                        <li><a href="https://letter-builder.internadda.com/">Cover Letter Gen</a></li>
+                        <li><a href="https://ai-paraphraser.internadda.com">Essay Paraphraser</a></li>
                     </ul>
                 </div>
-                <!-- Community -->
-                <div>
-                    <h3 class="text-white font-semibold mb-4 uppercase text-sm tracking-wider">Community</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="community/join.html" class="hover:text-brand-500 transition-colors">Join Community</a></li>
-                        <li><a href="about.html" class="hover:text-brand-500 transition-colors">About Us</a></li>
-                        <li><a href="contact.html" class="hover:text-brand-500 transition-colors">Contact Us</a></li>
-                        <li><a href="https://blog-internadda.blogspot.com/" class="hover:text-brand-500 transition-colors">Blog</a></li>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">InternAdda</h3>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="refund.html">Refund Policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">Community</h3>
+                    <ul class="footer-links">
+                        <li><a href="community/join.html">Join Community</a></li>
+                        <li><a href="community/partners.html">Partners</a></li>
+                        <li><a href="https://blog.internadda.com/">Blog</a></li>
+                        <li><a href="community/academy.html">Offline Academy</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="border-t border-slate-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
-                <p>&copy; 2025 Internadda. All rights reserved. | Developed by Internadda Team</p>
-                <div class="flex space-x-6 mt-4 md:mt-0">
-                    <a href="terms.html" class="hover:text-white transition-colors">Terms</a>
-                    <a href="refund.html" class="hover:text-white transition-colors">Refund Policy</a>
-                    <a href="#" class="hover:text-white transition-colors">Privacy</a>
-                </div>
+
+            <div class="footer-bottom">
+                <p>© 2025 Internadda. All rights reserved. | Developed by Internadda Team</p>
             </div>
         </div>
     </footer>
 
-    <script>
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        if(btn && menu) {
-            btn.addEventListener('click', () => {
-                menu.classList.toggle('hidden');
-            });
-        }
-    </script>
+    <!-- JavaScript -->
+    <script src="script.js"></script>
 </body>
 </html>
