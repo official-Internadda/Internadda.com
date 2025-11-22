@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Exam Fee Payment — Python Developer Internship</title>
+    <title>Secure Exam Fee Payment — Data Science Internship</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         /* --- GLOBAL VARIABLES & RESET --- */
         :root {
-            --primary: #4c51bf; 
+            --primary: #4c51bf; /* Deeper Indigo/Violet */
             --dark: #1a202c;
             --gray: #4a5568;
             --success: #38a169;
@@ -38,7 +38,7 @@
         /* --- HEADER --- */
         .header-container { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; }
         .logo { text-decoration: none; color: var(--primary); display: flex; align-items: center; font-size: 1.8rem; font-weight: 800; font-family: 'Poppins', sans-serif;}
-        .logo i { margin-right: 10px; }
+        .logo i { margin-right: 10px; color: #f6ad55; } /* Graduation Cap Color */
 
         /* --- PAYMENT & FORM SECTION --- */
         #payment-step { text-align: center; } 
@@ -66,7 +66,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin-bottom: 30px; /* Spacing before exam specs */
+            margin-bottom: 30px;
         }
         .form-group {
             display: flex;
@@ -148,11 +148,11 @@
         
         /* Cashfree Button Styles */
         .button-container {
-            background: #0043fd; 
+            background: #1d3be2; 
             border: 1px solid black; border-radius: 15px; 
             display: flex; padding: 10px; width: fit-content; 
             cursor: pointer;
-            box-shadow: 0 8px 20px rgba(0, 67, 253, 0.35);
+            box-shadow: 0 8px 20px rgba(29, 59, 226, 0.35);
             transition: all 0.2s;
         }
         .button-container:hover { 
@@ -187,7 +187,7 @@
             <div class="exam-container">
                 <div id="payment-step" class="exam-step">
                     <h2><i class="fas fa-file-invoice-dollar"></i> Secure Exam Fee Payment</h2> 
-                    <p>This fee grants you access to the <b>Python Developer Final Exam</b>, a mandatory, proctored step in our internship selection process. The fee covers professional, real-time proctoring services to ensure a fair and secure evaluation for all candidates.</p>
+                    <p>This fee grants you access to the <b>Data Science Final Exam</b>, a mandatory, proctored step in our internship selection process. The fee covers professional, real-time proctoring services to ensure a fair and secure evaluation for all candidates.</p>
                     
                     <div class="details-box">
                         <h3><i class="fas fa-user-graduate"></i> Candidate Registration</h3>
@@ -217,7 +217,7 @@
 
                             <div class="form-group">
                                 <label for="userDomain">Selected Domain</label>
-                                <input type="text" id="userDomain" value="Python Development" readonly>
+                                <input type="text" id="userDomain" value="Data Science Intern" readonly>
                             </div>
                         </form>
 
@@ -229,7 +229,7 @@
                                     <i class="fas fa-brain"></i> 
                                     <div>
                                         <span class="detail-label">Assessment Topic:</span><br>
-                                        <span class="detail-value">Python Web Development & Database Integration</span>
+                                        <span class="detail-value">Data Science & Analytics</span>
                                     </div>
                                 </div>
                                 
@@ -238,9 +238,9 @@
                                     <div>
                                         <span class="detail-label">Key Skills Tested:</span><br>
                                         <div class="skill-list">
-                                            <span>Python</span>
-                                            <span>Flask/Django</span>
-                                            <span>SQL</span>
+                                            <span>Python/R</span>
+                                            <span>Statistics</span>
+                                            <span>Visualization</span>
                                         </div>
                                     </div>
                                 </div>
@@ -260,7 +260,7 @@
                                     <div class="meter-fill"></div>
                                 </div>
                                 <span class="detail-value" style="font-size: 1.2rem; color: var(--moderate-color);">MODERATE</span>
-                                <p style="font-size: 0.85rem; color: var(--gray); margin: 5px 0 0 0;">(Core Developer Concepts)</p>
+                                <p style="font-size: 0.85rem; color: var(--gray); margin: 5px 0 0 0;">(Core Data Concepts)</p>
                             </div>
                         </div>
                         
@@ -273,11 +273,10 @@
 
                     <!-- PAYMENT BUTTON CONTAINER -->
                     <div id="payment-button-container">
-                        <!-- NOTE: id="cashfreeLink" logic changed to save data first -->
                         <a href="#" id="cashfreeLink">
                             <div class="button-container">
                               <div>
-                                <img src="https://cashfree-checkoutcartimages-prod.cashfree.com/logo-removebg-previewj9ds2a8p77e0_prod.png" alt="logo" class="logo-container" style="width: 40px; height: 40px;">
+                                <img src="https://cashfree-checkoutcartimages-prod.cashfree.com/logo-removebg-previewj9ds2cpks5i0_prod.png" alt="logo" class="logo-container" style="width: 40px; height: 40px;">
                               </div>
                               <div class="text-container" style="display: flex; flex-direction: column; align-items: center; margin-left: 10px; justify-content: center; margin-right: 10px;">
                                 <div id="payBtnText" style="font-family: Arial; color: #ffffff; margin-bottom: 5px; font-size: 18px; font-weight: 700;"> <i class="fas fa-lock" style="margin-right: 5px;"></i> Pay Now
@@ -347,11 +346,11 @@
                     payBtnContainer.style.pointerEvents = 'auto';
                     errorMsg.style.display = 'none';
                     
-                    // Also Save to LocalStorage for the Exam Page to read later
+                    // Save to LocalStorage
                     localStorage.setItem('candidateName', name);
                     localStorage.setItem('candidateAge', age);
                     localStorage.setItem('candidateGender', gender);
-                    localStorage.setItem('candidateDomain', 'Python Development');
+                    localStorage.setItem('candidateDomain', 'Data Science Intern');
                 } else {
                     payBtnContainer.style.opacity = '0.5';
                     payBtnContainer.style.pointerEvents = 'none';
@@ -365,37 +364,35 @@
             });
 
             // --- PAY BUTTON CLICK HANDLER ---
-            // This intercepts the click, saves to Firebase, then redirects
             cashfreeLink.addEventListener('click', async function(e) {
-                e.preventDefault(); // STOP the link from opening immediately
+                e.preventDefault();
 
                 const name = document.getElementById('userName').value.trim();
                 const age = document.getElementById('userAge').value.trim();
                 const gender = document.getElementById('userGender').value;
-                const domain = "Python Development";
+                const domain = "Data Science Intern";
 
-                // 1. Change UI to show processing
+                // 1. UI Processing
                 payBtnText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-                payBtnContainer.style.pointerEvents = 'none'; // Prevent double click
+                payBtnContainer.style.pointerEvents = 'none';
 
-                // 2. Save to Firebase "exam_registrations" collection
+                // 2. Firebase Save
                 try {
                     await db.collection("exam_registrations").add({
                         name: name,
                         age: age,
                         gender: gender,
                         domain: domain,
-                        status: "Payment Initiated", // Tag as initiated
+                        status: "Payment Initiated",
                         timestamp: firebase.firestore.FieldValue.serverTimestamp()
                     });
-                    console.log("Registration saved to Firebase!");
+                    console.log("Registration saved!");
                 } catch (error) {
-                    console.error("Error saving to Firebase:", error);
-                    // We continue to redirect even if save fails so we don't block the user
+                    console.error("Error saving:", error);
                 }
 
-                // 3. Redirect to Cashfree (The actual payment link)
-                window.location.href = "https://payments.cashfree.com/forms/python_dev_final_exam";
+                // 3. Redirect to Cashfree
+                window.location.href = "https://payments.cashfree.com/forms/data_science_final_exam";
             });
         });
     </script>
