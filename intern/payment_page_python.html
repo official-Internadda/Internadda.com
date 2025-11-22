@@ -3,45 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Exam Fee Payment — Python Developer Internship</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght[700]&display=swap" rel="stylesheet">
+    <title>Secure Exam Fee Payment — Python Internship</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* Modernized Styles & Animations */
+        /* --- GLOBAL VARIABLES & RESET --- */
         :root {
-            --primary: #4c51bf; /* Deeper Indigo/Violet */
+            --primary: #306998; /* Python Blue */
+            --secondary: #ffd43b; /* Python Yellow */
             --dark: #1a202c;
             --gray: #4a5568;
             --success: #38a169;
             --light: #f7fafc;
-            --hover-light: #f0f4ff; /* Light primary hover */
-            /* Adjusted Meter Colors: Green to Yellow, minimal Red hint */
-            --meter-start-color: #38a169; /* Green (Easy) */
-            --meter-mid-color: #f6ad55; /* Orange/Yellow (Moderate) */
-            --meter-end-color: #e53e3e; /* Red (Advanced) */
-            --moderate-fill-height: 45%; /* Fill to 45% for Moderate */
-            --moderate-color: #f6ad55; /* Use mid-color for text */
+            --hover-light: #f0f4ff;
+            --meter-mid-color: #f6ad55;
         }
+        
+        * { box-sizing: border-box; }
         body { margin: 0; padding: 0; background-color: var(--light); font-family: 'Inter', sans-serif; color: var(--dark); }
+        
+        /* --- LAYOUT CONTAINERS --- */
         .exam-container { max-width: 900px; margin: 40px auto; padding: 0 20px; position: relative; }
         .exam-step { 
-            background: #fff; padding: 40px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-bottom: 30px; 
+            background: #fff; padding: 40px; border-radius: 16px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-bottom: 30px; 
             animation: fadeIn 0.5s ease-out;
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Header */
+        /* --- HEADER --- */
         .header-container { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; }
         .logo { text-decoration: none; color: var(--primary); display: flex; align-items: center; font-size: 1.8rem; font-weight: 800; font-family: 'Poppins', sans-serif;}
-        .logo i { margin-right: 10px; }
+        .logo i { margin-right: 10px; color: var(--secondary); }
 
-        /* Payment Step Style */
+        /* --- PAYMENT & FORM SECTION --- */
         #payment-step { text-align: center; } 
-        #payment-step h2 { font-size: 2.5rem; margin-bottom: 20px; color: var(--primary); animation: slideInUp 0.5s ease-out; } 
-        #payment-step p { font-size: 1.15rem; color: var(--gray); margin-bottom: 25px; max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.6;} 
+        #payment-step h2 { font-size: 2.2rem; margin-bottom: 15px; color: var(--primary); } 
+        #payment-step p { font-size: 1.05rem; color: var(--gray); margin-bottom: 25px; max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.6;} 
         
-        /* EXAM OVERVIEW BOX */
+        /* --- DETAILS BOX (FORM WRAPPER) --- */
         .details-box {
             background: linear-gradient(145deg, #f0f4ff, #e2e8f0);
             border: 2px solid var(--primary);
@@ -49,139 +50,128 @@
             padding: 30px;
             text-align: left;
             margin-top: 25px;
-            box-shadow: 0 6px 15px rgba(76, 81, 191, 0.15);
+            box-shadow: 0 6px 15px rgba(48, 105, 152, 0.15);
         }
         .details-box h3 { 
-            font-size: 1.5rem; color: var(--dark); margin-top: 0; display: flex; align-items: center; 
+            font-size: 1.4rem; color: var(--dark); margin-top: 0; display: flex; align-items: center; 
             border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 15px; margin-bottom: 20px;
         }
-        .details-box h3 i { margin-right: 15px; color: var(--primary); font-size: 1.2em; } 
+        .details-box h3 i { margin-right: 12px; color: var(--primary); } 
 
-        .exam-detail-grid {
+        /* --- CANDIDATE FORM GRID --- */
+        .form-grid {
             display: grid;
-            grid-template-columns: 3fr 1fr;
-            gap: 30px;
-            align-items: center;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
-        .exam-details-left {
+        .form-group {
             display: flex;
             flex-direction: column;
-            gap: 20px; 
+            min-width: 0; /* Prevents flex item from overflowing */
         }
-        .detail-row {
-            display: flex;
-            align-items: flex-start;
-            line-height: 1.5;
-            padding-left: 10px;
-        }
-        .detail-row i {
-            font-size: 1.4rem;
-            color: var(--primary);
-            margin-right: 15px;
-            flex-shrink: 0;
-            margin-top: 3px;
-        }
-        .detail-row span {
-            font-size: 1.15rem; 
+        .form-group label {
             font-weight: 600;
             color: var(--dark);
-        }
-        .detail-label {
-            font-weight: 500;
-            color: var(--gray);
-            margin-right: 10px;
-        }
-        .detail-value {
-            font-weight: 700;
-            color: var(--dark);
-        }
-        .skill-list {
-            display: inline-flex; 
-            flex-wrap: wrap; 
-            gap: 8px; 
-            margin-top: 5px;
-        }
-        .skill-list span {
-            display: inline-block;
-            background: #c3dafe;
-            color: var(--primary);
-            padding: 4px 10px; 
-            border-radius: 6px; 
+            margin-bottom: 6px;
             font-size: 0.95rem;
-            font-weight: 600;
+        }
+        .form-group input, .form-group select {
+            padding: 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: #fff;
+            transition: border-color 0.2s;
+            font-family: inherit;
+            width: 100%; /* CRITICAL FIX: Ensures input stays within parent */
+            min-width: 0; /* CRITICAL FIX: Prevents Grid overflow */
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(48, 105, 152, 0.1);
+        }
+        .form-group input[readonly] {
+            background-color: #e2e8f0;
+            color: var(--gray);
+            cursor: not-allowed;
+            border-color: #cbd5e0;
         }
 
-        /* DYNAMIC DIFFICULTY METER (MODERATE ADJUSTMENTS) */
-        .difficulty-visual {
-            text-align: center;
-            padding: 15px;
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            animation: popIn 0.5s ease-out;
+        /* --- EXAM SPECS (MINI GRID) --- */
+        .exam-detail-grid {
+            display: grid;
+            grid-template-columns: 3fr 1fr; 
+            gap: 20px;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0,0,0,0.1);
         }
-        .difficulty-visual h4 {
-            margin: 0 0 10px 0;
-            font-size: 1.1rem;
-            color: var(--dark);
-        }
-        .meter-bar-container {
-            display: flex;
-            flex-direction: column-reverse; 
-            height: 100px; 
-            width: 30px;
-            background: #cbd5e0;
-            border-radius: 5px;
-            overflow: hidden;
-            margin: 10px auto;
-            box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
-        }
-        .meter-fill {
-            width: 100%;
-            height: var(--moderate-fill-height); /* MODERATE FILL HEIGHT */
-            background: linear-gradient(to top, var(--meter-start-color), var(--meter-mid-color) 70%, var(--meter-end-color) 90%); 
-            transition: height 1s ease-out;
-            animation: fillMeter 1.5s forwards;
-        }
-        @keyframes fillMeter {
-            from { height: 0; }
-            to { height: var(--moderate-fill-height); } /* Fill to MODERATE height */
-        }
+        .detail-row { display: flex; align-items: center; margin-bottom: 10px; }
+        .detail-row i { font-size: 1.2rem; color: var(--primary); margin-right: 12px; width: 20px; text-align: center; }
+        .detail-row span { font-weight: 600; color: var(--dark); }
+        
+        .difficulty-visual { text-align: right; }
+        .detail-value { font-weight: 700; color: var(--dark); font-size: 1.1rem; }
 
-        /* Media Query for Mobile View: Hide Difficulty Meter */
-        @media (max-width: 768px) {
-            .exam-detail-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            .difficulty-visual {
-                display: none; 
-            }
-        }
-        /* End Media Query */
-
-        /* BUTTON STYLES OVERRIDES/ADJUSTMENTS */
+        /* --- PAYMENT BUTTON AREA --- */
         #payment-button-container { 
             display: flex; 
             justify-content: center; 
-            align-items: center; 
-            margin: 40px 0; 
+            margin-top: 30px; 
+            transition: opacity 0.3s ease, transform 0.2s ease;
         }
-        /* Overriding some properties from original CSS to respect new button's inline style, but keeping hover animation */
-        .button-container:hover { 
-            transform: translateY(-4px); 
-            box-shadow: 0 10px 25px rgba(29, 59, 226, 0.5); /* Keeping the hover effect */
-        }
-        a { text-decoration: none; }
         
-        /* Footer */
+        /* Cashfree Button Styles */
+        .button-container {
+            background: #1d3be2; /* Cashfree Blue */
+            border: 1px solid transparent; 
+            border-radius: 12px;
+            display: flex;
+            padding: 12px 24px; 
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(29, 59, 226, 0.3);
+            transition: all 0.2s;
+        }
+        .button-container:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 15px rgba(29, 59, 226, 0.4);
+        }
+        .logo-container { width: 30px; height: auto; margin-right: 12px; }
+        .text-container { text-align: left; color: white; }
+        .pay-text { font-weight: 700; font-size: 16px; line-height: 1.2; }
+        .powered-text { font-size: 10px; opacity: 0.9; }
+        
+        a { text-decoration: none; }
+
+        /* --- FOOTER --- */
         footer { background-color: #e2e8f0; padding: 30px 0; border-top: 1px solid #cbd5e0; text-align: center; color: var(--gray); margin-top: 50px; }
+
+        /* --- RESPONSIVE ADJUSTMENTS --- */
+        @media (max-width: 768px) {
+            /* Reduce massive padding on mobile to create space for content */
+            .exam-step { padding: 20px; } 
+            .details-box { padding: 20px; }
+            
+            /* Stack form elements */
+            .form-grid { grid-template-columns: 1fr; gap: 15px; }
+            
+            /* Header adjustments */
+            .header-container { padding-top: 15px; }
+            .logo { font-size: 1.5rem; }
+            
+            /* Exam details stacking */
+            .exam-detail-grid { grid-template-columns: 1fr; text-align: left; }
+            .difficulty-visual { text-align: left; margin-top: 10px; border-top: 1px dashed #cbd5e0; padding-top: 10px; }
+        }
     </style>
 </head>
 <body>
     <header> 
         <div class="exam-container header-container">
-            <a href="#" class="logo"><i class="fas fa-graduation-cap"></i><span class="logo-text">InternAdda</span></a>
+            <a href="#" class="logo"><i class="fab fa-python"></i><span class="logo-text">InternAdda</span></a>
         </div>
     </header>
 
@@ -190,88 +180,125 @@
             <div class="exam-container">
                 <div id="payment-step" class="exam-step">
                     <h2><i class="fas fa-file-invoice-dollar"></i> Secure Exam Fee Payment</h2> 
+                    <p>Complete your registration to unlock the <b>Python Development Final Exam</b>. The details below will be verified against your exam performance for certification.</p>
                     
-                    <p>This fee grants you access to the <b>Python Developer Final Exam</b>, a mandatory, proctored step in our internship selection process. The fee covers professional, real-time proctoring services to ensure a fair and secure evaluation for all candidates.</p>
-                    
+                    <!-- CANDIDATE REGISTRATION FORM -->
                     <div class="details-box">
-                        <h3><i class="fas fa-laptop-code"></i> Python Developer Assessment Overview</h3>
+                        <h3><i class="fas fa-user-graduate"></i> Candidate Registration</h3>
                         
+                        <form id="candidateForm" class="form-grid">
+                            <div class="form-group">
+                                <label for="userName">Full Name</label>
+                                <input type="text" id="userName" placeholder="Enter your official name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="userPhone">Phone Number</label>
+                                <input type="tel" id="userPhone" placeholder="+91 98765..." required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="userGender">Gender</label>
+                                <select id="userGender" required>
+                                    <option value="" disabled selected>Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="userDomain">Selected Domain</label>
+                                <input type="text" id="userDomain" value="Python Development" readonly>
+                            </div>
+                        </form>
+                        
+                        <!-- Exam Specs Mini-Display -->
                         <div class="exam-detail-grid">
                             <div class="exam-details-left">
-                                
-                                <div class="detail-row">
-                                    <i class="fas fa-brain"></i> 
-                                    <div>
-                                        <span class="detail-label">Assessment Topic:</span><br>
-                                        <span class="detail-value">Python Web Development & Database Integration</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="detail-row">
-                                    <i class="fas fa-code"></i> 
-                                    <div>
-                                        <span class="detail-label">Key Skills Tested:</span><br>
-                                        <div class="skill-list">
-                                            <span>Python</span>
-                                            <span>Flask/Django</span>
-                                            <span>SQL</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="detail-row">
-                                    <i class="fas fa-clock"></i> 
-                                    <div>
-                                        <span class="detail-label">Exam Format:</span><br>
-                                        <span class="detail-value">25 MCQs | 30 Minutes Duration</span>
-                                    </div>
-                                </div>
+                                <div class="detail-row"><i class="fas fa-clock"></i> <span>Duration: 30 Minutes</span></div>
+                                <div class="detail-row"><i class="fas fa-list-ol"></i> <span>Questions: 25 MCQs</span></div>
                             </div>
-
                             <div class="difficulty-visual">
-                                <h4>Difficulty Level:</h4>
-                                <div class="meter-bar-container">
-                                    <div class="meter-fill" style="height: var(--moderate-fill-height);"></div>
-                                </div>
-                                <span class="detail-value" style="font-size: 1.2rem; color: var(--moderate-color);">MODERATE</span>
-                                <p style="font-size: 0.85rem; color: var(--gray); margin: 5px 0 0 0;">(Core Developer Concepts)</p>
+                                <span class="detail-value" style="color: var(--meter-mid-color);">BEGINNER - INTERMEDIATE</span>
                             </div>
                         </div>
 
+                        <p id="formError" style="color: #e53e3e; font-size: 0.9rem; margin-top: 15px; font-weight: 600; display: none;">
+                            <i class="fas fa-exclamation-circle"></i> Please fill in all details above to proceed to payment.
+                        </p>
                     </div>
-                    
-                    <p style="margin-top: 40px; font-weight: 700; color: var(--primary); font-size: 1.2rem;">Click the trusted <b>PAY NOW</b> button below to secure your spot and instantly unlock the examination.</p>
 
-                    <div id="payment-button-container">
-                        <form>
-                          <a href="https://payments.cashfree.com/forms/python_dev_final_exam" target="_parent">
-                            <div class="button-container" style="background: #0043fd; 
-                                border: 1px solid black; border-radius: 15px; 
-                                display: flex; padding: 10px; width: fit-content; 
-                                cursor: pointer;
-                                box-shadow: 0 8px 20px rgba(0, 67, 253, 0.35); /* Adjusted shadow to match new button color */">
-                              <div>
-                                <img src="https://cashfree-checkoutcartimages-prod.cashfree.com/logo-removebg-previewj9ds2a8p77e0_prod.png" alt="logo" class="logo-container" style="width: 40px; height: 40px;">
-                              </div>
-                              <div class="text-container" style="display: flex; flex-direction: column; align-items: center; margin-left: 10px; justify-content: center; margin-right: 10px;">
-                                <div style="font-family: Arial; color: #ffffff; margin-bottom: 5px; font-size: 18px; font-weight: 700;"> <i class="fas fa-lock" style="margin-right: 5px;"></i> Pay Now
+                    <!-- PAYMENT BUTTON (Initially Disabled) -->
+                    <p style="margin-top: 30px; font-weight: 700; color: var(--primary);">Complete the form above to enable the Pay button.</p>
+
+                    <div id="payment-button-container" style="opacity: 0.5; pointer-events: none;">
+                        <!-- Replace with your SPECIFIC Python Cashfree link -->
+                        <a href="https://payments.cashfree.com/forms/python_final_exam" target="_parent" id="cashfreeLink">
+                            <div class="button-container">
+                                <div>
+                                    <img src="https://cashfree-checkoutcartimages-prod.cashfree.com/logo-removebg-previewv9ds2cpks5i0_prod.png" alt="Cashfree Logo" class="logo-container">
                                 </div>
-                                <div style="font-family: Arial; color: #e2e8f0; font-size: 11px;"> <span>Powered By Cashfree</span>
-                                  <img src="https://cashfreelogo.cashfree.com/cashfreepayments/logosvgs/Group_4355.svg" alt="logo" class="seconday-logo-container" style="width: 14px; height: 14px; vertical-align: middle; filter: brightness(0) invert(1);"> </div>
-                              </div>
+                                <div class="text-container">
+                                    <div class="pay-text">Pay Now</div>
+                                    <div class="powered-text">Secured by Cashfree</div>
+                                </div>
                             </div>
-                          </a>
-                        </form>
-                        </div>
+                        </a>
+                    </div>
 
-                    <div style="background: #e6fffa; border: 2px solid var(--success); color: var(--dark); font-weight: 700; border-radius: 10px; padding: 15px; margin-top: 20px; font-size: 0.95rem;">
-                        <i class="fas fa-check-circle"></i> <b>Instant Access:</b> Upon successful payment, you will be <b>automatically redirected</b> to the exam instructions page to start your test.
+                    <div style="background: #e6fffa; border: 2px solid var(--success); color: var(--dark); border-radius: 10px; padding: 15px; margin-top: 25px; font-size: 0.9rem; text-align: left;">
+                        <i class="fas fa-check-circle" style="color: var(--success); margin-right: 8px;"></i> 
+                        <b>Instant Access:</b> Upon successful payment, you will be <b>automatically redirected</b> to the exam page. Ensure you have a stable internet connection.
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer><div class="exam-container"><p>© 2025 Internadda. All rights reserved. | Secured Payment Gateway</p></div></footer>
+    <footer>
+        <div class="exam-container">
+            <p>© 2025 Internadda. All rights reserved. | Secured Payment Gateway</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('candidateForm');
+            const inputs = form.querySelectorAll('input, select');
+            const payBtnContainer = document.getElementById('payment-button-container');
+            const errorMsg = document.getElementById('formError');
+
+            function checkForm() {
+                const name = document.getElementById('userName').value.trim();
+                const phone = document.getElementById('userPhone').value.trim();
+                const gender = document.getElementById('userGender').value;
+                
+                if (name && phone && gender) {
+                    // Enable Button
+                    payBtnContainer.style.opacity = '1';
+                    payBtnContainer.style.pointerEvents = 'auto';
+                    errorMsg.style.display = 'none';
+                    
+                    // Save Data to LocalStorage for the Next Page (Exam)
+                    localStorage.setItem('candidateName', name);
+                    localStorage.setItem('candidatePhone', phone);
+                    localStorage.setItem('candidateGender', gender);
+                    localStorage.setItem('candidateDomain', 'Python Development');
+                } else {
+                    // Disable Button
+                    payBtnContainer.style.opacity = '0.5';
+                    payBtnContainer.style.pointerEvents = 'none';
+                    errorMsg.style.display = 'block';
+                }
+            }
+
+            // Listen for changes on all inputs
+            inputs.forEach(input => {
+                input.addEventListener('input', checkForm);
+                input.addEventListener('change', checkForm);
+            });
+        });
+    </script>
 </body>
 </html>
