@@ -146,7 +146,7 @@
             transition: opacity 0.3s ease; opacity: 0.5; pointer-events: none; /* Default Disabled */
         }
         
-        /* Cashfree Button Styles (Restored User's Original Style) */
+        /* Cashfree Button Styles */
         .button-container {
             background: #0043fd; 
             border: 1px solid black; border-radius: 15px; 
@@ -164,7 +164,7 @@
         /* --- FOOTER --- */
         footer { background-color: #e2e8f0; padding: 30px 0; border-top: 1px solid #cbd5e0; text-align: center; color: var(--gray); margin-top: 50px; }
 
-        /* --- RESPONSIVE (MOBILE FIXES INCLUDED) --- */
+        /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
             .form-grid { grid-template-columns: 1fr; gap: 15px; }
             .exam-detail-grid { grid-template-columns: 1fr; gap: 20px; }
@@ -200,8 +200,13 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="userPhone">Phone Number</label>
-                                <input type="tel" id="userPhone" placeholder="+91 98765..." required>
+                                <label for="userAge">Age</label>
+                                <input type="number" id="userAge" placeholder="e.g. 22" min="16" max="99" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="userDOB">Date of Birth</label>
+                                <input type="date" id="userDOB" required>
                             </div>
 
                             <div class="form-group">
@@ -214,7 +219,7 @@
                                 </select>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" style="grid-column: 1 / -1;">
                                 <label for="userDomain">Selected Domain</label>
                                 <input type="text" id="userDomain" value="Python Development" readonly>
                             </div>
@@ -272,14 +277,14 @@
 
                     <!-- PAYMENT BUTTON CONTAINER -->
                     <div id="payment-button-container">
-                        <!-- Restored User's Correct Cashfree Link: python_dev_final_exam -->
-                        <a href="https://payments.cashfree.com/forms/python_dev_final_exam" target="_parent" id="cashfreeLink">
+                        <!-- NOTE: id="cashfreeLink" logic changed to save data first -->
+                        <a href="#" id="cashfreeLink">
                             <div class="button-container">
                               <div>
                                 <img src="https://cashfree-checkoutcartimages-prod.cashfree.com/logo-removebg-previewj9ds2a8p77e0_prod.png" alt="logo" class="logo-container" style="width: 40px; height: 40px;">
                               </div>
                               <div class="text-container" style="display: flex; flex-direction: column; align-items: center; margin-left: 10px; justify-content: center; margin-right: 10px;">
-                                <div style="font-family: Arial; color: #ffffff; margin-bottom: 5px; font-size: 18px; font-weight: 700;"> <i class="fas fa-lock" style="margin-right: 5px;"></i> Pay Now
+                                <div id="payBtnText" style="font-family: Arial; color: #ffffff; margin-bottom: 5px; font-size: 18px; font-weight: 700;"> <i class="fas fa-lock" style="margin-right: 5px;"></i> Pay Now
                                 </div>
                                 <div style="font-family: Arial; color: #e2e8f0; font-size: 11px;"> <span>Powered By Cashfree</span>
                                   <img src="https://cashfreelogo.cashfree.com/cashfreepayments/logosvgs/Group_4355.svg" alt="logo" class="seconday-logo-container" style="width: 14px; height: 14px; vertical-align: middle; filter: brightness(0) invert(1);"> </div>
@@ -298,31 +303,52 @@
 
     <footer><div class="exam-container"><p>© 2025 Internadda. All rights reserved. | Secured Payment Gateway</p></div></footer>
 
+    <!-- FIREBASE SDKs (REQUIRED FOR SAVING DATA ON CLICK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
     <script>
+        // 1. INITIALIZE FIREBASE
+        const firebaseConfig = {
+            apiKey: "AIzaSyCBAVUB555zTVMvvMnDyyjsC0SR_awBsOY",
+            authDomain: "internadda-com.firebaseapp.com",
+            projectId: "internadda-com",
+            storageBucket: "internadda-com.firebasestorage.app",
+            messagingSenderId: "63475091988",
+            appId: "1:63475091988:web:a84d22d53af3a7cd7a7501",
+            measurementId: "G-W1V99YWBWW"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('candidateForm');
             const inputs = form.querySelectorAll('input, select');
             const payBtnContainer = document.getElementById('payment-button-container');
+            const cashfreeLink = document.getElementById('cashfreeLink');
+            const payBtnText = document.getElementById('payBtnText');
             const errorMsg = document.getElementById('formError');
 
+            // --- FORM VALIDATION ---
             function checkForm() {
                 const name = document.getElementById('userName').value.trim();
-                const phone = document.getElementById('userPhone').value.trim();
+                const age = document.getElementById('userAge').value.trim();
+                const dob = document.getElementById('userDOB').value;
                 const gender = document.getElementById('userGender').value;
                 
-                if (name && phone && gender) {
-                    // Enable Button
+                if (name && age && dob && gender) {
                     payBtnContainer.style.opacity = '1';
                     payBtnContainer.style.pointerEvents = 'auto';
                     errorMsg.style.display = 'none';
                     
-                    // Save Data to LocalStorage for the Next Page
+                    // Also Save to LocalStorage for the Exam Page to read later
                     localStorage.setItem('candidateName', name);
-                    localStorage.setItem('candidatePhone', phone);
+                    localStorage.setItem('candidateAge', age);
+                    localStorage.setItem('candidateDOB', dob);
                     localStorage.setItem('candidateGender', gender);
                     localStorage.setItem('candidateDomain', 'Python Development');
                 } else {
-                    // Disable Button
                     payBtnContainer.style.opacity = '0.5';
                     payBtnContainer.style.pointerEvents = 'none';
                     errorMsg.style.display = 'block';
@@ -332,6 +358,42 @@
             inputs.forEach(input => {
                 input.addEventListener('input', checkForm);
                 input.addEventListener('change', checkForm);
+            });
+
+            // --- PAY BUTTON CLICK HANDLER ---
+            // This intercepts the click, saves to Firebase, then redirects
+            cashfreeLink.addEventListener('click', async function(e) {
+                e.preventDefault(); // STOP the link from opening immediately
+
+                const name = document.getElementById('userName').value.trim();
+                const age = document.getElementById('userAge').value.trim();
+                const dob = document.getElementById('userDOB').value;
+                const gender = document.getElementById('userGender').value;
+                const domain = "Python Development";
+
+                // 1. Change UI to show processing
+                payBtnText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                payBtnContainer.style.pointerEvents = 'none'; // Prevent double click
+
+                // 2. Save to Firebase "exam_registrations" collection
+                try {
+                    await db.collection("exam_registrations").add({
+                        name: name,
+                        age: age,
+                        dob: dob,
+                        gender: gender,
+                        domain: domain,
+                        status: "Payment Initiated", // Tag as initiated
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    console.log("Registration saved to Firebase!");
+                } catch (error) {
+                    console.error("Error saving to Firebase:", error);
+                    // We continue to redirect even if save fails so we don't block the user
+                }
+
+                // 3. Redirect to Cashfree (The actual payment link)
+                window.location.href = "https://payments.cashfree.com/forms/python_dev_final_exam";
             });
         });
     </script>
