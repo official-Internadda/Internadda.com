@@ -4,214 +4,131 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Science Final Exam | Internadda Certification Test</title>
-    <meta name="description" content="Official Final Exam for Data Science & Analytics Internship qualification. Pass this test to secure your paid internship opportunity.">
+    <meta name="description" content="Official Final Exam for Data Science Internship.">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Corrected path for nested file structure -->
     <link rel="stylesheet" href="../style.css">
-
     <link rel="icon" type="image/png" href="../images/favicon.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico">
 
     <style>
-        /* Specific Styles for Exam Interface (Shared with AI/ML Exam) */
-        body {
-            background-color: #f7fafc;
-        }
-        main {
-            padding-top: 20px;
-            padding-bottom: 80px;
-        }
-        .exam-container {
-            max-width: 900px;
-            margin: 40px auto;
-            background-color: var(--white);
-            border-radius: 16px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-        }
-        .exam-header {
-            text-align: center;
-            border-bottom: 3px solid var(--primary);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-        .exam-header h1 {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-        .exam-header p {
-            color: var(--secondary);
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-        .exam-info-box {
+        /* Exam Specific Styles */
+        body { background-color: #f7fafc; font-family: 'Inter', sans-serif; color: #1a202c; }
+        main { padding-top: 30px; padding-bottom: 80px; }
+        
+        /* --- FIXED HEADER ALIGNMENT --- */
+        .header-container {
             display: flex;
-            justify-content: space-around;
-            gap: 20px;
-            margin-bottom: 30px;
-            padding: 15px;
-            background-color: #ebf8ff;
-            border-radius: 10px;
-            border: 1px solid #cceeff;
+            justify-content: space-between;
+            align-items: center; 
+            padding-top: 15px;
+            padding-bottom: 15px;
+            height: 80px;
         }
-        .info-item {
-            text-align: center;
+        .logo {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
         }
-        .info-item strong {
-            display: block;
-            font-size: 1.4rem;
-            color: var(--dark);
-        }
-        .info-item span {
-            font-size: 0.9rem;
-            color: var(--gray);
-        }
-        .question-card {
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 25px;
-        }
-        .question-card p {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 15px;
-        }
-        .options label {
-            display: block;
-            background-color: #f7fafc;
-            padding: 12px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 1px solid #e2e8f0;
-        }
-        .options label:hover {
-            background-color: #edf2f7;
-            border-color: var(--secondary);
-        }
-        .options input[type="radio"],
-        .options input[type="checkbox"] {
-            margin-right: 10px;
-            accent-color: var(--primary);
-        }
-        .exam-submit-area {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid #e2e8f0;
-            margin-top: 30px;
-        }
-        .warning-message {
-            color: #e53e3e;
-            background-color: #fff5f5;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #fed7d7;
-            margin-bottom: 20px;
-            font-weight: 600;
+        /* ----------------------------- */
+
+        .exam-container {
+            max-width: 850px; margin: 40px auto; background-color: #ffffff;
+            border-radius: 16px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08); padding: 50px;
+            border: 1px solid #f1f5f9;
         }
         
-        /* Mobile adjustments */
+        .exam-header { text-align: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 30px; margin-bottom: 40px; }
+        .exam-header h1 { font-size: 2.2rem; color: #4c51bf; margin-bottom: 10px; letter-spacing: -0.5px; font-weight: 800; }
+        .exam-header p { 
+            color: #4c51bf; font-size: 0.95rem; font-weight: 600; 
+            background: #eef2ff; color: #4338ca;
+            display: inline-block; padding: 6px 16px; border-radius: 20px; 
+            border: 1px solid #c7d2fe;
+        }
+        
+        .exam-info-box {
+            display: flex; justify-content: space-between; gap: 20px; margin-bottom: 40px;
+            padding: 20px 30px; background-color: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;
+        }
+        .info-item { text-align: center; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .info-item i { font-size: 1.5rem; margin-bottom: 5px; }
+        .info-item strong { display: block; font-size: 1.2rem; color: #0f172a; font-weight: 700; }
+        .info-item span { font-size: 0.85rem; color: #64748b; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .question-card { 
+            border: 1px solid #e2e8f0; border-radius: 12px; padding: 30px; margin-bottom: 30px; 
+            background: #fff; transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .question-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04); border-color: #cbd5e1;
+        }
+        .question-number {
+            display: inline-block; background: #e0e7ff; color: #4338ca; 
+            font-size: 0.8rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; margin-bottom: 10px;
+        }
+        .question-card p { font-size: 1.15rem; font-weight: 600; color: #1e293b; margin-bottom: 20px; line-height: 1.5; }
+        
+        .options { display: grid; gap: 12px; }
+        .options label {
+            display: flex; align-items: center; 
+            background-color: #f8fafc; padding: 16px; 
+            border-radius: 10px; cursor: pointer; transition: all 0.2s ease; 
+            border: 2px solid transparent;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .options label:hover { background-color: #eef2ff; border-color: #c7d2fe; }
+        .options input { 
+            margin-right: 16px; width: 20px; height: 20px; accent-color: #4338ca; flex-shrink: 0; 
+            cursor: pointer;
+        }
+        .option-text { font-size: 1rem; color: #475569; font-weight: 500; }
+
+        .exam-submit-area { text-align: center; padding-top: 40px; border-top: 2px solid #f1f5f9; margin-top: 40px; }
+        .warning-message {
+            color: #991b1b; background-color: #fef2f2; padding: 16px;
+            border-radius: 8px; border: 1px solid #fecaca; margin-bottom: 30px; font-weight: 600;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+
+        /* Modal */
+        #resultOverlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.9); z-index: 2000; align-items: center; justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            background: white; padding: 50px; border-radius: 24px; text-align: center;
+            max-width: 480px; width: 90%; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
         @media (max-width: 768px) {
-            .exam-container {
-                padding: 20px;
-                margin: 20px auto;
-            }
-            .exam-header h1 {
-                font-size: 2rem;
-            }
-            .exam-info-box {
-                flex-direction: column;
-                gap: 10px;
-            }
+            .exam-container { padding: 25px; margin: 20px auto; width: 95%; }
+            .exam-header h1 { font-size: 1.8rem; }
+            .exam-info-box { flex-wrap: wrap; gap: 15px; padding: 15px; }
+            .info-item { min-width: 40%; }
+            .options label { padding: 14px; } 
         }
     </style>
 </head>
 <body>
-    <!-- Google Analytics Script (Retained) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZZ3HGFM3Q"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-3ZZ3HGFM3Q');
-    </script>
 
-    <!-- ==============================================
-         HEADER: 3D Animated Nav (Requests 1 & 2) - Adjusted paths
-         ============================================== -->
+    <!-- HEADER -->
     <header>
         <div class="container header-container">
             <a href="../index.html" class="logo">
-                <img src="../images/logo.jpg" alt="InternAdda Logo" class="logo-img">
-                <span class="logo-text">InternAdda</span>
+                <span class="logo-text" style="color: #4338ca; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px;">
+                    <i class="fas fa-graduation-cap" style="color: #f59e0b; margin-right: 8px;"></i>InternAdda
+                </span>
             </a>
-
-            <nav class="nav-menu">
-                <a href="../index.html" class="nav-link">Home</a>
-                <a href="../courses/course.html" class="nav-link">Courses</a>
-                <a href="internship.html" class="nav-link">Internships</a>
-                <a href="../jobs.html" class="nav-link">Jobs</a>
-                <a href="../about.html" class="nav-link">About</a>
-                
-                <!-- TOOLS DROPDOWN -->
-                <div class="nav-item dropdown" id="toolsDropdown">
-                    <a href="#" class="nav-link dropdown-toggle">Tools <i class="fas fa-chevron-down dropdown-arrow"></i></a>
-                    <div class="dropdown-content">
-                        <a href="../tools/ats-score.html" class="dropdown-link"><i class="fas fa-chart-bar"></i> ATS Score</a>
-                        <a href="../tools/resume-builder.html" class="dropdown-link"><i class="fas fa-file-alt"></i> Resume Builder</a>
-                        <a href="../tools/interview-questions.html" class="dropdown-link"><i class="fas fa-question-circle"></i> Interview Question</a>
-                        <a href="../tools/cover-letter.html" class="dropdown-link"><i class="fas fa-envelope"></i> Cover Letter Generator</a>
-                        <a href="../tools/paraphraser.html" class="dropdown-link"><i class="fas fa-pen-nib"></i> Essay / Paraphraser Tool</a>
-                    </div>
-                </div>
-                
-                <!-- MORE DROPDOWN -->
-                <div class="nav-item dropdown" id="moreDropdown">
-                    <a href="#" class="nav-link dropdown-toggle">More <i class="fas fa-chevron-down dropdown-arrow"></i></a>
-                    <div class="dropdown-content">
-                        <a href="../contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
-                        <a href="../blog/index.html" class="dropdown-link"><i class="fas fa-newspaper"></i> Blog</a>
-                        <a href="../community/join.html" class="dropdown-link"><i class="fas fa-users"></i> Community</a>
-                        <a href="../community/partners.html" class="dropdown-link"><i class="fas fa-handshake"></i> Partners</a>
-                        <a href="../community/academy.html" class="dropdown-link"><i class="fas fa-university"></i> Offline Academy</a>
-                    </div>
-                </div>
-                
-                <!-- MOBILE ONLY LINKS -->
-                <a href="../tools/ats-score.html" class="nav-link mobile-only-link">ATS Score</a>
-                <a href="../tools/resume-builder.html" class="nav-link mobile-only-link">Resume Builder</a>
-                <a href="../tools/interview-questions.html" class="nav-link mobile-only-link">Interview Question</a>
-                <a href="../tools/cover-letter.html" class="nav-link mobile-only-link">Cover Letter Generator</a>
-                <a href="../tools/paraphraser.html" class="nav-link mobile-only-link">Essay / Paraphraser Tool</a>
-                <a href="../contact.html" class="nav-link mobile-only-link">Contact</a>
-                <a href="../blog/index.html" class="nav-link mobile-only-link">Blog</a>
-                <a href="../community/join.html" class="nav-link mobile-only-link">Community</a>
-                <a href="../community/partners.html" class="nav-link mobile-only-link">Partners</a>
-                <a href="../community/academy.html" class="nav-link mobile-only-link">Offline Academy</a>
-            </nav>
-
-            <div class="header-actions">
-                <div class="search-container">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="searchInput" class="search-input" placeholder="Search courses & domains...">
-                </div>
-                <!-- AUTH BUTTONS REMOVED -->
-            </div> 
-
-            <button class="hamburger-menu" id="hamburgerMenu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+            <div style="margin-left: auto; font-size: 0.9rem; text-align: right;">
+                <div style="color: #64748b; font-size: 0.8rem; font-weight: 500;">Candidate</div>
+                <div id="dispName" style="color: #0f172a; font-weight: 700;">Loading...</div>
+            </div>
         </div>
-        <div id="searchResults" class="search-results-container container hidden"></div>
     </header>
 
     <main>
@@ -219,93 +136,344 @@
             <div class="container">
                 <div class="exam-container">
                     <div class="exam-header">
-                        <h1 class="exam-title">Data Science & Analytics Final Exam</h1>
-                        <p>Qualification Test for Paid Internship Placement</p>
+                        <h1 class="exam-title">Data Science Final Exam</h1>
+                        <p>Official Certification Assessment</p>
                     </div>
 
                     <div class="warning-message">
                         <i class="fas fa-exclamation-triangle"></i> 
-                        <strong>WARNING:</strong> This is a high-stakes, timed test. Once submitted, results are final. Do not refresh the page.
+                        <span><strong>WARNING:</strong> Do not refresh or close this page. Results are final.</span>
                     </div>
 
                     <div class="exam-info-box">
                         <div class="info-item">
-                            <i class="far fa-clock" style="color: var(--primary);"></i>
-                            <strong>60 Minutes</strong>
+                            <i class="far fa-clock" style="color: #4338ca;"></i>
+                            <strong>30 Mins</strong>
                             <span>Time Limit</span>
                         </div>
                         <div class="info-item">
-                            <i class="fas fa-clipboard-list" style="color: var(--primary);"></i>
-                            <strong>50</strong>
-                            <span>Total Questions</span>
+                            <i class="fas fa-clipboard-list" style="color: #4338ca;"></i>
+                            <strong>25</strong>
+                            <span>Questions</span>
                         </div>
                         <div class="info-item">
-                            <i class="fas fa-percent" style="color: var(--primary);"></i>
-                            <strong>75%</strong>
+                            <i class="fas fa-check-circle" style="color: #16a34a;"></i>
+                            <strong>60%</strong>
                             <span>Passing Score</span>
                         </div>
                     </div>
 
                     <form id="dataScienceFinalExamForm">
                         
-                        <!-- Question 1: Multiple Choice (Data Cleaning) -->
+                        <!-- Q1 -->
                         <div class="question-card">
-                            <p>1. Which of the following techniques is most appropriate for imputing missing values in a categorical feature?</p>
+                            <span class="question-number">Question 1</span>
+                            <p>What is the process of cleaning and transforming raw data called?</p>
                             <div class="options">
-                                <label><input type="radio" name="q1" value="A"> Mean Imputation</label>
-                                <label><input type="radio" name="q1" value="B"> Median Imputation</label>
-                                <label><input type="radio" name="q1" value="C"> Mode Imputation</label>
-                                <label><input type="radio" name="q1" value="D"> Linear Interpolation</label>
+                                <label><input type="radio" name="q1" value="A"><span class="option-text">Data Mining</span></label>
+                                <label><input type="radio" name="q1" value="B"><span class="option-text">Data Wrangling</span></label>
+                                <label><input type="radio" name="q1" value="C"><span class="option-text">Data Visualization</span></label>
+                                <label><input type="radio" name="q1" value="D"><span class="option-text">Data Warehousing</span></label>
                             </div>
                         </div>
 
-                        <!-- Question 2: Multiple Selection (Statistics) -->
+                        <!-- Q2 -->
                         <div class="question-card">
-                            <p>2. Select all measures that describe the central tendency of a dataset:</p>
+                            <span class="question-number">Question 2</span>
+                            <p>Which library is primarily used for data manipulation in Python?</p>
                             <div class="options">
-                                <label><input type="checkbox" name="q2" value="A"> Standard Deviation</label>
-                                <label><input type="checkbox" name="q2" value="B"> Mean</label>
-                                <label><input type="checkbox" name="q2" value="C"> Variance</label>
-                                <label><input type="checkbox" name="q2" value="D"> Median</label>
-                            </div>
-                        </div>
-                        
-                        <!-- Question 3: Fill in the blank/Short Answer (Machine Learning) -->
-                        <div class="question-card">
-                            <p>3. The primary goal of a **Regularization** technique (e.g., L1 or L2) in machine learning is to prevent a model from _________ the training data.</p>
-                            <div class="options">
-                                <input type="text" name="q3" placeholder="Enter your answer (e.g., overfitting, generalizing)">
-                            </div>
-                        </div>
-                        
-                        <!-- Question 4: Multiple Choice (SQL/Database) -->
-                         <div class="question-card">
-                            <p>4. In SQL, which clause is used to filter results based on a condition applied to aggregated group data?</p>
-                            <div class="options">
-                                <label><input type="radio" name="q4" value="A"> WHERE</label>
-                                <label><input type="radio" name="q4" value="B"> GROUP BY</label>
-                                <label><input type="radio" name="q4" value="C"> ORDER BY</label>
-                                <label><input type="radio" name="q4" value="D"> HAVING</label>
-                            </div>
-                        </div>
-                        
-                        <!-- Question 5: Multiple Choice (Visualization) -->
-                         <div class="question-card">
-                            <p>5. Which type of chart is best suited for visualizing the distribution of a single numerical variable?</p>
-                            <div class="options">
-                                <label><input type="radio" name="q5" value="A"> Scatter Plot</label>
-                                <label><input type="radio" name="q5" value="B"> Bar Chart</label>
-                                <label><input type="radio" name="q5" value="C"> Histogram</label>
-                                <label><input type="radio" name="q5" value="D"> Line Chart</label>
+                                <label><input type="radio" name="q2" value="A"><span class="option-text">NumPy</span></label>
+                                <label><input type="radio" name="q2" value="B"><span class="option-text">Pandas</span></label>
+                                <label><input type="radio" name="q2" value="C"><span class="option-text">Matplotlib</span></label>
+                                <label><input type="radio" name="q2" value="D"><span class="option-text">Seaborn</span></label>
                             </div>
                         </div>
 
-                        <!-- Add more questions here (omitted for brevity) -->
+                        <!-- Q3 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 3</span>
+                            <p>What type of plot is best for showing the distribution of a single variable?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q3" value="A"><span class="option-text">Scatter Plot</span></label>
+                                <label><input type="radio" name="q3" value="B"><span class="option-text">Histogram</span></label>
+                                <label><input type="radio" name="q3" value="C"><span class="option-text">Line Chart</span></label>
+                                <label><input type="radio" name="q3" value="D"><span class="option-text">Pie Chart</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q4 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 4</span>
+                            <p>Which term refers to a variable that can take on a continuum of values?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q4" value="A"><span class="option-text">Discrete</span></label>
+                                <label><input type="radio" name="q4" value="B"><span class="option-text">Categorical</span></label>
+                                <label><input type="radio" name="q4" value="C"><span class="option-text">Continuous</span></label>
+                                <label><input type="radio" name="q4" value="D"><span class="option-text">Nominal</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q5 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 5</span>
+                            <p>What is the mean of the dataset [2, 4, 6, 8, 10]?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q5" value="A"><span class="option-text">4</span></label>
+                                <label><input type="radio" name="q5" value="B"><span class="option-text">5</span></label>
+                                <label><input type="radio" name="q5" value="C"><span class="option-text">6</span></label>
+                                <label><input type="radio" name="q5" value="D"><span class="option-text">8</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q6 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 6</span>
+                            <p>Which SQL command is used to retrieve data from a database?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q6" value="A"><span class="option-text">GET</span></label>
+                                <label><input type="radio" name="q6" value="B"><span class="option-text">SELECT</span></label>
+                                <label><input type="radio" name="q6" value="C"><span class="option-text">FETCH</span></label>
+                                <label><input type="radio" name="q6" value="D"><span class="option-text">EXTRACT</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q7 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 7</span>
+                            <p>In Pandas, which function reads a CSV file?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q7" value="A"><span class="option-text">read_file()</span></label>
+                                <label><input type="radio" name="q7" value="B"><span class="option-text">load_csv()</span></label>
+                                <label><input type="radio" name="q7" value="C"><span class="option-text">read_csv()</span></label>
+                                <label><input type="radio" name="q7" value="D"><span class="option-text">import_csv()</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q8 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 8</span>
+                            <p>What is 'Variance' a measure of?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q8" value="A"><span class="option-text">Central tendency</span></label>
+                                <label><input type="radio" name="q8" value="B"><span class="option-text">Data spread</span></label>
+                                <label><input type="radio" name="q8" value="C"><span class="option-text">Skewness</span></label>
+                                <label><input type="radio" name="q8" value="D"><span class="option-text">Kurtosis</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q9 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 9</span>
+                            <p>Which concept handles the problem of outliers?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q9" value="A"><span class="option-text">Standard Deviation</span></label>
+                                <label><input type="radio" name="q9" value="B"><span class="option-text">Interquartile Range (IQR)</span></label>
+                                <label><input type="radio" name="q9" value="C"><span class="option-text">Mean</span></label>
+                                <label><input type="radio" name="q9" value="D"><span class="option-text">Mode</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q10 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 10</span>
+                            <p>What is A/B testing primarily used for?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q10" value="A"><span class="option-text">Cleaning data</span></label>
+                                <label><input type="radio" name="q10" value="B"><span class="option-text">Comparing two versions of something</span></label>
+                                <label><input type="radio" name="q10" value="C"><span class="option-text">Training models</span></label>
+                                <label><input type="radio" name="q10" value="D"><span class="option-text">Database management</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q11 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 11</span>
+                            <p>Which join returns all records when there is a match in either left or right table?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q11" value="A"><span class="option-text">INNER JOIN</span></label>
+                                <label><input type="radio" name="q11" value="B"><span class="option-text">LEFT JOIN</span></label>
+                                <label><input type="radio" name="q11" value="C"><span class="option-text">RIGHT JOIN</span></label>
+                                <label><input type="radio" name="q11" value="D"><span class="option-text">FULL OUTER JOIN</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q12 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 12</span>
+                            <p>What does 'EDA' stand for?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q12" value="A"><span class="option-text">Estimated Data Analysis</span></label>
+                                <label><input type="radio" name="q12" value="B"><span class="option-text">Exploratory Data Analysis</span></label>
+                                <label><input type="radio" name="q12" value="C"><span class="option-text">Essential Data Algorithm</span></label>
+                                <label><input type="radio" name="q12" value="D"><span class="option-text">Effective Database Assessment</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q13 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 13</span>
+                            <p>Which Python library is used for statistical plotting?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q13" value="A"><span class="option-text">NumPy</span></label>
+                                <label><input type="radio" name="q13" value="B"><span class="option-text">Seaborn</span></label>
+                                <label><input type="radio" name="q13" value="C"><span class="option-text">Requests</span></label>
+                                <label><input type="radio" name="q13" value="D"><span class="option-text">Flask</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q14 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 14</span>
+                            <p>What is the median of [1, 3, 3, 6, 7, 8, 9]?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q14" value="A"><span class="option-text">3</span></label>
+                                <label><input type="radio" name="q14" value="B"><span class="option-text">6</span></label>
+                                <label><input type="radio" name="q14" value="C"><span class="option-text">7</span></label>
+                                <label><input type="radio" name="q14" value="D"><span class="option-text">5.2</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q15 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 15</span>
+                            <p>Which of these is a dimension reduction technique?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q15" value="A"><span class="option-text">ANOVA</span></label>
+                                <label><input type="radio" name="q15" value="B"><span class="option-text">PCA (Principal Component Analysis)</span></label>
+                                <label><input type="radio" name="q15" value="C"><span class="option-text">Chi-Square</span></label>
+                                <label><input type="radio" name="q15" value="D"><span class="option-text">T-Test</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q16 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 16</span>
+                            <p>What is 'Correlation'?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q16" value="A"><span class="option-text">Causation between variables</span></label>
+                                <label><input type="radio" name="q16" value="B"><span class="option-text">A statistical measure of relationship between two variables</span></label>
+                                <label><input type="radio" name="q16" value="C"><span class="option-text">The sum of two variables</span></label>
+                                <label><input type="radio" name="q16" value="D"><span class="option-text">The difference between mean and median</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q17 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 17</span>
+                            <p>Which distribution is bell-shaped?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q17" value="A"><span class="option-text">Uniform</span></label>
+                                <label><input type="radio" name="q17" value="B"><span class="option-text">Normal (Gaussian)</span></label>
+                                <label><input type="radio" name="q17" value="C"><span class="option-text">Binomial</span></label>
+                                <label><input type="radio" name="q17" value="D"><span class="option-text">Poisson</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q18 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 18</span>
+                            <p>What is the purpose of 'GROUP BY' in SQL?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q18" value="A"><span class="option-text">To filter rows</span></label>
+                                <label><input type="radio" name="q18" value="B"><span class="option-text">To aggregate data based on a column</span></label>
+                                <label><input type="radio" name="q18" value="C"><span class="option-text">To sort data</span></label>
+                                <label><input type="radio" name="q18" value="D"><span class="option-text">To join tables</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q19 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 19</span>
+                            <p>Which library is used for web scraping?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q19" value="A"><span class="option-text">BeautifulSoup</span></label>
+                                <label><input type="radio" name="q19" value="B"><span class="option-text">NumPy</span></label>
+                                <label><input type="radio" name="q19" value="C"><span class="option-text">Matplotlib</span></label>
+                                <label><input type="radio" name="q19" value="D"><span class="option-text">Django</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q20 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 20</span>
+                            <p>What does `df.head()` do in Pandas?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q20" value="A"><span class="option-text">Returns the last 5 rows</span></label>
+                                <label><input type="radio" name="q20" value="B"><span class="option-text">Returns the first 5 rows</span></label>
+                                <label><input type="radio" name="q20" value="C"><span class="option-text">Returns the headers only</span></label>
+                                <label><input type="radio" name="q20" value="D"><span class="option-text">Returns a summary of data</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q21 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 21</span>
+                            <p>Which value indicates a perfect positive correlation?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q21" value="A"><span class="option-text">0</span></label>
+                                <label><input type="radio" name="q21" value="B"><span class="option-text">-1</span></label>
+                                <label><input type="radio" name="q21" value="C"><span class="option-text">1</span></label>
+                                <label><input type="radio" name="q21" value="D"><span class="option-text">100</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q22 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 22</span>
+                            <p>What is a 'Null Hypothesis'?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q22" value="A"><span class="option-text">The hypothesis that there is a significant effect</span></label>
+                                <label><input type="radio" name="q22" value="B"><span class="option-text">The hypothesis that there is no significant effect</span></label>
+                                <label><input type="radio" name="q22" value="C"><span class="option-text">An incorrect hypothesis</span></label>
+                                <label><input type="radio" name="q22" value="D"><span class="option-text">A proven hypothesis</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q23 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 23</span>
+                            <p>Which of the following is NOT a measure of central tendency?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q23" value="A"><span class="option-text">Mean</span></label>
+                                <label><input type="radio" name="q23" value="B"><span class="option-text">Median</span></label>
+                                <label><input type="radio" name="q23" value="C"><span class="option-text">Mode</span></label>
+                                <label><input type="radio" name="q23" value="D"><span class="option-text">Range</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q24 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 24</span>
+                            <p>What is 'Feature Engineering'?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q24" value="A"><span class="option-text">Creating new features from existing data</span></label>
+                                <label><input type="radio" name="q24" value="B"><span class="option-text">Removing features</span></label>
+                                <label><input type="radio" name="q24" value="C"><span class="option-text">Designing software features</span></label>
+                                <label><input type="radio" name="q24" value="D"><span class="option-text">Collecting more data</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q25 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 25</span>
+                            <p>In a box plot, what does the box represent?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q25" value="A"><span class="option-text">The entire range of data</span></label>
+                                <label><input type="radio" name="q25" value="B"><span class="option-text">The Interquartile Range (IQR)</span></label>
+                                <label><input type="radio" name="q25" value="C"><span class="option-text">The outliers</span></label>
+                                <label><input type="radio" name="q25" value="D"><span class="option-text">The standard deviation</span></label>
+                            </div>
+                        </div>
 
                         <div class="exam-submit-area">
-                            <p style="color: var(--gray); font-size: 1rem;">Click 'Submit' only when you are completely ready. This action cannot be reversed.</p>
-                            <button type="submit" class="btn btn-primary btn-lg" id="submitExamButton" style="width: 300px; margin-top: 15px;">
-                                <i class="fas fa-check-circle" style="margin-right: 10px;"></i> Submit Final Exam
+                            <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 20px;">
+                                By clicking "Submit Final Exam", you confirm that you have completed the test independently.
+                            </p>
+                            <button type="submit" class="btn" id="submitExamButton" 
+                                style="background: #4c51bf; color: white; padding: 16px 40px; border: none; border-radius: 50px; 
+                                font-size: 1.1rem; font-weight: 700; cursor: pointer; width: 100%; max-width: 320px;
+                                box-shadow: 0 10px 25px rgba(76, 81, 191, 0.3); transition: all 0.3s ease;">
+                                <i class="fas fa-paper-plane" style="margin-right: 10px;"></i> Submit Final Exam
                             </button>
                         </div>
                     </form>
@@ -314,115 +482,132 @@
         </section>
     </main>
 
-    <!-- ==============================================
-         FOOTER: Updated with Tools Column (Request 3) - Adjusted paths
-         ============================================== -->
+    <!-- RESULT MODAL -->
+    <div id="resultOverlay">
+        <div class="modal-content">
+            <div id="resultIcon" style="font-size: 4.5rem; margin-bottom: 25px;"></div>
+            <h2 id="resultTitle" style="margin-bottom: 15px; font-size: 2rem; font-weight: 800;"></h2>
+            <p id="resultMessage" style="color: #475569; margin-bottom: 35px; line-height: 1.7; font-size: 1.1rem;"></p>
+            <button id="resultActionBtn" style="background: #4c51bf; color: white; padding: 14px 32px; border: none; 
+            border-radius: 50px; font-weight: 700; cursor: pointer; font-size: 1rem; transition: transform 0.2s;"></button>
+        </div>
+    </div>
+
     <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <div class="footer-logo">Internadda</div>
-                    <p class="footer-description">Transforming careers through learning, interning, and earning opportunities.</p>
-                    <div class="social-links">
-                        <a href="https://www.linkedin.com/company/internadda-india" target="_blank" class="social-link" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="https://www.youtube.com/@theinternadda" target="_blank" class="social-link" aria-label="YouTube">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                        <a href="https://www.instagram.com/internadda.india" target="_blank" class="social-link" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Learn</h3>
-                    <ul class="footer-links">
-                        <li><a href="../courses/course.html">Browse Courses</a></li>
-                        <li><a href="../courses/course.html">Free Courses</a></li>
-                        <li><a href="#">Paid Courses</a></li>
-                        <li><a href="#">Become an Instructor</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Intern</h3>
-                    <ul class="footer-links">
-                        <li><a href="internship.html">Find Internships</a></li>
-                        <li><a href="#">For Companies</a></li>
-                        <li><a href="#">Success Stories</a></li>
-                        <li><a href="#">Career Coaching</a></li>
-                    </ul>
-                </div>
-                
-                <!-- NEW TOOLS COLUMN (Request 3) -->
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Career Tools</h3>
-                    <ul class="footer-links">
-                        <li><a href="../tools/ats-score.html">ATS Score Checker</a></li>
-                        <li><a href="../tools/resume-builder.html">Resume Builder</a></li>
-                        <li><a href="../tools/interview-questions.html">Interview Prep</a></li>
-                        <li><a href="../tools/cover-letter.html">Cover Letter Gen</a></li>
-                        <li><a href="../tools/paraphraser.html">Essay Paraphraser</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">InternAdda</h3>
-                    <ul class="footer-links">
-                        <li><a href="../about.html">About Us</a></li>
-                        <li><a href="../contact.html">Contact Us</a></li>
-                        <li><a href="../terms.html">Terms & Conditions</a></li>
-                        <li><a href="../refund.html">Refund Policy</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Community</h3>
-                    <ul class="footer-links">
-                        <li><a href="../community/join.html">Join Community</a></li>
-                        <li><a href="../community/partners.html">Partners</a></li>
-                        <li><a href="../blog/index.html">Blog</a></li>
-                        <li><a href="../community/academy.html">Offline Academy</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>© 2025 Internadda. All rights reserved. | Developed by Internadda Team</p>
-            </div>
+        <div class="container" style="text-align: center; padding: 30px; color: #94a3b8; font-size: 0.9rem;">
+            <p>© 2025 Internadda. All rights reserved. | Developed by Internadda Team</p>
         </div>
     </footer>
 
-    <!-- NOTE: The global script.js is NOT included here. Exam-specific script included below. -->
-    <script>
-        // Simple Client-side Exam Logic (Placeholder)
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('dataScienceFinalExamForm');
-            const submitButton = document.getElementById('submitExamButton');
-            
-            // This is a placeholder function to prevent non-functional form submission.
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    // In a real application, this would send data via AJAX and redirect.
-                    // For now, we simulate submission and show a message.
-                    alert("Data Science Exam submitted! Results will be processed and notified soon.");
-                    // window.location.href = 'results_page_data_science.html'; // Example redirect
-                });
-            }
+    <!-- FIREBASE SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
 
-            // Re-adding the header menu toggle logic since the global script is removed
-            const hamburgerMenu = document.getElementById('hamburgerMenu');
-            const navMenu = document.querySelector('.nav-menu');
+    <script>
+        // 1. FIREBASE CONFIGURATION
+        const firebaseConfig = {
+            apiKey: "AIzaSyCBAVUB555zTVMvvMnDyyjsC0SR_awBsOY",
+            authDomain: "internadda-com.firebaseapp.com",
+            projectId: "internadda-com",
+            storageBucket: "internadda-com.firebasestorage.app",
+            messagingSenderId: "63475091988",
+            appId: "1:63475091988:web:a84d22d53af3a7cd7a7501",
+            measurementId: "G-W1V99YWBWW"
+        };
+
+        // 2. INITIALIZE
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const analytics = firebase.analytics();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // 3. RETRIEVE DATA
+            const name = localStorage.getItem('candidateName') || "Guest Candidate";
+            const age = localStorage.getItem('candidateAge') || "N/A";
+            const gender = localStorage.getItem('candidateGender') || "Not Specified";
+            const domain = localStorage.getItem('candidateDomain') || "Data Science Intern";
+
+            document.getElementById('dispName').textContent = name;
+
+            // 4. EXAM LOGIC
+            const form = document.getElementById('dataScienceFinalExamForm');
             
-            if (hamburgerMenu && navMenu) {
-                hamburgerMenu.addEventListener('click', () => {
-                    hamburgerMenu.classList.toggle('active');
-                    navMenu.classList.toggle('active');
-                    document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+            if (form) {
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const btn = document.getElementById('submitExamButton');
+                    btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Processing Result...';
+                    btn.style.opacity = "0.8";
+                    btn.disabled = true;
+                    
+                    // SCORING
+                    let score = 0;
+                    const totalQuestions = 25; 
+                    const formData = new FormData(form);
+                    
+                    // Correct Answer Key
+                    const answers = {
+                        q1: 'B', q2: 'B', q3: 'B', q4: 'C', q5: 'C',
+                        q6: 'B', q7: 'C', q8: 'B', q9: 'B', q10: 'B',
+                        q11: 'D', q12: 'B', q13: 'B', q14: 'B', q15: 'B',
+                        q16: 'B', q17: 'B', q18: 'B', q19: 'A', q20: 'B',
+                        q21: 'C', q22: 'B', q23: 'D', q24: 'A', q25: 'B'
+                    };
+
+                    for (let i = 1; i <= totalQuestions; i++) {
+                        if (formData.get('q' + i) === answers['q' + i]) {
+                            score++;
+                        }
+                    }
+
+                    const percentage = Math.round((score / totalQuestions) * 100);
+                    const passed = percentage >= 60;
+                    const status = passed ? "Pass" : "Fail";
+
+                    // SAVE TO FIREBASE (Updated fields: +Age, -Phone)
+                    try {
+                        await db.collection("exam_results").add({
+                            name: name,
+                            age: age,
+                            gender: gender,
+                            domain: domain,
+                            score: percentage,
+                            status: status,
+                            submittedAt: new Date()
+                        });
+                        console.log("Saved to Firebase");
+                    } catch (err) {
+                        console.error("Firebase Error:", err);
+                    }
+
+                    // SHOW RESULT
+                    const overlay = document.getElementById('resultOverlay');
+                    const rTitle = document.getElementById('resultTitle');
+                    const rMsg = document.getElementById('resultMessage');
+                    const rIcon = document.getElementById('resultIcon');
+                    const rBtn = document.getElementById('resultActionBtn');
+
+                    overlay.style.display = 'flex';
+
+                    if (passed) {
+                        rIcon.innerHTML = '<i class="fas fa-medal" style="color: #16a34a; filter: drop-shadow(0 4px 6px rgba(22, 163, 74, 0.4));"></i>';
+                        rTitle.textContent = "Congratulations! You Passed!";
+                        rTitle.style.color = "#166534";
+                        rMsg.innerHTML = `Outstanding performance, <strong>${name}</strong>!<br>You scored <strong>${percentage}%</strong>.<br>You have qualified for the interview round.`;
+                        rBtn.textContent = "Proceed to Interview";
+                        rBtn.style.background = "#16a34a";
+                        rBtn.onclick = () => window.location.href = "https://data-science.interview.internadda.com";
+                    } else {
+                        rIcon.innerHTML = '<i class="fas fa-times-circle" style="color: #dc2626; filter: drop-shadow(0 4px 6px rgba(220, 38, 38, 0.4));"></i>';
+                        rTitle.textContent = "Exam Not Cleared";
+                        rTitle.style.color = "#991b1b";
+                        rMsg.innerHTML = `You scored <strong>${percentage}%</strong>.<br>The passing criteria is 60%.<br>Don't worry, you can try again or explore other internships.`;
+                        rBtn.textContent = "Return to Internships";
+                        rBtn.style.background = "#dc2626";
+                        // Redirect to Internship Page on Retry
+                        rBtn.onclick = () => window.location.href = "https://internadda.com/intern/internship";
+                    }
                 });
             }
         });
