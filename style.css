@@ -592,19 +592,11 @@ footer {
 }
 
 /* =========================================
-   8. RESPONSIVE / MOBILE MENU
+   8. PROFESSIONAL MOBILE MENU (EdTech Style)
    ========================================= */
-@media (max-width: 1024px) {
-    .hero-heading { font-size: 3rem; }
-    .hero-image-wrapper { max-width: 400px; }
-    .footer-grid { grid-template-columns: repeat(3, 1fr); }
-    .footer-brand { grid-column: span 3; text-align: center; padding: 0;}
-    .footer-description { margin: 0 auto 25px; }
-    .social-links { justify-content: center; }
-}
-
 @media (max-width: 768px) {
-    /* General Mobile Adjustments */
+    
+    /* General Mobile Adjustments for Hero/Footer */
     .hero-container { flex-direction: column; text-align: center; gap: 40px; }
     .hero-heading { font-size: 2.5rem; }
     .hero-cta { justify-content: center; flex-direction: column; }
@@ -616,7 +608,6 @@ footer {
     .marquee-track { gap: 30px; }
     .testimonial-card-dark { min-width: 300px; }
 
-    /* Footer Mobile - 2 Columns */
     .footer-grid {
         grid-template-columns: 1fr 1fr; 
         gap: 40px 20px; 
@@ -631,89 +622,143 @@ footer {
     }
     .footer-brand .footer-description { margin: 0 auto 20px; }
 
-    /* --- PROFESSIONAL MOBILE MENU STYLING --- */
-    .mobile-menu-btn { display: block; z-index: 1002; }
+    /* --- MOBILE MENU LOGIC STARTS HERE --- */
+    
+    /* 1. Hamburger Icon */
+    .mobile-menu-btn { 
+        display: block; 
+        z-index: 1002; 
+        font-size: 1.4rem;
+        color: var(--text-main);
+        padding: 5px;
+    }
 
+    /* 2. The Main Menu Container (Top-Down Drop) */
     .nav-links {
-        position: fixed;
-        top: 80px;
+        position: absolute;
+        top: 80px; /* Matches Header Height */
         left: 0;
         width: 100%;
-        height: calc(100vh - 80px);
-        background: #ffffff; /* Clean white background */
+        background: #ffffff;
         flex-direction: column;
-        align-items: flex-start; /* Left align items */
+        align-items: flex-start;
         padding: 0;
-        padding-top: 20px;
-        transform: translateX(100%);
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         gap: 0;
-        overflow-y: auto;
+        
+        /* Animation Logic: Start Hidden */
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        
+        /* Visual Polish */
+        border-top: 1px solid #f1f5f9;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
     }
 
-    .nav-links.active { transform: translateX(0); }
+    /* 3. Active State (When Menu is Open) */
+    .nav-links.active {
+        max-height: 85vh; /* Allow scrolling if menu is long */
+        overflow-y: auto;
+        opacity: 1;
+        transform: translateY(0);
+    }
 
-    /* Individual Menu Items */
-    .nav-links > a, 
-    .nav-links > div.dropdown {
-        width: 100%; 
-        text-align: left;
-        padding: 15px 25px;
-        border-bottom: 1px solid #f1f5f9; /* Subtle separator */
-        font-size: 1.1rem;
+    /* 4. Menu Items (Rows with Separators) */
+    .nav-item {
+        width: 100%;
+        padding: 16px 24px;
+        font-size: 1.05rem;
         font-weight: 600;
         color: #334155;
+        border-bottom: 1px solid #f1f5f9; /* The separated line */
         display: flex;
         align-items: center;
-        justify-content: flex-start; /* Force left alignment */
+        justify-content: flex-start;
     }
 
-    /* Icons in Mobile Menu */
+    .nav-item:hover {
+        background-color: #f8fafc;
+        color: var(--primary);
+    }
+
+    /* Icons inside Menu Items */
     .nav-item i {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 15px;
+        display: inline-block; /* Show icons on mobile */
+        width: 24px;
+        text-align: center;
+        margin-right: 12px;
         color: var(--primary);
         font-size: 1.1rem;
-        background: #eef2ff; /* Light indigo background for icon */
-        width: 36px;
-        height: 36px;
-        border-radius: 8px; /* Rounded square shape */
-        flex-shrink: 0;
     }
 
-    /* "More" Dropdown Label */
+    /* 5. Dropdown Handling on Mobile (Accordion Style) */
+    .dropdown {
+        display: block;
+        width: 100%;
+        padding: 0; /* Remove padding from wrapper, apply to span */
+    }
+
+    /* The "More" or "Tools" Clickable Text */
     .dropdown > span {
         width: 100%;
-        justify-content: flex-start;
+        padding: 16px 24px;
         display: flex;
         align-items: center;
-        padding: 15px 25px;
-    }
-
-    /* Dropdown Content (Nested Items) */
-    .dropdown-content {
-        position: static;
-        display: none;
-        box-shadow: none;
-        border: none;
-        padding: 0;
-        width: 100%;
-        background: #f8fafc; /* Slightly gray background for nested items */
-        margin-top: 0;
-        border-radius: 0;
-    }
-    
-    .dropdown-content::before { display: none; }
-
-    .dropdown-content a {
-        justify-content: flex-start;
-        padding: 12px 25px 12px 75px; /* Increased left padding for indentation */
-        font-size: 0.95rem;
-        color: #64748b;
+        justify-content: space-between; /* Arrow to the right */
         border-bottom: 1px solid #f1f5f9;
     }
     
-    .nav-links > div.dropdown:last-child { border-bottom: none; }
+    /* Rotate arrow when open */
+    .dropdown.active > span i.fa-chevron-down {
+        transform: rotate(180deg);
+        transition: transform 0.3s;
+    }
+
+    /* The Dropdown Content (Sub-menu) */
+    .dropdown-content {
+        position: static; /* Not absolute */
+        display: none; /* Hidden by default */
+        width: 100%;
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+        background-color: #f8fafc; /* Slightly darker bg for contrast */
+        padding: 5px 0;
+        animation: none; /* Remove slideUp animation for mobile */
+    }
+
+    /* Show dropdown content when active */
+    .dropdown.active .dropdown-content {
+        display: block;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    /* Dropdown Links */
+    .dropdown-content a {
+        padding: 14px 24px 14px 50px; /* Indented left padding */
+        font-size: 0.95rem;
+        color: #64748b;
+        border-bottom: 1px solid #e2e8f0; /* Inner separator */
+    }
+    
+    .dropdown-content a:last-child {
+        border-bottom: none;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #eef2ff;
+        color: var(--primary);
+    }
+
+    /* Hide the small triangle from desktop view */
+    .dropdown-content::before {
+        display: none;
+    }
+    
+    /* Hide Desktop-only classes if any */
+    .mobile-only-link {
+        display: flex; /* Ensure these show if you use them */
+    }
 }
