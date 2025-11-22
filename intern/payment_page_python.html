@@ -205,11 +205,6 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="userDOB">Date of Birth</label>
-                                <input type="date" id="userDOB" required>
-                            </div>
-
-                            <div class="form-group">
                                 <label for="userGender">Gender</label>
                                 <select id="userGender" required>
                                     <option value="" disabled selected>Select Gender</option>
@@ -219,7 +214,7 @@
                                 </select>
                             </div>
 
-                            <div class="form-group" style="grid-column: 1 / -1;">
+                            <div class="form-group">
                                 <label for="userDomain">Selected Domain</label>
                                 <input type="text" id="userDomain" value="Python Development" readonly>
                             </div>
@@ -334,10 +329,10 @@
             function checkForm() {
                 const name = document.getElementById('userName').value.trim();
                 const age = document.getElementById('userAge').value.trim();
-                const dob = document.getElementById('userDOB').value;
+                // Removed dob check
                 const gender = document.getElementById('userGender').value;
                 
-                if (name && age && dob && gender) {
+                if (name && age && gender) {
                     payBtnContainer.style.opacity = '1';
                     payBtnContainer.style.pointerEvents = 'auto';
                     errorMsg.style.display = 'none';
@@ -345,7 +340,7 @@
                     // Also Save to LocalStorage for the Exam Page to read later
                     localStorage.setItem('candidateName', name);
                     localStorage.setItem('candidateAge', age);
-                    localStorage.setItem('candidateDOB', dob);
+                    // Removed dob storage
                     localStorage.setItem('candidateGender', gender);
                     localStorage.setItem('candidateDomain', 'Python Development');
                 } else {
@@ -367,7 +362,7 @@
 
                 const name = document.getElementById('userName').value.trim();
                 const age = document.getElementById('userAge').value.trim();
-                const dob = document.getElementById('userDOB').value;
+                // Removed dob retrieval
                 const gender = document.getElementById('userGender').value;
                 const domain = "Python Development";
 
@@ -380,7 +375,7 @@
                     await db.collection("exam_registrations").add({
                         name: name,
                         age: age,
-                        dob: dob,
+                        // Removed dob field
                         gender: gender,
                         domain: domain,
                         status: "Payment Initiated", // Tag as initiated
