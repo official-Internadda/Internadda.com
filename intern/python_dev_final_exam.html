@@ -15,56 +15,92 @@
 
     <style>
         /* Exam Specific Styles */
-        body { background-color: #f7fafc; }
-        main { padding-top: 20px; padding-bottom: 80px; }
+        body { background-color: #f7fafc; font-family: 'Inter', sans-serif; color: #1a202c; }
+        main { padding-top: 30px; padding-bottom: 80px; }
+        
         .exam-container {
-            max-width: 900px; margin: 40px auto; background-color: #fff;
-            border-radius: 16px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); padding: 40px;
+            max-width: 850px; margin: 40px auto; background-color: #ffffff;
+            border-radius: 16px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08); padding: 50px;
+            border: 1px solid #f1f5f9;
         }
-        .exam-header { text-align: center; border-bottom: 3px solid #306998; padding-bottom: 20px; margin-bottom: 30px; }
-        .exam-header h1 { font-size: 2.5rem; color: #306998; margin-bottom: 5px; }
-        .exam-header p { color: #ffd43b; font-size: 1.1rem; font-weight: 600; background: #306998; display: inline-block; padding: 4px 12px; border-radius: 4px; }
         
+        /* Header Styling */
+        .exam-header { text-align: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 30px; margin-bottom: 40px; }
+        .exam-header h1 { font-size: 2.2rem; color: #306998; margin-bottom: 10px; letter-spacing: -0.5px; font-weight: 800; }
+        .exam-header p { 
+            color: #306998; font-size: 0.95rem; font-weight: 600; 
+            background: #fffbeb; color: #b45309; /* Amber colors */
+            display: inline-block; padding: 6px 16px; border-radius: 20px; 
+            border: 1px solid #fcd34d;
+        }
+        
+        /* Info Box Styling */
         .exam-info-box {
-            display: flex; justify-content: space-around; gap: 20px; margin-bottom: 30px;
-            padding: 15px; background-color: #ebf8ff; border-radius: 10px; border: 1px solid #cceeff;
+            display: flex; justify-content: space-between; gap: 20px; margin-bottom: 40px;
+            padding: 20px 30px; background-color: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;
         }
-        .info-item { text-align: center; }
-        .info-item strong { display: block; font-size: 1.4rem; color: #1a202c; }
-        .info-item span { font-size: 0.9rem; color: #718096; }
+        .info-item { text-align: center; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .info-item i { font-size: 1.5rem; margin-bottom: 5px; }
+        .info-item strong { display: block; font-size: 1.2rem; color: #0f172a; font-weight: 700; }
+        .info-item span { font-size: 0.85rem; color: #64748b; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
         
-        .question-card { border: 1px solid #e2e8f0; border-radius: 10px; padding: 25px; margin-bottom: 25px; }
-        .question-card p { font-size: 1.1rem; font-weight: 600; color: #1a202c; margin-bottom: 15px; }
+        /* Question Card Styling */
+        .question-card { 
+            border: 1px solid #e2e8f0; border-radius: 12px; padding: 30px; margin-bottom: 30px; 
+            background: #fff; transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .question-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04); border-color: #cbd5e1;
+        }
+        .question-number {
+            display: inline-block; background: #e0f2fe; color: #0284c7; 
+            font-size: 0.8rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; margin-bottom: 10px;
+        }
+        .question-card p { font-size: 1.15rem; font-weight: 600; color: #1e293b; margin-bottom: 20px; line-height: 1.5; }
         
+        /* Options Styling */
+        .options { display: grid; gap: 12px; }
         .options label {
-            display: block; background-color: #f7fafc; padding: 12px; margin-bottom: 10px;
-            border-radius: 8px; cursor: pointer; transition: all 0.2s ease; border: 1px solid #e2e8f0;
+            display: flex; align-items: center; 
+            background-color: #f8fafc; padding: 16px; 
+            border-radius: 10px; cursor: pointer; transition: all 0.2s ease; 
+            border: 2px solid transparent; /* Hidden border for hover effect */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
-        .options label:hover { background-color: #edf2f7; border-color: #ffd43b; }
-        .options input { margin-right: 10px; accent-color: #306998; }
-        
-        .exam-submit-area { text-align: center; padding-top: 30px; border-top: 1px solid #e2e8f0; margin-top: 30px; }
+        .options label:hover { background-color: #f0f9ff; border-color: #bae6fd; }
+        .options input { 
+            margin-right: 16px; width: 20px; height: 20px; accent-color: #0284c7; flex-shrink: 0; 
+            cursor: pointer;
+        }
+        .option-text { font-size: 1rem; color: #475569; font-weight: 500; }
+
+        /* Submit Area */
+        .exam-submit-area { text-align: center; padding-top: 40px; border-top: 2px solid #f1f5f9; margin-top: 40px; }
         .warning-message {
-            color: #e53e3e; background-color: #fff5f5; padding: 15px;
-            border-radius: 8px; border: 1px solid #fed7d7; margin-bottom: 20px; font-weight: 600;
+            color: #991b1b; background-color: #fef2f2; padding: 16px;
+            border-radius: 8px; border: 1px solid #fecaca; margin-bottom: 30px; font-weight: 600;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
         }
 
         /* Modal */
         #resultOverlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center;
-            backdrop-filter: blur(5px);
+            background: rgba(15, 23, 42, 0.9); z-index: 2000; align-items: center; justify-content: center;
+            backdrop-filter: blur(8px);
         }
         .modal-content {
-            background: white; padding: 40px; border-radius: 20px; text-align: center;
-            max-width: 450px; width: 90%; animation: popIn 0.4s ease-out;
+            background: white; padding: 50px; border-radius: 24px; text-align: center;
+            max-width: 480px; width: 90%; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
-        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
         @media (max-width: 768px) {
-            .exam-container { padding: 20px; margin: 20px auto; }
-            .exam-header h1 { font-size: 2rem; }
-            .exam-info-box { flex-direction: column; gap: 10px; }
+            .exam-container { padding: 25px; margin: 20px auto; width: 95%; }
+            .exam-header h1 { font-size: 1.8rem; }
+            .exam-info-box { flex-wrap: wrap; gap: 15px; padding: 15px; }
+            .info-item { min-width: 40%; }
+            .options label { padding: 14px; } 
         }
     </style>
 </head>
@@ -74,13 +110,13 @@
     <header>
         <div class="container header-container">
             <a href="../index.html" class="logo">
-                <span class="logo-text" style="color: #306998; font-size: 1.5rem; font-weight: 800;">
+                <span class="logo-text" style="color: #306998; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px;">
                     <i class="fab fa-python" style="color: #ffd43b; margin-right: 8px;"></i>InternAdda
                 </span>
             </a>
             <div style="margin-left: auto; font-size: 0.9rem; text-align: right;">
-                <div style="color: #718096;">Candidate</div>
-                <div id="dispName" style="color: #306998; font-weight: 700;">Loading...</div>
+                <div style="color: #64748b; font-size: 0.8rem; font-weight: 500;">Candidate</div>
+                <div id="dispName" style="color: #0f172a; font-weight: 700;">Loading...</div>
             </div>
         </div>
     </header>
@@ -91,12 +127,12 @@
                 <div class="exam-container">
                     <div class="exam-header">
                         <h1 class="exam-title">Python Development Final Exam</h1>
-                        <p>Qualification Test for Paid Internship</p>
+                        <p>Official Certification Assessment</p>
                     </div>
 
                     <div class="warning-message">
                         <i class="fas fa-exclamation-triangle"></i> 
-                        <strong>WARNING:</strong> High-stakes test. Do not refresh the page.
+                        <span><strong>WARNING:</strong> Do not refresh or close this page. Results are final.</span>
                     </div>
 
                     <div class="exam-info-box">
@@ -111,51 +147,323 @@
                             <span>Questions</span>
                         </div>
                         <div class="info-item">
-                            <i class="fas fa-percent" style="color: #306998;"></i>
+                            <i class="fas fa-check-circle" style="color: #16a34a;"></i>
                             <strong>60%</strong>
                             <span>Passing Score</span>
                         </div>
                     </div>
 
                     <form id="pythonDevFinalExamForm">
-                        <!-- Question 1 -->
+                        
+                        <!-- Q1 -->
                         <div class="question-card">
-                            <p>1. Which of the following is the correct extension of a Python file?</p>
+                            <span class="question-number">Question 1</span>
+                            <p>What is the output of `print(type([]))` in Python?</p>
                             <div class="options">
-                                <label><input type="radio" name="q1" value="A"> .python</label>
-                                <label><input type="radio" name="q1" value="B"> .pl</label>
-                                <label><input type="radio" name="q1" value="C"> .py</label> <!-- Correct -->
-                                <label><input type="radio" name="q1" value="D"> .p</label>
+                                <label><input type="radio" name="q1" value="A"><span class="option-text">&lt;class 'tuple'&gt;</span></label>
+                                <label><input type="radio" name="q1" value="B"><span class="option-text">&lt;class 'dict'&gt;</span></label>
+                                <label><input type="radio" name="q1" value="C"><span class="option-text">&lt;class 'list'&gt;</span></label>
+                                <label><input type="radio" name="q1" value="D"><span class="option-text">&lt;class 'set'&gt;</span></label>
                             </div>
                         </div>
 
-                        <!-- Question 2 -->
+                        <!-- Q2 -->
                         <div class="question-card">
-                            <p>2. Which collection type in Python is ordered and immutable?</p>
+                            <span class="question-number">Question 2</span>
+                            <p>Which keyword is used to define a function in Python?</p>
                             <div class="options">
-                                <label><input type="radio" name="q2" value="A"> List</label>
-                                <label><input type="radio" name="q2" value="B"> Tuple</label> <!-- Correct -->
-                                <label><input type="radio" name="q2" value="C"> Dictionary</label>
-                                <label><input type="radio" name="q2" value="D"> Set</label>
+                                <label><input type="radio" name="q2" value="A"><span class="option-text">function</span></label>
+                                <label><input type="radio" name="q2" value="B"><span class="option-text">def</span></label>
+                                <label><input type="radio" name="q2" value="C"><span class="option-text">define</span></label>
+                                <label><input type="radio" name="q2" value="D"><span class="option-text">func</span></label>
                             </div>
                         </div>
 
-                        <!-- Question 3 -->
+                        <!-- Q3 -->
                         <div class="question-card">
-                            <p>3. What does the `len()` function do?</p>
+                            <span class="question-number">Question 3</span>
+                            <p>Which of the following is NOT a valid variable name in Python?</p>
                             <div class="options">
-                                <label><input type="radio" name="q3" value="A"> Returns the largest item</label>
-                                <label><input type="radio" name="q3" value="B"> Returns the type of an object</label>
-                                <label><input type="radio" name="q3" value="C"> Returns the length of an object</label> <!-- Correct -->
-                                <label><input type="radio" name="q3" value="D"> Converts a value to an integer</label>
+                                <label><input type="radio" name="q3" value="A"><span class="option-text">_my_var</span></label>
+                                <label><input type="radio" name="q3" value="B"><span class="option-text">myVar</span></label>
+                                <label><input type="radio" name="q3" value="C"><span class="option-text">2myVar</span></label>
+                                <label><input type="radio" name="q3" value="D"><span class="option-text">my_var2</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q4 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 4</span>
+                            <p>What data type is the object below? <br> `L = [1, 23, 'hello', 1]`</p>
+                            <div class="options">
+                                <label><input type="radio" name="q4" value="A"><span class="option-text">List</span></label>
+                                <label><input type="radio" name="q4" value="B"><span class="option-text">Dictionary</span></label>
+                                <label><input type="radio" name="q4" value="C"><span class="option-text">Tuple</span></label>
+                                <label><input type="radio" name="q4" value="D"><span class="option-text">Array</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q5 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 5</span>
+                            <p>Which operator is used for exponentiation in Python?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q5" value="A"><span class="option-text">^</span></label>
+                                <label><input type="radio" name="q5" value="B"><span class="option-text">**</span></label>
+                                <label><input type="radio" name="q5" value="C"><span class="option-text">*</span></label>
+                                <label><input type="radio" name="q5" value="D"><span class="option-text">//</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q6 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 6</span>
+                            <p>What is the result of `10 // 3` in Python?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q6" value="A"><span class="option-text">3.33</span></label>
+                                <label><input type="radio" name="q6" value="B"><span class="option-text">3.0</span></label>
+                                <label><input type="radio" name="q6" value="C"><span class="option-text">3</span></label>
+                                <label><input type="radio" name="q6" value="D"><span class="option-text">1</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q7 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 7</span>
+                            <p>How do you insert comments in Python code?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q7" value="A"><span class="option-text">// This is a comment</span></label>
+                                <label><input type="radio" name="q7" value="B"><span class="option-text"># This is a comment</span></label>
+                                <label><input type="radio" name="q7" value="C"><span class="option-text">/* This is a comment */</span></label>
+                                <label><input type="radio" name="q7" value="D"><span class="option-text">&lt;!-- This is a comment --&gt;</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q8 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 8</span>
+                            <p>Which collection is ordered, changeable, and allows duplicate members?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q8" value="A"><span class="option-text">Set</span></label>
+                                <label><input type="radio" name="q8" value="B"><span class="option-text">Dictionary</span></label>
+                                <label><input type="radio" name="q8" value="C"><span class="option-text">Tuple</span></label>
+                                <label><input type="radio" name="q8" value="D"><span class="option-text">List</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q9 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 9</span>
+                            <p>How do you start a `for` loop in Python?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q9" value="A"><span class="option-text">for x in y:</span></label>
+                                <label><input type="radio" name="q9" value="B"><span class="option-text">for (x in y)</span></label>
+                                <label><input type="radio" name="q9" value="C"><span class="option-text">for x inside y:</span></label>
+                                <label><input type="radio" name="q9" value="D"><span class="option-text">for each x in y:</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q10 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 10</span>
+                            <p>Which method can be used to remove any whitespace from both the beginning and the end of a string?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q10" value="A"><span class="option-text">ptrim()</span></label>
+                                <label><input type="radio" name="q10" value="B"><span class="option-text">trim()</span></label>
+                                <label><input type="radio" name="q10" value="C"><span class="option-text">strip()</span></label>
+                                <label><input type="radio" name="q10" value="D"><span class="option-text">len()</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q11 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 11</span>
+                            <p>Which statement is used to stop a loop?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q11" value="A"><span class="option-text">break</span></label>
+                                <label><input type="radio" name="q11" value="B"><span class="option-text">stop</span></label>
+                                <label><input type="radio" name="q11" value="C"><span class="option-text">exit</span></label>
+                                <label><input type="radio" name="q11" value="D"><span class="option-text">return</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q12 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 12</span>
+                            <p>Which of the following is a mutable data type?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q12" value="A"><span class="option-text">int</span></label>
+                                <label><input type="radio" name="q12" value="B"><span class="option-text">str</span></label>
+                                <label><input type="radio" name="q12" value="C"><span class="option-text">tuple</span></label>
+                                <label><input type="radio" name="q12" value="D"><span class="option-text">dict</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q13 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 13</span>
+                            <p>What is the correct way to create a class in Python?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q13" value="A"><span class="option-text">class MyClass:</span></label>
+                                <label><input type="radio" name="q13" value="B"><span class="option-text">create class MyClass:</span></label>
+                                <label><input type="radio" name="q13" value="C"><span class="option-text">class = MyClass:</span></label>
+                                <label><input type="radio" name="q13" value="D"><span class="option-text">function MyClass:</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q14 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 14</span>
+                            <p>What is the output of `bool(0)`?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q14" value="A"><span class="option-text">True</span></label>
+                                <label><input type="radio" name="q14" value="B"><span class="option-text">False</span></label>
+                                <label><input type="radio" name="q14" value="C"><span class="option-text">None</span></label>
+                                <label><input type="radio" name="q14" value="D"><span class="option-text">Error</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q15 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 15</span>
+                            <p>Which module in Python supports regular expressions?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q15" value="A"><span class="option-text">regex</span></label>
+                                <label><input type="radio" name="q15" value="B"><span class="option-text">re</span></label>
+                                <label><input type="radio" name="q15" value="C"><span class="option-text">pyre</span></label>
+                                <label><input type="radio" name="q15" value="D"><span class="option-text">reg</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q16 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 16</span>
+                            <p>Which of the following is used for exception handling?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q16" value="A"><span class="option-text">try...except</span></label>
+                                <label><input type="radio" name="q16" value="B"><span class="option-text">catch...try</span></label>
+                                <label><input type="radio" name="q16" value="C"><span class="option-text">do...catch</span></label>
+                                <label><input type="radio" name="q16" value="D"><span class="option-text">try...catch</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q17 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 17</span>
+                            <p>What does `pip` stand for?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q17" value="A"><span class="option-text">Pip Installs Packages</span></label>
+                                <label><input type="radio" name="q17" value="B"><span class="option-text">Python Install Package</span></label>
+                                <label><input type="radio" name="q17" value="C"><span class="option-text">Preferred Installer Program</span></label>
+                                <label><input type="radio" name="q17" value="D"><span class="option-text">None of the above</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q18 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 18</span>
+                            <p>Which function checks if all items in a list are True?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q18" value="A"><span class="option-text">any()</span></label>
+                                <label><input type="radio" name="q18" value="B"><span class="option-text">all()</span></label>
+                                <label><input type="radio" name="q18" value="C"><span class="option-text">check()</span></label>
+                                <label><input type="radio" name="q18" value="D"><span class="option-text">list.true()</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q19 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 19</span>
+                            <p>What is the correct way to open a file named "test.txt" for reading?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q19" value="A"><span class="option-text">open("test.txt", "w")</span></label>
+                                <label><input type="radio" name="q19" value="B"><span class="option-text">open("test.txt")</span></label>
+                                <label><input type="radio" name="q19" value="C"><span class="option-text">open("test.txt", "a")</span></label>
+                                <label><input type="radio" name="q19" value="D"><span class="option-text">open("test.txt", "x")</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q20 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 20</span>
+                            <p>Which of the following is a tuple?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q20" value="A"><span class="option-text">[1, 2, 3]</span></label>
+                                <label><input type="radio" name="q20" value="B"><span class="option-text">{1, 2, 3}</span></label>
+                                <label><input type="radio" name="q20" value="C"><span class="option-text">(1, 2, 3)</span></label>
+                                <label><input type="radio" name="q20" value="D"><span class="option-text">{'a':1, 'b':2}</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q21 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 21</span>
+                            <p>What does `len("Hello")` return?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q21" value="A"><span class="option-text">4</span></label>
+                                <label><input type="radio" name="q21" value="B"><span class="option-text">5</span></label>
+                                <label><input type="radio" name="q21" value="C"><span class="option-text">6</span></label>
+                                <label><input type="radio" name="q21" value="D"><span class="option-text">Error</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q22 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 22</span>
+                            <p>How do you access the first element of a list `L`?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q22" value="A"><span class="option-text">L[1]</span></label>
+                                <label><input type="radio" name="q22" value="B"><span class="option-text">L(0)</span></label>
+                                <label><input type="radio" name="q22" value="C"><span class="option-text">L[0]</span></label>
+                                <label><input type="radio" name="q22" value="D"><span class="option-text">L.first()</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q23 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 23</span>
+                            <p>Which keyword is used to create an anonymous function?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q23" value="A"><span class="option-text">def</span></label>
+                                <label><input type="radio" name="q23" value="B"><span class="option-text">lambda</span></label>
+                                <label><input type="radio" name="q23" value="C"><span class="option-text">anon</span></label>
+                                <label><input type="radio" name="q23" value="D"><span class="option-text">func</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q24 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 24</span>
+                            <p>Which logical operator returns True if both statements are true?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q24" value="A"><span class="option-text">or</span></label>
+                                <label><input type="radio" name="q24" value="B"><span class="option-text">not</span></label>
+                                <label><input type="radio" name="q24" value="C"><span class="option-text">and</span></label>
+                                <label><input type="radio" name="q24" value="D"><span class="option-text">xor</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q25 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 25</span>
+                            <p>Which method adds an item to the end of a list?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q25" value="A"><span class="option-text">insert()</span></label>
+                                <label><input type="radio" name="q25" value="B"><span class="option-text">append()</span></label>
+                                <label><input type="radio" name="q25" value="C"><span class="option-text">add()</span></label>
+                                <label><input type="radio" name="q25" value="D"><span class="option-text">push()</span></label>
                             </div>
                         </div>
 
                         <div class="exam-submit-area">
-                            <p style="color: #718096; font-size: 1rem;">Click 'Submit' only when you are completely ready. This action cannot be reversed.</p>
+                            <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 20px;">
+                                By clicking "Submit Final Exam", you confirm that you have completed the test independently.
+                            </p>
                             <button type="submit" class="btn" id="submitExamButton" 
-                                style="background: #306998; color: white; padding: 15px 30px; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; margin-top: 15px; width: 100%; max-width: 300px;">
-                                <i class="fas fa-check-circle" style="margin-right: 10px;"></i> Submit Final Exam
+                                style="background: #306998; color: white; padding: 16px 40px; border: none; border-radius: 50px; 
+                                font-size: 1.1rem; font-weight: 700; cursor: pointer; width: 100%; max-width: 320px;
+                                box-shadow: 0 10px 25px rgba(48, 105, 152, 0.3); transition: all 0.3s ease;">
+                                <i class="fas fa-paper-plane" style="margin-right: 10px;"></i> Submit Final Exam
                             </button>
                         </div>
                     </form>
@@ -167,15 +475,16 @@
     <!-- RESULT MODAL -->
     <div id="resultOverlay">
         <div class="modal-content">
-            <div id="resultIcon" style="font-size: 4rem; margin-bottom: 20px;"></div>
-            <h2 id="resultTitle" style="margin-bottom: 10px; font-size: 1.8rem;"></h2>
-            <p id="resultMessage" style="color: #718096; margin-bottom: 30px; line-height: 1.6;"></p>
-            <button id="resultActionBtn" style="background: #306998; color: white; padding: 12px 24px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;"></button>
+            <div id="resultIcon" style="font-size: 4.5rem; margin-bottom: 25px;"></div>
+            <h2 id="resultTitle" style="margin-bottom: 15px; font-size: 2rem; font-weight: 800;"></h2>
+            <p id="resultMessage" style="color: #475569; margin-bottom: 35px; line-height: 1.7; font-size: 1.1rem;"></p>
+            <button id="resultActionBtn" style="background: #306998; color: white; padding: 14px 32px; border: none; 
+            border-radius: 50px; font-weight: 700; cursor: pointer; font-size: 1rem; transition: transform 0.2s;"></button>
         </div>
     </div>
 
     <footer>
-        <div class="container" style="text-align: center; padding: 20px; color: #718096;">
+        <div class="container" style="text-align: center; padding: 30px; color: #94a3b8; font-size: 0.9rem;">
             <p>© 2025 Internadda. All rights reserved. | Developed by Internadda Team</p>
         </div>
     </footer>
@@ -186,7 +495,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
 
     <script>
-        // 1. FIREBASE CONFIGURATION (Your Specific Keys)
+        // 1. FIREBASE CONFIGURATION
         const firebaseConfig = {
             apiKey: "AIzaSyCBAVUB555zTVMvvMnDyyjsC0SR_awBsOY",
             authDomain: "internadda-com.firebaseapp.com",
@@ -218,18 +527,30 @@
                 form.addEventListener('submit', async function(e) {
                     e.preventDefault();
                     const btn = document.getElementById('submitExamButton');
-                    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Grading...';
+                    const originalBtnText = btn.innerHTML;
+                    btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Processing Result...';
+                    btn.style.opacity = "0.8";
                     btn.disabled = true;
                     
                     // SCORING
                     let score = 0;
-                    const totalQuestions = 3; // Update to 25 for real exam
+                    const totalQuestions = 25; 
                     const formData = new FormData(form);
                     
-                    // Answer Key
-                    if(formData.get('q1') === 'C') score++;
-                    if(formData.get('q2') === 'B') score++;
-                    if(formData.get('q3') === 'C') score++;
+                    // Correct Answer Key
+                    const answers = {
+                        q1: 'C', q2: 'B', q3: 'C', q4: 'A', q5: 'B',
+                        q6: 'C', q7: 'B', q8: 'D', q9: 'A', q10: 'C',
+                        q11: 'A', q12: 'D', q13: 'A', q14: 'B', q15: 'B',
+                        q16: 'A', q17: 'A', q18: 'B', q19: 'B', q20: 'C',
+                        q21: 'B', q22: 'C', q23: 'B', q24: 'C', q25: 'B'
+                    };
+
+                    for (let i = 1; i <= totalQuestions; i++) {
+                        if (formData.get('q' + i) === answers['q' + i]) {
+                            score++;
+                        }
+                    }
 
                     const percentage = Math.round((score / totalQuestions) * 100);
                     const passed = percentage >= 60;
@@ -261,19 +582,21 @@
                     overlay.style.display = 'flex';
 
                     if (passed) {
-                        rIcon.innerHTML = '<i class="fas fa-trophy" style="color: #38a169;"></i>';
-                        rTitle.textContent = "Certified!";
-                        rTitle.style.color = "#38a169";
-                        rMsg.innerHTML = `Excellent work, <b>${name}</b>!<br>You scored <b>${percentage}%</b>.<br>You are eligible for the interview.`;
+                        rIcon.innerHTML = '<i class="fas fa-medal" style="color: #16a34a; filter: drop-shadow(0 4px 6px rgba(22, 163, 74, 0.4));"></i>';
+                        rTitle.textContent = "Congratulations! You Passed!";
+                        rTitle.style.color = "#166534";
+                        rMsg.innerHTML = `Outstanding performance, <strong>${name}</strong>!<br>You scored <strong>${percentage}%</strong>.<br>You have qualified for the interview round.`;
                         rBtn.textContent = "Proceed to Interview";
+                        rBtn.style.background = "#16a34a";
                         rBtn.onclick = () => window.location.href = "https://python.interview.internadda.com";
                     } else {
-                        rIcon.innerHTML = '<i class="fas fa-times-circle" style="color: #e53e3e;"></i>';
-                        rTitle.textContent = "Exam Failed";
-                        rTitle.style.color = "#e53e3e";
-                        rMsg.innerHTML = `You scored <b>${percentage}%</b>.<br>Passing criteria is 60%.<br>Please try again.`;
-                        rBtn.textContent = "Try Again";
-                        rBtn.onclick = () => window.location.reload();
+                        rIcon.innerHTML = '<i class="fas fa-times-circle" style="color: #dc2626; filter: drop-shadow(0 4px 6px rgba(220, 38, 38, 0.4));"></i>';
+                        rTitle.textContent = "Exam Not Cleared";
+                        rTitle.style.color = "#991b1b";
+                        rMsg.innerHTML = `You scored <strong>${percentage}%</strong>.<br>The passing criteria is 60%.<br>Don't worry, you can try again or explore other internships.`;
+                        rBtn.textContent = "Return to Internships";
+                        rBtn.style.background = "#dc2626";
+                        rBtn.onclick = () => window.location.href = "https://internadda.com/intern/internship";
                     }
                 });
             }
