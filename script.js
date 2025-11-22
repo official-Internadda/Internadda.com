@@ -10,9 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const track = container.querySelector('.marquee-track');
         if (!track) return;
 
+        // Clone items for smooth infinite loop
         const items = Array.from(track.children);
-        
-        // Clone original items and append them to the end for smooth loop
         items.forEach(item => {
             const clone = item.cloneNode(true);
             track.appendChild(clone);
@@ -24,34 +23,42 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     // ==============================================
-    // 2. DROPDOWN TOGGLE (CLICK BEHAVIOR)
+    // 2. DROPDOWN LOGIC (Desktop & Mobile Accordion)
     // ==============================================
-    const dropdown = document.querySelector('.dropdown');
-    if (dropdown) {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
         const trigger = dropdown.querySelector('span');
         
-        trigger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdown.classList.toggle('active');
-        });
+        if (trigger) {
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent closing immediately
+                
+                // Optional: Close other open dropdowns for a cleaner "accordion" feel
+                dropdowns.forEach(other => {
+                    if (other !== dropdown) {
+                        other.classList.remove('active');
+                    }
+                });
 
-        const dropdownLinks = dropdown.querySelectorAll('a');
-        dropdownLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                dropdown.classList.remove('active');
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
             });
-        });
+        }
+    });
 
-        document.addEventListener('click', (e) => {
+    // Close all dropdowns when clicking anywhere else on the page
+    document.addEventListener('click', (e) => {
+        dropdowns.forEach(dropdown => {
             if (!dropdown.contains(e.target)) {
                 dropdown.classList.remove('active');
             }
         });
-    }
+    });
 
 
     // ==============================================
-    // 3. MOBILE MENU TOGGLE
+    // 3. MOBILE MENU TOGGLE (Hamburger)
     // ==============================================
     const menuBtn = document.querySelector('.mobile-menu-btn');
     const navLinks = document.querySelector('.nav-links');
@@ -61,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.stopPropagation();
             navLinks.classList.toggle('active');
             
+            // Toggle Icon between Hamburger (fa-bars) and Close (fa-times)
             const icon = menuBtn.querySelector('i');
             if (navLinks.classList.contains('active')) {
                 icon.classList.remove('fa-bars');
@@ -71,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
+        // Close mobile menu when clicking outside of it
         document.addEventListener('click', (e) => {
             if (navLinks.classList.contains('active') && 
                 !navLinks.contains(e.target) && 
@@ -84,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+
     // ==============================================
     // 4. HERO IMAGE SLIDER
     // ==============================================
@@ -92,24 +102,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const heroImg = document.getElementById('hero-slider');
 
     if (heroImg && slides.length > 0) {
-        // Preload images to avoid flickering
+        // Preload images to prevent flickering
         slides.forEach(src => {
             const img = new Image();
             img.src = src;
         });
 
         setInterval(() => {
-            // Fade out
+            // Step 1: Fade Out
             heroImg.style.opacity = 0;
 
             setTimeout(() => {
-                // Change source
+                // Step 2: Change Image Source
                 currentSlide = (currentSlide + 1) % slides.length;
                 heroImg.src = slides[currentSlide];
                 
-                // Fade in
+                // Step 3: Fade In
                 heroImg.style.opacity = 1;
-            }, 500); // Match the CSS transition time (0.5s)
-        }, 4000); // Change every 4 seconds
+            }, 500); // Matches the CSS transition duration
+        }, 4000); // Change slide every 4 seconds
     }
 });
