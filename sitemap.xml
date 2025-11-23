@@ -9,122 +9,62 @@
 
 <url>
   <loc>https://internadda.com/</loc>
-  <lastmod>2025-11-05T20:55:41+00:00</lastmod>
+  <lastmod>2025-11-23T11:47:23+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://internadda.com/courses/course</loc>
-  <lastmod>2025-11-05T20:55:42+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
   <loc>https://internadda.com/intern/internship</loc>
-  <lastmod>2025-11-05T20:55:42+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://internadda.com/jobs</loc>
-  <lastmod>2025-11-05T20:55:43+00:00</lastmod>
+  <lastmod>2025-11-23T11:47:24+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://internadda.com/about</loc>
-  <lastmod>2025-11-05T20:55:43+00:00</lastmod>
+  <lastmod>2025-11-23T11:47:24+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://internadda.com/contact</loc>
-  <lastmod>2025-11-05T20:55:43+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://internadda.com/blog</loc>
-  <lastmod>2025-11-05T20:55:43+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://internadda.com/community/join</loc>
-  <lastmod>2025-11-05T20:55:43+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://internadda.com/community/partners</loc>
-  <lastmod>2025-11-05T20:55:44+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://internadda.com/community/academy</loc>
-  <lastmod>2025-11-05T20:55:44+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://internadda.com/courses/courses/Essential%20Data%20Science%20Intern%20Course</loc>
-  <lastmod>2025-11-05T20:55:44+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://internadda.com/courses/courses/Generative-AI-Prompt-Engineering-Masterclass</loc>
-  <lastmod>2025-11-05T20:55:44+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://internadda.com/courses/courses/Python-Essentials-for-All</loc>
-  <lastmod>2025-11-05T20:55:44+00:00</lastmod>
+  <lastmod>2025-11-23T11:47:24+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://internadda.com/terms</loc>
-  <lastmod>2025-11-05T20:55:45+00:00</lastmod>
+  <lastmod>2025-11-23T11:47:24+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://internadda.com/refund</loc>
-  <lastmod>2025-11-05T20:55:45+00:00</lastmod>
+  <lastmod>2025-11-23T11:47:24+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://internadda.com/courses/courses/Ethical-Hacking-Mastery</loc>
-  <lastmod>2025-11-05T20:55:45+00:00</lastmod>
-  <priority>0.64</priority>
+  <loc>https://internadda.com/community/join</loc>
+  <lastmod>2025-11-23T11:47:25+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://internadda.com/intern/data_science_practice_test</loc>
-  <lastmod>2025-11-05T20:55:45+00:00</lastmod>
+  <loc>https://internadda.com/community/partners</loc>
+  <lastmod>2025-11-23T11:47:25+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://internadda.com/community/academy</loc>
+  <lastmod>2025-11-23T11:47:25+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://internadda.com/intern/payment_page_python</loc>
+  <lastmod>2025-11-23T11:47:25+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://internadda.com/intern/payment_page_data_science</loc>
-  <lastmod>2025-11-05T20:55:45+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://internadda.com/intern/ai_ml_practice_test</loc>
-  <lastmod>2025-11-05T20:55:45+00:00</lastmod>
+  <lastmod>2025-11-23T11:47:25+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://internadda.com/intern/payment_page_ai_ml</loc>
-  <lastmod>2025-11-05T20:55:46+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://internadda.com/intern/python_dev_practice_test</loc>
-  <lastmod>2025-11-05T20:55:46+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://internadda.com/intern/payment_page_python</loc>
-  <lastmod>2025-11-05T20:55:46+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://internadda.com/privacy</loc>
-  <lastmod>2025-11-05T20:55:46+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://internadda.com/blog/nov25/dao-web3-future</loc>
-  <lastmod>2025-11-05T20:55:46+00:00</lastmod>
+  <lastmod>2025-11-23T11:47:26+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 
