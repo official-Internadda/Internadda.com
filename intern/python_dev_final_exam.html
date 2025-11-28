@@ -604,7 +604,13 @@
                         rMsg.innerHTML = `Outstanding performance, <strong>${name}</strong>!<br>You scored <strong>${percentage}%</strong>.<br>You have qualified for the interview round.`;
                         rBtn.textContent = "Proceed to Interview";
                         rBtn.style.background = "#16a34a";
-                        rBtn.onclick = () => window.location.href = "https://python.interview.internadda.com";
+                        rBtn.onclick = () => {
+                        // URL में डेटा जोड़कर भेज रहे हैं
+                        const targetUrl = new URL("https://interview.internadda.com/"); // अपने React App का सही लिंक यहाँ डालें
+                        targetUrl.searchParams.set("name", name); // 'name' variable ऊपर से आ रहा है
+                        targetUrl.searchParams.set("role", domain); // 'domain' variable ऊपर से आ रहा है
+                        window.location.href = targetUrl.toString();
+                    };
                     } else {
                         rIcon.innerHTML = '<i class="fas fa-times-circle" style="color: #dc2626; filter: drop-shadow(0 4px 6px rgba(220, 38, 38, 0.4));"></i>';
                         rTitle.textContent = "Exam Not Cleared";
