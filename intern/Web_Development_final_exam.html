@@ -477,7 +477,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
 
 <script>
-    // 1. FIREBASE CONFIGURATION (API Key is publicly visible here)
+    // 1. FIREBASE CONFIGURATION (No changes as requested)
     const firebaseConfig = {
         apiKey: "AIzaSyCBAVUB555zTVMvvMnDyyjsC0SR_awBsOY",
         authDomain: "internadda-com.firebaseapp.com",
@@ -488,34 +488,34 @@
         measurementId: "G-W1V99YWBWW"
     };
 
-    // 2. INITIALIZE
+    // 2. INITIALIZE FIREBASE
     let db;
     if (typeof firebase !== 'undefined') {
         firebase.initializeApp(firebaseConfig);
         db = firebase.firestore();
-        // firebase.analytics() is initialized but not used in the scoring logic below
     } else {
-        console.error("Firebase SDK not loaded. Cannot save results.");
+        console.warn("Firebase SDK not loaded. Skipping database operations.");
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        // 3. RETRIEVE CANDIDATE DATA
+        // 3. RETRIEVE CANDIDATE DATA FROM LOCAL STORAGE
+        // This relies entirely on the payment page saving this data beforehand.
         const name = localStorage.getItem('candidateName') || "Guest Candidate";
         const age = localStorage.getItem('candidateAge') || "N/A";
         const gender = localStorage.getItem('candidateGender') || "Not Specified";
-        const domain = localStorage.getItem('candidateDomain') || "Web Development"; 
+        const domain = localStorage.getItem('candidateDomain') || "Web Development"; // Use domain from localStorage
+        const interviewRole = "Full Stack Developer"; // Hardcoded role for interview link as requested
 
         const dispNameEl = document.getElementById('dispName');
         if (dispNameEl) {
             dispNameEl.textContent = name;
         }
 
-        // --- TIMER AND AUTO-SUBMIT LOGIC ---
+        // --- TIMER AND AUTO-SUBMIT LOGIC (FIXED) ---
         const timerEl = document.getElementById('examTimer');
         const form = document.getElementById('webDevFinalExamForm'); 
         
         let timeLimit = 30 * 60; // 30 minutes in seconds
-        let timeStart = Date.now(); // Record start time
         let countdown; 
 
         // Function to format time: MM:SS
@@ -528,27 +528,26 @@
         // Function to handle automatic submission when time runs out
         function autoSubmitExam() {
             if (countdown) {
-                clearInterval(countdown); // Timer stop
+                clearInterval(countdown);
             }
             if (timerEl) {
-                timerEl.textContent = "00:00"; // Display 00:00
+                timerEl.textContent = "00:00";
             }
             
             const submitBtn = document.getElementById('submitExamButton');
             if(submitBtn && form && !submitBtn.disabled) {
                 submitBtn.innerHTML = '<i class="fas fa-hourglass-end"></i> Time Up! Submitting...';
-                // Dispatch event to trigger the form submission handler
                 form.dispatchEvent(new Event('submit', { cancelable: true })); 
             }
         }
 
-        // Timer logic starts here
+        // Start Timer 
         if (timerEl) {
              countdown = setInterval(() => {
                 timerEl.textContent = formatTime(timeLimit);
 
                 if (timeLimit <= 0) {
-                    autoSubmitExam(); // Time's up!
+                    autoSubmitExam();
                     return; 
                 }
                 timeLimit--;
@@ -560,11 +559,11 @@
             form.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
-                // Stop Timer
+                // Stop Timer and calculate time taken
                 if (countdown) {
                     clearInterval(countdown);
                 }
-                const timeTakenSeconds = (30 * 60) - timeLimit; // Calculate time taken
+                const timeTakenSeconds = (30 * 60) - timeLimit; 
 
                 const btn = document.getElementById('submitExamButton');
                 if(btn) {
@@ -573,12 +572,11 @@
                     btn.disabled = true;
                 }
                 
-                // SCORING... 
+                // SCORING... (Answer Key is correct)
                 let score = 0;
                 const totalQuestions = 25;
                 const formData = new FormData(form);
                 
-                // Correct Answer Key (WEB DEVELOPMENT)
                 const answers = {
                     q1: 'A', q2: 'C', q3: 'C', q4: 'D', q5: 'D',
                     q6: 'D', q7: 'D', q8: 'A', q9: 'B', q10: 'B',
@@ -597,7 +595,7 @@
                 const passed = percentage >= 60;
                 const status = passed ? "Pass" : "Fail";
 
-                // SAVE TO FIREBASE
+                // SAVE TO FIREBASE (Only if Firebase is initialized)
                 if (typeof db !== 'undefined') {
                     try {
                         await db.collection("exam_results").add({
@@ -636,7 +634,8 @@
                         rBtn.onclick = () => {
                             const targetUrl = new URL("https://interview.internadda.com/"); 
                             targetUrl.searchParams.set("name", name); 
-                            targetUrl.searchParams.set("role", Full Stack Developer); 
+                            // Using the hardcoded role as requested for the next step URL
+                            targetUrl.searchParams.set("role", interviewRole); 
                             window.location.href = targetUrl.toString();
                         };
                     } else {
