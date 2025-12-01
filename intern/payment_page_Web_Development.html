@@ -207,12 +207,11 @@
             <div class="exam-container">
                 <div id="payment-step" class="exam-step">
                     <h2><i class="fas fa-file-invoice-dollar"></i> Secure Exam Fee Payment</h2> 
-                    <p>This fee grants you access to the <b>Web Development Final Exam</b>, a mandatory, proctored step in our internship selection process. The fee covers professional, real-time proctoring services to ensure a fair and secure evaluation for all candidates.</p>
+                    <p>This fee grants you access to the <strong>Web Development Final Exam</strong>, a mandatory, proctored step in our internship selection process. The fee covers professional, real-time proctoring services to ensure a fair and secure evaluation for all candidates.</p>
                     
                     <div class="details-box">
                         <h3><i class="fas fa-user-graduate"></i> Candidate Registration</h3>
                         
-                        <!-- FORM -->
                         <form id="candidateForm" class="form-grid">
                             <div class="form-group">
                                 <label for="userName">Full Name</label>
@@ -286,14 +285,13 @@
                             </div>
                         </div>
                         
-                        <p id="formError" style="color: #e53e3e; font-size: 0.9rem; margin-top: 15px; font-weight: 600; display: none;">
+                        <p id="formError" style="color: #e53e3e; font-size: 0.9rem; margin-top: 15px; font-weight: 600; display: block;">
                             <i class="fas fa-exclamation-circle"></i> Please fill in all details above to enable payment.
                         </p>
                     </div>
                     
-                    <p style="margin-top: 40px; font-weight: 700; color: var(--primary); font-size: 1.2rem;">Complete the form above to unlock the <b>PAY NOW</b> button.</p>
+                    <p style="margin-top: 40px; font-weight: 700; color: var(--primary); font-size: 1.2rem;">Complete the form above to unlock the <strong>PAY NOW</strong> button.</p>
 
-                    <!-- PAYMENT BUTTON CONTAINER -->
                     <div id="payment-button-container">
                         <a href="https://payments.cashfree.com/forms/Web_Development_Internadda" target="_parent" id="cashfreeLink">
                             <div class="button-container" style="background: #1d3bc1">
@@ -314,7 +312,7 @@
                     </div>
 
                     <div style="background: #e6fffa; border: 2px solid var(--success); color: var(--dark); font-weight: 700; border-radius: 10px; padding: 15px; margin-top: 20px; font-size: 0.95rem;">
-                        <i class="fas fa-check-circle"></i> <b>Instant Access:</b> Upon successful payment, you will be <b>automatically redirected</b> to the exam instructions page to start your test.
+                        <i class="fas fa-check-circle"></i> <strong>Instant Access:</strong> Upon successful payment, you will be <strong>automatically redirected</strong> to the exam instructions page to start your test.
                     </div>
                 </div>
             </div>
@@ -323,7 +321,6 @@
 
     <footer><div class="exam-container"><p>© 2025 Internadda. All rights reserved. | Secured Payment Gateway</p></div></footer>
 
-    <!-- FIREBASE SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
@@ -339,8 +336,14 @@
             measurementId: "G-W1V99YWBWW"
         };
         
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+        // Ensure firebase SDK loaded before initializing
+        let db;
+        if (typeof firebase !== 'undefined') {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+        } else {
+            console.error("Firebase SDK not loaded. Cannot save registrations.");
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('candidateForm');
@@ -349,9 +352,14 @@
             const cashfreeLink = document.getElementById('cashfreeLink');
             const errorMsg = document.getElementById('formError');
             const ageError = document.getElementById('ageError');
+            const domainValue = "Web Development"; // Domain value is fixed
 
-            // --- FORM VALIDATION ---
-            function checkForm() {
+            // Set the read-only domain input value
+            document.getElementById('userDomain').value = domainValue;
+
+
+            // --- FORM VALIDATION & LOCAL STORAGE SAVE ---
+            function checkFormAndSaveLocal() {
                 const name = document.getElementById('userName').value.trim();
                 const ageInput = document.getElementById('userAge');
                 const age = parseInt(ageInput.value);
@@ -370,56 +378,65 @@
                     payBtnContainer.style.pointerEvents = 'auto';
                     errorMsg.style.display = 'none';
                     
-                    // Save to LocalStorage
+                    // 🚨 CHANGE 1: Save ALL required data to LocalStorage only when valid
                     localStorage.setItem('candidateName', name);
                     localStorage.setItem('candidateAge', age);
                     localStorage.setItem('candidateGender', gender);
-                    localStorage.setItem('candidateDomain', 'Web Development');
+                    localStorage.setItem('candidateDomain', domainValue); // Set fixed domain
                 } else {
+                    // Disable payment button and show error
                     payBtnContainer.style.opacity = '0.5';
                     payBtnContainer.style.pointerEvents = 'none';
-                    errorMsg.style.display = 'block';
+                    if (name || ageInput.value || gender) { // Show general error if user started filling
+                         errorMsg.style.display = 'block';
+                    }
+                   
+                    // Optionally clear local storage if fields are cleared, though generally best to leave stale data until overwriting
                 }
             }
 
+            // Listen to all relevant inputs
             inputs.forEach(input => {
-                input.addEventListener('input', checkForm);
-                input.addEventListener('change', checkForm);
+                input.addEventListener('input', checkFormAndSaveLocal);
+                input.addEventListener('change', checkFormAndSaveLocal);
             });
 
-            // --- PAY BUTTON CLICK HANDLER (Validation + Firebase) ---
+            // Run check on page load to set initial button state/error message
+            checkFormAndSaveLocal();
+
+
+            // --- PAY BUTTON CLICK HANDLER (Firebase Save before redirect) ---
             cashfreeLink.addEventListener('click', async function(e) {
-                // We do NOT prevent default here so the link works to open Cashfree
-                // BUT we want to save to Firebase first if possible.
-                // Since it's a direct link now, we can attach a quick fire-and-forget save
-                
+                // Fetch data again (though it should be the same as local storage)
                 const name = document.getElementById('userName').value.trim();
                 const age = document.getElementById('userAge').value.trim();
                 const gender = document.getElementById('userGender').value;
-                const domain = "Web Development";
-
-                if (!name || !age || !gender) {
-                    e.preventDefault(); // Stop if invalid
-                    alert("Please complete the form first.");
-                    return;
+                
+                // Final check to prevent race condition/invalid state
+                if (payBtnContainer.style.pointerEvents === 'none') {
+                     e.preventDefault(); // Stop if button is visually disabled
+                     alert("Please complete the form first.");
+                     return;
                 }
 
-                // 2. Firebase Save (Non-blocking ideally, but might race with navigation)
-                try {
-                    db.collection("exam_registrations").add({
-                        name: name,
-                        age: age,
-                        gender: gender,
-                        domain: domain,
-                        status: "Payment Link Clicked",
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                    console.log("Registration saved!");
-                } catch (error) {
-                    console.error("Error saving:", error);
+                // 2. Firebase Save (Non-blocking)
+                if (typeof db !== 'undefined') {
+                    try {
+                        db.collection("exam_registrations").add({
+                            name: name,
+                            age: age,
+                            gender: gender,
+                            domain: domainValue,
+                            status: "Payment Link Clicked",
+                            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                        console.log("Registration saved to Firebase!");
+                    } catch (error) {
+                        console.error("Error saving to Firebase:", error);
+                    }
                 }
                 
-                // Allow the link to proceed naturally to: https://payments.cashfree.com/forms/Web_Development_Internadda
+                // Allow the link to proceed naturally to Cashfree
             });
         });
     </script>
