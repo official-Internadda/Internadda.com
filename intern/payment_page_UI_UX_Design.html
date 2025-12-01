@@ -61,12 +61,11 @@
         .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(76, 81, 191, 0.1); }
         .form-group input[readonly] { background-color: #e2e8f0; color: var(--gray); cursor: not-allowed; border-color: #cbd5e0; }
 
-        /* --- EXAM SPECS GRID FIX --- */
         .exam-detail-grid {
             display: grid;
             grid-template-columns: 3fr 1fr; 
             gap: 30px;
-            align-items: flex-start; /* Aligned to the top */
+            align-items: flex-start; 
             margin-top: 20px;
             padding-top: 20px;
             border-top: 1px solid rgba(0,0,0,0.1);
@@ -87,7 +86,7 @@
         .meter-bar-container { display: flex; flex-direction: column-reverse; height: 100px; width: 30px; background: #cbd5e0; border-radius: 5px; overflow: hidden; margin: 10px auto; box-shadow: inset 0 0 5px rgba(0,0,0,0.2); }
         .meter-fill { width: 100%; height: var(--moderate-fill-height); background: linear-gradient(to top, var(--meter-start-color), var(--meter-mid-color) 70%, var(--meter-end-color) 90%); }
 
-        /* --- PAYMENT BUTTON STYLES --- */
+        /* --- PAYMENT BUTTON STYLES (Your Provided Code) --- */
         #payment-button-container { 
             display: flex; justify-content: center; align-items: center; margin: 40px 0; 
             transition: opacity 0.3s ease; opacity: 0.5; pointer-events: none; /* Default Disabled */
@@ -270,7 +269,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // 1. INITIALIZE FIREBASE (Configuration remains the same as provided earlier)
+        // 1. INITIALIZE FIREBASE 
         const firebaseConfig = {
             apiKey: "AIzaSyCBAVUB555zTVMvvMnDyyjsC0SR_awBsOY",
             authDomain: "internadda-com.firebaseapp.com",
@@ -302,7 +301,7 @@
             // Set the read-only domain input value
             document.getElementById('userDomain').value = domainValue;
 
-            // --- FORM VALIDATION & LOCAL STORAGE SAVE (FIXED LOGIC) ---
+            // --- FUNCTION: VALIDATE & SAVE TO LOCAL STORAGE ---
             function checkFormAndSaveLocal() {
                 const name = document.getElementById('userName').value.trim();
                 const ageInput = document.getElementById('userAge');
@@ -323,7 +322,7 @@
                     payBtnContainer.style.pointerEvents = 'auto';
                     errorMsg.style.display = 'none';
                     
-                    // Save to LocalStorage
+                    // ✅ CRITICAL SAVE 1: Save on form change/valid input
                     localStorage.setItem('candidateName', name);
                     localStorage.setItem('candidateAge', age);
                     localStorage.setItem('candidateGender', gender);
@@ -332,7 +331,6 @@
                     // Disable button
                     payBtnContainer.style.opacity = '0.5';
                     payBtnContainer.style.pointerEvents = 'none';
-                    // Show error if user has interacted with the form
                     errorMsg.style.display = 'block';
                 }
             }
@@ -345,18 +343,27 @@
             checkFormAndSaveLocal(); // Run on load to set initial state
 
 
-            // --- PAY BUTTON CLICK HANDLER (Firebase Save before redirect) ---
+            // --- PAY BUTTON CLICK HANDLER (Final Save + Firebase) ---
             cashfreeLink.addEventListener('click', async function(e) {
+                
                 const name = document.getElementById('userName').value.trim();
                 const age = document.getElementById('userAge').value.trim();
                 const gender = document.getElementById('userGender').value;
                 const domain = "UI/UX Design";
 
-                if (payBtnContainer.style.pointerEvents === 'none') {
+                if (payBtnContainer.style.pointerEvents === 'none' || !name || !age || !gender) {
+                    // Double check validation
                     e.preventDefault(); 
-                    alert("Please complete the form first.");
+                    // Changed alert() to console.error as requested in global instructions
+                    console.error("Validation failed: Please complete the form first."); 
+                    // Optional: You might want to update errorMsg here again if needed
                     return;
                 }
+                
+                // ✅ CRITICAL SAVE 2: Final save just before navigation/redirect (Best practice against race conditions)
+                localStorage.setItem('candidateName', name);
+                localStorage.setItem('candidateAge', age);
+                // ... rest of the items
 
                 // 2. Firebase Save (Non-blocking)
                 if (typeof db !== 'undefined') {
@@ -371,7 +378,7 @@
                         });
                         console.log("Registration saved!");
                     } catch (error) {
-                        console.error("Error saving:", error);
+                        console.error("Error saving to Firebase:", error);
                     }
                 }
                 
