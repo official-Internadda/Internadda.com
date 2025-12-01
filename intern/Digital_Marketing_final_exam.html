@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Marketing Final Exam | Internadda Certification Test</title>
+    <meta name="description" content="Official Final Exam for Digital Marketing Internship.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+
+    <style>
+        /* Exam Specific Styles (Kept identical for style consistency) */
+        body { background-color: #f7fafc; font-family: 'Inter', sans-serif; color: #1a202c; }
+        main { padding-top: 30px; padding-bottom: 80px; }
+        
+        /* --- FIXED HEADER ALIGNMENT --- */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; 
+            padding-top: 15px;
+            padding-bottom: 15px;
+            height: 80px;
+        }
+        .logo {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        /* ----------------------------- */
+
+        .exam-container {
+            max-width: 850px; margin: 40px auto; background-color: #ffffff;
+            border-radius: 16px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08); padding: 50px;
+            border: 1px solid #f1f5f9;
+        }
+        
+        .exam-header { text-align: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 30px; margin-bottom: 40px; }
+        .exam-header h1 { font-size: 2.2rem; color: #4c51bf; margin-bottom: 10px; letter-spacing: -0.5px; font-weight: 800; }
+        .exam-header p { 
+            color: #4c51bf; font-size: 0.95rem; font-weight: 600; 
+            background: #eef2ff; color: #4338ca;
+            display: inline-block; padding: 6px 16px; border-radius: 20px; 
+            border: 1px solid #c7d2fe;
+        }
+        
+        .exam-info-box {
+            display: flex; justify-content: space-between; gap: 20px; margin-bottom: 40px;
+            padding: 20px 30px; background-color: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;
+        }
+        .info-item { text-align: center; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .info-item i { font-size: 1.5rem; margin-bottom: 5px; }
+        .info-item strong { display: block; font-size: 1.2rem; color: #0f172a; font-weight: 700; }
+        .info-item span { font-size: 0.85rem; color: #64748b; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .question-card { 
+            border: 1px solid #e2e8f0; border-radius: 12px; padding: 30px; margin-bottom: 30px; 
+            background: #fff; transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .question-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04); border-color: #cbd5e1;
+        }
+        .question-number {
+            display: inline-block; background: #e0e7ff; color: #4338ca; 
+            font-size: 0.8rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; margin-bottom: 10px;
+        }
+        .question-card p { font-size: 1.15rem; font-weight: 600; color: #1e293b; margin-bottom: 20px; line-height: 1.5; }
+        
+        .options { display: grid; gap: 12px; }
+        .options label {
+            display: flex; align-items: center; 
+            background-color: #f8fafc; padding: 16px; 
+            border-radius: 10px; cursor: pointer; transition: all 0.2s ease; 
+            border: 2px solid transparent;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .options label:hover { background-color: #eef2ff; border-color: #c7d2fe; }
+        .options input { 
+            margin-right: 16px; width: 20px; height: 20px; accent-color: #4338ca; flex-shrink: 0; 
+            cursor: pointer;
+        }
+        .option-text { font-size: 1rem; color: #475569; font-weight: 500; }
+
+        .exam-submit-area { text-align: center; padding-top: 40px; border-top: 2px solid #f1f5f9; margin-top: 40px; }
+        .warning-message {
+            color: #991b1b; background-color: #fef2f2; padding: 16px;
+            border-radius: 8px; border: 1px solid #fecaca; margin-bottom: 30px; font-weight: 600;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+
+        /* Modal */
+        #resultOverlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.9); z-index: 2000; align-items: center; justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            background: white; padding: 50px; border-radius: 24px; text-align: center;
+            max-width: 480px; width: 90%; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        @media (max-width: 768px) {
+            .exam-container { padding: 25px; margin: 20px auto; width: 95%; }
+            .exam-header h1 { font-size: 1.8rem; }
+            .exam-info-box { flex-wrap: wrap; gap: 15px; padding: 15px; }
+            .info-item { min-width: 40%; }
+            .options label { padding: 14px; } 
+        }
+    </style>
+</head>
+<body>
+
+        <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-text" style="color: #4338ca; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px;">
+                    <i class="fas fa-graduation-cap" style="color: #f59e0b; margin-right: 8px;"></i>InternAdda
+                </span>
+            </a>
+            <div style="margin-left: auto; font-size: 0.9rem; text-align: right;">
+                <div style="color: #64748b; font-size: 0.8rem; font-weight: 500;">Candidate</div>
+                <div id="dispName" style="color: #0f172a; font-weight: 700;">Loading...</div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="exam-section">
+            <div class="container">
+                <div class="exam-container">
+                    <div class="exam-header">
+                        <h1 class="exam-title">Digital Marketing Final Exam</h1>
+                        <p>Official Certification Assessment</p>
+                    </div>
+
+                    <div class="warning-message">
+                        <i class="fas fa-exclamation-triangle"></i> 
+                        <span><strong>WARNING:</strong> Do not refresh or close this page. Results are final.</span>
+                    </div>
+
+                    <div class="exam-info-box">
+                        <div class="info-item">
+                            <i class="far fa-clock" style="color: #4338ca;"></i>
+                            <strong>30 Mins</strong>
+                            <span>Time Limit</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-clipboard-list" style="color: #4338ca;"></i>
+                            <strong>25</strong>
+                            <span>Questions</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-check-circle" style="color: #16a34a;"></i>
+                            <strong>60%</strong>
+                            <span>Passing Score</span>
+                        </div>
+                    </div>
+
+                    <form id="digitalMarketingFinalExamForm">
+                        
+                                                <div class="question-card">
+                            <span class="question-number">Question 1</span>
+                            <p>What are the four core elements of the traditional **Marketing Mix** (4 P's) that are also relevant in digital marketing?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q1" value="A"><span class="option-text">Plan, Position, Platform, Performance</span></label>
+                                <label><input type="radio" name="q1" value="B"><span class="option-text">Product, Price, Place, Promotion</span></label>
+                                <label><input type="radio" name="q1" value="C"><span class="option-text">Process, People, Platforms, Profit</span></label>
+                                <label><input type="radio" name="q1" value="D"><span class="option-text">Pull, Push, Platform, Partnerships</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 2</span>
+                            <p>What does the acronym **SEO** stand for?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q2" value="A"><span class="option-text">Search Engine Operations</span></label>
+                                <label><input type="radio" name="q2" value="B"><span class="option-text">Systematic Effort Optimization</span></label>
+                                <label><input type="radio" name="q2" value="C"><span class="option-text">Search Engine Optimization</span></label>
+                                <label><input type="radio" name="q2" value="D"><span class="option-text">Site Entry Objective</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 3</span>
+                            <p>**PPC** is a model where advertisers pay a fee each time an ad is clicked. What does PPC stand for?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q3" value="A"><span class="option-text">Promotion Per Click</span></label>
+                                <label><input type="radio" name="q3" value="B"><span class="option-text">Page Placement Cost</span></label>
+                                <label><input type="radio" name="q3" value="C"><span class="option-text">Pay-Per-Click</span></label>
+                                <label><input type="radio" name="q3" value="D"><span class="option-text">Platform Profit Campaign</span></label>
+                        </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 4</span>
+                            <p>Which of the following describes the difference between **SEO and SEM**?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q4" value="A"><span class="option-text">SEO is only for images; SEM is for text.</span></label>
+                                <label><input type="radio" name="q4" value="B"><span class="option-text">SEO is immediate and paid; SEM is long-term and free.</span></label>
+                                <label><input type="radio" name="q4" value="C"><span class="option-text">SEM is a broader strategy that includes both SEO (organic) and PPC (paid).</span></label>
+                                <label><input type="radio" name="q4" value="D"><span class="option-text">SEO focuses on social media; SEM focuses on search.</span></label>
+                        </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 5</span>
+                            <p>The metric **CTR** is calculated by dividing the number of clicks on an ad/link by the number of times the ad/link was shown. What does CTR stand for?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q5" value="A"><span class="option-text">Conversion Target Ratio</span></label>
+                                <label><input type="radio" name="q5" value="B"><span class="option-text">Customer Tracking Report</span></label>
+                                <label><input type="radio" name="q5" value="C"><span class="option-text">Click-Through Rate</span></label>
+                                <label><input type="radio" name="q5" value="D"><span class="option-text">Content Traffic Review</span></label>
+                        </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 6</span>
+                            <p>Creating detailed profiles of fictional people who represent your target audience is known as creating a:</p>
+                            <div class="options">
+                                <label><input type="radio" name="q6" value="A"><span class="option-text">Customer Lifetime Value (CLV) Model</span></label>
+                                <label><input type="radio" name="q6" value="B"><span class="option-text">Buyer Persona</span></label>
+                                <label><input type="radio" name="q6" value="C"><span class="option-text">Demographic Segment</span></label>
+                                <label><input type="radio" name="q6" value="D"><span class="option-text">Market Forecast</span></label>
+                        </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 7</span>
+                            <p>Which of the following elements is generally considered the **most crucial ranking factor** for Google SEO?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q7" value="A"><span class="option-text">Having many internal links</span></label>
+                                <label><input type="radio" name="q7" value="B"><span class="option-text">Keyword density in the footer</span></label>
+                                <label><input type="radio" name="q7" value="C"><span class="option-text">High-quality, relevant content that satisfies user intent</span></label>
+                                <label><input type="radio" name="q7" value="D"><span class="option-text">The number of words on a page</span></label>
+                        </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 8</span>
+                            <p>What is the term for a series of automated emails sent to a lead or customer based on pre-set conditions and timings?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q8" value="A"><span class="option-text">A/B Testing Campaign</span></label>
+                                <label><input type="radio" name="q8" value="B"><span class="option-text">Drip Campaign (or Email Automation)</span></label>
+                                <label><input type="radio" name="q8" value="C"><span class="option-text">Newsletter Blast</span></label>
+                                <label><input type="radio" name="q8" value="D"><span class="option-text">Lead Scoring</span></label>
+                        </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 9</span>
+                            <p>What is the main goal of **Conversion Rate Optimization (CRO)**?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q9" value="A"><span class="option-text">To increase the overall website traffic.</span></label>
+                                <label><input type="radio" name="q9" value="B"><span class="option-text">To increase the percentage of website visitors who take a desired action.</span></label>
+                                <label><input type="radio" name="q9" value="C"><span class="option-text">To lower the cost-per-click (CPC) of ads.</span></label>
+                                <label><input type="radio" name="q9" value="D"><span class="option-text">To gather more email addresses.</span></label>
+                        </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 10</span>
+                            <p>In SEO, what is the term for optimizing the elements within the website itself, such as title tags, headings, and internal links?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q10" value="A"><span class="option-text">Off-Page SEO</span></label>
+                                <label><input type="radio" name="q10" value="B"><span class="option-text">Technical SEO</span></label>
+                                <label><input type="radio" name="q10" value="C"><span class="option-text">On-Page SEO</span></label>
+                                <label><input type="radio" name="q10" value="D"><span class="option-text">Black Hat SEO</span></label>
+                        </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 11</span>
+                            <p>**Display Ads** that appear on third-party websites and target users based on their past browsing behavior are called:</p>
+                            <div class="options">
+                                <label><input type="radio" name="q11" value="A"><span class="option-text">Search Network Ads</span></label>
+                                <label><input type="radio" name="q11" value="B"><span class="option-text">Affiliate Marketing</span></label>
+                                <label><input type="radio" name="q11" value="C"><span class="option-text">Remarketing or Retargeting Ads</span></label>
+                                <label><input type="radio" name="q11" value="D"><span class="option-text">Native Ads</span></label>
+                        </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 12</span>
+                            <p>Which KPI is most likely to be a **Vanity Metric** (looks good but doesn't drive business goals)?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q12" value="A"><span class="option-text">Return on Investment (ROI)</span></label>
+                                <label><input type="radio" name="q12" value="B"><span class="option-text">Total number of likes on social media posts</span></label>
+                                <label><input type="radio" name="q12" value="C"><span class="option-text">Conversion Rate</span></label>
+                                <label><input type="radio" name="q12" value="D"><span class="option-text">Cost Per Acquisition (CPA)</span></label>
+                        </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 13</span>
+                            <p>What is the primary function of a **robots.txt** file?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q13" value="A"><span class="option-text">To list all pages for search engine indexing</span></label>
+                                <label><input type="radio" name="q13" value="B"><span class="option-text">To block specific search engine crawlers from accessing certain parts of a website</span></label>
+                                <label><input type="radio" name="q13" value="C"><span class="option-text">To optimize the loading speed of JavaScript files</span></label>
+                                <label><input type="radio" name="q13" value="D"><span class="option-text">To define the website's sitemap structure</span></label>
+                        </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 14</span>
+                            <p>Which type of content is typically best for the **Awareness Stage** in the customer journey?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q14" value="A"><span class="option-text">Pricing pages or free demo requests</span></label>
+                                <label><input type="radio" name="q14" value="B"><span class="option-text">Long-form blog posts, guides, or infographics that address a problem</span></label>
+                                <label><input type="radio" name="q14" value="C"><span class="option-text">Customer testimonials and case studies</span></label>
+                                <label><input type="radio" name="q14" value="D"><span class="option-text">Direct product purchase links</span></label>
+                        </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 15</span>
+                            <p>Which tool is commonly used to track website traffic, user behavior, and conversion goals?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q15" value="A"><span class="option-text">Google Search Console</span></label>
+                                <label><input type="radio" name="q15" value="B"><span class="option-text">Moz Pro</span></label>
+                                <label><input type="radio" name="q15" value="C"><span class="option-text">Google Analytics</span></label>
+                                <label><input type="radio" name="q15" value="D"><span class="option-text">SEMrush</span></label>
+                        </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 16</span>
+                            <p>Which key component of an ad (PPC/Paid Social) directly influences the **Quality Score** in Google Ads?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q16" value="A"><span class="option-text">Competitor's Ad Rank</span></label>
+                                <label><input type="radio" name="q16" value="B"><span class="option-text">The number of impressions</span></label>
+                                <label><input type="radio" name="q16" value="C"><span class="option-text">Expected CTR, Ad Relevance, and Landing Page Experience</span></label>
+                                <label><input type="radio" name="q16" value="D"><span class="option-text">The time of day the ad is scheduled</span></label>
+                        </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 17</span>
+                            <p>When optimizing images for SEO, what is the best practice?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q17" value="A"><span class="option-text">Using the highest resolution possible regardless of file size</span></label>
+                                <label><input type="radio" name="q17" value="B"><span class="option-text">Filling the Alt Text with as many keywords as possible (Keyword Stuffing)</span></label>
+                                <label><input type="radio" name="q17" value="C"><span class="option-text">Compressing the image size and using descriptive Alt Text</span></label>
+                                <label><input type="radio" name="q17" value="D"><span class="option-text">Saving the file name as just "image.jpg"</span></label>
+                        </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 18</span>
+                            <p>What is the primary benefit of using a **CRM (Customer Relationship Management)** system in digital marketing?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q18" value="A"><span class="option-text">To automatically generate SEO content.</span></label>
+                                <label><input type="radio" name="q18" value="B"><span class="option-text">To manage and analyze interactions and relationships with customers and prospects.</span></label>
+                                <label><input type="radio" name="q18" value="C"><span class="option-text">To buy large email lists legally.</span></label>
+                                <label><input type="radio" name="q18" value="D"><span class="option-text">To host the company's website on a server.</span></label>
+                        </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 19</span>
+                            <p>What does **SERP** stand for?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q19" value="A"><span class="option-text">Site Engagement Report Platform</span></label>
+                                <label><input type="radio" name="q19" value="B"><span class="option-text">Social Email Ranking Protocol</span></label>
+                                <label><input type="radio" name="q19" value="C"><span class="option-text">Search Engine Results Page</span></label>
+                                <label><input type="radio" name="q19" value="D"><span class="option-text">Service Execution Review Process</span></label>
+                        </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 20</span>
+                            <p>Which audience segmentation method divides the market based on personality, values, lifestyle, and interests?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q20" value="A"><span class="option-text">Demographic Segmentation</span></label>
+                                <label><input type="radio" name="q20" value="B"><span class="option-text">Geographic Segmentation</span></label>
+                                <label><input type="radio" name="q20" value="C"><span class="option-text">Behavioral Segmentation</span></label>
+                                <label><input type="radio" name="q20" value="D"><span class="option-text">Psychographic Segmentation</span></label>
+                        </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 21</span>
+                            <p>A **Backlink** is a link from one website to another. In SEO, high-quality backlinks primarily signal what to search engines?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q21" value="A"><span class="option-text">High website bounce rate</span></label>
+                                <label><input type="radio" name="q21" value="B"><span class="option-text">Authority and trustworthiness of the content</span></label>
+                                <label><input type="radio" name="q21" value="C"><span class="option-text">Fast page loading speed</span></label>
+                                <label><input type="radio" name="q21" value="D"><span class="option-text">The website is optimized for mobile</span></label>
+                        </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 22</span>
+                            <p>What is the main advantage of using **A/B Testing** on a landing page?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q22" value="A"><span class="option-text">To guarantee a perfect 100% conversion rate.</span></label>
+                                <label><input type="radio" name="q22" value="B"><span class="option-text">To compare two versions of the page to see which performs better with real users.</span></label>
+                                <label><input type="radio" name="q22" value="C"><span class="option-text">To make the page load faster on all devices.</span></label>
+                                <label><input type="radio" name="q22" value="D"><span class="option-text">To optimize the page's meta description for search.</span></label>
+                        </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 23</span>
+                            <p>Which part of the URL is generally the **most important** for SEO keyword targeting?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q23" value="A"><span class="option-text">The file extension (.html, .php)</span></label>
+                                <label><input type="radio" name="q23" value="B"><span class="option-text">The subdomain (e.g., blog.example.com)</span></label>
+                                <label><input type="radio" name="q23" value="C"><span class="option-text">The slug (the final part of the URL after the domain, e.g., /product-guide)</span></label>
+                                <label><input type="radio" name="q23" value="D"><span class="option-text">The number of slashes in the URL</span></label>
+                        </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 24</span>
+                            <p>What is the most effective way to organically grow reach and engagement on a new **Social Media** platform?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q24" value="A"><span class="option-text">Posting the same exact content 10 times a day.</span></label>
+                                <label><input type="radio" name="q24" value="B"><span class="option-text">Focusing only on direct sales pitches in every post.</span></label>
+                                <label><input type="radio" name="q24" value="C"><span class="option-text">Creating high-value, platform-specific content and actively engaging with the community.</span></label>
+                                <label><input type="radio" name="q24" value="D"><span class="option-text">Buying followers from a third-party service.</span></label>
+                        </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 25</span>
+                            <p>In email marketing, what is the term for the people who have willingly agreed to receive communication from your brand?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q25" value="A"><span class="option-text">Bought Leads</span></label>
+                                <label><input type="radio" name="q25" value="B"><span class="option-text">Open Rate Subscribers</span></label>
+                                <label><input type="radio" name="q25" value="C"><span class="option-text">Opt-in Subscribers</span></label>
+                                <label><input type="radio" name="q25" value="D"><span class="option-text">Email Blacklist</span></label>
+                        </div>
+                        </div>
+
+                        <div class="exam-submit-area">
+                            <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 20px;">
+                                By clicking "Submit Final Exam", you confirm that you have completed the test independently.
+                            </p>
+                            <button type="submit" class="btn" id="submitExamButton" 
+                                style="background: #4c51bf; color: white; padding: 16px 40px; border: none; border-radius: 50px; 
+                                font-size: 1.1rem; font-weight: 700; cursor: pointer; width: 100%; max-width: 320px;
+                                box-shadow: 0 10px 25px rgba(76, 81, 191, 0.3); transition: all 0.3s ease;">
+                                <i class="fas fa-paper-plane" style="margin-right: 10px;"></i> Submit Final Exam
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+        <div id="resultOverlay">
+        <div class="modal-content">
+            <div id="resultIcon" style="font-size: 4.5rem; margin-bottom: 25px;"></div>
+            <h2 id="resultTitle" style="margin-bottom: 15px; font-size: 2rem; font-weight: 800;"></h2>
+            <p id="resultMessage" style="color: #475569; margin-bottom: 35px; line-height: 1.7; font-size: 1.1rem;"></p>
+            <button id="resultActionBtn" style="background: #4c51bf; color: white; padding: 14px 32px; border: none; 
+            border-radius: 50px; font-weight: 700; cursor: pointer; font-size: 1rem; transition: transform 0.2s;"></button>
+        </div>
+      </div>
+
+    <footer>
+        <div class="container" style="text-align: center; padding: 30px; color: #94a3b8; font-size: 0.9rem;">
+            <p>© 2025 Internadda. All rights reserved. | Developed by Internadda Team</p>
+        </div>
+    </footer>
+
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+
+    <script>
+        // 1. FIREBASE CONFIGURATION (unchanged)
+        const firebaseConfig = {
+            apiKey: "AIzaSyCBAVUB555zTVMvvMnDyyjsC0SR_awBsOY",
+            authDomain: "internadda-com.firebaseapp.com",
+            projectId: "internadda-com",
+            storageBucket: "internadda-com.firebasestorage.app",
+            messagingSenderId: "63475091988",
+            appId: "1:63475091988:web:a84d22d53af3a7cd7a7501",
+            measurementId: "G-W1V99YWBWW"
+        };
+
+        // 2. INITIALIZE (unchanged)
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const analytics = firebase.analytics();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // 3. RETRIEVE DATA
+            const name = localStorage.getItem('candidateName') || "Guest Candidate";
+            const age = localStorage.getItem('candidateAge') || "N/A";
+            const gender = localStorage.getItem('candidateGender') || "Not Specified";
+            // DOMAIN CHANGED to Digital Marketing
+            const domain = localStorage.getItem('candidateDomain') || "Digital Marketing";
+
+            document.getElementById('dispName').textContent = name;
+
+            // 4. EXAM LOGIC
+            const form = document.getElementById('digitalMarketingFinalExamForm');
+            
+            if (form) {
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const btn = document.getElementById('submitExamButton');
+                    btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Processing Result...';
+                    btn.style.opacity = "0.8";
+                    btn.disabled = true;
+                    
+                    // SCORING
+                    let score = 0;
+                    const totalQuestions = 25; 
+                    const formData = new FormData(form);
+                    
+                    // Correct Answer Key (UPDATED for Digital Marketing)
+                    const answers = {
+                        q1: 'B', q2: 'C', q3: 'C', q4: 'C', q5: 'C',
+                        q6: 'B', q7: 'C', q8: 'B', q9: 'B', q10: 'C',
+                        q11: 'C', q12: 'B', q13: 'B', q14: 'B', q15: 'C',
+                        q16: 'C', q17: 'C', q18: 'B', q19: 'C', q20: 'D',
+                        q21: 'B', q22: 'B', q23: 'C', q24: 'C', q25: 'C'
+                    };
+
+                    for (let i = 1; i <= totalQuestions; i++) {
+                        if (formData.get('q' + i) === answers['q' + i]) {
+                            score++;
+                        }
+                    }
+
+                    const percentage = Math.round((score / totalQuestions) * 100);
+                    const passed = percentage >= 60;
+                    const status = passed ? "Pass" : "Fail";
+
+                    // SAVE TO FIREBASE (Updated fields: +Age, -Phone)
+                    try {
+                        await db.collection("exam_results").add({
+                            name: name,
+                            age: age,
+                            gender: gender,
+                            domain: domain, // Use the updated domain
+                            score: percentage,
+                            status: status,
+                            submittedAt: new Date()
+                        });
+                        console.log("Saved to Firebase");
+                    } catch (err) {
+                        console.error("Firebase Error:", err);
+                    }
+
+                    // SHOW RESULT
+                    const overlay = document.getElementById('resultOverlay');
+                    const rTitle = document.getElementById('resultTitle');
+                    const rMsg = document.getElementById('resultMessage');
+                    const rIcon = document.getElementById('resultIcon');
+                    const rBtn = document.getElementById('resultActionBtn');
+
+                    overlay.style.display = 'flex';
+
+                    if (passed) {
+                        rIcon.innerHTML = '<i class="fas fa-medal" style="color: #16a34a; filter: drop-shadow(0 4px 6px rgba(22, 163, 74, 0.4));"></i>';
+                        rTitle.textContent = "Congratulations! You Passed!";
+                        rTitle.style.color = "#166534";
+                        rMsg.innerHTML = `Outstanding performance, <strong>${name}</strong>!<br>You scored <strong>${percentage}%</strong>.<br>You have qualified for the interview round.`;
+                        rBtn.textContent = "Proceed to Interview";
+                        rBtn.style.background = "#16a34a";
+                        rBtn.onclick = () => {
+                        // URL में डेटा जोड़कर भेज रहे हैं
+                        const targetUrl = new URL("https://interview.internadda.com/"); // अपने React App का सही लिंक यहाँ डालें
+                        targetUrl.searchParams.set("name", name); // 'name' variable ऊपर से आ रहा है
+                        targetUrl.searchParams.set("role", domain); // 'domain' variable ऊपर से आ रहा है
+                        window.location.href = targetUrl.toString();
+                    };
+                    } else {
+                        rIcon.innerHTML = '<i class="fas fa-times-circle" style="color: #dc2626; filter: drop-shadow(0 4px 6px rgba(220, 38, 38, 0.4));"></i>';
+                        rTitle.textContent = "Exam Not Cleared";
+                        rTitle.style.color = "#991b1b";
+                        rMsg.innerHTML = `You scored <strong>${percentage}%</strong>.<br>The passing criteria is 60%.<br>Don't worry, you can try again or explore other internships.`;
+                        rBtn.textContent = "Return to Internships";
+                        rBtn.style.background = "#dc2626";
+                        // Redirect to Internship Page on Retry
+                        rBtn.onclick = () => window.location.href = "https://internadda.com/intern/internship";
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
