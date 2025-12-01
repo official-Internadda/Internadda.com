@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Exam Fee Payment — Web Development Internship</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- GLOBAL VARIABLES & RESET --- */
+        :root {
+            --primary: #4c51bf; /* Deeper Indigo/Violet */
+            --dark: #1a202c;
+            --gray: #4a5568;
+            --success: #38a169;
+            --light: #f7fafc;
+            --hover-light: #f0f4ff;
+            --meter-mid-color: #f6ad55; /* Orange/Yellow */
+            --meter-start-color: #38a169; 
+            --meter-end-color: #e53e3e;
+            --moderate-fill-height: 45%;
+            --moderate-color: #f6ad55;
+        }
+        
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 0; background-color: var(--light); font-family: 'Inter', sans-serif; color: var(--dark); }
+        
+        /* --- LAYOUT CONTAINERS --- */
+        .exam-container { max-width: 900px; margin: 40px auto; padding: 0 20px; position: relative; }
+        .exam-step { 
+            background: #fff; padding: 40px; border-radius: 16px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-bottom: 30px; 
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- HEADER --- */
+        .header-container { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; }
+        .logo { text-decoration: none; color: var(--primary); display: flex; align-items: center; font-size: 1.8rem; font-weight: 800; font-family: 'Poppins', sans-serif;}
+        .logo i { margin-right: 10px; color: #f6ad55; }
+
+        /* --- PAYMENT & FORM SECTION --- */
+        #payment-step { text-align: center; } 
+        #payment-step h2 { font-size: 2.5rem; margin-bottom: 20px; color: var(--primary); animation: slideInUp 0.5s ease-out; } 
+        #payment-step p { font-size: 1.15rem; color: var(--gray); margin-bottom: 25px; max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.6;} 
+        
+        /* --- DETAILS BOX (FORM WRAPPER) --- */
+        .details-box {
+            background: linear-gradient(145deg, #f0f4ff, #e2e8f0);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: left;
+            margin-top: 25px;
+            box-shadow: 0 6px 15px rgba(76, 81, 191, 0.15);
+        }
+        .details-box h3 { 
+            font-size: 1.5rem; color: var(--dark); margin-top: 0; display: flex; align-items: center; 
+            border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 15px; margin-bottom: 20px;
+        }
+        .details-box h3 i { margin-right: 15px; color: var(--primary); font-size: 1.2em; } 
+
+        /* --- CANDIDATE FORM GRID --- */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+        .form-group label {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+        .form-group input, .form-group select {
+            padding: 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: #fff;
+            transition: border-color 0.2s;
+            font-family: inherit;
+            width: 100%;
+            min-width: 0;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(76, 81, 191, 0.1);
+        }
+        .form-group input[readonly] {
+            background-color: #e2e8f0;
+            color: var(--gray);
+            cursor: not-allowed;
+            border-color: #cbd5e0;
+        }
+
+        /* --- EXAM SPECS GRID --- */
+        .exam-detail-grid {
+            display: grid;
+            grid-template-columns: 3fr 1fr; 
+            gap: 30px;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+        .exam-details-left { display: flex; flex-direction: column; gap: 20px; }
+        .detail-row { display: flex; align-items: flex-start; padding-left: 10px; }
+        .detail-row i { font-size: 1.4rem; color: var(--primary); margin-right: 15px; margin-top: 3px; flex-shrink: 0; }
+        .detail-label { font-weight: 500; color: var(--gray); margin-right: 10px; }
+        .detail-value { font-weight: 700; color: var(--dark); font-size: 1.15rem; }
+        
+        .skill-list { display: inline-flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
+        .skill-list span { background: #c3dafe; color: var(--primary); padding: 4px 10px; border-radius: 6px; font-size: 0.95rem; font-weight: 600; }
+
+        /* --- DIFFICULTY METER --- */
+        .difficulty-visual { 
+            text-align: center; padding: 15px; background: #fff; border-radius: 10px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); animation: popIn 0.5s ease-out; 
+        }
+        .difficulty-visual h4 { margin: 0 0 10px 0; font-size: 1.1rem; color: var(--dark); }
+        .meter-bar-container { 
+            display: flex; flex-direction: column-reverse; height: 100px; width: 30px; 
+            background: #cbd5e0; border-radius: 5px; overflow: hidden; margin: 10px auto; 
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.2); 
+        }
+        .meter-fill { 
+            width: 100%; height: var(--moderate-fill-height); 
+            background: linear-gradient(to top, var(--meter-start-color), var(--meter-mid-color) 70%, var(--meter-end-color) 90%); 
+            transition: height 1s ease-out; animation: fillMeter 1.5s forwards; 
+        }
+        @keyframes fillMeter { from { height: 0; } to { height: var(--moderate-fill-height); } }
+        @keyframes popIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+        /* --- PAYMENT BUTTON AREA (Updated from user request) --- */
+        #payment-button-container { 
+            display: flex; justify-content: center; align-items: center; margin: 40px 0; 
+            transition: opacity 0.3s ease; opacity: 0.5; pointer-events: none; /* Default Disabled */
+        }
+        
+        /* Cashfree Button Styles Override */
+        .button-container {
+            background: #1d3bc1; /* Updated per request */
+            border: 1px solid black;
+            border-radius: 15px;
+            display: flex;
+            padding: 10px;
+            width: fit-content;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(29, 59, 226, 0.35);
+            transition: all 0.2s;
+        }
+        .button-container:hover { 
+            transform: translateY(-4px); 
+            box-shadow: 0 10px 25px rgba(29, 59, 226, 0.5);
+        }
+        .text-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-left: 10px;
+            justify-content: center;
+            margin-right: 10px;
+        }
+        .logo-container {
+            width: 40px;
+            height: 40px;
+        }
+        .seconday-logo-container {
+            width: 16px;
+            height: 16px;
+            vertical-align: middle;
+        }
+        a { text-decoration:none; }
+
+        /* --- FOOTER --- */
+        footer { background-color: #e2e8f0; padding: 30px 0; border-top: 1px solid #cbd5e0; text-align: center; color: var(--gray); margin-top: 50px; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; gap: 15px; }
+            .exam-detail-grid { grid-template-columns: 1fr; gap: 20px; }
+            .difficulty-visual { display: none; }
+            .exam-step { padding: 20px; }
+            .details-box { padding: 20px; }
+            #payment-step h2 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header> 
+        <div class="exam-container header-container">
+            <a href="#" class="logo"><i class="fas fa-graduation-cap"></i><span class="logo-text">InternAdda</span></a>
+        </div>
+    </header>
+
+    <main>
+        <section class="course-section">
+            <div class="exam-container">
+                <div id="payment-step" class="exam-step">
+                    <h2><i class="fas fa-file-invoice-dollar"></i> Secure Exam Fee Payment</h2> 
+                    <p>This fee grants you access to the <b>Web Development Final Exam</b>, a mandatory, proctored step in our internship selection process. The fee covers professional, real-time proctoring services to ensure a fair and secure evaluation for all candidates.</p>
+                    
+                    <div class="details-box">
+                        <h3><i class="fas fa-user-graduate"></i> Candidate Registration</h3>
+                        
+                        <!-- FORM -->
+                        <form id="candidateForm" class="form-grid">
+                            <div class="form-group">
+                                <label for="userName">Full Name</label>
+                                <input type="text" id="userName" placeholder="Enter your official name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="userAge">Age</label>
+                                <input type="number" id="userAge" placeholder="e.g. 22" min="0" max="100" required>
+                                <span id="ageError" style="color: #e53e3e; font-size: 0.8rem; display: none; margin-top: 4px;">Age must be between 0 and 100.</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="userGender">Gender</label>
+                                <select id="userGender" required>
+                                    <option value="" disabled selected>Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="userDomain">Selected Domain</label>
+                                <input type="text" id="userDomain" value="Web Development" readonly>
+                            </div>
+                        </form>
+
+                        <h3><i class="fas fa-laptop-code"></i> Assessment Overview</h3>
+                        
+                        <div class="exam-detail-grid">
+                            <div class="exam-details-left">
+                                <div class="detail-row">
+                                    <i class="fas fa-brain"></i> 
+                                    <div>
+                                        <span class="detail-label">Assessment Topic:</span><br>
+                                        <span class="detail-value">Web Development (Full Stack)</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="detail-row">
+                                    <i class="fas fa-code"></i> 
+                                    <div>
+                                        <span class="detail-label">Key Skills Tested:</span><br>
+                                        <div class="skill-list">
+                                            <span>HTML5</span>
+                                            <span>CSS3</span>
+                                            <span>JavaScript</span>
+                                            <span>React</span>
+                                            <span>Node.js</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="detail-row">
+                                    <i class="fas fa-clock"></i> 
+                                    <div>
+                                        <span class="detail-label">Exam Format:</span><br>
+                                        <span class="detail-value">25 MCQs | 30 Minutes Duration</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="difficulty-visual">
+                                <h4>Difficulty Level:</h4>
+                                <div class="meter-bar-container">
+                                    <div class="meter-fill"></div>
+                                </div>
+                                <span class="detail-value" style="font-size: 1.2rem; color: var(--moderate-color);">MODERATE</span>
+                                <p style="font-size: 0.85rem; color: var(--gray); margin: 5px 0 0 0;">(Core Web Concepts)</p>
+                            </div>
+                        </div>
+                        
+                        <p id="formError" style="color: #e53e3e; font-size: 0.9rem; margin-top: 15px; font-weight: 600; display: none;">
+                            <i class="fas fa-exclamation-circle"></i> Please fill in all details above to enable payment.
+                        </p>
+                    </div>
+                    
+                    <p style="margin-top: 40px; font-weight: 700; color: var(--primary); font-size: 1.2rem;">Complete the form above to unlock the <b>PAY NOW</b> button.</p>
+
+                    <!-- PAYMENT BUTTON CONTAINER -->
+                    <div id="payment-button-container">
+                        <a href="https://payments.cashfree.com/forms/Web_Development_Internadda" target="_parent" id="cashfreeLink">
+                            <div class="button-container" style="background: #1d3bc1">
+                              <div>
+                                <img src="https://cashfree-checkoutcartimages-prod.cashfree.com/android-chrome-512x512f9ijeb2mim1g_prod.png" alt="logo" class="logo-container">
+                              </div>
+                              <div class="text-container">
+                                <div style="font-family: Arial; color: #fff; margin-bottom: 5px; font-size: 14px; font-weight: 700;">
+                                  <i class="fas fa-lock" style="margin-right: 5px;"></i> Pay Now
+                                </div>
+                                <div style="font-family: Arial; color: #fff; font-size: 10px;">
+                                    <span>Powered By Cashfree</span>
+                                    <img src="https://cashfreelogo.cashfree.com/cashfreepayments/logosvgs/Group_4355.svg" alt="logo" class="seconday-logo-container" style="filter: brightness(0) invert(1);">
+                                </div>
+                              </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div style="background: #e6fffa; border: 2px solid var(--success); color: var(--dark); font-weight: 700; border-radius: 10px; padding: 15px; margin-top: 20px; font-size: 0.95rem;">
+                        <i class="fas fa-check-circle"></i> <b>Instant Access:</b> Upon successful payment, you will be <b>automatically redirected</b> to the exam instructions page to start your test.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer><div class="exam-container"><p>© 2025 Internadda. All rights reserved. | Secured Payment Gateway</p></div></footer>
+
+    <!-- FIREBASE SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // 1. INITIALIZE FIREBASE
+        const firebaseConfig = {
+            apiKey: "AIzaSyCBAVUB555zTVMvvMnDyyjsC0SR_awBsOY",
+            authDomain: "internadda-com.firebaseapp.com",
+            projectId: "internadda-com",
+            storageBucket: "internadda-com.firebasestorage.app",
+            messagingSenderId: "63475091988",
+            appId: "1:63475091988:web:a84d22d53af3a7cd7a7501",
+            measurementId: "G-W1V99YWBWW"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('candidateForm');
+            const inputs = form.querySelectorAll('input, select');
+            const payBtnContainer = document.getElementById('payment-button-container');
+            const cashfreeLink = document.getElementById('cashfreeLink');
+            const errorMsg = document.getElementById('formError');
+            const ageError = document.getElementById('ageError');
+
+            // --- FORM VALIDATION ---
+            function checkForm() {
+                const name = document.getElementById('userName').value.trim();
+                const ageInput = document.getElementById('userAge');
+                const age = parseInt(ageInput.value);
+                const gender = document.getElementById('userGender').value;
+                
+                let isAgeValid = false;
+                if (!isNaN(age) && age >= 0 && age <= 100) {
+                    isAgeValid = true;
+                    ageError.style.display = 'none';
+                } else if (ageInput.value !== "") {
+                    ageError.style.display = 'block';
+                }
+
+                if (name && isAgeValid && gender) {
+                    payBtnContainer.style.opacity = '1';
+                    payBtnContainer.style.pointerEvents = 'auto';
+                    errorMsg.style.display = 'none';
+                    
+                    // Save to LocalStorage
+                    localStorage.setItem('candidateName', name);
+                    localStorage.setItem('candidateAge', age);
+                    localStorage.setItem('candidateGender', gender);
+                    localStorage.setItem('candidateDomain', 'Web Development');
+                } else {
+                    payBtnContainer.style.opacity = '0.5';
+                    payBtnContainer.style.pointerEvents = 'none';
+                    errorMsg.style.display = 'block';
+                }
+            }
+
+            inputs.forEach(input => {
+                input.addEventListener('input', checkForm);
+                input.addEventListener('change', checkForm);
+            });
+
+            // --- PAY BUTTON CLICK HANDLER (Validation + Firebase) ---
+            cashfreeLink.addEventListener('click', async function(e) {
+                // We do NOT prevent default here so the link works to open Cashfree
+                // BUT we want to save to Firebase first if possible.
+                // Since it's a direct link now, we can attach a quick fire-and-forget save
+                
+                const name = document.getElementById('userName').value.trim();
+                const age = document.getElementById('userAge').value.trim();
+                const gender = document.getElementById('userGender').value;
+                const domain = "Web Development";
+
+                if (!name || !age || !gender) {
+                    e.preventDefault(); // Stop if invalid
+                    alert("Please complete the form first.");
+                    return;
+                }
+
+                // 2. Firebase Save (Non-blocking ideally, but might race with navigation)
+                try {
+                    db.collection("exam_registrations").add({
+                        name: name,
+                        age: age,
+                        gender: gender,
+                        domain: domain,
+                        status: "Payment Link Clicked",
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    console.log("Registration saved!");
+                } catch (error) {
+                    console.error("Error saving:", error);
+                }
+                
+                // Allow the link to proceed naturally to: https://payments.cashfree.com/forms/Web_Development_Internadda
+            });
+        });
+    </script>
+</body>
+</html>
