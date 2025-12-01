@@ -426,7 +426,6 @@
 
         // 2. INITIALIZE
         let db;
-        // Check if firebase is available (added missing check from your original code)
         if (typeof firebase !== 'undefined') {
              firebase.initializeApp(firebaseConfig);
              db = firebase.firestore();
@@ -445,33 +444,30 @@
             const gender = localStorage.getItem('candidateGender') || "Not Specified";
             const domain = localStorage.getItem('candidateDomain') || "UI/UX Design";
 
-            document.getElementById('dispName').textContent = name; // ✅ FIX: Setting the fetched name
+            document.getElementById('dispName').textContent = name; // Setting the fetched name
 
-            // --- TIMER LOGIC (0 MIN TIMER / AUTO SUBMIT) ---
+            // --- TIMER LOGIC (No major change needed here) ---
             const timerEl = document.getElementById('examTimer');
-            // Set for 30 Minutes standard
             let timeLimit = 30 * 60; // 1800 seconds
             
             const countdown = setInterval(() => {
                 const minutes = Math.floor(timeLimit / 60);
                 const seconds = timeLimit % 60;
-                // Format with leading zeros
                 timerEl.textContent = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
                 if (timeLimit <= 0) {
                     clearInterval(countdown);
-                    timerEl.textContent = "00:00"; // Force display to 00:00
-                    // AUTO SUBMIT LOGIC
+                    timerEl.textContent = "00:00"; 
                     const submitBtn = document.getElementById('submitExamButton');
                     if(submitBtn) {
-                        submitBtn.click(); // Trigger click event for robust submission
+                        submitBtn.click(); 
                     }
                 }
                 timeLimit--;
             }, 1000);
 
 
-            // 4. EXAM LOGIC
+            // 4. EXAM LOGIC (No changes to scoring needed)
             const form = document.getElementById('uiUxFinalExamForm');
             
             if (form) {
@@ -486,12 +482,11 @@
                     btn.style.opacity = "0.8";
                     btn.disabled = true;
                     
-                    // SCORING
+                    // SCORING... (answers remain the same)
                     let score = 0;
                     const totalQuestions = 25; 
                     const formData = new FormData(form);
                     
-                    // Correct Answer Key (UI/UX DESIGN)
                     const answers = {
                         q1: 'B', q2: 'B', q3: 'B', q4: 'B', q5: 'B',
                         q6: 'B', q7: 'C', q8: 'B', q9: 'B', q10: 'B',
@@ -514,7 +509,7 @@
                     if (typeof db !== 'undefined') {
                         try {
                             await db.collection("exam_results").add({
-                                name: name, // ✅ FIX: Using the correctly fetched name
+                                name: name, 
                                 age: age,
                                 gender: gender,
                                 domain: domain,
@@ -522,7 +517,6 @@
                                 status: status,
                                 submittedAt: new Date()
                             });
-                            console.log("Saved to Firebase");
                         } catch (err) {
                             console.error("Firebase Error:", err);
                         }
@@ -541,7 +535,6 @@
                         rIcon.innerHTML = '<i class="fas fa-medal" style="color: #16a34a; filter: drop-shadow(0 4px 6px rgba(22, 163, 74, 0.4));"></i>';
                         rTitle.textContent = "Congratulations! You Passed!";
                         rTitle.style.color = "#166534";
-                        // ✅ FIX: Using the correctly fetched name in the message
                         rMsg.innerHTML = `Outstanding performance, <strong>${name}</strong>!<br>You scored <strong>${percentage}%</strong>.<br>You have qualified for the interview round.`;
                         rBtn.textContent = "Proceed to Interview";
                         rBtn.style.background = "#16a34a";
