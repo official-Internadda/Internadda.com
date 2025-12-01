@@ -499,11 +499,13 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         // 3. RETRIEVE CANDIDATE DATA FROM LOCAL STORAGE
-        // This relies entirely on the payment page saving this data beforehand.
-        const name = localStorage.getItem('candidateName') || "Guest Candidate";
+        // FIX: Ensure name is handled correctly, use 'Guest Candidate' only if localStorage.getItem returns null, undefined, or empty string.
+        const storedName = localStorage.getItem('candidateName');
+        const name = storedName && storedName.trim() !== '' ? storedName : "Guest Candidate";
+        
         const age = localStorage.getItem('candidateAge') || "N/A";
         const gender = localStorage.getItem('candidateGender') || "Not Specified";
-        const domain = localStorage.getItem('candidateDomain') || "Web Development"; // Use domain from localStorage
+        const domain = localStorage.getItem('candidateDomain') || "Web Development"; 
         const interviewRole = "Full Stack Developer"; // Hardcoded role for interview link as requested
 
         const dispNameEl = document.getElementById('dispName');
@@ -511,7 +513,7 @@
             dispNameEl.textContent = name;
         }
 
-        // --- TIMER AND AUTO-SUBMIT LOGIC (FIXED) ---
+        // --- TIMER AND AUTO-SUBMIT LOGIC ---
         const timerEl = document.getElementById('examTimer');
         const form = document.getElementById('webDevFinalExamForm'); 
         
@@ -572,7 +574,7 @@
                     btn.disabled = true;
                 }
                 
-                // SCORING... (Answer Key is correct)
+                // SCORING...
                 let score = 0;
                 const totalQuestions = 25;
                 const formData = new FormData(form);
@@ -634,7 +636,6 @@
                         rBtn.onclick = () => {
                             const targetUrl = new URL("https://interview.internadda.com/"); 
                             targetUrl.searchParams.set("name", name); 
-                            // Using the hardcoded role as requested for the next step URL
                             targetUrl.searchParams.set("role", interviewRole); 
                             window.location.href = targetUrl.toString();
                         };
