@@ -13,110 +13,45 @@
     <link rel="icon" type="image/png" href="../images/favicon.png">
 
     <style>
-        /* Exam Specific Styles */
+        /* (CSS Styles remain the same) */
         body { background-color: #f7fafc; font-family: 'Inter', sans-serif; color: #1a202c; }
         main { padding-top: 30px; padding-bottom: 80px; }
-        
-        /* --- FIXED HEADER ALIGNMENT --- */
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center; 
-            padding-top: 15px;
-            padding-bottom: 15px;
-            height: 80px;
-        }
-        .logo {
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-        /* ----------------------------- */
-
-        .exam-container {
-            max-width: 850px; margin: 40px auto; background-color: #ffffff;
-            border-radius: 16px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08); padding: 50px;
-            border: 1px solid #f1f5f9;
-        }
-        
+        .header-container { display: flex; justify-content: space-between; align-items: center; padding-top: 15px; padding-bottom: 15px; height: 80px; }
+        .logo { text-decoration: none; display: flex; align-items: center; }
+        .exam-container { max-width: 850px; margin: 40px auto; background-color: #ffffff; border-radius: 16px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08); padding: 50px; border: 1px solid #f1f5f9; }
         .exam-header { text-align: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 30px; margin-bottom: 40px; }
         .exam-header h1 { font-size: 2.2rem; color: #4c51bf; margin-bottom: 10px; letter-spacing: -0.5px; font-weight: 800; }
-        .exam-header p { 
-            color: #4c51bf; font-size: 0.95rem; font-weight: 600; 
-            background: #eef2ff; color: #4338ca;
-            display: inline-block; padding: 6px 16px; border-radius: 20px; 
-            border: 1px solid #c7d2fe;
-        }
-        
-        .exam-info-box {
-            display: flex; justify-content: space-between; gap: 20px; margin-bottom: 40px;
-            padding: 20px 30px; background-color: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;
-        }
+        .exam-header p { background: #eef2ff; color: #4338ca; display: inline-block; padding: 6px 16px; border-radius: 20px; border: 1px solid #c7d2fe; }
+        .exam-info-box { display: flex; justify-content: space-between; gap: 20px; margin-bottom: 40px; padding: 20px 30px; background-color: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0; }
         .info-item { text-align: center; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; }
         .info-item i { font-size: 1.5rem; margin-bottom: 5px; }
         .info-item strong { display: block; font-size: 1.2rem; color: #0f172a; font-weight: 700; }
         .info-item span { font-size: 0.85rem; color: #64748b; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
-        
-        .question-card { 
-            border: 1px solid #e2e8f0; border-radius: 12px; padding: 30px; margin-bottom: 30px; 
-            background: #fff; transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .question-card:hover {
-            box-shadow: 0 10px 30px rgba(0,0,0,0.04); border-color: #cbd5e1;
-        }
-        .question-number {
-            display: inline-block; background: #e0e7ff; color: #4338ca; 
-            font-size: 0.8rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; margin-bottom: 10px;
-        }
+        .question-card { border: 1px solid #e2e8f0; border-radius: 12px; padding: 30px; margin-bottom: 30px; background: #fff; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .question-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.04); border-color: #cbd5e1; }
+        .question-number { display: inline-block; background: #e0e7ff; color: #4338ca; font-size: 0.8rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; margin-bottom: 10px; }
         .question-card p { font-size: 1.15rem; font-weight: 600; color: #1e293b; margin-bottom: 20px; line-height: 1.5; }
-        
         .options { display: grid; gap: 12px; }
-        .options label {
-            display: flex; align-items: center; 
-            background-color: #f8fafc; padding: 16px; 
-            border-radius: 10px; cursor: pointer; transition: all 0.2s ease; 
-            border: 2px solid transparent;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        }
+        .options label { display: flex; align-items: center; background-color: #f8fafc; padding: 16px; border-radius: 10px; cursor: pointer; transition: all 0.2s ease; border: 2px solid transparent; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .options label:hover { background-color: #eef2ff; border-color: #c7d2fe; }
-        .options input { 
-            margin-right: 16px; width: 20px; height: 20px; accent-color: #4338ca; flex-shrink: 0; 
-            cursor: pointer;
-        }
+        .options input { margin-right: 16px; width: 20px; height: 20px; accent-color: #4338ca; flex-shrink: 0; cursor: pointer; }
         .option-text { font-size: 1rem; color: #475569; font-weight: 500; }
-
         .exam-submit-area { text-align: center; padding-top: 40px; border-top: 2px solid #f1f5f9; margin-top: 40px; }
-        .warning-message {
-            color: #991b1b; background-color: #fef2f2; padding: 16px;
-            border-radius: 8px; border: 1px solid #fecaca; margin-bottom: 30px; font-weight: 600;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-        }
-
-        /* Modal */
-        #resultOverlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.9); z-index: 2000; align-items: center; justify-content: center;
-            backdrop-filter: blur(8px);
-        }
-        .modal-content {
-            background: white; padding: 50px; border-radius: 24px; text-align: center;
-            max-width: 480px; width: 90%; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
+        .warning-message { color: #991b1b; background-color: #fef2f2; padding: 16px; border-radius: 8px; border: 1px solid #fecaca; margin-bottom: 30px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        #resultOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
+        .modal-content { background: white; padding: 50px; border-radius: 24px; text-align: center; max-width: 480px; width: 90%; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
         @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
         @media (max-width: 768px) {
             .exam-container { padding: 25px; margin: 20px auto; width: 95%; }
             .exam-header h1 { font-size: 1.8rem; }
             .exam-info-box { flex-wrap: wrap; gap: 15px; padding: 15px; }
             .info-item { min-width: 40%; }
-            .options label { padding: 14px; } 
+            .options label { padding: 14px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
     <header>
         <div class="container header-container">
             <a href="../index.html" class="logo">
@@ -148,7 +83,6 @@
                     <div class="exam-info-box">
                         <div class="info-item">
                             <i class="far fa-clock" style="color: #4338ca;"></i>
-                            <!-- TIMER ELEMENT -->
                             <strong id="examTimer">30:00</strong>
                             <span>Time Limit</span>
                         </div>
@@ -166,7 +100,6 @@
 
                     <form id="uiUxFinalExamForm">
                         
-                        <!-- Q1 -->
                         <div class="question-card">
                             <span class="question-number">Question 1</span>
                             <p>What does <strong>UX</strong> stand for?</p>
@@ -178,7 +111,6 @@
                             </div>
                         </div>
 
-                        <!-- Q2 -->
                         <div class="question-card">
                             <span class="question-number">Question 2</span>
                             <p>What is the primary difference between <strong>UI</strong> and <strong>UX</strong>?</p>
@@ -190,7 +122,6 @@
                             </div>
                         </div>
 
-                        <!-- Q3 -->
                         <div class="question-card">
                             <span class="question-number">Question 3</span>
                             <p>What is a <strong>Wireframe</strong>?</p>
@@ -202,7 +133,6 @@
                             </div>
                         </div>
 
-                        <!-- Q4 -->
                         <div class="question-card">
                             <span class="question-number">Question 4</span>
                             <p>What is <strong>White Space</strong> (or Negative Space) in design?</p>
@@ -214,7 +144,6 @@
                             </div>
                         </div>
 
-                        <!-- Q5 -->
                         <div class="question-card">
                             <span class="question-number">Question 5</span>
                             <p>Which tool is widely used for <strong>Interface Design</strong> and prototyping?</p>
@@ -226,7 +155,6 @@
                             </div>
                         </div>
 
-                        <!-- Q6 -->
                         <div class="question-card">
                             <span class="question-number">Question 6</span>
                             <p>What is a <strong>Persona</strong> in UX research?</p>
@@ -238,7 +166,6 @@
                             </div>
                         </div>
 
-                        <!-- Q7 -->
                         <div class="question-card">
                             <span class="question-number">Question 7</span>
                             <p>What does <strong>Information Architecture (IA)</strong> organize?</p>
@@ -250,7 +177,6 @@
                             </div>
                         </div>
 
-                        <!-- Q8 -->
                         <div class="question-card">
                             <span class="question-number">Question 8</span>
                             <p>In <strong>Color Theory</strong>, which color evokes trust and security?</p>
@@ -262,7 +188,6 @@
                             </div>
                         </div>
 
-                        <!-- Q9 -->
                         <div class="question-card">
                             <span class="question-number">Question 9</span>
                             <p>What is <strong>Responsive Design</strong>?</p>
@@ -274,7 +199,6 @@
                             </div>
                         </div>
 
-                        <!-- Q10 -->
                         <div class="question-card">
                             <span class="question-number">Question 10</span>
                             <p>What is the goal of <strong>Usability Testing</strong>?</p>
@@ -286,7 +210,6 @@
                             </div>
                         </div>
 
-                        <!-- Q11 -->
                         <div class="question-card">
                             <span class="question-number">Question 11</span>
                             <p>What does <strong>a11y</strong> stand for in design?</p>
@@ -298,7 +221,6 @@
                             </div>
                         </div>
 
-                        <!-- Q12 -->
                         <div class="question-card">
                             <span class="question-number">Question 12</span>
                             <p>Which Gestalt principle states that objects near each other are perceived as a group?</p>
@@ -310,7 +232,6 @@
                             </div>
                         </div>
 
-                        <!-- Q13 -->
                         <div class="question-card">
                             <span class="question-number">Question 13</span>
                             <p>What is a <strong>Mood Board</strong>?</p>
@@ -322,7 +243,6 @@
                             </div>
                         </div>
 
-                        <!-- Q14 -->
                         <div class="question-card">
                             <span class="question-number">Question 14</span>
                             <p>What is the standard <strong>contrast ratio</strong> for normal text according to WCAG AA guidelines?</p>
@@ -334,7 +254,6 @@
                             </div>
                         </div>
 
-                        <!-- Q15 -->
                         <div class="question-card">
                             <span class="question-number">Question 15</span>
                             <p>What does <strong>CTA</strong> stand for?</p>
@@ -346,7 +265,6 @@
                             </div>
                         </div>
 
-                        <!-- Q16 -->
                         <div class="question-card">
                             <span class="question-number">Question 16</span>
                             <p>What is a <strong>Prototype</strong>?</p>
@@ -358,7 +276,6 @@
                             </div>
                         </div>
 
-                        <!-- Q17 -->
                         <div class="question-card">
                             <span class="question-number">Question 17</span>
                             <p>What is the <strong>F-Pattern</strong> in design?</p>
@@ -370,7 +287,6 @@
                             </div>
                         </div>
 
-                        <!-- Q18 -->
                         <div class="question-card">
                             <span class="question-number">Question 18</span>
                             <p>What is <strong>Affordance</strong> in UX?</p>
@@ -382,7 +298,6 @@
                             </div>
                         </div>
 
-                        <!-- Q19 -->
                         <div class="question-card">
                             <span class="question-number">Question 19</span>
                             <p>What is <strong>Typography Hierarchy</strong>?</p>
@@ -394,7 +309,6 @@
                             </div>
                         </div>
 
-                        <!-- Q20 -->
                         <div class="question-card">
                             <span class="question-number">Question 20</span>
                             <p>What is <strong>Heuristic Evaluation</strong>?</p>
@@ -406,7 +320,6 @@
                             </div>
                         </div>
 
-                        <!-- Q21 -->
                         <div class="question-card">
                             <span class="question-number">Question 21</span>
                             <p>What is a <strong>User Journey Map</strong>?</p>
@@ -418,7 +331,6 @@
                             </div>
                         </div>
 
-                        <!-- Q22 -->
                         <div class="question-card">
                             <span class="question-number">Question 22</span>
                             <p>What are <strong>Micro-interactions</strong>?</p>
@@ -430,7 +342,6 @@
                             </div>
                         </div>
 
-                        <!-- Q23 -->
                         <div class="question-card">
                             <span class="question-number">Question 23</span>
                             <p>What is the <strong>60-30-10 Rule</strong> in UI design?</p>
@@ -442,7 +353,6 @@
                             </div>
                         </div>
 
-                        <!-- Q24 -->
                         <div class="question-card">
                             <span class="question-number">Question 24</span>
                             <p>What format is best for <strong>vector</strong> graphics?</p>
@@ -454,7 +364,6 @@
                             </div>
                         </div>
 
-                        <!-- Q25 -->
                         <div class="question-card">
                             <span class="question-number">Question 25</span>
                             <p>What does <strong>MVP</strong> stand for in product design?</p>
@@ -483,7 +392,6 @@
         </section>
     </main>
 
-    <!-- RESULT MODAL -->
     <div id="resultOverlay">
         <div class="modal-content">
             <div id="resultIcon" style="font-size: 4.5rem; margin-bottom: 25px;"></div>
@@ -500,7 +408,6 @@
         </div>
     </footer>
 
-    <!-- FIREBASE SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
@@ -518,19 +425,27 @@
         };
 
         // 2. INITIALIZE
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        const analytics = firebase.analytics();
+        let db;
+        // Check if firebase is available (added missing check from your original code)
+        if (typeof firebase !== 'undefined') {
+             firebase.initializeApp(firebaseConfig);
+             db = firebase.firestore();
+        } else {
+             console.warn("Firebase SDK not loaded. Skipping database operations.");
+        }
+        
 
         document.addEventListener('DOMContentLoaded', function() {
-            // 3. RETRIEVE DATA
-            const name = localStorage.getItem('candidateName') || "Guest Candidate";
+            // 3. RETRIEVE DATA FROM LOCAL STORAGE (FIXED LOGIC)
+            const storedName = localStorage.getItem('candidateName');
+            // ✅ FIX: Trim the name and use "Guest Candidate" only if it's empty or null/undefined
+            const name = storedName && storedName.trim() !== '' ? storedName.trim() : "Guest Candidate";
+            
             const age = localStorage.getItem('candidateAge') || "N/A";
             const gender = localStorage.getItem('candidateGender') || "Not Specified";
-            // UPDATED DOMAIN
             const domain = localStorage.getItem('candidateDomain') || "UI/UX Design";
 
-            document.getElementById('dispName').textContent = name;
+            document.getElementById('dispName').textContent = name; // ✅ FIX: Setting the fetched name
 
             // --- TIMER LOGIC (0 MIN TIMER / AUTO SUBMIT) ---
             const timerEl = document.getElementById('examTimer');
@@ -596,19 +511,21 @@
                     const status = passed ? "Pass" : "Fail";
 
                     // SAVE TO FIREBASE
-                    try {
-                        await db.collection("exam_results").add({
-                            name: name,
-                            age: age,
-                            gender: gender,
-                            domain: domain,
-                            score: percentage,
-                            status: status,
-                            submittedAt: new Date()
-                        });
-                        console.log("Saved to Firebase");
-                    } catch (err) {
-                        console.error("Firebase Error:", err);
+                    if (typeof db !== 'undefined') {
+                        try {
+                            await db.collection("exam_results").add({
+                                name: name, // ✅ FIX: Using the correctly fetched name
+                                age: age,
+                                gender: gender,
+                                domain: domain,
+                                score: percentage,
+                                status: status,
+                                submittedAt: new Date()
+                            });
+                            console.log("Saved to Firebase");
+                        } catch (err) {
+                            console.error("Firebase Error:", err);
+                        }
                     }
 
                     // SHOW RESULT
@@ -624,6 +541,7 @@
                         rIcon.innerHTML = '<i class="fas fa-medal" style="color: #16a34a; filter: drop-shadow(0 4px 6px rgba(22, 163, 74, 0.4));"></i>';
                         rTitle.textContent = "Congratulations! You Passed!";
                         rTitle.style.color = "#166534";
+                        // ✅ FIX: Using the correctly fetched name in the message
                         rMsg.innerHTML = `Outstanding performance, <strong>${name}</strong>!<br>You scored <strong>${percentage}%</strong>.<br>You have qualified for the interview round.`;
                         rBtn.textContent = "Proceed to Interview";
                         rBtn.style.background = "#16a34a";
