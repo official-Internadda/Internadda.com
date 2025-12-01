@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Development Final Exam | Internadda Certification Test</title>
+    <meta name="description" content="Official Final Exam for Web Development Internship.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+
+    <style>
+        /* Exam Specific Styles */
+        body { background-color: #f7fafc; font-family: 'Inter', sans-serif; color: #1a202c; }
+        main { padding-top: 30px; padding-bottom: 80px; }
+        
+        /* --- FIXED HEADER ALIGNMENT --- */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; 
+            padding-top: 15px;
+            padding-bottom: 15px;
+            height: 80px;
+        }
+        .logo {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        /* ----------------------------- */
+
+        .exam-container {
+            max-width: 850px; margin: 40px auto; background-color: #ffffff;
+            border-radius: 16px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08); padding: 50px;
+            border: 1px solid #f1f5f9;
+        }
+        
+        .exam-header { text-align: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 30px; margin-bottom: 40px; }
+        .exam-header h1 { font-size: 2.2rem; color: #4c51bf; margin-bottom: 10px; letter-spacing: -0.5px; font-weight: 800; }
+        .exam-header p { 
+            color: #4c51bf; font-size: 0.95rem; font-weight: 600; 
+            background: #eef2ff; color: #4338ca;
+            display: inline-block; padding: 6px 16px; border-radius: 20px; 
+            border: 1px solid #c7d2fe;
+        }
+        
+        .exam-info-box {
+            display: flex; justify-content: space-between; gap: 20px; margin-bottom: 40px;
+            padding: 20px 30px; background-color: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;
+        }
+        .info-item { text-align: center; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .info-item i { font-size: 1.5rem; margin-bottom: 5px; }
+        .info-item strong { display: block; font-size: 1.2rem; color: #0f172a; font-weight: 700; }
+        .info-item span { font-size: 0.85rem; color: #64748b; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .question-card { 
+            border: 1px solid #e2e8f0; border-radius: 12px; padding: 30px; margin-bottom: 30px; 
+            background: #fff; transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .question-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04); border-color: #cbd5e1;
+        }
+        .question-number {
+            display: inline-block; background: #e0e7ff; color: #4338ca; 
+            font-size: 0.8rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; margin-bottom: 10px;
+        }
+        .question-card p { font-size: 1.15rem; font-weight: 600; color: #1e293b; margin-bottom: 20px; line-height: 1.5; }
+        
+        .options { display: grid; gap: 12px; }
+        .options label {
+            display: flex; align-items: center; 
+            background-color: #f8fafc; padding: 16px; 
+            border-radius: 10px; cursor: pointer; transition: all 0.2s ease; 
+            border: 2px solid transparent;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .options label:hover { background-color: #eef2ff; border-color: #c7d2fe; }
+        .options input { 
+            margin-right: 16px; width: 20px; height: 20px; accent-color: #4338ca; flex-shrink: 0; 
+            cursor: pointer;
+        }
+        .option-text { font-size: 1rem; color: #475569; font-weight: 500; }
+
+        .exam-submit-area { text-align: center; padding-top: 40px; border-top: 2px solid #f1f5f9; margin-top: 40px; }
+        .warning-message {
+            color: #991b1b; background-color: #fef2f2; padding: 16px;
+            border-radius: 8px; border: 1px solid #fecaca; margin-bottom: 30px; font-weight: 600;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+
+        /* Modal */
+        #resultOverlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.9); z-index: 2000; align-items: center; justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            background: white; padding: 50px; border-radius: 24px; text-align: center;
+            max-width: 480px; width: 90%; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        @media (max-width: 768px) {
+            .exam-container { padding: 25px; margin: 20px auto; width: 95%; }
+            .exam-header h1 { font-size: 1.8rem; }
+            .exam-info-box { flex-wrap: wrap; gap: 15px; padding: 15px; }
+            .info-item { min-width: 40%; }
+            .options label { padding: 14px; } 
+        }
+    </style>
+</head>
+<body>
+
+        <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-text" style="color: #4338ca; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px;">
+                    <i class="fas fa-graduation-cap" style="color: #f59e0b; margin-right: 8px;"></i>InternAdda
+                </span>
+            </a>
+            <div style="margin-left: auto; font-size: 0.9rem; text-align: right;">
+                <div style="color: #64748b; font-size: 0.8rem; font-weight: 500;">Candidate</div>
+                <div id="dispName" style="color: #0f172a; font-weight: 700;">Loading...</div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="exam-section">
+            <div class="container">
+                <div class="exam-container">
+                    <div class="exam-header">
+                        <h1 class="exam-title">Web Development Final Exam</h1>
+                        <p>Official Certification Assessment</p>
+                    </div>
+
+                    <div class="warning-message">
+                        <i class="fas fa-exclamation-triangle"></i> 
+                        <span><strong>WARNING:</strong> Do not refresh or close this page. Results are final.</span>
+                    </div>
+
+                    <div class="exam-info-box">
+                        <div class="info-item">
+                            <i class="far fa-clock" style="color: #4338ca;"></i>
+                            <strong>30 Mins</strong>
+                            <span>Time Limit</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-clipboard-list" style="color: #4338ca;"></i>
+                            <strong>25</strong>
+                            <span>Questions</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-check-circle" style="color: #16a34a;"></i>
+                            <strong>60%</strong>
+                            <span>Passing Score</span>
+                        </div>
+                    </div>
+
+                    <form id="webDevFinalExamForm">
+                        
+                                                <div class="question-card">
+                            <span class="question-number">Question 1</span>
+                            <p>What does **HTML** stand for?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q1" value="A"><span class="option-text">Hyper Text Markup Language</span></label>
+                                <label><input type="radio" name="q1" value="B"><span class="option-text">High-Level Text Management</span></label>
+                                <label><input type="radio" name="q1" value="C"><span class="option-text">Hyperlink and Text Markup Language</span></label>
+                                <label><input type="radio" name="q1" value="D"><span class="option-text">Home Tool Markup Language</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 2</span>
+                            <p>Which **CSS** property is used to change the text color of an element?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q2" value="A"><span class="option-text">background-color</span></label>
+                                <label><input type="radio" name="q2" value="B"><span class="option-text">font-color</span></label>
+                                <label><input type="radio" name="q2" value="C"><span class="option-text">color</span></label>
+                                <label><input type="radio" name="q2" value="D"><span class="option-text">text-style</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 3</span>
+                            <p>Which is the correct way to link an external **JavaScript** file named "script.js"?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q3" value="A"><span class="option-text">&lt;script href="script.js"&gt;</span></label>
+                                <label><input type="radio" name="q3" value="B"><span class="option-text">&lt;script name="script.js"&gt;</span></label>
+                                <label><input type="radio" name="q3" value="C"><span class="option-text">&lt;script src="script.js"&gt;</span></label>
+                                <label><input type="radio" name="q3" value="D"><span class="option-text">&lt;script file="script.js"&gt;</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 4</span>
+                            <p>What is the purpose of the **&lt;meta name="viewport" content="..."&gt;** tag?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q4" value="A"><span class="option-text">To define character set</span></label>
+                                <label><input type="radio" name="q4" value="B"><span class="option-text">To set page title</span></label>
+                                <label><input type="radio" name="q4" value="C"><span class="option-text">To specify keywords for SEO</span></label>
+                                <label><input type="radio" name="q4" value="D"><span class="option-text">To control the page's dimensions and scaling on mobile devices</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 5</span>
+                            <p>What is the default display value for a **&lt;div&gt;** element?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q5" value="A"><span class="option-text">inline</span></label>
+                                <label><input type="radio" name="q5" value="B"><span class="option-text">inline-block</span></label>
+                                <label><input type="radio" name="q5" value="C"><span class="option-text">none</span></label>
+                                <label><input type="radio" name="q5" value="D"><span class="option-text">block</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 6</span>
+                            <p>Which **HTTP** method is typically used to retrieve data from a server?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q6" value="A"><span class="option-text">POST</span></label>
+                                <label><input type="radio" name="q6" value="B"><span class="option-text">PUT</span></label>
+                                <label><input type="radio" name="q6" value="C"><span class="option-text">DELETE</span></label>
+                                <label><input type="radio" name="q6" value="D"><span class="option-text">GET</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 7</span>
+                            <p>Which of the following is NOT a JavaScript framework/library?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q7" value="A"><span class="option-text">React</span></label>
+                                <label><input type="radio" name="q7" value="B"><span class="option-text">Angular</span></label>
+                                <label><input type="radio" name="q7" value="C"><span class="option-text">Vue</span></label>
+                                <label><input type="radio" name="q7" value="D"><span class="option-text">Django</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 8</span>
+                            <p>What is **"hoisting"** in JavaScript?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q8" value="A"><span class="option-text">Moving all variable declarations to the top of the current scope</span></label>
+                                <label><input type="radio" name="q8" value="B"><span class="option-text">A type of animation in CSS</span></label>
+                                <label><input type="radio" name="q8" value="C"><span class="option-text">A CSS property for vertical alignment</span></label>
+                                <label><input type="radio" name="q8" value="D"><span class="option-text">A server-side deployment process</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 9</span>
+                            <p>In **CSS Flexbox**, which property controls the alignment of flex items along the **main axis**?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q9" value="A"><span class="option-text">align-items</span></label>
+                                <label><input type="radio" name="q9" value="B"><span class="option-text">justify-content</span></label>
+                                <label><input type="radio" name="q9" value="C"><span class="option-text">flex-direction</span></label>
+                                <label><input type="radio" name="q9" value="D"><span class="option-text">align-content</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 10</span>
+                            <p>How do you conditionally render an element inside **JSX** (e.g., in React)?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q10" value="A"><span class="option-text">Using traditional `if/else` statements directly inside the return statement</span></label>
+                                <label><input type="radio" name="q10" value="B"><span class="option-text">Using the ternary operator or logical `&&` operator inside JSX</span></label>
+                                <label><input type="radio" name="q10" value="C"><span class="option-text">Using a `&lt;conditional&gt;` custom tag</span></label>
+                                <label><input type="radio" name="q10" value="D"><span class="option-text">By assigning HTML strings to variables outside of JSX</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 11</span>
+                            <p>What is the name of the package manager commonly used with Node.js/Web Development?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q11" value="A"><span class="option-text">Pip</span></label>
+                                <label><input type="radio" name="q11" value="B"><span class="option-text">Maven</span></label>
+                                <label><input type="radio" name="q11" value="C"><span class="option-text">npm (Node Package Manager)</span></label>
+                                <label><input type="radio" name="q11" value="D"><span class="option-text">Composer</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 12</span>
+                            <p>Which **CSS unit** is relative to the size of the font of the root element (i.e., the &lt;html&gt; element)?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q12" value="A"><span class="option-text">em</span></label>
+                                <label><input type="radio" name="q12" value="B"><span class="option-text">rem</span></label>
+                                <label><input type="radio" name="q12" value="C"><span class="option-text">px</span></label>
+                                <label><input type="radio" name="q12" value="D"><span class="option-text">vw</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 13</span>
+                            <p>What does **AJAX** stand for?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q13" value="A"><span class="option-text">Asynchronous JavaScript and XML</span></label>
+                                <label><input type="radio" name="q13" value="B"><span class="option-text">Advanced JavaScript and XHTML</span></label>
+                                <label><input type="radio" name="q13" value="C"><span class="option-text">Applied JSON and XML</span></label>
+                                <label><input type="radio" name="q13" value="D"><span class="option-text">Automated JavaScript Access Protocol</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 14</span>
+                            <p>What is the output of **`console.log(typeof null)`** in JavaScript?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q14" value="A"><span class="option-text">"object"</span></label>
+                                <label><input type="radio" name="q14" value="B"><span class="option-text">"null"</span></label>
+                                <label><input type="radio" name="q14" value="C"><span class="option-text">"undefined"</span></label>
+                                <label><input type="radio" name="q14" value="D"><span class="option-text">"number"</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 15</span>
+                            <p>What is a **closure** in JavaScript?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q15" value="A"><span class="option-text">A function that is immediately executed</span></label>
+                                <label><input type="radio" name="q15" value="B"><span class="option-text">A design pattern for structuring code</span></label>
+                                <label><input type="radio" name="q15" value="C"><span class="option-text">A function bundled together with its lexical environment (access to parent's scope)</span></label>
+                                <label><input type="radio" name="q15" value="D"><span class="option-text">A way to stop asynchronous operations</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 16</span>
+                            <p>Which attribute is used to provide an accessible text description for an image if it cannot be displayed?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q16" value="A"><span class="option-text">title</span></label>
+                                <label><input type="radio" name="q16" value="B"><span class="option-text">src</span></label>
+                                <label><input type="radio" name="q16" value="C"><span class="option-text">alt</span></label>
+                                <label><input type="radio" name="q16" value="D"><span class="option-text">href</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 17</span>
+                            <p>Which of these is best suited for complex 2D and 3D graphics rendered dynamically on a webpage?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q17" value="A"><span class="option-text">&lt;audio&gt;</span></label>
+                                <label><input type="radio" name="q17" value="B"><span class="option-text">&lt;video&gt;</span></label>
+                                <label><input type="radio" name="q17" value="C"><span class="option-text">&lt;canvas&gt;</span></label>
+                                <label><input type="radio" name="q17" value="D"><span class="option-text">&lt;img&gt;</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 18</span>
+                            <p>The `==` and `===` operators in JavaScript check for equality. What is the key difference?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q18" value="A"><span class="option-text">`==` checks value and type, `===` only checks value.</span></label>
+                                <label><input type="radio" name="q18" value="B"><span class="option-text">`==` is for numbers, `===` is for strings.</span></label>
+                                <label><input type="radio" name="q18" value="C"><span class="option-text">`==` performs type coercion (converts types), `===` checks both value and type without coercion.</span></label>
+                                <label><input type="radio" name="q18" value="D"><span class="option-text">There is no functional difference; they are interchangeable.</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 19</span>
+                            <p>What is the primary purpose of a **CSS Grid** layout?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q19" value="A"><span class="option-text">Arranging items in a single row or column (one-dimensional)</span></label>
+                                <label><input type="radio" name="q19" value="B"><span class="option-text">Adding shadows and borders to elements</span></label>
+                                <label><input type="radio" name="q19" value="C"><span class="option-text">Creating complex two-dimensional (rows and columns) layouts easily</span></label>
+                                <label><input type="radio" name="q19" value="D"><span class="option-text">Managing server-side data</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 20</span>
+                            <p>What does **CORS** stand for in the context of web requests?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q20" value="A"><span class="option-text">Client-Oriented Request Standard</span></label>
+                                <label><input type="radio" name="q20" value="B"><span class="option-text">Cross-Origin Resource Sharing</span></label>
+                                <label><input type="radio" name="q20" value="C"><span class="option-text">Content Over Remote Services</span></label>
+                                <label><input type="radio" name="q20" value="D"><span class="option-text">Centralized Object Routing System</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 21</span>
+                            <p>In React, which of the following is the fundamental building block used for defining reusable UI elements?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q21" value="A"><span class="option-text">State</span></label>
+                                <label><input type="radio" name="q21" value="B"><span class="option-text">Props</span></label>
+                                <label><input type="radio" name="q21" value="C"><span class="option-text">Components (Functions/Classes)</span></label>
+                                <label><input type="radio" name="q21" value="D"><span class="option-text">Hooks</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 22</span>
+                            <p>Which command is used to initialize a new Node.js project?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q22" value="A"><span class="option-text">node init</span></label>
+                                <label><input type="radio" name="q22" value="B"><span class="option-text">npm start</span></label>
+                                <label><input type="radio" name="q22" value="C"><span class="option-text">npm new</span></label>
+                                <label><input type="radio" name="q22" value="D"><span class="option-text">npm init</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 23</span>
+                            <p>In CSS, what is the correct order of the **Box Model** components from outside to inside?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q23" value="A"><span class="option-text">Content, Padding, Border, Margin</span></label>
+                                <label><input type="radio" name="q23" value="B"><span class="option-text">Margin, Border, Padding, Content</span></label>
+                                <label><input type="radio" name="q23" value="C"><span class="option-text">Border, Margin, Content, Padding</span></label>
+                                <label><input type="radio" name="q23" value="D"><span class="option-text">Padding, Margin, Border, Content</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 24</span>
+                            <p>Which HTML tag is used to create a hyperlink?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q24" value="A"><span class="option-text">&lt;link&gt;</span></label>
+                                <label><input type="radio" name="q24" value="B"><span class="option-text">&lt;href&gt;</span></label>
+                                <label><input type="radio" name="q24" value="C"><span class="option-text">&lt;a&gt;</span></label>
+                                <label><input type="radio" name="q24" value="D"><span class="option-text">&lt;hyperlink&gt;</span></label>
+                            </div>
+                        </div>
+
+                                                <div class="question-card">
+                            <span class="question-number">Question 25</span>
+                            <p>What is the significance of the **async** keyword in a JavaScript function declaration?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q25" value="A"><span class="option-text">It makes the function run synchronously</span></label>
+                                <label><input type="radio" name="q25" value="B"><span class="option-text">It indicates the function will always return a Promise</span></label>
+                                <label><input type="radio" name="q25" value="C"><span class="option-text">It prevents the function from being hoisted</span></label>
+                                <label><input type="radio" name="q25" value="D"><span class="option-text">It is used to define a new class</span></label>
+                            </div>
+                        </div>
+
+                        <div class="exam-submit-area">
+                            <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 20px;">
+                                By clicking "Submit Final Exam", you confirm that you have completed the test independently.
+                            </p>
+                            <button type="submit" class="btn" id="submitExamButton" 
+                                style="background: #4c51bf; color: white; padding: 16px 40px; border: none; border-radius: 50px; 
+                                font-size: 1.1rem; font-weight: 700; cursor: pointer; width: 100%; max-width: 320px;
+                                box-shadow: 0 10px 25px rgba(76, 81, 191, 0.3); transition: all 0.3s ease;">
+                                <i class="fas fa-paper-plane" style="margin-right: 10px;"></i> Submit Final Exam
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+        <div id="resultOverlay">
+        <div class="modal-content">
+            <div id="resultIcon" style="font-size: 4.5rem; margin-bottom: 25px;"></div>
+            <h2 id="resultTitle" style="margin-bottom: 15px; font-size: 2rem; font-weight: 800;"></h2>
+            <p id="resultMessage" style="color: #475569; margin-bottom: 35px; line-height: 1.7; font-size: 1.1rem;"></p>
+            <button id="resultActionBtn" style="background: #4c51bf; color: white; padding: 14px 32px; border: none; 
+            border-radius: 50px; font-weight: 700; cursor: pointer; font-size: 1rem; transition: transform 0.2s;"></button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container" style="text-align: center; padding: 30px; color: #94a3b8; font-size: 0.9rem;">
+            <p>© 2025 Internadda. All rights reserved. | Developed by Internadda Team</p>
+        </div>
+    </footer>
+
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+
+    <script>
+        // 1. FIREBASE CONFIGURATION (unchanged)
+        const firebaseConfig = {
+            apiKey: "AIzaSyCBAVUB555zTVMvvMnDyyjsC0SR_awBsOY",
+            authDomain: "internadda-com.firebaseapp.com",
+            projectId: "internadda-com",
+            storageBucket: "internadda-com.firebasestorage.app",
+            messagingSenderId: "63475091988",
+            appId: "1:63475091988:web:a84d22d53af3a7cd7a7501",
+            measurementId: "G-W1V99YWBWW"
+        };
+
+        // 2. INITIALIZE (unchanged)
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const analytics = firebase.analytics();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // 3. RETRIEVE DATA
+            const name = localStorage.getItem('candidateName') || "Guest Candidate";
+            const age = localStorage.getItem('candidateAge') || "N/A";
+            const gender = localStorage.getItem('candidateGender') || "Not Specified";
+            // DOMAIN CHANGED to Web Development
+            const domain = localStorage.getItem('candidateDomain') || "Web Development";
+
+            document.getElementById('dispName').textContent = name;
+
+            // 4. EXAM LOGIC
+            const form = document.getElementById('webDevFinalExamForm');
+            
+            if (form) {
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const btn = document.getElementById('submitExamButton');
+                    btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Processing Result...';
+                    btn.style.opacity = "0.8";
+                    btn.disabled = true;
+                    
+                    // SCORING
+                    let score = 0;
+                    const totalQuestions = 25; 
+                    const formData = new FormData(form);
+                    
+                    // Correct Answer Key (UPDATED for Web Development)
+                    const answers = {
+                        q1: 'A', q2: 'C', q3: 'C', q4: 'D', q5: 'D',
+                        q6: 'D', q7: 'D', q8: 'A', q9: 'B', q10: 'B',
+                        q11: 'C', q12: 'B', q13: 'A', q14: 'A', q15: 'C',
+                        q16: 'C', q17: 'C', q18: 'C', q19: 'C', q20: 'B',
+                        q21: 'C', q22: 'D', q23: 'B', q24: 'C', q25: 'B'
+                    };
+
+                    for (let i = 1; i <= totalQuestions; i++) {
+                        if (formData.get('q' + i) === answers['q' + i]) {
+                            score++;
+                        }
+                    }
+
+                    const percentage = Math.round((score / totalQuestions) * 100);
+                    const passed = percentage >= 60;
+                    const status = passed ? "Pass" : "Fail";
+
+                    // SAVE TO FIREBASE (Updated fields: +Age, -Phone)
+                    try {
+                        await db.collection("exam_results").add({
+                            name: name,
+                            age: age,
+                            gender: gender,
+                            domain: domain, // Use the updated domain
+                            score: percentage,
+                            status: status,
+                            submittedAt: new Date()
+                        });
+                        console.log("Saved to Firebase");
+                    } catch (err) {
+                        console.error("Firebase Error:", err);
+                    }
+
+                    // SHOW RESULT
+                    const overlay = document.getElementById('resultOverlay');
+                    const rTitle = document.getElementById('resultTitle');
+                    const rMsg = document.getElementById('resultMessage');
+                    const rIcon = document.getElementById('resultIcon');
+                    const rBtn = document.getElementById('resultActionBtn');
+
+                    overlay.style.display = 'flex';
+
+                    if (passed) {
+                        rIcon.innerHTML = '<i class="fas fa-medal" style="color: #16a34a; filter: drop-shadow(0 4px 6px rgba(22, 163, 74, 0.4));"></i>';
+                        rTitle.textContent = "Congratulations! You Passed!";
+                        rTitle.style.color = "#166534";
+                        rMsg.innerHTML = `Outstanding performance, <strong>${name}</strong>!<br>You scored <strong>${percentage}%</strong>.<br>You have qualified for the interview round.`;
+                        rBtn.textContent = "Proceed to Interview";
+                        rBtn.style.background = "#16a34a";
+                        rBtn.onclick = () => {
+                        // URL में डेटा जोड़कर भेज रहे हैं
+                        const targetUrl = new URL("https://interview.internadda.com/"); // अपने React App का सही लिंक यहाँ डालें
+                        targetUrl.searchParams.set("name", name); // 'name' variable ऊपर से आ रहा है
+                        targetUrl.searchParams.set("role", domain); // 'domain' variable ऊपर से आ रहा है
+                        window.location.href = targetUrl.toString();
+                    };
+                    } else {
+                        rIcon.innerHTML = '<i class="fas fa-times-circle" style="color: #dc2626; filter: drop-shadow(0 4px 6px rgba(220, 38, 38, 0.4));"></i>';
+                        rTitle.textContent = "Exam Not Cleared";
+                        rTitle.style.color = "#991b1b";
+                        rMsg.innerHTML = `You scored <strong>${percentage}%</strong>.<br>The passing criteria is 60%.<br>Don't worry, you can try again or explore other internships.`;
+                        rBtn.textContent = "Return to Internships";
+                        rBtn.style.background = "#dc2626";
+                        // Redirect to Internship Page on Retry
+                        rBtn.onclick = () => window.location.href = "https://internadda.com/intern/internship";
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
