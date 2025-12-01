@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI/UX Design Final Exam | Internadda Certification Test</title>
+    <meta name="description" content="Official Final Exam for UI/UX Design Internship.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+
+    <style>
+        /* Exam Specific Styles */
+        body { background-color: #f7fafc; font-family: 'Inter', sans-serif; color: #1a202c; }
+        main { padding-top: 30px; padding-bottom: 80px; }
+        
+        /* --- FIXED HEADER ALIGNMENT --- */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; 
+            padding-top: 15px;
+            padding-bottom: 15px;
+            height: 80px;
+        }
+        .logo {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        /* ----------------------------- */
+
+        .exam-container {
+            max-width: 850px; margin: 40px auto; background-color: #ffffff;
+            border-radius: 16px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08); padding: 50px;
+            border: 1px solid #f1f5f9;
+        }
+        
+        .exam-header { text-align: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 30px; margin-bottom: 40px; }
+        .exam-header h1 { font-size: 2.2rem; color: #4c51bf; margin-bottom: 10px; letter-spacing: -0.5px; font-weight: 800; }
+        .exam-header p { 
+            color: #4c51bf; font-size: 0.95rem; font-weight: 600; 
+            background: #eef2ff; color: #4338ca;
+            display: inline-block; padding: 6px 16px; border-radius: 20px; 
+            border: 1px solid #c7d2fe;
+        }
+        
+        .exam-info-box {
+            display: flex; justify-content: space-between; gap: 20px; margin-bottom: 40px;
+            padding: 20px 30px; background-color: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;
+        }
+        .info-item { text-align: center; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .info-item i { font-size: 1.5rem; margin-bottom: 5px; }
+        .info-item strong { display: block; font-size: 1.2rem; color: #0f172a; font-weight: 700; }
+        .info-item span { font-size: 0.85rem; color: #64748b; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .question-card { 
+            border: 1px solid #e2e8f0; border-radius: 12px; padding: 30px; margin-bottom: 30px; 
+            background: #fff; transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .question-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04); border-color: #cbd5e1;
+        }
+        .question-number {
+            display: inline-block; background: #e0e7ff; color: #4338ca; 
+            font-size: 0.8rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; margin-bottom: 10px;
+        }
+        .question-card p { font-size: 1.15rem; font-weight: 600; color: #1e293b; margin-bottom: 20px; line-height: 1.5; }
+        
+        .options { display: grid; gap: 12px; }
+        .options label {
+            display: flex; align-items: center; 
+            background-color: #f8fafc; padding: 16px; 
+            border-radius: 10px; cursor: pointer; transition: all 0.2s ease; 
+            border: 2px solid transparent;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .options label:hover { background-color: #eef2ff; border-color: #c7d2fe; }
+        .options input { 
+            margin-right: 16px; width: 20px; height: 20px; accent-color: #4338ca; flex-shrink: 0; 
+            cursor: pointer;
+        }
+        .option-text { font-size: 1rem; color: #475569; font-weight: 500; }
+
+        .exam-submit-area { text-align: center; padding-top: 40px; border-top: 2px solid #f1f5f9; margin-top: 40px; }
+        .warning-message {
+            color: #991b1b; background-color: #fef2f2; padding: 16px;
+            border-radius: 8px; border: 1px solid #fecaca; margin-bottom: 30px; font-weight: 600;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+
+        /* Modal */
+        #resultOverlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.9); z-index: 2000; align-items: center; justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            background: white; padding: 50px; border-radius: 24px; text-align: center;
+            max-width: 480px; width: 90%; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        @media (max-width: 768px) {
+            .exam-container { padding: 25px; margin: 20px auto; width: 95%; }
+            .exam-header h1 { font-size: 1.8rem; }
+            .exam-info-box { flex-wrap: wrap; gap: 15px; padding: 15px; }
+            .info-item { min-width: 40%; }
+            .options label { padding: 14px; } 
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-text" style="color: #4338ca; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px;">
+                    <i class="fas fa-graduation-cap" style="color: #f59e0b; margin-right: 8px;"></i>InternAdda
+                </span>
+            </a>
+            <div style="margin-left: auto; font-size: 0.9rem; text-align: right;">
+                <div style="color: #64748b; font-size: 0.8rem; font-weight: 500;">Candidate</div>
+                <div id="dispName" style="color: #0f172a; font-weight: 700;">Loading...</div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="exam-section">
+            <div class="container">
+                <div class="exam-container">
+                    <div class="exam-header">
+                        <h1 class="exam-title">UI/UX Design Final Exam</h1>
+                        <p>Official Certification Assessment</p>
+                    </div>
+
+                    <div class="warning-message">
+                        <i class="fas fa-exclamation-triangle"></i> 
+                        <span><strong>WARNING:</strong> Do not refresh or close this page. Results are final.</span>
+                    </div>
+
+                    <div class="exam-info-box">
+                        <div class="info-item">
+                            <i class="far fa-clock" style="color: #4338ca;"></i>
+                            <!-- TIMER ELEMENT -->
+                            <strong id="examTimer">30:00</strong>
+                            <span>Time Limit</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-clipboard-list" style="color: #4338ca;"></i>
+                            <strong>25</strong>
+                            <span>Questions</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-check-circle" style="color: #16a34a;"></i>
+                            <strong>60%</strong>
+                            <span>Passing Score</span>
+                        </div>
+                    </div>
+
+                    <form id="uiUxFinalExamForm">
+                        
+                        <!-- Q1 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 1</span>
+                            <p>What does <strong>UX</strong> stand for?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q1" value="A"><span class="option-text">User Exchange</span></label>
+                                <label><input type="radio" name="q1" value="B"><span class="option-text">User Experience</span></label>
+                                <label><input type="radio" name="q1" value="C"><span class="option-text">Universal Xperience</span></label>
+                                <label><input type="radio" name="q1" value="D"><span class="option-text">User Execution</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q2 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 2</span>
+                            <p>What is the primary difference between <strong>UI</strong> and <strong>UX</strong>?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q2" value="A"><span class="option-text">UI is coding; UX is drawing.</span></label>
+                                <label><input type="radio" name="q2" value="B"><span class="option-text">UI focuses on the visual look; UX focuses on the overall feel and function.</span></label>
+                                <label><input type="radio" name="q2" value="C"><span class="option-text">They are the same thing.</span></label>
+                                <label><input type="radio" name="q2" value="D"><span class="option-text">UI is for mobile; UX is for desktop.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q3 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 3</span>
+                            <p>What is a <strong>Wireframe</strong>?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q3" value="A"><span class="option-text">A high-fidelity colorful design.</span></label>
+                                <label><input type="radio" name="q3" value="B"><span class="option-text">A basic skeletal layout of a webpage or app.</span></label>
+                                <label><input type="radio" name="q3" value="C"><span class="option-text">The final code of the application.</span></label>
+                                <label><input type="radio" name="q3" value="D"><span class="option-text">A user testing report.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q4 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 4</span>
+                            <p>What is <strong>White Space</strong> (or Negative Space) in design?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q4" value="A"><span class="option-text">Wasted space that should be filled.</span></label>
+                                <label><input type="radio" name="q4" value="B"><span class="option-text">The area between elements that provides breathing room and structure.</span></label>
+                                <label><input type="radio" name="q4" value="C"><span class="option-text">The color white used as a background.</span></label>
+                                <label><input type="radio" name="q4" value="D"><span class="option-text">A loading screen.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q5 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 5</span>
+                            <p>Which tool is widely used for <strong>Interface Design</strong> and prototyping?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q5" value="A"><span class="option-text">Adobe Photoshop</span></label>
+                                <label><input type="radio" name="q5" value="B"><span class="option-text">Figma</span></label>
+                                <label><input type="radio" name="q5" value="C"><span class="option-text">Microsoft Paint</span></label>
+                                <label><input type="radio" name="q5" value="D"><span class="option-text">Sublime Text</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q6 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 6</span>
+                            <p>What is a <strong>Persona</strong> in UX research?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q6" value="A"><span class="option-text">The CEO of the company.</span></label>
+                                <label><input type="radio" name="q6" value="B"><span class="option-text">A fictional character representing a specific user segment.</span></label>
+                                <label><input type="radio" name="q6" value="C"><span class="option-text">A real customer interview transcript.</span></label>
+                                <label><input type="radio" name="q6" value="D"><span class="option-text">The brand logo mascot.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q7 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 7</span>
+                            <p>What does <strong>Information Architecture (IA)</strong> organize?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q7" value="A"><span class="option-text">The colors of the website.</span></label>
+                                <label><input type="radio" name="q7" value="B"><span class="option-text">The server database structure.</span></label>
+                                <label><input type="radio" name="q7" value="C"><span class="option-text">The content and flow of a website or app.</span></label>
+                                <label><input type="radio" name="q7" value="D"><span class="option-text">The marketing budget.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q8 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 8</span>
+                            <p>In <strong>Color Theory</strong>, which color evokes trust and security?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q8" value="A"><span class="option-text">Red</span></label>
+                                <label><input type="radio" name="q8" value="B"><span class="option-text">Blue</span></label>
+                                <label><input type="radio" name="q8" value="C"><span class="option-text">Yellow</span></label>
+                                <label><input type="radio" name="q8" value="D"><span class="option-text">Orange</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q9 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 9</span>
+                            <p>What is <strong>Responsive Design</strong>?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q9" value="A"><span class="option-text">Design that responds to user voice commands.</span></label>
+                                <label><input type="radio" name="q9" value="B"><span class="option-text">Design that adapts to different screen sizes and devices.</span></label>
+                                <label><input type="radio" name="q9" value="C"><span class="option-text">Design that loads very quickly.</span></label>
+                                <label><input type="radio" name="q9" value="D"><span class="option-text">Design using animations.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q10 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 10</span>
+                            <p>What is the goal of <strong>Usability Testing</strong>?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q10" value="A"><span class="option-text">To check if the code has bugs.</span></label>
+                                <label><input type="radio" name="q10" value="B"><span class="option-text">To observe real users attempting to complete tasks.</span></label>
+                                <label><input type="radio" name="q10" value="C"><span class="option-text">To ask users what features they want.</span></label>
+                                <label><input type="radio" name="q10" value="D"><span class="option-text">To test server load capacity.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q11 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 11</span>
+                            <p>What does <strong>a11y</strong> stand for in design?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q11" value="A"><span class="option-text">Affordance</span></label>
+                                <label><input type="radio" name="q11" value="B"><span class="option-text">Analytics</span></label>
+                                <label><input type="radio" name="q11" value="C"><span class="option-text">Accessibility</span></label>
+                                <label><input type="radio" name="q11" value="D"><span class="option-text">Alignment</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q12 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 12</span>
+                            <p>Which Gestalt principle states that objects near each other are perceived as a group?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q12" value="A"><span class="option-text">Similarity</span></label>
+                                <label><input type="radio" name="q12" value="B"><span class="option-text">Proximity</span></label>
+                                <label><input type="radio" name="q12" value="C"><span class="option-text">Closure</span></label>
+                                <label><input type="radio" name="q12" value="D"><span class="option-text">Continuity</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q13 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 13</span>
+                            <p>What is a <strong>Mood Board</strong>?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q13" value="A"><span class="option-text">A collection of images and styles to define the visual direction.</span></label>
+                                <label><input type="radio" name="q13" value="B"><span class="option-text">A chart showing user emotions.</span></label>
+                                <label><input type="radio" name="q13" value="C"><span class="option-text">A list of hex codes.</span></label>
+                                <label><input type="radio" name="q13" value="D"><span class="option-text">The final high-fidelity mockup.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q14 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 14</span>
+                            <p>What is the standard <strong>contrast ratio</strong> for normal text according to WCAG AA guidelines?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q14" value="A"><span class="option-text">3:1</span></label>
+                                <label><input type="radio" name="q14" value="B"><span class="option-text">4.5:1</span></label>
+                                <label><input type="radio" name="q14" value="C"><span class="option-text">7:1</span></label>
+                                <label><input type="radio" name="q14" value="D"><span class="option-text">10:1</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q15 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 15</span>
+                            <p>What does <strong>CTA</strong> stand for?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q15" value="A"><span class="option-text">Click Through Action</span></label>
+                                <label><input type="radio" name="q15" value="B"><span class="option-text">Call To Action</span></label>
+                                <label><input type="radio" name="q15" value="C"><span class="option-text">Center Text Alignment</span></label>
+                                <label><input type="radio" name="q15" value="D"><span class="option-text">Create The Asset</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q16 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 16</span>
+                            <p>What is a <strong>Prototype</strong>?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q16" value="A"><span class="option-text">A static image of the homepage.</span></label>
+                                <label><input type="radio" name="q16" value="B"><span class="option-text">An interactive simulation of the final product.</span></label>
+                                <label><input type="radio" name="q16" value="C"><span class="option-text">A sketch on paper.</span></label>
+                                <label><input type="radio" name="q16" value="D"><span class="option-text">The final released product.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q17 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 17</span>
+                            <p>What is the <strong>F-Pattern</strong> in design?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q17" value="A"><span class="option-text">A layout for footers.</span></label>
+                                <label><input type="radio" name="q17" value="B"><span class="option-text">A scanning pattern users often follow when reading web content.</span></label>
+                                <label><input type="radio" name="q17" value="C"><span class="option-text">A font style.</span></label>
+                                <label><input type="radio" name="q17" value="D"><span class="option-text">A file format.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q18 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 18</span>
+                            <p>What is <strong>Affordance</strong> in UX?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q18" value="A"><span class="option-text">How expensive a product is.</span></label>
+                                <label><input type="radio" name="q18" value="B"><span class="option-text">The visual clue that suggests how an object should be used (e.g., a button looks clickable).</span></label>
+                                <label><input type="radio" name="q18" value="C"><span class="option-text">The speed of the application.</span></label>
+                                <label><input type="radio" name="q18" value="D"><span class="option-text">The legal compliance of the design.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q19 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 19</span>
+                            <p>What is <strong>Typography Hierarchy</strong>?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q19" value="A"><span class="option-text">Using only one font size.</span></label>
+                                <label><input type="radio" name="q19" value="B"><span class="option-text">Arranging text to show importance through size, weight, and color.</span></label>
+                                <label><input type="radio" name="q19" value="C"><span class="option-text">Sorting fonts alphabetically.</span></label>
+                                <label><input type="radio" name="q19" value="D"><span class="option-text">Using serif fonts only.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q20 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 20</span>
+                            <p>What is <strong>Heuristic Evaluation</strong>?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q20" value="A"><span class="option-text">A user survey.</span></label>
+                                <label><input type="radio" name="q20" value="B"><span class="option-text">An expert review of an interface against established usability principles.</span></label>
+                                <label><input type="radio" name="q20" value="C"><span class="option-text">An algorithm to test code.</span></label>
+                                <label><input type="radio" name="q20" value="D"><span class="option-text">A focus group discussion.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q21 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 21</span>
+                            <p>What is a <strong>User Journey Map</strong>?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q21" value="A"><span class="option-text">A visual representation of the user's interaction with a product over time.</span></label>
+                                <label><input type="radio" name="q21" value="B"><span class="option-text">A map of the user's physical location.</span></label>
+                                <label><input type="radio" name="q21" value="C"><span class="option-text">The sitemap of the website.</span></label>
+                                <label><input type="radio" name="q21" value="D"><span class="option-text">A list of user passwords.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q22 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 22</span>
+                            <p>What are <strong>Micro-interactions</strong>?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q22" value="A"><span class="option-text">Small, subtle animations that provide feedback (e.g., a "like" heart animation).</span></label>
+                                <label><input type="radio" name="q22" value="B"><span class="option-text">Small screens on mobile devices.</span></label>
+                                <label><input type="radio" name="q22" value="C"><span class="option-text">Short user interviews.</span></label>
+                                <label><input type="radio" name="q22" value="D"><span class="option-text">Tiny fonts.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q23 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 23</span>
+                            <p>What is the <strong>60-30-10 Rule</strong> in UI design?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q23" value="A"><span class="option-text">A rule for font sizes.</span></label>
+                                <label><input type="radio" name="q23" value="B"><span class="option-text">A guideline for color balance: 60% dominant, 30% secondary, 10% accent.</span></label>
+                                <label><input type="radio" name="q23" value="C"><span class="option-text">A rule for margin spacing.</span></label>
+                                <label><input type="radio" name="q23" value="D"><span class="option-text">A rule for project timelines.</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q24 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 24</span>
+                            <p>What format is best for <strong>vector</strong> graphics?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q24" value="A"><span class="option-text">JPG</span></label>
+                                <label><input type="radio" name="q24" value="B"><span class="option-text">PNG</span></label>
+                                <label><input type="radio" name="q24" value="C"><span class="option-text">SVG</span></label>
+                                <label><input type="radio" name="q24" value="D"><span class="option-text">GIF</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Q25 -->
+                        <div class="question-card">
+                            <span class="question-number">Question 25</span>
+                            <p>What does <strong>MVP</strong> stand for in product design?</p>
+                            <div class="options">
+                                <label><input type="radio" name="q25" value="A"><span class="option-text">Most Valuable Player</span></label>
+                                <label><input type="radio" name="q25" value="B"><span class="option-text">Maximum Viable Product</span></label>
+                                <label><input type="radio" name="q25" value="C"><span class="option-text">Minimum Viable Product</span></label>
+                                <label><input type="radio" name="q25" value="D"><span class="option-text">Most Visual Prototype</span></label>
+                            </div>
+                        </div>
+
+                        <div class="exam-submit-area">
+                            <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 20px;">
+                                By clicking "Submit Final Exam", you confirm that you have completed the test independently.
+                            </p>
+                            <button type="submit" class="btn" id="submitExamButton" 
+                                style="background: #4c51bf; color: white; padding: 16px 40px; border: none; border-radius: 50px; 
+                                font-size: 1.1rem; font-weight: 700; cursor: pointer; width: 100%; max-width: 320px;
+                                box-shadow: 0 10px 25px rgba(76, 81, 191, 0.3); transition: all 0.3s ease;">
+                                <i class="fas fa-paper-plane" style="margin-right: 10px;"></i> Submit Final Exam
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- RESULT MODAL -->
+    <div id="resultOverlay">
+        <div class="modal-content">
+            <div id="resultIcon" style="font-size: 4.5rem; margin-bottom: 25px;"></div>
+            <h2 id="resultTitle" style="margin-bottom: 15px; font-size: 2rem; font-weight: 800;"></h2>
+            <p id="resultMessage" style="color: #475569; margin-bottom: 35px; line-height: 1.7; font-size: 1.1rem;"></p>
+            <button id="resultActionBtn" style="background: #4c51bf; color: white; padding: 14px 32px; border: none; 
+            border-radius: 50px; font-weight: 700; cursor: pointer; font-size: 1rem; transition: transform 0.2s;"></button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container" style="text-align: center; padding: 30px; color: #94a3b8; font-size: 0.9rem;">
+            <p>© 2025 Internadda. All rights reserved. | Developed by Internadda Team</p>
+        </div>
+    </footer>
+
+    <!-- FIREBASE SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+
+    <script>
+        // 1. FIREBASE CONFIGURATION
+        const firebaseConfig = {
+            apiKey: "AIzaSyCBAVUB555zTVMvvMnDyyjsC0SR_awBsOY",
+            authDomain: "internadda-com.firebaseapp.com",
+            projectId: "internadda-com",
+            storageBucket: "internadda-com.firebasestorage.app",
+            messagingSenderId: "63475091988",
+            appId: "1:63475091988:web:a84d22d53af3a7cd7a7501",
+            measurementId: "G-W1V99YWBWW"
+        };
+
+        // 2. INITIALIZE
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const analytics = firebase.analytics();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // 3. RETRIEVE DATA
+            const name = localStorage.getItem('candidateName') || "Guest Candidate";
+            const age = localStorage.getItem('candidateAge') || "N/A";
+            const gender = localStorage.getItem('candidateGender') || "Not Specified";
+            // UPDATED DOMAIN
+            const domain = localStorage.getItem('candidateDomain') || "UI/UX Design";
+
+            document.getElementById('dispName').textContent = name;
+
+            // --- TIMER LOGIC (0 MIN TIMER / AUTO SUBMIT) ---
+            const timerEl = document.getElementById('examTimer');
+            // Set for 30 Minutes standard
+            let timeLimit = 30 * 60; // 1800 seconds
+            
+            const countdown = setInterval(() => {
+                const minutes = Math.floor(timeLimit / 60);
+                const seconds = timeLimit % 60;
+                // Format with leading zeros
+                timerEl.textContent = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+                if (timeLimit <= 0) {
+                    clearInterval(countdown);
+                    timerEl.textContent = "00:00"; // Force display to 00:00
+                    // AUTO SUBMIT LOGIC
+                    const submitBtn = document.getElementById('submitExamButton');
+                    if(submitBtn) {
+                        submitBtn.click(); // Trigger click event for robust submission
+                    }
+                }
+                timeLimit--;
+            }, 1000);
+
+
+            // 4. EXAM LOGIC
+            const form = document.getElementById('uiUxFinalExamForm');
+            
+            if (form) {
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    // Stop Timer on Submit
+                    clearInterval(countdown);
+
+                    const btn = document.getElementById('submitExamButton');
+                    btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Processing Result...';
+                    btn.style.opacity = "0.8";
+                    btn.disabled = true;
+                    
+                    // SCORING
+                    let score = 0;
+                    const totalQuestions = 25; 
+                    const formData = new FormData(form);
+                    
+                    // Correct Answer Key (UI/UX DESIGN)
+                    const answers = {
+                        q1: 'B', q2: 'B', q3: 'B', q4: 'B', q5: 'B',
+                        q6: 'B', q7: 'C', q8: 'B', q9: 'B', q10: 'B',
+                        q11: 'C', q12: 'B', q13: 'A', q14: 'B', q15: 'B',
+                        q16: 'B', q17: 'B', q18: 'B', q19: 'B', q20: 'B',
+                        q21: 'A', q22: 'A', q23: 'B', q24: 'C', q25: 'C'
+                    };
+
+                    for (let i = 1; i <= totalQuestions; i++) {
+                        if (formData.get('q' + i) === answers['q' + i]) {
+                            score++;
+                        }
+                    }
+
+                    const percentage = Math.round((score / totalQuestions) * 100);
+                    const passed = percentage >= 60;
+                    const status = passed ? "Pass" : "Fail";
+
+                    // SAVE TO FIREBASE
+                    try {
+                        await db.collection("exam_results").add({
+                            name: name,
+                            age: age,
+                            gender: gender,
+                            domain: domain,
+                            score: percentage,
+                            status: status,
+                            submittedAt: new Date()
+                        });
+                        console.log("Saved to Firebase");
+                    } catch (err) {
+                        console.error("Firebase Error:", err);
+                    }
+
+                    // SHOW RESULT
+                    const overlay = document.getElementById('resultOverlay');
+                    const rTitle = document.getElementById('resultTitle');
+                    const rMsg = document.getElementById('resultMessage');
+                    const rIcon = document.getElementById('resultIcon');
+                    const rBtn = document.getElementById('resultActionBtn');
+
+                    overlay.style.display = 'flex';
+
+                    if (passed) {
+                        rIcon.innerHTML = '<i class="fas fa-medal" style="color: #16a34a; filter: drop-shadow(0 4px 6px rgba(22, 163, 74, 0.4));"></i>';
+                        rTitle.textContent = "Congratulations! You Passed!";
+                        rTitle.style.color = "#166534";
+                        rMsg.innerHTML = `Outstanding performance, <strong>${name}</strong>!<br>You scored <strong>${percentage}%</strong>.<br>You have qualified for the interview round.`;
+                        rBtn.textContent = "Proceed to Interview";
+                        rBtn.style.background = "#16a34a";
+                        rBtn.onclick = () => {
+                        const targetUrl = new URL("https://interview.internadda.com/"); 
+                        targetUrl.searchParams.set("name", name); 
+                        targetUrl.searchParams.set("role", domain); 
+                        window.location.href = targetUrl.toString();
+                    };
+                    } else {
+                        rIcon.innerHTML = '<i class="fas fa-times-circle" style="color: #dc2626; filter: drop-shadow(0 4px 6px rgba(220, 38, 38, 0.4));"></i>';
+                        rTitle.textContent = "Exam Not Cleared";
+                        rTitle.style.color = "#991b1b";
+                        rMsg.innerHTML = `You scored <strong>${percentage}%</strong>.<br>The passing criteria is 60%.<br>Don't worry, you can try again or explore other internships.`;
+                        rBtn.textContent = "Return to Internships";
+                        rBtn.style.background = "#dc2626";
+                        rBtn.onclick = () => window.location.href = "https://internadda.com/intern/internship";
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
