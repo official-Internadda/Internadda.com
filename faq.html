@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ / Help Center | Internadda</title>
+    <meta name="description" content="Answers to common questions about Internadda's free courses, certification exams, stipend policies, and paid internship placement process.">
+    
+    <meta property="og:title" content="Frequently Asked Questions (FAQ) | Internadda">
+    <meta property="og:description" content="Find quick answers regarding our courses, mandatory exams, and guaranteed stipend internships with corporate partners.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://internadda.com/faq.html">
+    <meta property="og:image" content="https://internadda.com/images/slide3.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@InternaddaIndia">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="icon" href="images/favicon.ico">
+
+    <style>
+        /* Page Specific Styles */
+        .faq-hero {
+            background: linear-gradient(135deg, #f8faff 0%, #ffffff 100%);
+            padding: 80px 0;
+            text-align: center;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .page-title { font-size: 3rem; font-weight: 800; color: #1a202c; margin-bottom: 20px; }
+        .page-title span { color: #4338ca; }
+        .page-subtitle { color: #64748b; font-size: 1.15rem; max-width: 700px; margin: 0 auto 40px; line-height: 1.6; }
+        
+        .content-section {
+            padding: 60px 0;
+        }
+
+        /* --- ACCORDION STYLES --- */
+        .accordion {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+
+        .accordion-header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            padding: 20px 25px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a202c;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            transition: background-color 0.3s;
+        }
+        
+        .accordion-header:hover {
+            background-color: #f8faff;
+            color: #4338ca;
+        }
+        
+        .accordion-header i {
+            margin-right: 15px;
+            color: #4338ca;
+            transition: transform 0.3s;
+        }
+        
+        /* Rotate the arrow icon when active */
+        .accordion-header::after {
+            content: "\f078"; /* fa-chevron-down */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            margin-left: 20px;
+            color: #64748b;
+            transition: transform 0.3s;
+        }
+
+        .accordion-header.active::after {
+            transform: rotate(-180deg);
+        }
+
+        .accordion-content {
+            background-color: #fcfdfe;
+            color: #4a5568;
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .accordion-content p {
+            padding: 15px 0 20px;
+            margin: 0;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .accordion-header.active + .accordion-content {
+            padding-bottom: 20px;
+        }
+        
+        .contact-cta {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: #e0e7ff;
+            border-radius: 12px;
+        }
+        .contact-cta a {
+            color: white;
+            background: #4338ca;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.3s;
+            text-decoration: none;
+        }
+        .contact-cta a:hover {
+            background: #3730a3;
+        }
+        
+        /* --- MOBILE CENTERING CORRECTION --- */
+        @media (max-width: 992px) {
+            .footer-brand .social-links {
+                justify-content: center;
+                width: fit-content;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="images/logo.jpg" alt="Internadda Logo" style="height: 40px; border-radius: 8px;">
+                <span>Intern<span style="color: #4338ca;">adda</span></span>
+            </a>
+
+            <nav class="nav-links">
+                <a href="index.html" class="nav-item"><i class="fas fa-home"></i> Home</a>
+                <a href="https://courses.internadda.com/" class="nav-item"><i class="fas fa-laptop-code"></i> Courses</a>
+                
+                <a href="https://ai.internadda.com" target="_blank" class="nav-item" style="color: #0088cc;">
+                    <i class="fas fa-robot"></i> AI Playground
+                </a>
+                
+                <a href="intern/internship.html" class="nav-item"><i class="fas fa-briefcase"></i> Internships</a>
+                <a href="about.html" class="nav-item"><i class="fas fa-info-circle"></i> About Us</a>
+                
+                <div class="dropdown nav-item">
+                    <span>
+                        <i class="fas fa-th-large" style="margin-right: 8px; color: #4338ca; background: #e0e7ff; width: 32px; height: 32px; line-height: 32px; text-align: center; border-radius: 50%; font-size: 1rem; display: none;"></i> 
+                        More <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 4px;"></i>
+                    </span>
+                    <div class="dropdown-content">
+                        <a href="https://check-ats.internadda.com/" class="dropdown-link"><i class="fas fa-chart-bar"></i> ATS Score</a>
+                        <a href="https://cv-builder.internadda.com/" class="dropdown-link"><i class="fas fa-file-alt"></i> Resume Builder</a>
+                        <a href="https://interview-preparation.internadda.com/" class="dropdown-link"><i class="fas fa-question-circle"></i> Interview Question</a>
+                        <a href="https://letter-builder.internadda.com/" class="dropdown-link"><i class="fas fa-envelope"></i> Cover Letter Generator</a>
+                        <a href="contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
+                        <a href="https://blog.internadda.com/" class="dropdown-link"><i class="fas fa-blog"></i> Blog</a>
+                    </div>
+                </div>
+            </nav>
+
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section class="faq-hero">
+            <div class="container">
+                <h1 class="page-title">Frequently Asked <span>Questions</span></h1>
+                <p class="page-subtitle">We've compiled answers to the most common queries about our courses, exams, and internship placement process.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="container">
+                <div class="accordion" id="faq-accordion">
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <i class="fas fa-graduation-cap"></i> Are the online courses truly free?
+                        </button>
+                        <div class="accordion-content">
+                            <p>Yes. All of our learning modules, course content, and study materials are 100% free and open access. We only charge a minimal fee for the mandatory Final Exam/Certification to cover proctoring costs and validate the skill for our corporate partners.</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <i class="fas fa-file-invoice-dollar"></i> Why is the Final Exam fee mandatory?
+                        </button>
+                        <div class="accordion-content">
+                            <p>The fee covers the cost of professional, real-time proctoring services to ensure the integrity and fairness of the exam. This rigor is essential so that our corporate partners trust the certification and are willing to offer paid internships to successful candidates.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <i class="fas fa-briefcase"></i> Is the stipend guaranteed? What is it based on?
+                        </button>
+                        <div class="accordion-content">
+                            <p>All candidates placed through Internadda are offered a performance-based stipend typically ranging from **₹1,000 to ₹10,000 per month**. The final amount depends on your performance during the internship project, ensuring meritocracy and skill recognition.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <i class="fas fa-link"></i> Will I get placed in a big MNC (like the logos shown)?
+                        </button>
+                        <div class="accordion-content">
+                            <p>We connect successful candidates with our verified network of Corporate Partners, which includes established companies and promising startups. While we showcase logos of companies that hire candidates with similar skill sets, placement is guaranteed within our partner network after successfully passing the final certification exam.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <i class="fas fa-robot"></i> What is the AI Playground feature?
+                        </button>
+                        <div class="accordion-content">
+                            <p>The AI Playground (`ai.internadda.com`) is a dedicated platform where you can practice Generative AI skills. It provides trending prompts and tools for image generation and text refinement, helping you prepare for AI-focused roles like Prompt Engineering.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <i class="fas fa-sync-alt"></i> Can I retake the final exam if I fail?
+                        </button>
+                        <div class="accordion-content">
+                            <p>Yes, we understand learning is a process. Policies regarding retakes, including waiting periods and applicable fees, are detailed on the respective course/exam enrollment page.</p>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div class="contact-cta">
+                    <p style="color: #4a5568; font-weight: 600; margin-bottom: 20px;">Still need assistance? Contact our support team directly.</p>
+                    <a href="contact.html"><i class="fas fa-headset"></i> Contact Support Now</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">Internadda</div>
+                    <p class="footer-description">Transforming careers through learning, interning, and earning opportunities.</p>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/company/internadda-india" target="_blank" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://x.com/InternaddaX?t=sYyD5uOaBLaxp08kCFFKIQ&s=09" target="_blank" class="social-link" aria-label="X (Twitter)">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@theinternadda" target="_blank" class="social-link" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://www.instagram.com/internadda.india" target="_blank" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">Learn</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://courses.internadda.com/">Browse Courses</a></li>
+                        <li><a href="https://courses.internadda.com/">Free Courses</a></li>
+                        <li><a href="#">Paid Courses</a></li>
+                        <li><a href="#">Become an Instructor</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">Intern</h3>
+                    <ul class="footer-links">
+                        <li><a href="intern/internship.html">Find Internships</a></li>
+                        <li><a href="#">For Companies</a></li>
+                        <li><a href="#">Success Stories</a></li>
+                        <li><a href="#">Career Coaching</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">Career Tools</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://check-ats.internadda.com/">ATS Score Checker</a></li>
+                        <li><a href="https://cv-builder.internadda.com/">Resume Builder</a></li>
+                        <li><a href="https://interview-preparation.internadda.com">Interview Prep</a></li>
+                        <li><a href="https://letter-builder.internadda.com/">Cover Letter Gen</a></li>
+                        <li><a href="https://ai.internadda.com/" target="_blank">AI Playground (Prompts)</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">InternAdda</h3>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="faq.html">FAQ / Help Center</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="refund.html">Refund Policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-links-title">Community</h3>
+                    <ul class="footer-links">
+                        <li><a href="community/join.html">Join Community</a></li>
+                        <li><a href="community/partners.html">Partners</a></li>
+                        <li><a href="https://blog.internadda.com/">Blog</a></li>
+                        <li><a href="community/academy.html">Offline Academy</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2025 Internadda. All rights reserved. | Developed by Internadda Team</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Simple JavaScript for Accordion functionality (Expand/Collapse)
+        document.querySelectorAll('.accordion-header').forEach(button => {
+            button.addEventListener('click', () => {
+                const accordionContent = button.nextElementSibling;
+                const wasActive = button.classList.toggle('active');
+
+                // Close other open panels
+                document.querySelectorAll('.accordion-header.active').forEach(otherButton => {
+                    if (otherButton !== button) {
+                        otherButton.classList.remove('active');
+                        otherButton.nextElementSibling.style.maxHeight = 0;
+                        otherButton.nextElementSibling.style.padding = '0 25px';
+                    }
+                });
+
+                // Toggle current panel
+                if (wasActive) {
+                    // Open: Set max-height to scrollHeight plus desired padding
+                    accordionContent.style.maxHeight = accordionContent.scrollHeight + 40 + 'px'; // +40 for top/bottom padding 
+                    accordionContent.style.padding = '0 25px';
+                } else {
+                    // Close: Set max-height to 0 and remove padding
+                    accordionContent.style.maxHeight = 0;
+                    accordionContent.style.padding = '0 25px';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
