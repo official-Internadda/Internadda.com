@@ -30,37 +30,34 @@
         }
 
         .page-title { 
-            font-size: 3rem; 
+            font-family: 'Poppins', sans-serif; 
+            font-size: 2.8rem; 
             font-weight: 800; 
             color: #1a202c; 
             margin-bottom: 20px; 
-            text-transform: uppercase; /* Match image style */
+            text-transform: uppercase; 
             letter-spacing: 1px;
-        }
-        .page-title span { color: #4338ca; }
-        .page-subtitle { 
-            color: #64748b; 
-            font-size: 1.15rem; 
-            max-width: 700px; 
-            margin: 0 auto 40px; 
-            line-height: 1.6; 
         }
         
         .content-section {
             padding: 40px 0 60px;
         }
 
-        /* --- NEW MINIMALIST ACCORDION STYLES (Matching Image) --- */
+        /* --- ACCORDION STYLES (Focusing on Robust Flexbox Alignment) --- */
         .faq-list {
             max-width: 850px;
             margin: 0 auto;
             border-top: 1px solid #e2e8f0;
-            list-style-type: none; /* Remove numbering here, numbering is handled by the counter-reset */
+            list-style-type: none;
+            padding: 0;
         }
 
         .faq-item {
             border-bottom: 1px solid #e2e8f0;
             transition: background-color 0.2s;
+        }
+        .faq-item:hover {
+            background-color: #f8faff;
         }
 
         .faq-question {
@@ -68,10 +65,9 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: white;
-            padding: 20px 0; /* No left/right padding to rely on container */
+            background: transparent;
+            padding: 20px 0; 
             font-size: 1.05rem;
-            font-weight: 500;
             color: #1a202c;
             border: none;
             cursor: pointer;
@@ -79,29 +75,34 @@
             user-select: none;
         }
         
-        .faq-question:hover {
-            background-color: #f8faff;
-        }
-        
-        /* Numbering style (Matching the image) */
+        /* The main question text container */
         .question-text {
              display: flex;
-             align-items: center;
-             font-weight: 600;
+             align-items: flex-start; /* Align number to the top of wrapping text */
+             font-weight: 500;
              flex-grow: 1;
              padding-right: 15px;
         }
         
+        /* The Numbering Element (Fixed space, non-shrinking) */
         .question-number {
+            flex-shrink: 0; /* Prevents number from shrinking */
+            width: 35px;    /* Gives fixed space for the number and dot */
             font-size: 1.15rem;
-            margin-right: 20px;
-            min-width: 30px;
             color: #4a5568;
-            font-weight: 400;
+            font-weight: 600;
+            line-height: 1.4;
+            /* Added margin for clean separation from the actual question */
+            margin-right: 15px; 
+        }
+        
+        .faq-question.active .question-text {
+            color: #4338ca;
         }
 
         /* Chevron Icon */
         .chevron {
+            flex-shrink: 0; /* Prevents chevron from shrinking/wrapping */
             color: #4a5568;
             font-size: 1rem;
             transition: transform 0.3s;
@@ -109,28 +110,26 @@
 
         .faq-question.active .chevron {
             transform: rotate(-180deg);
+            color: #4338ca;
         }
 
+        /* Answer Content */
         .faq-answer {
             color: #64748b;
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.4s ease-in-out;
-            padding: 0 0 0 50px; /* Indent to match number column */
+            /* Padding starts after the fixed number width + margins (approx 50px) */
+            padding: 0 0 0 50px; 
             line-height: 1.6;
         }
 
         .faq-answer-inner {
-            padding: 15px 0 25px;
-            border-top: 1px solid #e2e8f0;
-            margin-top: -1px; /* Overlap border with question block */
+            padding: 0 0 25px 0; 
+            padding-top: 5px;
         }
         
-        .faq-answer.active {
-            max-height: 500px; /* Adjusted large value for content */
-        }
-
-        /* Footer CTA */
+        /* View More Button Styles */
         .view-more-cta {
             text-align: center;
             margin-top: 40px;
@@ -141,14 +140,35 @@
             color: #4338ca;
             padding: 12px 30px;
             font-weight: 700;
+            background: #ffffff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
         
-        /* --- MOBILE CENTERING CORRECTION --- */
-        @media (max-width: 992px) {
-            .page-title { font-size: 2.2rem; }
-            .faq-question { padding: 15px 0; font-size: 1rem; }
-            .question-number { margin-right: 15px; min-width: 20px; font-size: 1rem; }
-            .faq-answer { padding: 0 0 0 35px; }
+        /* Contact CTA */
+        .contact-cta {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            background: #eef2ff;
+            border-radius: 12px;
+            border: 1px solid #c7d2fe;
+        }
+
+        /* --- MOBILE RESPONISVENESS (Adjusting spacing for small screens) --- */
+        @media (max-width: 768px) {
+            .page-title { font-size: 1.8rem; }
+            .faq-question { padding: 15px 5px; font-size: 0.95rem; }
+            
+            .question-number { 
+                /* Reduced space for number on mobile */
+                width: 30px; 
+                margin-right: 10px; 
+                font-size: 1rem; 
+            }
+            .faq-answer { 
+                /* Reduced indent for mobile space */
+                padding: 0 10px 0 40px; 
+            }
             
             .footer-brand .social-links {
                 justify-content: center;
@@ -170,14 +190,18 @@
             <nav class="nav-links">
                 <a href="index.html" class="nav-item"><i class="fas fa-home"></i> Home</a>
                 <a href="https://courses.internadda.com/" class="nav-item"><i class="fas fa-laptop-code"></i> Courses</a>
+                
                 <a href="https://ai.internadda.com" target="_blank" class="nav-item" style="color: #0088cc;">
                     <i class="fas fa-robot"></i> AI Playground
                 </a>
+                
                 <a href="intern/internship.html" class="nav-item"><i class="fas fa-briefcase"></i> Internships</a>
                 <a href="about.html" class="nav-item"><i class="fas fa-info-circle"></i> About Us</a>
                 
                 <div class="dropdown nav-item">
-                    <span><i class="fas fa-th-large"></i> More <i class="fas fa-chevron-down"></i></span>
+                    <span>
+                        <i class="fas fa-th-large"></i> More <i class="fas fa-chevron-down"></i>
+                    </span>
                     <div class="dropdown-content">
                         <a href="https://check-ats.internadda.com/" class="dropdown-link"><i class="fas fa-chart-bar"></i> ATS Score</a>
                         <a href="https://cv-builder.internadda.com/" class="dropdown-link"><i class="fas fa-file-alt"></i> Resume Builder</a>
@@ -207,13 +231,13 @@
                     <li class="faq-item">
                         <button class="faq-question">
                             <span class="question-text">
-                                <span class="question-number">1.</span> How can I enroll in Internadda's <strong>Free Certification Courses</strong>?
+                                <span class="question-number">1.</span> Are Internadda's <strong>Certification Courses</strong> truly free?
                             </span>
                             <i class="fas fa-chevron-down chevron"></i>
                         </button>
                         <div class="faq-answer">
                             <div class="faq-answer-inner">
-                                Enrollment in our <strong>Free Courses</strong> is instant and requires only a simple registration on our learning platform. All course content is freely accessible. The goal is to provide <strong>quality tech education</strong> without financial barriers.
+                                Yes. All our core learning content and modules are 100% free of charge. We are committed to democratizing access to <strong>quality tech education</strong>. We only charge for the mandatory final exam to cover proctoring and validation costs.
                             </div>
                         </div>
                     </li>
@@ -227,7 +251,7 @@
                         </button>
                         <div class="faq-answer">
                             <div class="faq-answer-inner">
-                                The fee covers the cost of professional, highly secure <strong>real-time proctoring services</strong> required to validate the authenticity of your certification. This rigorous process ensures our <strong>Corporate Partners</strong> trust your results, leading directly to paid internship opportunities.
+                                The fee covers the expense of implementing a secure, <strong>real-time proctored assessment</strong>. This rigorous process is crucial to guarantee that your certification is trusted and recognized by our <strong>Corporate Partners</strong> for paid opportunities.
                             </div>
                         </div>
                     </li>
@@ -235,13 +259,13 @@
                     <li class="faq-item">
                         <button class="faq-question">
                             <span class="question-text">
-                                <span class="question-number">3.</span> What is the stipend range, and is it <strong>performance-based</strong>?
+                                <span class="question-number">3.</span> What is the **stipend range** and is it <strong>performance-based</strong>?
                             </span>
                             <i class="fas fa-chevron-down chevron"></i>
                         </button>
                         <div class="faq-answer">
                             <div class="faq-answer-inner">
-                                The stipend offered is <strong>performance-based</strong>, typically ranging from <strong>₹1,000 to ₹10,000 per month</strong>, depending on your assigned project and contributions during the internship. This is designed to reward skill and meritocracy.
+                                The stipend offered is <strong>performance-based</strong>, typically ranging from <strong>₹1,000 to ₹10,000 per month</strong>, rewarding skill and efficiency based on your project contributions during the live internship work.
                             </div>
                         </div>
                     </li>
@@ -249,13 +273,13 @@
                     <li class="faq-item">
                         <button class="faq-question">
                             <span class="question-text">
-                                <span class="question-number">4.</span> Does Internadda guarantee placement with <strong>Corporate Partners</strong>?
+                                <span class="question-number">4.</span> Does the exam <strong>guarantee placement</strong> with a company?
                             </span>
                             <i class="fas fa-chevron-down chevron"></i>
                         </button>
                         <div class="faq-answer">
                             <div class="faq-answer-inner">
-                                We guarantee an opportunity for an interview and placement within our network of <strong>verified Corporate Partners</strong> upon successful completion and certification of the Final Exam. Selection is based on the partner company's final recruitment criteria.
+                                Successfully passing the <strong>Proctored Final Exam</strong> guarantees you eligibility and direct referrals into our network of <strong>verified Corporate Partners</strong> for selection. Final hiring decisions rest with the partner, but our certification maximizes your chances.
                             </div>
                         </div>
                     </li>
@@ -263,13 +287,13 @@
                     <li class="faq-item">
                         <button class="faq-question">
                             <span class="question-text">
-                                <span class="question-number">5.</span> What is the policy for <strong>retaking the Final Exam</strong> if I fail?
+                                <span class="question-number">5.</span> What is the policy for <strong>retaking the Final Exam</strong>?
                             </span>
                             <i class="fas fa-chevron-down chevron"></i>
                         </button>
                         <div class="faq-answer">
                             <div class="faq-answer-inner">
-                                If you do not achieve the <strong>minimum passing score (60%)</strong>, you are allowed to retake the exam after a specified cooling period. We recommend reviewing the course material and attempting the **Practice Tests** before your next attempt. The exam fee applies to each attempt.
+                                You are generally allowed to retake the exam after a short <strong>waiting period</strong> (e.g., 7 days) to ensure you study before reattempting. The standard exam fee applies to each retake to maintain proctoring quality.
                             </div>
                         </div>
                     </li>
@@ -277,13 +301,13 @@
                     <li class="faq-item">
                         <button class="faq-question">
                             <span class="question-text">
-                                <span class="question-number">6.</span> What services are offered in the <strong>AI Playground</strong> at ai.internadda.com?
+                                <span class="question-number">6.</span> How can the <strong>AI Playground</strong> help my career?
                             </span>
                             <i class="fas fa-chevron-down chevron"></i>
                         </button>
                         <div class="faq-answer">
                             <div class="faq-answer-inner">
-                                The AI Playground is a space to practice and refine your <strong>Prompt Engineering skills</strong>. You can find trending image generation prompts, large language model (LLM) templates, and guides to maximize creative and accurate output from AI tools like Gemini.
+                                The AI Playground at <strong>ai.internadda.com</strong> is a hands-on tool for mastering Generative AI. It allows you to build the practical skills needed for high-demand Prompt Engineering roles by providing **trending prompts** and tutorials.
                             </div>
                         </div>
                     </li>
@@ -291,25 +315,73 @@
                     <li class="faq-item">
                         <button class="faq-question">
                             <span class="question-text">
-                                <span class="question-number">7.</span> How does the <strong>ATS Score Checker</strong> tool improve my job applications?
+                                <span class="question-number">7.</span> What is the typical duration for <strong>Remote Internships</strong>?
                             </span>
                             <i class="fas fa-chevron-down chevron"></i>
                         </button>
                         <div class="faq-answer">
                             <div class="faq-answer-inner">
-                                The **ATS (Applicant Tracking System)** checker analyzes your resume against industry standards and job descriptions. By boosting your ATS score, you ensure your resume passes initial screening software and is seen by human recruiters for <strong>IT internship applications</strong>.
+                                Our professional internships are usually structured for a commitment period ranging from <strong>2 to 6 months</strong>. This duration ensures you gain significant real-world experience and contribute meaningfully to the project.
                             </div>
                         </div>
                     </li>
-
+                    
+                    <div id="hidden-faqs" style="display: none;">
+                        <li class="faq-item">
+                            <button class="faq-question">
+                                <span class="question-text">
+                                    <span class="question-number">8.</span> Are there any <strong>technical requirements</strong> for the courses?
+                                </span>
+                                <i class="fas fa-chevron-down chevron"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-inner">
+                                    Most courses, especially those for <strong>Web Development</strong> and <strong>Python</strong>, require a stable internet connection and access to a desktop or laptop computer. Specific software requirements are listed at the start of each course module.
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <li class="faq-item">
+                            <button class="faq-question">
+                                <span class="question-text">
+                                    <span class="question-number">9.</span> Is the certification <strong>recognized by MNCs</strong>?
+                                </span>
+                                <i class="fas fa-chevron-down chevron"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-inner">
+                                    Yes. Due to the stringent, <strong>proctored nature</strong> of our certification process, our certificates are highly valued. Our primary focus is ensuring your validated <strong>skill sets</strong> meet the practical demands of the industry, leading to recognition among MNCs.
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <li class="faq-item">
+                            <button class="faq-question">
+                                <span class="question-text">
+                                    <span class="question-number">10.</span> Will the internships involve <strong>real-time projects</strong>?
+                            </span>
+                                <i class="fas fa-chevron-down chevron"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-inner">
+                                    Our internships are focused solely on **real-time project contribution**. The experience focuses on applying your skills to solve genuine business or development challenges for our partners, not just theoretical training.
+                                </div>
+                            </div>
+                        </li>
+                    </div>
+                    
                 </ul>
 
-                <div class="view-more-cta">
-                    <button class="btn btn-transparent">
+                <div class="view-more-cta" id="view-more-container">
+                    <button class="btn btn-transparent" id="view-more-btn">
                         View More Questions
                     </button>
                 </div>
                 
+                <div class="contact-cta">
+                    <p style="color: #4a5568; font-weight: 600; margin-bottom: 20px;">Cannot find your specific answer? Contact our support team directly.</p>
+                    <a href="contact.html"><i class="fas fa-headset"></i> Contact Support Now</a>
+                </div>
             </div>
         </section>
     </main>
@@ -403,7 +475,7 @@
                 const answer = button.nextElementSibling;
                 const wasActive = button.classList.toggle('active');
 
-                // Close other open panels
+                // Close other open panels and reset max height
                 document.querySelectorAll('.faq-question.active').forEach(otherButton => {
                     if (otherButton !== button) {
                         otherButton.classList.remove('active');
@@ -421,6 +493,55 @@
                     answer.classList.remove('active');
                 }
             });
+        });
+        
+        // JavaScript for "View More" Button functionality
+        document.getElementById('view-more-btn').addEventListener('click', function() {
+            const hiddenFaqsContainer = document.getElementById('hidden-faqs');
+            const items = hiddenFaqsContainer.querySelectorAll('.faq-item');
+            const listContainer = document.getElementById('faq-list-container');
+            
+            if (items.length > 0) {
+                let delay = 0;
+                let qNum = listContainer.querySelectorAll('.faq-item').length + 1;
+                
+                // Move hidden items into the main list container for animation and correct numbering
+                items.forEach((item) => {
+                    listContainer.appendChild(item);
+                });
+
+                // Animate and show the newly moved items
+                items.forEach((item) => {
+                     // Update number for display continuity
+                     item.querySelector('.question-number').textContent = `${qNum}.`;
+                     qNum++;
+                    
+                     item.style.display = 'list-item'; 
+                     item.style.opacity = 0;
+                    
+                     setTimeout(() => {
+                        item.style.transition = 'opacity 0.5s ease-in';
+                        item.style.opacity = 1;
+                    }, delay);
+                    delay += 200;
+                });
+            }
+            
+            // Hide the button container after all are revealed
+            document.getElementById('view-more-container').style.display = 'none';
+        });
+        
+        // Final DOM content load check for initial state
+        document.addEventListener('DOMContentLoaded', () => {
+             // Ensure initial numbering is correct (1-7 visible)
+             let qNum = 1;
+             document.querySelectorAll('#faq-list-container > .faq-item').forEach(item => {
+                 const numEl = item.querySelector('.question-number');
+                 if(numEl) {
+                     numEl.textContent = `${qNum}.`;
+                     qNum++;
+                 }
+             });
         });
     </script>
 </body>
