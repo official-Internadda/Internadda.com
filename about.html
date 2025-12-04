@@ -6,6 +6,13 @@
     <title>About Us | Internadda</title>
     <meta name="description" content="Learn about Internadda's mission to empower students with skills and internships.">
     
+    <meta property="og:title" content="About Internadda | Empowering Future Leaders">
+    <meta property="og:description" content="We are bridging the gap between academic learning and paid industry internships. Read about our mission and meet the team.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://internadda.com/about.html">
+    <meta property="og:image" content="https://internadda.com/images/slide3.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@InternaddaIndia">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -92,9 +99,7 @@
             .story-img { width: 100%; }
         }
 
-        /* =========================================
-           NEW PROFESSIONAL TEAM STYLES (4 in Row Desktop / 2 in Row Mobile)
-           ========================================= */
+        /* --- EXISTING TEAM STYLES --- */
         .team-section {
             background: #1e293b; /* Dark Blue Background */
             padding: 60px 0 80px;
@@ -115,14 +120,14 @@
             display: grid;
             /* Default: 4 columns equal width (Desktop) */
             grid-template-columns: repeat(4, 1fr); 
-            gap: 20px; /* Slightly reduced gap to fit 4 nicely */
+            gap: 20px; 
         }
 
         .team-card {
             background: linear-gradient(145deg, #0f172a 0%, #020617 100%);
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 16px;
-            padding: 25px 15px; /* Reduced padding to make them compact */
+            padding: 25px 15px; 
             text-align: center;
             transition: all 0.3s ease;
             position: relative;
@@ -138,7 +143,7 @@
 
         /* Image Size Reduced slightly for 4-col layout */
         .team-img-wrapper {
-            width: 120px; /* Reduced from 140px */
+            width: 120px; 
             height: 120px;
             margin: 0 auto 20px;
             border-radius: 50%;
@@ -157,7 +162,7 @@
         .team-info { padding: 0; }
         
         .team-name { 
-            font-size: 1.25rem; /* Slightly smaller font */
+            font-size: 1.25rem; 
             font-weight: 700; 
             color: white; 
             margin-bottom: 5px; 
@@ -181,34 +186,42 @@
         
         .team-link { text-decoration: none; display: block; }
 
-        /* --- RESPONSIVE: TABLET & MOBILE --- */
+        /* --- NEW TRUST BAR STYLE --- */
+        .trust-bar-section {
+            background: #eef2ff; 
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid #c7d2fe;
+        }
+        .trust-bar-section h2 {
+            font-size: 1.8rem;
+            color: #4338ca;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+        .trust-bar-section p {
+            color: #64748b;
+            font-size: 1.05rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* --- MOBILE CENTERING CORRECTION --- */
         @media (max-width: 992px) {
             .team-grid {
-                /* On Tablets and Mobile: 2 Columns per row */
                 grid-template-columns: repeat(2, 1fr); 
                 gap: 15px;
             }
-            
-            .team-card {
-                padding: 20px 10px;
-            }
-            
+            .team-card { padding: 20px 10px; }
             .team-name { font-size: 1.1rem; }
-        }
-
-        @media (max-width: 480px) {
-            /* On very small phones, keep 2 columns but make text smaller, or switch to 1 if needed. 
-               Keeping 2 as requested. */
-            .team-img-wrapper {
-                width: 90px;
-                height: 90px;
-            }
-            .team-bio {
-                font-size: 0.75rem;
-                display: none; /* Optional: Hide bio on very small screens to save space */
+            
+            /* Explicitly center the social links block on mobile */
+            .footer-brand .social-links {
+                justify-content: center;
+                width: fit-content;
+                margin: 0 auto;
             }
         }
-
     </style>
 </head>
 <body>
@@ -219,9 +232,14 @@
                 <img src="images/logo.jpg" alt="Internadda Logo" style="height: 40px; border-radius: 8px;">
                 <span>Intern<span style="color: #4338ca;">adda</span></span>
             </a>
+
             <nav class="nav-links">
                 <a href="index.html" class="nav-item"><i class="fas fa-home"></i> Home</a>
                 <a href="https://courses.internadda.com/" class="nav-item"><i class="fas fa-laptop-code"></i> Courses</a>
+                
+                <a href="https://ai.internadda.com" target="_blank" class="nav-item" style="color: #0088cc;">
+                    <i class="fas fa-robot"></i> AI Playground
+                </a>
                 <a href="intern/internship.html" class="nav-item"><i class="fas fa-briefcase"></i> Internships</a>
                 <a href="about.html" class="nav-item" style="color: #4338ca;"><i class="fas fa-info-circle"></i> About Us</a>
                 <div class="dropdown nav-item">
@@ -317,7 +335,7 @@
                             <div class="team-info">
                                 <h3 class="team-name">Vikash Yadav</h3>
                                 <span class="team-role">Co-Founder</span>
-                                <p class="team-bio">Driving operations and partnerships for students.</p>
+                            <p class="team-bio">Driving operations and partnerships for students.</p>
                             </div>
                         </div>
                     </a>
@@ -350,7 +368,14 @@
                 </div>
             </div>
         </section>
-    </main>
+        
+        <section class="trust-bar-section">
+            <div class="container">
+                <h2>Our Commitment: Integrity & Opportunity</h2>
+                <p>All certifications earned are rigorously vetted via a proctored process, ensuring our corporate partners trust every successful candidate we recommend.</p>
+            </div>
+        </section>
+        </main>
 
     <footer>
         <div class="container">
@@ -359,9 +384,18 @@
                     <div class="footer-logo">Internadda</div>
                     <p class="footer-description">Transforming careers through learning, interning, and earning opportunities.</p>
                     <div class="social-links">
-                        <a href="https://www.linkedin.com/company/internadda-india" target="_blank" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://www.youtube.com/@theinternadda" target="_blank" class="social-link"><i class="fab fa-youtube"></i></a>
-                        <a href="https://www.instagram.com/internadda.india" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/company/internadda-india" target="_blank" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://x.com/InternaddaX?t=sYyD5uOaBLaxp08kCFFKIQ&s=09" target="_blank" class="social-link" aria-label="X (Twitter)">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@theinternadda" target="_blank" class="social-link" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://www.instagram.com/internadda.india" target="_blank" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
                     </div>
                 </div>
                 <div class="footer-links-column">
@@ -379,6 +413,7 @@
                         <li><a href="intern/internship.html">Find Internships</a></li>
                         <li><a href="#">For Companies</a></li>
                         <li><a href="#">Success Stories</a></li>
+                        <li><a href="#">Career Coaching</a></li>
                     </ul>
                 </div>
                 <div class="footer-links-column">
@@ -388,13 +423,15 @@
                         <li><a href="https://cv-builder.internadda.com/">Resume Builder</a></li>
                         <li><a href="https://interview-preparation.internadda.com">Interview Prep</a></li>
                         <li><a href="https://letter-builder.internadda.com/">Cover Letter Gen</a></li>
-                    </ul>
+                        <li><a href="https://ai.internadda.com/" target="_blank">AI Playground (Prompts)</a></li>
+                        </ul>
                 </div>
                 <div class="footer-links-column">
                     <h3 class="footer-links-title">InternAdda</h3>
                     <ul class="footer-links">
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="faq.html">FAQ / Help Center</a></li>
                         <li><a href="terms.html">Terms & Conditions</a></li>
                         <li><a href="refund.html">Refund Policy</a></li>
                     </ul>
