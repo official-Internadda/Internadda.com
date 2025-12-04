@@ -6,40 +6,41 @@
     <title>Internadda | Learn, Intern & Earn</title>
     <meta name="description" content="India's best platform for internships and free courses.">
     
-    <!-- Google Fonts (Inter) -->
+    <meta property="og:title" content="Internadda | Learn, Intern & Earn - India's Leading Internship Platform">
+    <meta property="og:description" content="India's best platform for free courses and high-stipend internships in Tech, Data Science, and AI. Launch your career today.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://internadda.com/">
+    <meta property="og:image" content="https://internadda.com/images/slide1.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@InternaddaIndia">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Main Stylesheet -->
     <link rel="stylesheet" href="style.css">
     
-    <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico">
 </head>
 <body>
 
-    <!-- =========================================
-       HEADER / NAVIGATION
-       ========================================= -->
     <header>
         <div class="container nav-container">
-            <!-- Logo -->
             <a href="index.html" class="logo">
                 <img src="images/logo.jpg" alt="Internadda Logo" style="height: 40px; border-radius: 8px;">
                 <span>Intern<span style="color: #4338ca;">adda</span></span>
             </a>
 
-            <!-- Navigation Links -->
             <nav class="nav-links">
-                <!-- NEW: Home Link -->
                 <a href="index.html" class="nav-item">
                     <i class="fas fa-home"></i> Home
                 </a>
 
                 <a href="https://courses.internadda.com/" class="nav-item">
                     <i class="fas fa-laptop-code"></i> Courses
+                </a>
+                
+                <a href="https://ai.internadda.com" target="_blank" class="nav-item" style="color: #0088cc;">
+                    <i class="fas fa-robot"></i> AI Playground
                 </a>
                 <a href="intern/internship.html" class="nav-item">
                     <i class="fas fa-briefcase"></i> Internships
@@ -48,7 +49,6 @@
                     <i class="fas fa-info-circle"></i> About Us
                 </a>
                 
-                <!-- DROPDOWN MENU -->
                 <div class="dropdown nav-item">
                     <span>
                         <i class="fas fa-th-large" style="margin-right: 8px; color: #4338ca; background: #e0e7ff; width: 32px; height: 32px; line-height: 32px; text-align: center; border-radius: 50%; font-size: 1rem; display: none;"></i> 
@@ -65,7 +65,6 @@
                 </div>
             </nav>
 
-            <!-- Mobile Menu Button (Hamburger) -->
             <button class="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
             </button>
@@ -73,9 +72,6 @@
     </header>
 
     <main>
-        <!-- =========================================
-           HERO SECTION (WITH SLIDER)
-           ========================================= -->
         <section class="hero">
             <div class="container hero-container">
                 <div class="hero-content">
@@ -110,7 +106,6 @@
 
                 <div class="hero-image">
                     <div class="hero-image-wrapper">
-                        <!-- SLIDER IMAGE (Handled by Script.js) -->
                         <img id="hero-slider" src="images/slide1.png" alt="Student Learning" class="slider-img">
                         
                         <div class="floating-badge badge-top">
@@ -126,9 +121,6 @@
             </div>
         </section>
 
-        <!-- =========================================
-           PARTNER MARQUEE
-           ========================================= -->
         <section class="partner-logo-section">
             <div class="container" style="text-align: center; margin-bottom: 30px;">
                 <p style="color: #718096; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; font-size: 0.9rem;">Top companies that motivate our learners to grow</p>
@@ -148,9 +140,6 @@
             </div>
         </section>
 
-        <!-- =========================================
-           FEATURED COURSES (UPDATED UI)
-           ========================================= -->
         <section style="padding: 80px 0; background: #fff;">
             <div class="container">
                 <div style="text-align: center; margin-bottom: 50px;">
@@ -160,18 +149,15 @@
 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
                     
-                    <!-- Course Card 1: Python -->
                     <div class="course-card">
                         <div style="position: relative;">
                             <img src="images/Python-Essentials-for-All.png" alt="Python" style="width: 100%; height: 200px; object-fit: cover;">
-                            <!-- Free Badge -->
                             <span class="badge-free">Free</span>
                         </div>
                         <div style="padding: 24px;">
                             <span style="background: #ebf4ff; color: #4c51bf; font-size: 0.8rem; font-weight: 600; padding: 4px 12px; border-radius: 20px;">Development</span>
                             <h3 style="font-size: 1.25rem; font-weight: 700; margin: 12px 0 8px; color: #1a202c;">Python Essentials</h3>
                             
-                            <!-- Meta Data: Time & Rating -->
                             <div class="course-meta">
                                 <span><i class="far fa-clock"></i> 4 Weeks</span>
                                 <span><i class="fas fa-star" style="color: #fbbf24;"></i> 4.8</span>
@@ -179,12 +165,10 @@
 
                             <p style="color: #718096; font-size: 0.95rem; margin-bottom: 20px;">Master the basics of Python programming from scratch.</p>
                             
-                            <!-- Redirect Link -->
                             <a href="https://courses.internadda.com/" style="color: #4338ca; font-weight: 600; display: flex; align-items: center; gap: 8px;">View Course <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
 
-                    <!-- Course Card 2: Hacking -->
                     <div class="course-card">
                         <div style="position: relative;">
                             <img src="images/Ethical-Hacking-Mastery.png" alt="Hacking" style="width: 100%; height: 200px; object-fit: cover;">
@@ -204,7 +188,6 @@
                         </div>
                     </div>
 
-                    <!-- Course Card 3: Data Science -->
                     <div class="course-card">
                         <div style="position: relative;">
                             <img src="images/Essential Data Science Intern Course.png" alt="Data Science" style="width: 100%; height: 200px; object-fit: cover;">
@@ -227,9 +210,6 @@
             </div>
         </section>
 
-        <!-- =========================================
-           TESTIMONIALS
-           ========================================= -->
         <section class="testimonials-dark">
             <div class="container" style="text-align: center; margin-bottom: 50px;">
                 <h2 class="section-title">Success Stories</h2>
@@ -283,9 +263,6 @@
         </section>
     </main>
 
-    <!-- =========================================
-       FOOTER
-       ========================================= -->
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -295,6 +272,9 @@
                     <div class="social-links">
                         <a href="https://www.linkedin.com/company/internadda-india" target="_blank" class="social-link" aria-label="LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://x.com/InternaddaX?t=sYyD5uOaBLaxp08kCFFKIQ&s=09" target="_blank" class="social-link" aria-label="X (Twitter)">
+                            <i class="fab fa-twitter"></i>
                         </a>
                         <a href="https://www.youtube.com/@theinternadda" target="_blank" class="social-link" aria-label="YouTube">
                             <i class="fab fa-youtube"></i>
@@ -332,7 +312,8 @@
                         <li><a href="https://cv-builder.internadda.com/">Resume Builder</a></li>
                         <li><a href="https://interview-preparation.internadda.com">Interview Prep</a></li>
                         <li><a href="https://letter-builder.internadda.com/">Cover Letter Gen</a></li>
-                    </ul>
+                        <li><a href="https://ai.internadda.com/" target="_blank">AI Playground (Prompts)</a></li>
+                        </ul>
                 </div>
 
                 <div class="footer-links-column">
@@ -340,6 +321,7 @@
                     <ul class="footer-links">
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="faq.html">FAQ / Help Center</a></li>
                         <li><a href="terms.html">Terms & Conditions</a></li>
                         <li><a href="refund.html">Refund Policy</a></li>
                     </ul>
@@ -362,7 +344,6 @@
         </div>
     </footer>
 
-    <!-- JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>
