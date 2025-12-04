@@ -75,24 +75,23 @@
             user-select: none;
         }
         
-        /* The main question text container */
+        /* Numbering and Text Alignment */
         .question-text {
              display: flex;
-             align-items: flex-start; /* Align number to the top of wrapping text */
+             align-items: flex-start; /* CRITICAL FIX: Align number to the top of wrapping text */
              font-weight: 500;
              flex-grow: 1;
              padding-right: 15px;
+             line-height: 1.4; /* Improves readability on mobile */
         }
         
-        /* The Numbering Element (Fixed space, non-shrinking) */
         .question-number {
-            flex-shrink: 0; /* Prevents number from shrinking */
-            width: 35px;    /* Gives fixed space for the number and dot */
+            flex-shrink: 0; 
+            width: 35px;    /* Fixed width for number */
             font-size: 1.15rem;
             color: #4a5568;
             font-weight: 600;
-            line-height: 1.4;
-            /* Added margin for clean separation from the actual question */
+            line-height: 1.4; 
             margin-right: 15px; 
         }
         
@@ -102,7 +101,7 @@
 
         /* Chevron Icon */
         .chevron {
-            flex-shrink: 0; /* Prevents chevron from shrinking/wrapping */
+            flex-shrink: 0; 
             color: #4a5568;
             font-size: 1rem;
             transition: transform 0.3s;
@@ -119,8 +118,7 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.4s ease-in-out;
-            /* Padding starts after the fixed number width + margins (approx 50px) */
-            padding: 0 0 0 50px; 
+            padding: 0 0 0 50px; /* Aligned with desktop */
             line-height: 1.6;
         }
 
@@ -154,20 +152,20 @@
             border: 1px solid #c7d2fe;
         }
 
-        /* --- MOBILE RESPONISVENESS (Adjusting spacing for small screens) --- */
+        /* --- MOBILE RESPONISVENESS (Final Fix) --- */
         @media (max-width: 768px) {
             .page-title { font-size: 1.8rem; }
             .faq-question { padding: 15px 5px; font-size: 0.95rem; }
             
             .question-number { 
-                /* Reduced space for number on mobile */
-                width: 30px; 
+                /* Ensures small gap and fixed position */
+                width: 25px; 
                 margin-right: 10px; 
                 font-size: 1rem; 
             }
             .faq-answer { 
-                /* Reduced indent for mobile space */
-                padding: 0 10px 0 40px; 
+                /* Adjusted padding based on fixed number width (25px) + margin (10px) + content start (~40px) */
+                padding: 0 10px 0 45px; 
             }
             
             .footer-brand .social-links {
@@ -231,7 +229,7 @@
                     <li class="faq-item">
                         <button class="faq-question">
                             <span class="question-text">
-                                <span class="question-number">1.</span> Are Internadda's <strong>Certification Courses</strong> truly free?
+                                <span class="question-number">1.</span> Are <strong>Courses</strong> and content truly free?
                             </span>
                             <i class="fas fa-chevron-down chevron"></i>
                         </button>
@@ -245,7 +243,7 @@
                     <li class="faq-item">
                         <button class="faq-question">
                             <span class="question-text">
-                                <span class="question-number">2.</span> Why is the <strong>Final Certification Exam Fee</strong> mandatory?
+                                <span class="question-number">2.</span> Why is the <strong>Final Exam Fee</strong> mandatory?
                             </span>
                             <i class="fas fa-chevron-down chevron"></i>
                         </button>
@@ -259,7 +257,7 @@
                     <li class="faq-item">
                         <button class="faq-question">
                             <span class="question-text">
-                                <span class="question-number">3.</span> What is the **stipend range** and is it <strong>performance-based</strong>?
+                                <span class="question-number">3.</span> What is the <strong>stipend range</strong> and is it <strong>performance-based</strong>?
                             </span>
                             <i class="fas fa-chevron-down chevron"></i>
                         </button>
@@ -273,7 +271,7 @@
                     <li class="faq-item">
                         <button class="faq-question">
                             <span class="question-text">
-                                <span class="question-number">4.</span> Does the exam <strong>guarantee placement</strong> with a company?
+                                <span class="question-number">4.</span> Does the exam <strong>guarantee placement</strong>?
                             </span>
                             <i class="fas fa-chevron-down chevron"></i>
                         </button>
@@ -287,7 +285,7 @@
                     <li class="faq-item">
                         <button class="faq-question">
                             <span class="question-text">
-                                <span class="question-number">5.</span> What is the policy for <strong>retaking the Final Exam</strong>?
+                                <span class="question-number">5.</span> What is the policy for <strong>retaking the Exam</strong>?
                             </span>
                             <i class="fas fa-chevron-down chevron"></i>
                         </button>
@@ -301,7 +299,7 @@
                     <li class="faq-item">
                         <button class="faq-question">
                             <span class="question-text">
-                                <span class="question-number">6.</span> How can the <strong>AI Playground</strong> help my career?
+                                <span class="question-number">6.</span> How does the <strong>AI Playground</strong> help my career?
                             </span>
                             <i class="fas fa-chevron-down chevron"></i>
                         </button>
@@ -315,7 +313,7 @@
                     <li class="faq-item">
                         <button class="faq-question">
                             <span class="question-text">
-                                <span class="question-number">7.</span> What is the typical duration for <strong>Remote Internships</strong>?
+                                <span class="question-number">7.</span> What is the typical <strong>internship duration</strong>?
                             </span>
                             <i class="fas fa-chevron-down chevron"></i>
                         </button>
@@ -358,13 +356,13 @@
                         <li class="faq-item">
                             <button class="faq-question">
                                 <span class="question-text">
-                                    <span class="question-number">10.</span> Will the internships involve <strong>real-time projects</strong>?
+                                    <span class="question-number">10.</span> Will internships involve <strong>real-time projects</strong>?
                             </span>
                                 <i class="fas fa-chevron-down chevron"></i>
                             </button>
                             <div class="faq-answer">
                                 <div class="faq-answer-inner">
-                                    Our internships are focused solely on **real-time project contribution**. The experience focuses on applying your skills to solve genuine business or development challenges for our partners, not just theoretical training.
+                                    Our internships are focused solely on <strong>real-time project contribution</strong>. The experience applies your skills to solve genuine business or development challenges for our partners, not just theoretical training.
                                 </div>
                             </div>
                         </li>
