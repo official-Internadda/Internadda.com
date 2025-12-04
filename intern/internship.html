@@ -6,20 +6,24 @@
     <title>Internships | Internadda</title>
     <meta name="description" content="Find the best internships in Web Development, Data Science, AI, and more.">
     
-    <!-- Google Fonts (Inter) -->
+    <meta property="og:title" content="Find Your Dream Internship | Internadda">
+    <meta property="og:description" content="Explore opportunities to learn, grow, and kickstart your career with top companies.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://internadda.com/intern/internship.html">
+    <meta property="og:image" content="../images/slide1.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@InternaddaIndia">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Main Stylesheet (Points to root style.css) -->
     <link rel="stylesheet" href="../style.css">
     
-    <!-- Favicon -->
     <link rel="icon" href="../images/favicon.ico">
 
     <style>
-        /* Specific Styles for Internship Page */
+        /* Specific Styles for Internship Page (Adjusted for Images and Trust) */
         .page-header {
             background: linear-gradient(135deg, #f8faff 0%, #ffffff 100%);
             padding: 60px 0 40px;
@@ -27,60 +31,13 @@
             border-bottom: 1px solid #f1f5f9;
         }
 
-        .page-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #1a202c;
-            margin-bottom: 15px;
-        }
-        
-        .page-title span {
-            color: #4338ca;
-        }
-
-        .page-subtitle {
-            color: #64748b;
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .filter-section {
-            background: white;
-            padding: 20px 0;
-            border-bottom: 1px solid #e2e8f0;
-            position: sticky;
-            top: 80px; /* Below header */
-            z-index: 90;
-        }
-        
-        .filter-container {
-            display: flex;
-            gap: 15px;
-            overflow-x: auto;
-            padding-bottom: 5px;
-            -webkit-overflow-scrolling: touch;
-        }
-        
-        .filter-chip {
-            padding: 8px 20px;
-            border-radius: 30px;
-            background: #f1f5f9;
-            color: #64748b;
-            font-weight: 500;
-            font-size: 0.9rem;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.2s;
-            border: 1px solid transparent;
-        }
-        
-        .filter-chip:hover, .filter-chip.active {
-            background: #e0e7ff;
-            color: #4338ca;
-            border-color: #c7d2fe;
-        }
-
+        .page-title { font-size: 2.5rem; font-weight: 800; color: #1a202c; margin-bottom: 15px; }
+        .page-title span { color: #4338ca; }
+        .page-subtitle { color: #64748b; font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+        .filter-section { background: white; padding: 20px 0; border-bottom: 1px solid #e2e8f0; position: sticky; top: 80px; z-index: 90; }
+        .filter-container { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 5px; -webkit-overflow-scrolling: touch; }
+        .filter-chip { padding: 8px 20px; border-radius: 30px; background: #f1f5f9; color: #64748b; font-weight: 500; font-size: 0.9rem; cursor: pointer; white-space: nowrap; transition: all 0.2s; border: 1px solid transparent; }
+        .filter-chip:hover, .filter-chip.active { background: #e0e7ff; color: #4338ca; border-color: #c7d2fe; }
         .internship-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -88,39 +45,53 @@
             padding: 60px 0;
         }
 
+        /* CARD STYLES */
         .internship-card {
             background: white;
             border: 1px solid #e2e8f0;
             border-radius: 16px;
-            padding: 24px;
+            padding: 0; 
             transition: transform 0.3s, box-shadow 0.3s;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            text-align: left; 
         }
-
         .internship-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 30px rgba(0,0,0,0.08);
             border-color: #cbd5e0;
+        }
+        
+        /* IMAGE WRAPPER */
+        .role-image-wrapper {
+            width: 100%;
+            height: 180px; 
+            overflow: hidden;
+            border-radius: 16px 16px 0 0;
+            position: relative;
+        }
+        .role-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .internship-card:hover .role-image-wrapper img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1; 
         }
 
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-        }
-
-        .role-icon {
-            width: 50px;
-            height: 50px;
-            background: #f8fafc;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: #4338ca;
+            margin-bottom: 10px;
         }
 
         .status-badge {
@@ -130,40 +101,59 @@
             border-radius: 20px;
             text-transform: uppercase;
         }
-        
         .status-active { background: #dcfce7; color: #166534; }
         .status-closing { background: #fee2e2; color: #991b1b; }
 
         .role-title {
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-size: 1.3rem;
+            font-weight: 800;
             color: #1a202c;
-            margin: 10px 0 5px;
+            margin: 0;
+            line-height: 1.3;
         }
 
         .company-name {
             color: #64748b;
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 500;
             display: flex;
             align-items: center;
             gap: 6px;
+            margin-top: 5px;
         }
-
-        .card-meta {
-            display: flex;
-            gap: 15px;
-            margin-top: auto;
-            padding-top: 15px;
-            border-top: 1px solid #f1f5f9;
-            font-size: 0.85rem;
-            color: #64748b;
+        
+        /* TRUST-BUILDING SECTION */
+        .trust-meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding: 15px 0;
+            margin-top: 15px;
+            border-top: 1px dashed #f1f5f9;
         }
-
-        .meta-item {
+        .trust-item {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #4a5568;
+            font-weight: 600;
+        }
+        .trust-item i {
+            color: #22c55e; 
+            font-size: 1.1rem;
+        }
+        .trust-item:nth-child(3) i { color: #f59e0b; }
+
+
+        /* Dual CTA */
+        .card-footer {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            margin-top: auto;
         }
 
         .apply-btn {
@@ -175,55 +165,60 @@
             padding: 12px;
             border-radius: 10px;
             font-weight: 600;
-            margin-top: 15px;
             transition: background 0.2s;
         }
+        .apply-btn:hover { background: #3730a3; }
         
-        .apply-btn:hover {
-            background: #3730a3;
-        }
-
+        /* ======================================= */
+        /* === MOBILE VIEW CENTERING CORRECTION === */
+        /* ======================================= */
         @media (max-width: 768px) {
-            .internship-grid {
-                grid-template-columns: 1fr;
-                padding: 40px 0;
-            }
+            .internship-grid { grid-template-columns: 1fr; padding: 40px 0; }
             .page-title { font-size: 2rem; }
+            .trust-meta-grid { grid-template-columns: 1fr; }
+            .role-image-wrapper { height: 160px; }
+            
+            .footer-brand {
+                 /* Inherited from base CSS, ensures brand area is full width and centered */
+                text-align: center; 
+            }
+            
+            /* Explicitly target and center the social links block */
+            .footer-brand .social-links {
+                justify-content: center; /* Centers items inside flex container */
+                width: fit-content;      /* Makes the block only as wide as its content */
+                margin: 0 auto;          /* Centers the block itself horizontally */
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- =========================================
-       HEADER / NAVIGATION
-       ========================================= -->
     <header>
         <div class="container nav-container">
-            <!-- Logo -->
             <a href="../index.html" class="logo">
                 <img src="../images/logo.jpg" alt="Internadda Logo" style="height: 40px; border-radius: 8px;">
                 <span>Intern<span style="color: #4338ca;">adda</span></span>
             </a>
 
-            <!-- Navigation Links -->
             <nav class="nav-links">
-                <!-- Home Link -->
                 <a href="../index.html" class="nav-item">
                     <i class="fas fa-home"></i> Home
                 </a>
 
-                <!-- Main Items with Icons -->
                 <a href="https://courses.internadda.com/" class="nav-item">
                     <i class="fas fa-laptop-code"></i> Courses
                 </a>
-                <a href="internship.html" class="nav-item" style="color: #4338ca;"> <!-- Active Page -->
-                    <i class="fas fa-briefcase"></i> Internships
+                
+                <a href="https://ai.internadda.com" target="_blank" class="nav-item" style="color: #0088cc;">
+                    <i class="fas fa-robot"></i> AI Playground
+                </a>
+                <a href="internship.html" class="nav-item" style="color: #4338ca;"> <i class="fas fa-briefcase"></i> Internships
                 </a>
                 <a href="../about.html" class="nav-item">
                     <i class="fas fa-info-circle"></i> About Us
                 </a>
                 
-                <!-- DROPDOWN MENU -->
                 <div class="dropdown nav-item">
                     <span>
                         <i class="fas fa-th-large" style="margin-right: 8px; color: #4338ca; background: #e0e7ff; width: 32px; height: 32px; line-height: 32px; text-align: center; border-radius: 50%; font-size: 1rem; display: none;"></i> 
@@ -240,7 +235,6 @@
                 </div>
             </nav>
 
-            <!-- Mobile Menu Button (Hamburger) -->
             <button class="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
             </button>
@@ -248,15 +242,13 @@
     </header>
 
     <main>
-        <!-- PAGE HEADER -->
         <section class="page-header">
             <div class="container">
                 <h1 class="page-title">Find Your Dream <span>Internship</span></h1>
-                <p class="page-subtitle">Explore opportunities to learn, grow, and kickstart your career with top companies.</p>
+                <p class="page-subtitle">Explore verified, high-value opportunities to learn, grow, and kickstart your career with our Corporate Partners.</p>
             </div>
         </section>
 
-        <!-- FILTERS -->
         <div class="filter-section">
             <div class="container">
                 <div class="filter-container">
@@ -270,125 +262,187 @@
             </div>
         </div>
 
-        <!-- INTERNSHIP GRID -->
         <section class="container">
             <div class="internship-grid">
                 
-                <!-- Card 1: Python Developer -->
                 <div class="internship-card">
-                    <div class="card-header">
-                        <div class="role-icon"><i class="fab fa-python"></i></div>
-                        <span class="status-badge status-active">Active</span>
+                    <div class="role-image-wrapper">
+                        <img src="../images/test_Python Development.png" alt="Python Developer Internship">
                     </div>
-                    <div>
-                        <h3 class="role-title">Python Developer Intern</h3>
-                        <p class="company-name"><i class="fas fa-building"></i> Internadda</p>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="role-title">Python Developer Intern</h3>
+                            <span class="status-badge status-active">Active</span>
+                        </div>
+                        <p class="company-name"><i class="fas fa-building"></i> Corporate Partners</p>
+                        
+                        <div class="trust-meta-grid">
+                            <span class="trust-item"><i class="fas fa-check-circle"></i> Certified Opportunity</span>
+                            <span class="trust-item"><i class="fas fa-user-shield"></i> Vetted by Experts</span>
+                            <span class="trust-item"><i class="fas fa-wallet"></i> ₹1,000 - ₹10,000 /month</span>
+                            <span class="trust-item"><i class="fas fa-map-marker-alt"></i> Remote</span>
+                        </div>
+                        
+                        <div class="card-footer">
+                             <a href="payment_page_python.html" class="apply-btn">
+                                <i class="fas fa-unlock"></i> Secure Exam Access
+                            </a>
+                            <a href="python_dev_practice_test.html" class="btn btn-transparent" style="width: 100%; border-color: #4338ca; color: #4338ca; padding: 8px 12px; font-weight: 600;">
+                                <i class="fas fa-pencil-alt"></i> Take Practice Test
+                            </a>
+                        </div>
                     </div>
-                    <div class="card-meta">
-                        <span class="meta-item"><i class="far fa-clock"></i> 2 Months</span>
-                        <span class="meta-item"><i class="fas fa-wallet"></i> Unpaid</span>
-                        <span class="meta-item"><i class="fas fa-map-marker-alt"></i> Remote</span>
-                    </div>
-                    <a href="payment_page_python.html" class="apply-btn">View Details & Apply</a>
                 </div>
 
-                <!-- Card 2: Web Development -->
                 <div class="internship-card">
-                    <div class="card-header">
-                        <div class="role-icon"><i class="fas fa-code"></i></div>
-                        <span class="status-badge status-active">Active</span>
+                    <div class="role-image-wrapper">
+                        <img src="../images/test_Web & Mobile Development.png" alt="Web Development Internship">
                     </div>
-                    <div>
-                        <h3 class="role-title">Web Development Intern</h3>
-                        <p class="company-name"><i class="fas fa-building"></i> Internadda</p>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="role-title">Web Development Intern</h3>
+                            <span class="status-badge status-active">Active</span>
+                        </div>
+                        <p class="company-name"><i class="fas fa-building"></i> Corporate Partners</p>
+                        
+                        <div class="trust-meta-grid">
+                            <span class="trust-item"><i class="fas fa-check-circle"></i> Certified Opportunity</span>
+                            <span class="trust-item"><i class="fas fa-user-shield"></i> Vetted by Experts</span>
+                            <span class="trust-item"><i class="fas fa-wallet"></i> ₹1,000 - ₹10,000 /month</span>
+                            <span class="trust-item"><i class="fas fa-map-marker-alt"></i> Remote</span>
+                        </div>
+                        
+                        <div class="card-footer">
+                             <a href="payment_page_Web_Development.html" class="apply-btn">
+                                <i class="fas fa-unlock"></i> Secure Exam Access
+                            </a>
+                            <a href="web_dev_practice_test.html" class="btn btn-transparent" style="width: 100%; border-color: #4338ca; color: #4338ca; padding: 8px 12px; font-weight: 600;">
+                                <i class="fas fa-pencil-alt"></i> Take Practice Test
+                            </a>
+                        </div>
                     </div>
-                    <div class="card-meta">
-                        <span class="meta-item"><i class="far fa-clock"></i> 3 Months</span>
-                        <span class="meta-item"><i class="fas fa-wallet"></i> Unpaid</span>
-                        <span class="meta-item"><i class="fas fa-map-marker-alt"></i> Remote</span>
-                    </div>
-                    <a href="payment_page_Web_Development.html" class="apply-btn">View Details & Apply</a>
                 </div>
 
-                <!-- Card 3: Data Science -->
                 <div class="internship-card">
-                    <div class="card-header">
-                        <div class="role-icon"><i class="fas fa-database"></i></div>
-                        <span class="status-badge status-active">Active</span>
+                    <div class="role-image-wrapper">
+                        <img src="../images/test_data Science.png" alt="Data Science Internship">
                     </div>
-                    <div>
-                        <h3 class="role-title">Data Science Intern</h3>
-                        <p class="company-name"><i class="fas fa-building"></i> Internadda</p>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="role-title">Data Science Intern</h3>
+                            <span class="status-badge status-active">Active</span>
+                        </div>
+                        <p class="company-name"><i class="fas fa-building"></i> Corporate Partners</p>
+                        
+                        <div class="trust-meta-grid">
+                            <span class="trust-item"><i class="fas fa-check-circle"></i> Certified Opportunity</span>
+                            <span class="trust-item"><i class="fas fa-user-shield"></i> Vetted by Experts</span>
+                            <span class="trust-item"><i class="fas fa-wallet"></i> ₹1,000 - ₹10,000 /month</span>
+                            <span class="trust-item"><i class="fas fa-map-marker-alt"></i> Remote</span>
+                        </div>
+                        
+                        <div class="card-footer">
+                             <a href="payment_page_data_science.html" class="apply-btn">
+                                <i class="fas fa-unlock"></i> Secure Exam Access
+                            </a>
+                            <a href="data_science_practice_test.html" class="btn btn-transparent" style="width: 100%; border-color: #4338ca; color: #4338ca; padding: 8px 12px; font-weight: 600;">
+                                <i class="fas fa-pencil-alt"></i> Take Practice Test
+                            </a>
+                        </div>
                     </div>
-                    <div class="card-meta">
-                        <span class="meta-item"><i class="far fa-clock"></i> 4 Months</span>
-                        <span class="meta-item"><i class="fas fa-wallet"></i> Unpaid</span>
-                        <span class="meta-item"><i class="fas fa-map-marker-alt"></i> Remote</span>
-                    </div>
-                    <a href="payment_page_data_science.html" class="apply-btn">View Details & Apply</a>
                 </div>
 
-                <!-- Card 4: AI & ML -->
                 <div class="internship-card">
-                    <div class="card-header">
-                        <div class="role-icon"><i class="fas fa-brain"></i></div>
-                        <span class="status-badge status-closing">Closing Soon</span>
+                    <div class="role-image-wrapper">
+                        <img src="../images/test_Artificial Intelligence.png" alt="AI & ML Internship">
                     </div>
-                    <div>
-                        <h3 class="role-title">AI & ML Intern</h3>
-                        <p class="company-name"><i class="fas fa-building"></i> Internadda</p>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="role-title">AI & ML Intern</h3>
+                            <span class="status-badge status-closing">Closing Soon</span>
+                        </div>
+                        <p class="company-name"><i class="fas fa-building"></i> Corporate Partners</p>
+                        
+                        <div class="trust-meta-grid">
+                            <span class="trust-item"><i class="fas fa-check-circle"></i> Certified Opportunity</span>
+                            <span class="trust-item"><i class="fas fa-user-shield"></i> Vetted by Experts</span>
+                            <span class="trust-item"><i class="fas fa-wallet"></i> ₹1,000 - ₹10,000 /month</span>
+                            <span class="trust-item"><i class="fas fa-map-marker-alt"></i> Remote</span>
+                        </div>
+                        
+                        <div class="card-footer">
+                             <a href="payment_page_ai_ml.html" class="apply-btn">
+                                <i class="fas fa-unlock"></i> Secure Exam Access
+                            </a>
+                            <a href="ai_ml_practice_test.html" class="btn btn-transparent" style="width: 100%; border-color: #4338ca; color: #4338ca; padding: 8px 12px; font-weight: 600;">
+                                <i class="fas fa-pencil-alt"></i> Take Practice Test
+                            </a>
+                        </div>
                     </div>
-                    <div class="card-meta">
-                        <span class="meta-item"><i class="far fa-clock"></i> 4 Months</span>
-                        <span class="meta-item"><i class="fas fa-wallet"></i> Unpaid</span>
-                        <span class="meta-item"><i class="fas fa-map-marker-alt"></i> Remote</span>
-                    </div>
-                    <a href="payment_page_ai_ml.html" class="apply-btn">View Details & Apply</a>
                 </div>
 
-                 <!-- Card 5: Digital Marketing -->
                  <div class="internship-card">
-                    <div class="card-header">
-                        <div class="role-icon"><i class="fas fa-bullhorn"></i></div>
-                        <span class="status-badge status-active">Active</span>
+                    <div class="role-image-wrapper">
+                        <img src="../images/test_Digital Marketing & Growth Hacking.png" alt="Digital Marketing Internship">
                     </div>
-                    <div>
-                        <h3 class="role-title">Digital Marketing</h3>
-                        <p class="company-name"><i class="fas fa-building"></i> Internadda</p>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="role-title">Digital Marketing</h3>
+                            <span class="status-badge status-active">Active</span>
+                        </div>
+                        <p class="company-name"><i class="fas fa-building"></i> Corporate Partners</p>
+                        
+                        <div class="trust-meta-grid">
+                            <span class="trust-item"><i class="fas fa-check-circle"></i> Certified Opportunity</span>
+                            <span class="trust-item"><i class="fas fa-user-shield"></i> Vetted by Experts</span>
+                            <span class="trust-item"><i class="fas fa-wallet"></i> ₹1,000 - ₹10,000 /month</span>
+                            <span class="trust-item"><i class="fas fa-map-marker-alt"></i> Remote</span>
+                        </div>
+                        
+                        <div class="card-footer">
+                             <a href="payment_page_Digital_Marketing.html" class="apply-btn">
+                                <i class="fas fa-unlock"></i> Secure Exam Access
+                            </a>
+                            <a href="digital_marketing_practice_test.html" class="btn btn-transparent" style="width: 100%; border-color: #4338ca; color: #4338ca; padding: 8px 12px; font-weight: 600;">
+                                <i class="fas fa-pencil-alt"></i> Take Practice Test
+                            </a>
+                        </div>
                     </div>
-                    <div class="card-meta">
-                        <span class="meta-item"><i class="far fa-clock"></i> 2 Months</span>
-                        <span class="meta-item"><i class="fas fa-wallet"></i> Unpaid</span>
-                        <span class="meta-item"><i class="fas fa-map-marker-alt"></i> Remote</span>
-                    </div>
-                    <a href="payment_page_Digital_Marketing.html" class="apply-btn">View Details & Apply</a>
                 </div>
 
-                 <!-- Card 6: UI/UX Design -->
                  <div class="internship-card">
-                    <div class="card-header">
-                        <div class="role-icon"><i class="fas fa-pen-nib"></i></div>
-                        <span class="status-badge status-active">Active</span>
+                    <div class="role-image-wrapper">
+                        <img src="../images/test_UIUX Design & Product Design.png" alt="UI/UX Design Internship">
                     </div>
-                    <div>
-                        <h3 class="role-title">UI/UX Design Intern</h3>
-                        <p class="company-name"><i class="fas fa-building"></i> Internadda</p>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="role-title">UI/UX Design Intern</h3>
+                            <span class="status-badge status-active">Active</span>
+                        </div>
+                        <p class="company-name"><i class="fas fa-building"></i> Corporate Partners</p>
+                        
+                        <div class="trust-meta-grid">
+                            <span class="trust-item"><i class="fas fa-check-circle"></i> Certified Opportunity</span>
+                            <span class="trust-item"><i class="fas fa-user-shield"></i> Vetted by Experts</span>
+                            <span class="trust-item"><i class="fas fa-wallet"></i> ₹1,000 - ₹10,000 /month</span>
+                            <span class="trust-item"><i class="fas fa-map-marker-alt"></i> Remote</span>
+                        </div>
+                        
+                        <div class="card-footer">
+                             <a href="payment_page_UI_UX_Design.html" class="apply-btn">
+                                <i class="fas fa-unlock"></i> Secure Exam Access
+                            </a>
+                            <a href="ui_ux_design_practice_test.html" class="btn btn-transparent" style="width: 100%; border-color: #4338ca; color: #4338ca; padding: 8px 12px; font-weight: 600;">
+                                <i class="fas fa-pencil-alt"></i> Take Practice Test
+                            </a>
+                        </div>
                     </div>
-                    <div class="card-meta">
-                        <span class="meta-item"><i class="far fa-clock"></i> 3 Months</span>
-                        <span class="meta-item"><i class="fas fa-wallet"></i> Unpaid</span>
-                        <span class="meta-item"><i class="fas fa-map-marker-alt"></i> Remote</span>
-                    </div>
-                    <a href="payment_page_UI_UX_Design.html" class="apply-btn">View Details & Apply</a>
                 </div>
 
             </div>
         </section>
     </main>
 
-    <!-- =========================================
-       FOOTER
-       ========================================= -->
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -398,6 +452,9 @@
                     <div class="social-links">
                         <a href="https://www.linkedin.com/company/internadda-india" target="_blank" class="social-link" aria-label="LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://x.com/InternaddaX?t=sYyD5uOaBLaxp08kCFFKIQ&s=09" target="_blank" class="social-link" aria-label="X (Twitter)">
+                            <i class="fab fa-twitter"></i>
                         </a>
                         <a href="https://www.youtube.com/@theinternadda" target="_blank" class="social-link" aria-label="YouTube">
                             <i class="fab fa-youtube"></i>
@@ -435,7 +492,8 @@
                         <li><a href="https://cv-builder.internadda.com/">Resume Builder</a></li>
                         <li><a href="https://interview-preparation.internadda.com">Interview Prep</a></li>
                         <li><a href="https://letter-builder.internadda.com/">Cover Letter Gen</a></li>
-                    </ul>
+                        <li><a href="https://ai.internadda.com/" target="_blank">AI Playground (Prompts)</a></li>
+                        </ul>
                 </div>
 
                 <div class="footer-links-column">
@@ -443,6 +501,7 @@
                     <ul class="footer-links">
                         <li><a href="../about.html">About Us</a></li>
                         <li><a href="../contact.html">Contact Us</a></li>
+                        <li><a href="../faq.html">FAQ / Help Center</a></li>
                         <li><a href="../terms.html">Terms & Conditions</a></li>
                         <li><a href="../refund.html">Refund Policy</a></li>
                     </ul>
@@ -465,7 +524,6 @@
         </div>
     </footer>
 
-    <!-- JavaScript (Points to root script.js) -->
     <script src="../script.js"></script>
 </body>
 </html>
