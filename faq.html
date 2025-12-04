@@ -66,9 +66,8 @@
             align-items: center;
             justify-content: space-between;
             background: transparent;
-            padding: 20px 0;
-            /* **MODIFIED: Increased desktop font size** */
-            font-size: **1.2rem**; 
+            padding: 20px 0; 
+            font-size: 1.05rem;
             color: #1a202c;
             border: none;
             cursor: pointer;
@@ -88,7 +87,7 @@
         
         .question-number {
             flex-shrink: 0; 
-            width: 35px;    /* Fixed width for number */
+            width: 35px;    /* Fixed width for number */
             font-size: 1.15rem;
             color: #4a5568;
             font-weight: 600;
@@ -156,15 +155,13 @@
         /* --- MOBILE RESPONISVENESS (Final Fix) --- */
         @media (max-width: 768px) {
             .page-title { font-size: 1.8rem; }
-            /* **MODIFIED: Increased mobile font size** */
-            .faq-question { padding: 15px 5px; font-size: **1.1rem**; } 
+            .faq-question { padding: 15px 5px; font-size: 0.95rem; }
             
             .question-number { 
                 /* Ensures small gap and fixed position */
                 width: 25px; 
                 margin-right: 10px; 
                 font-size: 1rem; 
-                line-height: 1.4;
             }
             .faq-answer { 
                 /* Adjusted padding based on fixed number width (25px) + margin (10px) + content start (~40px) */
@@ -360,7 +357,7 @@
                             <button class="faq-question">
                                 <span class="question-text">
                                     <span class="question-number">10.</span> Will internships involve <strong>real-time projects</strong>?
-                                </span>
+                            </span>
                                 <i class="fas fa-chevron-down chevron"></i>
                             </button>
                             <div class="faq-answer">
@@ -521,10 +518,10 @@
                      item.style.opacity = 0;
                     
                      setTimeout(() => {
-                         item.style.transition = 'opacity 0.5s ease-in';
-                         item.style.opacity = 1;
-                     }, delay);
-                     delay += 200;
+                        item.style.transition = 'opacity 0.5s ease-in';
+                        item.style.opacity = 1;
+                    }, delay);
+                    delay += 200;
                 });
             }
             
