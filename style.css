@@ -761,4 +761,10 @@ footer {
     .mobile-only-link {
         display: flex; /* Ensure these show if you use them */
     }
+
+   /* Active Page Highlighting */
+.nav-item.active {
+    color: #4338ca !important;
+    font-weight: 700;
+   }
 }
