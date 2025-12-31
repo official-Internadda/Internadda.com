@@ -153,11 +153,11 @@
 
                     <div class="exam-info-box">
                         <div class="info-item">
-                            <i class="far fa-clock" style="color: #306998;"></i>
-                            <strong>30 Mins</strong>
+                            <i class="far fa-clock" style="color: #4338ca;"></i>
+                            <strong id="timerDisplay">30:00</strong>
                             <span>Time Limit</span>
                         </div>
-                        <div class="info-item">
+                                                <div class="info-item">
                             <i class="fas fa-clipboard-list" style="color: #306998;"></i>
                             <strong>25</strong>
                             <span>Questions</span>
@@ -511,6 +511,28 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
 
     <script>
+
+        let totalSeconds = 30 * 60; // 30 minutes in seconds
+        const timerDisplay = document.getElementById('timerDisplay');
+
+        const countdown = setInterval(() => {
+            let minutes = Math.floor(totalSeconds / 60);
+            let seconds = totalSeconds % 60;
+
+            // Add leading zero if less than 10
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+
+            timerDisplay.textContent = `${minutes}:${seconds}`;
+
+            if (totalSeconds <= 0) {
+                clearInterval(countdown);
+                alert("Time is up! Your exam will be submitted automatically.");
+                document.getElementById('aiMlFinalExamForm').requestSubmit(); // Auto-submit
+            } else {
+                totalSeconds--;
+            }
+        }, 1000);
         // 1. FIREBASE CONFIGURATION
         const firebaseConfig = {
             apiKey: "AIzaSyCBAVUB555zTVMvvMnDyyjsC0SR_awBsOY",
