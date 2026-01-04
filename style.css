@@ -167,7 +167,7 @@ header {
     cursor: pointer;
 }
 
-/* --- ACTIVE NAV GLOW EFFECT --- */
+/* Active glow */
 .active-glow {
     color: #4338ca !important;
     font-weight: 700 !important;
