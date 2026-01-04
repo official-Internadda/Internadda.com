@@ -123,22 +123,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 4000); // Change slide every 4 seconds
     }
 
-    // ==============================================
-    // 5. ACTIVE NAV LINK GLOW
-    // ==============================================
-    const currentPath = window.location.pathname.split("/").pop() || 'index.html';
-    const allNavLinks = document.querySelectorAll('.nav-item');
-
-    allNavLinks.forEach(link => {
-        // Get the filename from the href (e.g., "index.html")
-        const linkPath = link.getAttribute('href');
-        
-        // Remove existing active classes first
-        link.classList.remove('active', 'active-glow');
-
-        // Check if current page matches the link's destination
-        if (linkPath === currentPath) {
-            link.classList.add('active-glow');
-        }
-    });
 });
