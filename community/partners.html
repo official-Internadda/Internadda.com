@@ -6,20 +6,14 @@
     <title>Our Partners | Internadda</title>
     <meta name="description" content="Internadda partners with top companies to provide the best internship opportunities for students.">
     
-    <!-- Google Fonts (Inter) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Main Stylesheet (Points to root style.css) -->
     <link rel="stylesheet" href="../style.css">
     
-    <!-- Favicon -->
-    <link rel="icon" href="../images/favicon.ico">
-
     <style>
-        /* Page Specific Styles */
+        /* --- Existing Styles --- */
         .partners-hero {
             background: linear-gradient(135deg, #f8faff 0%, #ffffff 100%);
             padding: 80px 0;
@@ -27,28 +21,19 @@
             border-bottom: 1px solid #f1f5f9;
         }
 
-        .page-title {
-            font-size: 3rem;
-            font-weight: 800;
-            color: #1a202c;
-            margin-bottom: 20px;
-        }
-        
+        .page-title { font-size: 3rem; font-weight: 800; color: #1a202c; margin-bottom: 20px; }
         .page-title span { color: #4338ca; }
 
         .page-subtitle {
-            color: #64748b;
-            font-size: 1.15rem;
-            max-width: 700px;
-            margin: 0 auto 40px;
-            line-height: 1.6;
+            color: #64748b; font-size: 1.15rem; max-width: 700px;
+            margin: 0 auto 40px; line-height: 1.6;
         }
 
         .partners-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 40px;
-            padding: 80px 0;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 30px;
+            padding: 60px 0;
             align-items: center;
         }
 
@@ -56,287 +41,235 @@
             background: white;
             border: 1px solid #e2e8f0;
             border-radius: 16px;
-            padding: 40px 20px;
+            padding: 20px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s ease;
             height: 180px;
+            cursor: pointer;
         }
 
         .partner-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 30px rgba(0,0,0,0.05);
-            border-color: #cbd5e0;
+            border-color: #4338ca;
         }
 
         .partner-logo {
             max-width: 80%;
-            max-height: 80px;
-            filter: grayscale(100%);
-            opacity: 0.7;
+            max-height: 70px;
+            object-fit: contain;
             transition: all 0.3s;
         }
 
-        .partner-card:hover .partner-logo {
-            filter: grayscale(0%);
-            opacity: 1;
-            transform: scale(1.05);
+        .partner-name {
+            margin-top: 15px;
+            font-weight: 600;
+            color: #1a202c;
+            font-size: 0.95rem;
         }
 
-        .cta-section {
-            background: #0f172a;
-            padding: 80px 0;
+        /* --- POPUP (MODAL) STYLES --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.7);
+            display: none; /* Hidden by default */
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
             text-align: center;
-            color: white;
+            animation: modalSlideUp 0.3s ease-out;
         }
 
-        .cta-title {
-            font-size: 2.5rem;
-            font-weight: 700;
+        @keyframes modalSlideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px; right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .modal-logo {
+            height: 60px;
             margin-bottom: 20px;
         }
 
-        .cta-text {
-            color: #cbd5e0;
-            max-width: 600px;
-            margin: 0 auto 40px;
-            font-size: 1.1rem;
+        .modal-desc {
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 25px;
         }
 
-        .partner-btn {
-            display: inline-block;
-            background: #4338ca;
-            color: white;
-            padding: 15px 30px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s;
+        .modal-socials {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .modal-socials a {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4338ca;
+            transition: 0.3s;
             text-decoration: none;
         }
 
-        .partner-btn:hover {
-            background: #3730a3;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(67, 56, 202, 0.3);
+        .modal-socials a:hover {
+            background: #4338ca;
+            color: white;
         }
 
+        /* CTA & Media Queries */
+        .cta-section { background: #0f172a; padding: 80px 0; text-align: center; color: white; }
+        .partner-btn { display: inline-block; background: #4338ca; color: white; padding: 15px 30px; border-radius: 12px; text-decoration: none; font-weight: 600; }
+        
         @media (max-width: 768px) {
-            .page-title { font-size: 2.2rem; }
-            .partners-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
-            .partner-card { height: 140px; padding: 20px; }
+            .partners-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
 
-    <!-- =========================================
-       HEADER / NAVIGATION
-       ========================================= -->
     <header>
         <div class="container nav-container">
-            <!-- Logo -->
             <a href="../index.html" class="logo">
-                <img src="../images/logo.jpg" alt="Internadda Logo" style="height: 40px; border-radius: 8px;">
+                <img src="../images/logo.jpg" alt="Logo" style="height: 40px; border-radius: 8px;">
                 <span>Intern<span style="color: #4338ca;">adda</span></span>
             </a>
-
-            <!-- Navigation Links -->
             <nav class="nav-links">
-                <!-- Home Link -->
-                <a href="../index.html" class="nav-item">
-                    <i class="fas fa-home"></i> Home
-                </a>
-
-                <!-- Main Items with Icons -->
-                <a href="https://courses.internadda.com/" class="nav-item">
-                    <i class="fas fa-laptop-code"></i> Courses
-                </a>
-                <a href="../intern/internship.html" class="nav-item">
-                    <i class="fas fa-briefcase"></i> Internships
-                </a>
-                <a href="../about.html" class="nav-item">
-                    <i class="fas fa-info-circle"></i> About Us
-                </a>
-                
-                <!-- DROPDOWN MENU -->
-                <div class="dropdown nav-item">
-                    <span>
-                        <i class="fas fa-th-large" style="margin-right: 8px; color: #4338ca; background: #e0e7ff; width: 32px; height: 32px; line-height: 32px; text-align: center; border-radius: 50%; font-size: 1rem; display: none;"></i> 
-                        More <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 4px;"></i>
-                    </span>
-                    <div class="dropdown-content">
-                        <a href="https://check-ats.internadda.com/" class="dropdown-link"><i class="fas fa-chart-bar"></i> ATS Score</a>
-                        <a href="https://cv-builder.internadda.com/" class="dropdown-link"><i class="fas fa-file-alt"></i> Resume Builder</a>
-                        <a href="https://interview-preparation.internadda.com/" class="dropdown-link"><i class="fas fa-question-circle"></i> Interview Question</a>
-                        <a href="https://letter-builder.internadda.com/" class="dropdown-link"><i class="fas fa-envelope"></i> Cover Letter Generator</a>
-                        <a href="../contact.html" class="dropdown-link"><i class="fas fa-phone"></i> Contact</a>
-                        <a href="https://blog.internadda.com/" class="dropdown-link"><i class="fas fa-blog"></i> Blog</a>
-                    </div>
-                </div>
+                <a href="../index.html" class="nav-item"><i class="fas fa-home"></i> Home</a>
+                <a href="../about.html" class="nav-item"><i class="fas fa-info-circle"></i> About Us</a>
             </nav>
-
-            <!-- Mobile Menu Button (Hamburger) -->
-            <button class="mobile-menu-btn">
-                <i class="fas fa-bars"></i>
-            </button>
         </div>
     </header>
 
     <main>
-        <!-- HERO -->
         <section class="partners-hero">
             <div class="container">
                 <h1 class="page-title">Our Trusted <span>Partners</span></h1>
-                <p class="page-subtitle">We collaborate with industry leaders to bring you the best opportunities for growth and career advancement.</p>
+                <p class="page-subtitle">Click on a partner to learn more about our collaboration and their mission.</p>
             </div>
         </section>
 
-        <!-- PARTNERS GRID -->
         <section class="container">
-            <div class="partners-grid">
-                <!-- Partner 1 -->
-                <div class="partner-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="partner-logo">
+            <div class="partners-grid" id="partnersGrid">
                 </div>
-                <!-- Partner 2 -->
-                <div class="partner-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" class="partner-logo">
-                </div>
-                <!-- Partner 3 -->
-                <div class="partner-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon" class="partner-logo">
-                </div>
-                <!-- Partner 4 -->
-                <div class="partner-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" alt="Meta" class="partner-logo">
-                </div>
-                <!-- Partner 5 -->
-                <div class="partner-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" class="partner-logo">
-                </div>
-                <!-- Partner 6 -->
-                <div class="partner-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Adobe_Corporate_logo.svg" alt="Adobe" class="partner-logo">
-                </div>
-                <!-- Partner 7 -->
-                <div class="partner-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Accenture.svg" alt="Accenture" class="partner-logo">
-                </div>
-                <!-- Partner 8 -->
-                <div class="partner-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM" class="partner-logo">
-                </div>
-                <!-- Partner 9 -->
-                <div class="partner-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/34/Tech_Mahindra_New_Logo.svg" alt="Tech Mahindra" class="partner-logo">
-                </div>
-                <!-- Partner 10 -->
-                <div class="partner-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Paytm_Logo_%28standalone%29.svg" alt="Paytm" class="partner-logo">
-                </div>
-                 <!-- Partner 11 -->
-                 <div class="partner-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/60/Walmart_spark_%282025%29.svg" alt="Flipkart" class="partner-logo">
-                </div>
-                 <!-- Partner 12 -->
-                 <div class="partner-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Tata_Consultancy_Services_Logo.svg" alt="TCS" class="partner-logo">
-                </div>
-            </div>
         </section>
 
-        <!-- CTA SECTION -->
         <section class="cta-section">
             <div class="container">
                 <h2 class="cta-title">Partner with Us</h2>
-                <p class="cta-text">Are you a company looking to hire top talent? Join our network of partners and connect with thousands of skilled students.</p>
+                <p class="cta-text">Join our network of partners and connect with thousands of skilled students.</p>
                 <a href="../contact.html" class="partner-btn">Become a Partner</a>
             </div>
         </section>
     </main>
 
-    <!-- =========================================
-       FOOTER
-       ========================================= -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <img src="" alt="Logo" class="modal-logo" id="modalLogo">
+            <h3 id="modalName" style="margin-bottom: 10px;">Company Name</h3>
+            <p class="modal-desc" id="modalDesc">Description goes here.</p>
+            <div class="modal-socials" id="modalSocials">
+                </div>
+        </div>
+    </div>
+
     <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <div class="footer-logo">Internadda</div>
-                    <p class="footer-description">Transforming careers through learning, interning, and earning opportunities.</p>
-                    <div class="social-links">
-                        <a href="https://www.linkedin.com/company/internadda-india" target="_blank" class="social-link" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="https://www.youtube.com/@theinternadda" target="_blank" class="social-link" aria-label="YouTube">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                        <a href="https://www.instagram.com/internadda.india" target="_blank" class="social-link" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Learn</h3>
-                    <ul class="footer-links">
-                        <li><a href="https://courses.internadda.com/">Browse Courses</a></li>
-                        <li><a href="https://courses.internadda.com/">Free Courses</a></li>
-                        <li><a href="#">Paid Courses</a></li>
-                        <li><a href="#">Become an Instructor</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Intern</h3>
-                    <ul class="footer-links">
-                        <li><a href="../intern/internship.html">Find Internships</a></li>
-                        <li><a href="#">For Companies</a></li>
-                        <li><a href="#">Success Stories</a></li>
-                        <li><a href="#">Career Coaching</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Career Tools</h3>
-                    <ul class="footer-links">
-                        <li><a href="https://check-ats.internadda.com/">ATS Score Checker</a></li>
-                        <li><a href="https://cv-builder.internadda.com/">Resume Builder</a></li>
-                        <li><a href="https://interview-preparation.internadda.com">Interview Prep</a></li>
-                        <li><a href="https://letter-builder.internadda.com/">Cover Letter Gen</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">InternAdda</h3>
-                    <ul class="footer-links">
-                        <li><a href="../about.html">About Us</a></li>
-                        <li><a href="../contact.html">Contact Us</a></li>
-                        <li><a href="../terms.html">Terms & Conditions</a></li>
-                        <li><a href="../refund.html">Refund Policy</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Community</h3>
-                    <ul class="footer-links">
-                        <li><a href="join.html">Join Community</a></li>
-                        <li><a href="partners.html">Partners</a></li>
-                        <li><a href="https://blog.internadda.com/">Blog</a></li>
-                        <li><a href="academy.html">Offline Academy</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>© 2025 Internadda. All rights reserved. | Developed by Internadda Team</p>
-            </div>
+        <div class="container" style="text-align: center; padding: 40px 0; color: #64748b;">
+            <p>© 2025 Internadda. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- JavaScript -->
-    <script src="../script.js"></script>
+    <script>
+        // PARTNER DATA
+        const partners = [
+            {
+                name: "bridge for Meal",
+                logo: "https://via.placeholder.com/150?text=Abridge", 
+                desc: "bridge for Meal is a premier grooming and lifestyle brand dedicated to modern professional development.",
+                socials: { linkedin: "#", instagram: "#", website: "#" }
+            },
+            {
+                name: "Branded Base",
+                logo: "https://media.licdn.com/dms/image/v2/D4E0BAQFt-rTs4TJJQg/img-crop_100/B4EZgXIz9hGwAQ-/0/1752734847212?e=1769040000&v=beta&t=PTe-WnXRDW8ThieKHUr1GyfAvdrGmr-wmzosSRy1vcA",
+                desc: "Branded Base helps startups scale their identity through innovative marketing and design solutions.",
+                socials: { linkedin: "https://www.linkedin.com/company/108010045/admin/dashboard/", twitter: "#", website: "#" }
+            },
+            {
+                name: "Tech Solutions",
+                logo: "https://via.placeholder.com/150?text=Tech+Sol",
+                desc: "A global leader in providing software development internships and technical training.",
+                socials: { linkedin: "#", website: "#" }
+            },
+            {
+                name: "Homeka",
+                logo: "https://media.licdn.com/dms/image/v2/D4D0BAQFGCCxvKbdpGA/company-logo_200_200/B4DZt4miUiH8AQ-/0/1767254927033/homeka_club_logo?e=1769040000&v=beta&t=kkC848qKM1vHwgDdi_EemcLkLKX4RsrdbEAT7hWMUTw",
+                desc: "Homeka is founded by IIT Delhi alumnus with extensive leadership experience at India's largest real estate brokerage house. With over five years of driving strategy, 
+                    sales, and marketing in the sector, we've seen firsthand the challenges Indian homebuyers face-and we're here to solve them.",
+                socials: { linkedin: "https://www.linkedin.com/company/homeka-club/" , instagram: "#, website: "https://homeka.in/"  }
+            }
+        ];
+
+        const grid = document.getElementById('partnersGrid');
+        const modal = document.getElementById('modalOverlay');
+        const closeModal = document.getElementById('closeModal');
+
+        // Generate Cards
+        partners.forEach((partner, index) => {
+            const card = document.createElement('div');
+            card.className = 'partner-card';
+            card.innerHTML = `
+                <img src="${partner.logo}" alt="${partner.name}" class="partner-logo">
+                <div class="partner-name">${partner.name}</div>
+            `;
+            card.onclick = () => openPartnerModal(index);
+            grid.appendChild(card);
+        });
+
+        function openPartnerModal(index) {
+            const p = partners[index];
+            document.getElementById('modalLogo').src = p.logo;
+            document.getElementById('modalName').innerText = p.name;
+            document.getElementById('modalDesc').innerText = p.desc;
+            
+            const socialsCont = document.getElementById('modalSocials');
+            socialsCont.innerHTML = '';
+            
+            // Map social icons
+            if(p.socials.linkedin) socialsCont.innerHTML += `<a href="${p.socials.linkedin}"><i class="fab fa-linkedin"></i></a>`;
+            if(p.socials.instagram) socialsCont.innerHTML += `<a href="${p.socials.instagram}"><i class="fab fa-instagram"></i></a>`;
+            if(p.socials.website) socialsCont.innerHTML += `<a href="${p.socials.website}"><i class="fas fa-globe"></i></a>`;
+            if(p.socials.twitter) socialsCont.innerHTML += `<a href="${p.socials.twitter}"><i class="fab fa-twitter"></i></a>`;
+
+            modal.style.display = 'flex';
+        }
+
+        closeModal.onclick = () => modal.style.display = 'none';
+        window.onclick = (event) => { if (event.target == modal) modal.style.display = 'none'; }
+    </script>
 </body>
 </html>
