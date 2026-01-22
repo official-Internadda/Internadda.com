@@ -322,6 +322,33 @@ nav.nav-links a.nav-item.active-glow::after {
     transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
 }
 
+/* --- TRUST BAR SECTION --- */
+.trust-bar-section {
+    background: #eef2ff; 
+    padding: 60px 0;
+    text-align: center;
+    border-top: 1px solid #c7d2fe;
+    border-bottom: 1px solid #c7d2fe;
+}
+.trust-bar-section h2 {
+    font-size: 2rem;
+    color: #4338ca;
+    margin-bottom: 15px;
+    font-weight: 800;
+}
+.trust-bar-section p {
+    color: #64748b;
+    font-size: 1.1rem;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .trust-bar-section h2 { font-size: 1.6rem; }
+    .trust-bar-section { padding: 40px 20px; }
+}
+
 /* SLIDER IMAGE TRANSITION */
 .slider-img {
     width: 100%;
