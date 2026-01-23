@@ -322,33 +322,71 @@ nav.nav-links a.nav-item.active-glow::after {
     transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
 }
 
-/* --- TRUST BAR SECTION --- */
+/* --- UPDATED TRUST BAR SECTION --- */
 .trust-bar-section {
-    background: #eef2ff; 
-    padding: 60px 0;
+    background: #f8fafc; /* Slightly cleaner off-white */
+    padding: 50px 0;
     text-align: center;
-    border-top: 1px solid #c7d2fe;
-    border-bottom: 1px solid #c7d2fe;
+    border-top: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
 }
-.trust-bar-section h2 {
-    font-size: 2rem;
-    color: #4338ca;
-    margin-bottom: 15px;
-    font-weight: 800;
-}
-.trust-bar-section p {
-    color: #64748b;
-    font-size: 1.1rem;
-    max-width: 800px;
+
+.trust-badge-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    max-width: 900px;
     margin: 0 auto;
+    text-align: left; /* Better for readability with logos */
+}
+
+.msme-logo {
+    width: 120px; /* Adjust based on your logo design */
+    height: auto;
+    filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.1));
+}
+
+.trust-bar-section h2 {
+    font-size: 1.8rem;
+    color: #1e1b4b; /* Deeper professional navy */
+    margin-bottom: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.trust-bar-section p {
+    color: #475569;
+    font-size: 1.05rem;
     line-height: 1.6;
+    margin: 0;
 }
 
+.trust-bar-section p strong {
+    color: #4338ca;
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
-    .trust-bar-section h2 { font-size: 1.6rem; }
-    .trust-bar-section { padding: 40px 20px; }
-}
+    .trust-badge-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+    
+    .trust-bar-section h2 { 
+        font-size: 1.5rem; 
+    }
+    
+    .trust-bar-section { 
+        padding: 40px 20px; 
+    }
 
+    .msme-logo {
+        width: 100px;
+    }
+}
 /* SLIDER IMAGE TRANSITION */
 .slider-img {
     width: 100%;
