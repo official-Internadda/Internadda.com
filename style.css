@@ -322,51 +322,90 @@ nav.nav-links a.nav-item.active-glow::after {
     transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
 }
 
-/* --- UPDATED TRUST BAR SECTION --- */
+/* --- TRUST BAR SECTION UPDATED --- */
 .trust-bar-section {
-    background: #f8fafc; /* Slightly cleaner off-white */
-    padding: 50px 0;
-    text-align: center;
-    border-top: 1px solid #e2e8f0;
-    border-bottom: 1px solid #e2e8f0;
+    background: #eef2ff; /* Light blue background jo aapke screenshot mein tha */
+    padding: 80px 0;
+    position: relative;
 }
 
 .trust-badge-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 30px;
-    max-width: 900px;
+    gap: 40px;
+    max-width: 1000px;
     margin: 0 auto;
-    text-align: left; /* Better for readability with logos */
+    padding: 0 20px;
+}
+
+/* Logo Card Style */
+.trust-card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 180px;
+    transition: transform 0.3s ease;
+}
+
+.trust-card:hover {
+    transform: translateY(-5px);
 }
 
 .msme-logo {
-    width: 120px; /* Adjust based on your logo design */
+    width: 130px; /* Desktop size */
     height: auto;
-    filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.1));
 }
 
-.trust-bar-section h2 {
-    font-size: 1.8rem;
-    color: #1e1b4b; /* Deeper professional navy */
-    margin-bottom: 10px;
+/* Text Styling */
+.trust-text {
+    flex: 1;
+    text-align: left;
+}
+
+.trust-text h2 {
+    font-size: 2.2rem;
+    color: #1e1b4b;
+    margin-bottom: 15px;
     font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
-.trust-bar-section p {
+.trust-text p {
     color: #475569;
-    font-size: 1.05rem;
-    line-height: 1.6;
+    font-size: 1.15rem;
+    line-height: 1.7;
     margin: 0;
 }
 
-.trust-bar-section p strong {
+.trust-text p strong {
     color: #4338ca;
 }
 
+/* --- Responsive View --- */
+@media (max-width: 992px) {
+    .trust-badge-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+    
+    .trust-text {
+        text-align: center;
+    }
+    
+    .trust-text h2 {
+        font-size: 1.8rem;
+    }
+
+    .trust-card {
+        min-width: 150px;
+        padding: 20px;
+    }
+}
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .trust-badge-container {
