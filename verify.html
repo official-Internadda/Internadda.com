@@ -21,21 +21,20 @@ body {
 /* Card */
 .card {
     background: #ffffff;
-    padding: 50px 45px;
-    border-radius: 18px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    padding: 55px 45px;
+    border-radius: 20px;
+    box-shadow: 0 25px 70px rgba(0,0,0,0.15);
     text-align: center;
-    width: 360px;
-    position: relative;
+    width: 380px;
 }
 
 /* Loader */
 .loader {
     border: 4px solid #e5e7eb;
-    border-top: 4px solid #4338ca;
+    border-top: 4px solid #2563eb;
     border-radius: 50%;
-    width: 45px;
-    height: 45px;
+    width: 48px;
+    height: 48px;
     margin: 0 auto;
     animation: spin 1s linear infinite;
 }
@@ -45,32 +44,33 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-.hidden {
-    display: none;
-}
+.hidden { display: none; }
 
-/* Tick */
+/* Big Tick */
 .tick {
-    width: 85px;
-    height: 85px;
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
-    background: #4338ca;
+    background: #2563eb;
     color: white;
-    font-size: 48px;
+    font-size: 64px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 18px;
+    margin: 0 auto 22px;
+    box-shadow: 0 10px 30px rgba(37,99,235,0.35);
 }
 
-/* Logos */
-.brand {
-    margin-top: 10px;
-}
-
+/* Brand */
 .brand img {
-    height: 42px;
-    margin: 0 6px;
+    height: 46px;
+}
+
+.brand-name {
+    font-size: 22px;
+    font-weight: 600;
+    color: #0f172a;
+    margin-top: 6px;
 }
 
 /* Text */
@@ -78,14 +78,30 @@ body {
     font-size: 20px;
     font-weight: 600;
     color: #0f172a;
-    margin-top: 10px;
+    margin-top: 18px;
 }
 
 .desc {
     font-size: 14px;
     color: #475569;
-    line-height: 1.6;
+    line-height: 1.65;
     margin-top: 8px;
+}
+
+/* MSME */
+.msme {
+    margin-top: 22px;
+}
+
+.msme img {
+    height: 40px;
+}
+
+.msme-text {
+    font-size: 12px;
+    color: #475569;
+    margin-top: 4px;
+    letter-spacing: 0.4px;
 }
 </style>
 </head>
@@ -93,30 +109,45 @@ body {
 <body>
 
 <div class="card">
+
+    <!-- LOADING -->
     <div id="loading">
         <div class="loader"></div>
-        <p class="desc" style="margin-top:15px;">Verifying certificate…</p>
+        <p class="desc" style="margin-top:14px;">Verifying certificate authenticity…</p>
     </div>
 
+    <!-- VERIFIED -->
     <div id="verified" class="hidden">
+
+        <!-- BIG BLUE TICK -->
         <div class="tick">✔</div>
 
+        <!-- INTERNADDA -->
         <div class="brand">
             <img src="images/logo.jpg" alt="Internadda Logo">
-            <img src="images/msme.png" alt="MSME Badge">
+            <div class="brand-name">Internadda</div>
         </div>
 
-        <div class="title">Certificate Verified</div>
+        <!-- TEXT -->
+        <div class="title">Certificate Successfully Verified</div>
         <p class="desc">
-            This Elite Program Certificate issued by <b>Internadda</b>  
-            has been successfully verified and is valid.
+            This Elite Program Certificate has been issued by  
+            <b>Internadda</b> and is confirmed as valid and authentic.
         </p>
 
-        <p class="desc" style="margin-top:8px;">
-            This confirms that the holder has completed the  
-            Internadda Learning Program.
+        <p class="desc">
+            The holder has completed a certified learning program  
+            under the Internadda platform.
         </p>
+
+        <!-- MSME -->
+        <div class="msme">
+            <img src="images/msme.png" alt="MSME Logo">
+            <div class="msme-text">MSME Registered Platform</div>
+        </div>
+
     </div>
+
 </div>
 
 <script>
