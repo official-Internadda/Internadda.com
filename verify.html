@@ -1,1 +1,130 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Internadda Certificate Verification</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #eef2ff, #f8fafc);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Card */
+.card {
+    background: #ffffff;
+    padding: 50px 45px;
+    border-radius: 18px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    text-align: center;
+    width: 360px;
+    position: relative;
+}
+
+/* Loader */
+.loader {
+    border: 4px solid #e5e7eb;
+    border-top: 4px solid #4338ca;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    margin: 0 auto;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.hidden {
+    display: none;
+}
+
+/* Tick */
+.tick {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    background: #4338ca;
+    color: white;
+    font-size: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px;
+}
+
+/* Logos */
+.brand {
+    margin-top: 10px;
+}
+
+.brand img {
+    height: 42px;
+    margin: 0 6px;
+}
+
+/* Text */
+.title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #0f172a;
+    margin-top: 10px;
+}
+
+.desc {
+    font-size: 14px;
+    color: #475569;
+    line-height: 1.6;
+    margin-top: 8px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <div id="loading">
+        <div class="loader"></div>
+        <p class="desc" style="margin-top:15px;">Verifying certificate…</p>
+    </div>
+
+    <div id="verified" class="hidden">
+        <div class="tick">✔</div>
+
+        <div class="brand">
+            <img src="/internadda.jpg" alt="Internadda Logo">
+            <img src="/msme.png" alt="MSME Badge">
+        </div>
+
+        <div class="title">Certificate Verified</div>
+        <p class="desc">
+            This Elite Program Certificate issued by <b>Internadda</b>  
+            has been successfully verified and is valid.
+        </p>
+
+        <p class="desc" style="margin-top:8px;">
+            This confirms that the holder has completed the  
+            Internadda Learning Program.
+        </p>
+    </div>
+</div>
+
+<script>
+setTimeout(() => {
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("verified").classList.remove("hidden");
+}, 1800);
+</script>
+
+</body>
+</html>
