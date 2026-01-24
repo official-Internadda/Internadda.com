@@ -31,18 +31,17 @@
         ul { list-style: none; }
         img { max-width: 100%; display: block; }
 
-        /* Container Utility */
+        /* Container Utility - Fixed for Professional Look */
         .container {
             width: 100%;
-            max-width: 1320px;     /* Professional standard width */
+            max-width: 1320px;     /* Content ko center mein balanced rakhta hai */
             margin: 0 auto;
-            padding: 0 40px;       /* Side padding fixed rakha hai taki stretched na lage */
+            padding: 0 40px;       /* Fixed padding, percentage nahi */
         }
 
-        /* Tablets aur Mobile ke liye padding thodi kam */
         @media screen and (max-width: 768px) {
             .container {
-                padding: 0 20px;
+                padding: 0 20px;   /* Mobile ke liye tight padding */
             }
         }
         /* =========================================
@@ -80,7 +79,7 @@
         /* Desktop Nav */
         .nav-links {
             display: flex;
-            gap: 30px;
+            gap: 25px;             /* Professional tight spacing */
             align-items: center;
         }
 
@@ -207,12 +206,22 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 40px;             /* Gap ko 60px se kam karke 40px kar diya */
+            gap: 40px;             /* Gap normal rakha hai */
         }
 
         .hero-content {
             flex: 1;
-            max-width: 580px;      /* Isse text zyada stretch nahi hoga aur clean dikhega */
+            max-width: 580px;      /* Text width limit taki stretched na lage */
+        }
+
+        .hero-heading {
+            font-size: 3.2rem;     /* 3.8rem se thoda kam kiya for better balance */
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            color: #1a202c;
+            letter-spacing: -1px;
+        }     max-width: 580px;      /* Isse text zyada stretch nahi hoga aur clean dikhega */
         }
 
         .hero-description {
@@ -236,14 +245,6 @@
             letter-spacing: 0.5px;
         }
 
-        .hero-heading {
-            font-size: 3.8rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 24px;
-            color: #1a202c;
-            letter-spacing: -1px;
-        }
 
         .hero-heading span {
             background: linear-gradient(135deg, #4c51bf 0%, #9f7aea 100%);
@@ -618,11 +619,21 @@
 
         .footer-grid {
             display: grid;
-            grid-template-columns: 1.5fr repeat(5, 1fr); /* Tighter column spacing */
-            gap: 20px;             /* Reduced gap between link columns */
+            /* Brand ko space di aur baaki columns ko tight rakha */
+            grid-template-columns: 1.8fr repeat(5, 1fr); 
+            gap: 25px;
             margin-bottom: 60px;
+            max-width: 1320px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
+        @media (max-width: 1200px) {
+            .footer-grid {
+                grid-template-columns: 1.5fr repeat(3, 1fr);
+            }
+        }
+        
         .footer-brand { padding-right: 20px; }
 
         .footer-logo {
@@ -698,180 +709,164 @@
             font-size: 0.9rem;
         }
 
-        /* =========================================
-           8. PROFESSIONAL MOBILE MENU (EdTech Style)
-           ========================================= */
-        @media (max-width: 768px) {
-            
-            /* General Mobile Adjustments for Hero/Footer */
-            .hero-container { flex-direction: column; text-align: center; gap: 40px; }
-            .hero-heading { font-size: 2.5rem; }
-            .hero-cta { justify-content: center; flex-direction: column; }
-            .btn { width: 100%; }
-            .hero-stats { justify-content: center; flex-wrap: wrap; }
-            .hero-image-wrapper { transform: none; width: 100%; }
-            .hero-image-wrapper:hover { transform: none; }
-            .marquee-section::before, .marquee-section::after { width: 50px; }
-            .marquee-track { gap: 30px; }
-            .testimonial-card-dark { min-width: 300px; }
+ /* =========================================
+   8. PROFESSIONAL MOBILE MENU (Updated)
+   ========================================= */
+@media (max-width: 768px) {
+    
+    /* General Mobile Adjustments */
+    .hero-container { flex-direction: column; text-align: center; gap: 40px; }
+    .hero-heading { font-size: 2.5rem; }
+    .hero-cta { justify-content: center; flex-direction: column; }
+    .btn { width: 100%; }
+    .hero-stats { justify-content: center; flex-wrap: wrap; }
+    .hero-image-wrapper { transform: none; width: 100%; }
+    .hero-image-wrapper:hover { transform: none; }
+    .marquee-section::before, .marquee-section::after { width: 50px; }
+    .marquee-track { gap: 30px; }
+    .testimonial-card-dark { min-width: 300px; }
 
-            .footer-grid {
-                grid-template-columns: 1fr 1fr; 
-                gap: 40px 20px; 
-                text-align: left; 
-            }
-            .footer-brand {
-                grid-column: span 2; 
-                text-align: center;
-                border-bottom: 1px solid rgba(255,255,255,0.05);
-                padding-bottom: 30px;
-                margin-bottom: 10px;
-            }
-            .footer-brand .footer-description { margin: 0 auto 20px; }
+    .footer-grid {
+        grid-template-columns: 1fr 1fr; 
+        gap: 30px 20px; 
+        text-align: left; 
+    }
+    .footer-brand {
+        grid-column: span 2; 
+        text-align: center;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        padding-bottom: 30px;
+        margin-bottom: 10px;
+    }
+    .footer-brand .footer-description { margin: 0 auto 20px; }
 
-            /* --- MOBILE MENU LOGIC STARTS HERE --- */
-            
-            /* 1. Hamburger Icon */
-            .mobile-menu-btn { 
-                display: block; 
-                z-index: 1002; 
-                font-size: 1.4rem;
-                color: var(--text-main);
-                padding: 5px;
-            }
+    /* --- MOBILE MENU FIXES --- */
+    
+    /* 1. Hamburger Icon */
+    .mobile-menu-btn { 
+        display: block; 
+        z-index: 1002; 
+        font-size: 1.4rem;
+        color: var(--text-main);
+        padding: 5px;
+    }
 
-            /* 2. The Main Menu Container (Top-Down Drop) */
-            .nav-links {
-                position: absolute;
-                top: 80px; /* Matches Header Height */
-                left: 0;
-                width: 100%;
-                background: #ffffff;
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 0;
-                gap: 25px;
-                
-                /* Animation Logic: Start Hidden */
-                max-height: 0;
-                overflow: hidden;
-                opacity: 0;
-                transform: translateY(-10px);
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                
-                /* Visual Polish */
-                border-top: 1px solid #f1f5f9;
-                box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-            }
+    /* 2. Menu Container - GAP SET TO 0 TO REMOVE EXTRA SPACE */
+    .nav-links {
+        position: absolute;
+        top: 80px; 
+        left: 0;
+        width: 100%;
+        background: #ffffff;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0;
+        gap: 0;              /* Removed gap: 25px here */
+        
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border-top: 1px solid #f1f5f9;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    }
 
-            /* 3. Active State (When Menu is Open) */
-            .nav-links.active {
-                max-height: 85vh; /* Allow scrolling if menu is long */
-                overflow-y: auto;
-                opacity: 1;
-                transform: translateY(0);
-            }
+    .nav-links.active {
+        max-height: 85vh;
+        overflow-y: auto;
+        opacity: 1;
+        transform: translateY(0);
+    }
 
-            /* 4. Menu Items (Rows with Separators) */
-            .nav-item {
-                width: 100%;
-                padding: 16px 24px;
-                font-size: 1.05rem;
-                font-weight: 600;
-                color: #334155;
-                border-bottom: 1px solid #f1f5f9; /* The separated line */
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-            }
+    /* 3. Menu Items - Tightened Padding */
+    .nav-item {
+        width: 100%;
+        padding: 14px 24px;   /* Reduced vertical padding (16px to 14px) */
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: #334155;
+        border-bottom: 1px solid #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
 
-            .nav-item:hover {
-                background-color: #f8fafc;
-                color: var(--primary);
-            }
+    .nav-item:hover {
+        background-color: #f8fafc;
+        color: var(--primary);
+    }
 
-            /* Icons inside Menu Items */
-            .nav-item i {
-                display: inline-block; /* Show icons on mobile */
-                width: 24px;
-                text-align: center;
-                margin-right: 12px;
-                color: var(--primary);
-                font-size: 1.1rem;
-            }
+    /* Icons inside Menu Items */
+    .nav-item i {
+        display: inline-block; 
+        width: 24px;
+        text-align: center;
+        margin-right: 12px;
+        color: var(--primary);
+        font-size: 1.1rem;
+    }
 
-            /* 5. Dropdown Handling on Mobile (Accordion Style) */
-            .dropdown {
-                display: block;
-                width: 100%;
-                padding: 0; /* Remove padding from wrapper, apply to span */
-            }
+    /* 4. Dropdown Spacing */
+    .dropdown {
+        display: block;
+        width: 100%;
+        padding: 0; 
+    }
 
-            /* The "More" or "Tools" Clickable Text */
-            .dropdown > span {
-                width: 100%;
-                padding: 16px 24px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between; /* Arrow to the right */
-                border-bottom: 1px solid #f1f5f9;
-            }
-            
-            /* Rotate arrow when open */
-            .dropdown.active > span i.fa-chevron-down {
-                transform: rotate(180deg);
-                transition: transform 0.3s;
-            }
+    .dropdown > span {
+        width: 100%;
+        padding: 14px 24px;   /* Match nav-item padding */
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #f1f5f9;
+    }
+    
+    .dropdown.active > span i.fa-chevron-down {
+        transform: rotate(180deg);
+        transition: transform 0.3s;
+    }
 
-            /* The Dropdown Content (Sub-menu) */
-            .dropdown-content {
-                position: static; /* Not absolute */
-                display: none; /* Hidden by default */
-                width: 100%;
-                box-shadow: none;
-                border: none;
-                border-radius: 0;
-                background-color: #f8fafc; /* Slightly darker bg for contrast */
-                padding: 5px 0;
-                animation: none; /* Remove slideUp animation for mobile */
-            }
+    .dropdown-content {
+        position: static;
+        display: none;
+        width: 100%;
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+        background-color: #f8fafc; 
+        padding: 0;           /* Removed inner padding */
+        animation: none;
+    }
 
-            /* Show dropdown content when active */
-            .dropdown.active .dropdown-content {
-                display: block;
-                border-bottom: 1px solid #f1f5f9;
-            }
+    .dropdown.active .dropdown-content {
+        display: block;
+        border-bottom: 1px solid #f1f5f9;
+    }
 
-            /* Dropdown Links */
-            .dropdown-content a {
-                padding: 14px 24px 14px 50px; /* Indented left padding */
-                font-size: 0.95rem;
-                color: #64748b;
-                border-bottom: 1px solid #e2e8f0; /* Inner separator */
-            }
-            
-            .dropdown-content a:last-child {
-                border-bottom: none;
-            }
+    .dropdown-content a {
+        padding: 12px 24px 12px 50px; /* Indented Sub-links tightened */
+        font-size: 0.95rem;
+        color: #64748b;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .dropdown-content a:last-child {
+        border-bottom: none;
+    }
 
-            .dropdown-content a:hover {
-                background-color: #eef2ff;
-                color: var(--primary);
-            }
+    .dropdown-content a:hover {
+        background-color: #eef2ff;
+        color: var(--primary);
+    }
 
-            /* Hide the small triangle from desktop view */
-            .dropdown-content::before {
-                display: none;
-            }
-            
-            /* Hide Desktop-only classes if any */
-            .mobile-only-link {
-                display: flex; /* Ensure these show if you use them */
-            }
+    .dropdown-content::before {
+        display: none;
+    }
 
-           /* Active Page Highlighting */
-        .nav-item.active {
-            color: #4338ca !important;
-            font-weight: 700;
-           }
-        }
+    .nav-item.active {
+        color: #4338ca !important;
+        font-weight: 700;
+    }
+}
