@@ -921,3 +921,83 @@ body {
         font-weight: 700;
     }
 }
+
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at center, #020617, #000);
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+  color: white;
+}
+
+#intro {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.scene {
+  text-align: center;
+  transform-style: preserve-3d;
+  perspective: 800px;
+}
+
+.logo {
+  width: 160px;
+  opacity: 0;
+  transform: translateZ(-200px) scale(0.4);
+  animation: logoPop 1.2s cubic-bezier(.19,1,.22,1) forwards;
+}
+
+.brand {
+  font-size: 52px;
+  letter-spacing: 3px;
+  margin: 12px 0;
+  background: linear-gradient(90deg,#38bdf8,#3b82f6,#22d3ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: textRise 1s ease forwards;
+  animation-delay: 1s;
+}
+
+.tagline {
+  font-size: 20px;
+  color: #cbd5e1;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 1s ease forwards;
+  animation-delay: 1.7s;
+}
+
+.slogan {
+  margin-top: 10px;
+  font-size: 22px;
+  letter-spacing: 4px;
+  color: #f97316;
+  opacity: 0;
+  transform: scale(0.8);
+  animation: sloganPop 0.9s ease forwards;
+  animation-delay: 2.4s;
+}
+
+@keyframes logoPop {
+  to { opacity:1; transform: translateZ(0) scale(1); }
+}
+
+@keyframes textRise {
+  to { opacity:1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  to { opacity:1; transform: translateY(0); }
+}
+
+@keyframes sloganPop {
+  to { opacity:1; transform: scale(1); }
+}
