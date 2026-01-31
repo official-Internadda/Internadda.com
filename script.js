@@ -34,8 +34,8 @@ window.addEventListener("load", () => {
       intro.style.display = "none";
       main.style.display = "block";
       document.body.style.overflow = "auto";
-    }, 1000);
-  }, 4500);
+    }, 700);
+  }, 2600);
 });
 
 
