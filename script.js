@@ -27,15 +27,13 @@ window.addEventListener("load", () => {
   const main = document.getElementById("main-content");
 
   setTimeout(() => {
-    intro.style.opacity = "0";
-    intro.style.transition = "1s";
-
+    intro.classList.add("outro");
     setTimeout(() => {
       intro.style.display = "none";
       main.style.display = "block";
       document.body.style.overflow = "auto";
     }, 700);
-  }, 2600);
+  }, 2400); // ⏱ Total ~2.4 sec
 });
 
 
