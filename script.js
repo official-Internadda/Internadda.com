@@ -22,6 +22,26 @@ document.addEventListener('DOMContentLoaded', function() {
     setupMarquee('studentMarquee');
 
 
+window.addEventListener("load", () => {
+  const intro = document.getElementById("intro");
+  const sound = document.getElementById("introSound");
+  const main = document.getElementById("main-content");
+
+  // Try playing sound
+  sound.play().catch(() => {});
+
+  setTimeout(() => {
+    intro.style.opacity = "0";
+    intro.style.transition = "1s";
+
+    setTimeout(() => {
+      intro.style.display = "none";
+      main.style.display = "block";
+    }, 1000);
+  }, 2800); // total intro duration
+});
+
+
     // ==============================================
     // 2. DROPDOWN LOGIC (Desktop & Mobile Accordion)
     // ==============================================
