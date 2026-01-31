@@ -24,11 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 window.addEventListener("load", () => {
   const intro = document.getElementById("intro");
-  const sound = document.getElementById("introSound");
   const main = document.getElementById("main-content");
-
-  // Try playing sound
-  sound.play().catch(() => {});
 
   setTimeout(() => {
     intro.style.opacity = "0";
@@ -37,8 +33,9 @@ window.addEventListener("load", () => {
     setTimeout(() => {
       intro.style.display = "none";
       main.style.display = "block";
+      document.body.style.overflow = "auto";
     }, 1000);
-  }, 2800); // total intro duration
+  }, 4500);
 });
 
 
