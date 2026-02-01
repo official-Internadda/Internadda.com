@@ -22,21 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
     setupMarquee('studentMarquee');
 
 
-window.addEventListener("load", () => {
-  const intro = document.getElementById("intro");
-  const main = document.getElementById("main-content");
-
-  setTimeout(() => {
-    intro.classList.add("outro");
-    setTimeout(() => {
-      intro.style.display = "none";
-      main.style.display = "block";
-      document.body.style.overflow = "auto";
-    }, 700);
-  }, 2400); // ⏱ Total ~2.4 sec
-});
-
-
     // ==============================================
     // 2. DROPDOWN LOGIC (Desktop & Mobile Accordion)
     // ==============================================
