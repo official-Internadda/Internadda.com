@@ -22,133 +22,339 @@
     <link rel="icon" href="images/favicon.ico">
 
     <style>
-        /* --- EXISTING STYLES (Hero, Mission, etc.) --- */
+        /* --- IMPROVED HERO SECTION --- */
         .about-hero {
-            background: linear-gradient(135deg, #f8faff 0%, #ffffff 100%);
-            padding: 80px 0;
+            background: linear-gradient(135deg, #f0f4ff 0%, #f8fbff 100%);
+            padding: 100px 0 80px;
             text-align: center;
-            border-bottom: 1px solid #f1f5f9;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4338ca, #22c55e, #4338ca);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite linear;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
         }
 
         .about-title {
-            font-size: 3rem;
+            font-size: 3.2rem;
             font-weight: 800;
             color: #1a202c;
             margin-bottom: 20px;
+            line-height: 1.2;
         }
         
-        .about-title span { color: #4338ca; }
-
-        .about-lead {
-            font-size: 1.15rem;
-            color: #64748b;
-            max-width: 700px;
-            margin: 0 auto 40px;
-            line-height: 1.6;
+        .about-title span { 
+            color: #4338ca;
+            position: relative;
+            display: inline-block;
         }
 
+        .about-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: rgba(67, 56, 202, 0.1);
+            z-index: -1;
+            border-radius: 4px;
+        }
+
+        .about-lead {
+            font-size: 1.25rem;
+            color: #4a5568;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        /* --- IMPROVED STATS BAR --- */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #4338ca;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* --- IMPROVED MISSION/VISION CARDS --- */
         .mv-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin: 60px 0;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin: 80px 0;
+            padding: 0 20px;
         }
 
         .mv-card {
             background: white;
             border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 40px;
+            border-radius: 20px;
+            padding: 45px 35px;
             text-align: center;
-            transition: transform 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mv-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #4338ca, #22c55e);
         }
 
         .mv-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(67, 56, 202, 0.1);
+            border-color: #c7d2fe;
         }
 
         .mv-icon {
-            width: 70px;
-            height: 70px;
-            background: #e0e7ff;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
             color: #4338ca;
-            border-radius: 50%;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
-            margin: 0 auto 25px;
+            font-size: 2rem;
+            margin: 0 auto 30px;
+            transition: all 0.3s ease;
         }
 
-        .mv-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 15px; color: #1a202c; }
-        .mv-text { color: #64748b; line-height: 1.7; }
+        .mv-card:hover .mv-icon {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, #4338ca, #6366f1);
+            color: white;
+        }
 
-        /* Story Section */
+        .mv-title { 
+            font-size: 1.6rem; 
+            font-weight: 700; 
+            margin-bottom: 20px; 
+            color: #1a202c; 
+        }
+        
+        .mv-text { 
+            color: #4a5568; 
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* --- IMPROVED STORY SECTION --- */
         .story-section {
-            padding: 80px 0;
+            padding: 100px 0;
             display: flex;
             align-items: center;
-            gap: 60px;
+            gap: 80px;
+            background: #f8fafc;
+            border-radius: 30px;
+            margin: 40px auto;
+            max-width: 1200px;
+            padding: 60px;
         }
-        .story-content { flex: 1; }
-        .story-img { flex: 1; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        @media (max-width: 768px) {
-            .about-title { font-size: 2.2rem; }
-            .story-section { flex-direction: column-reverse; }
-            .story-img { width: 100%; }
+        
+        .story-content { 
+            flex: 1.2;
+            padding-right: 20px;
+        }
+        
+        .story-img { 
+            flex: 0.8; 
+            border-radius: 20px; 
+            overflow: hidden; 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.08);
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: transform 0.3s ease;
         }
 
-        /* --- EXISTING TEAM STYLES --- */
-        .team-section {
-            background: #1e293b; /* Dark Blue Background */
-            padding: 60px 0 80px;
+        .story-img:hover {
+            transform: perspective(1000px) rotateY(0deg);
+        }
+
+        .story-img img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .story-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #4338ca, #6366f1);
             color: white;
-            border-bottom: 1px solid #334155;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        .story-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 15px 0 25px;
+            color: #1a202c;
+            line-height: 1.2;
+        }
+
+        .story-text {
+            color: #4a5568;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        /* --- IMPROVED TEAM SECTION --- */
+        .team-section {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 80px 0 100px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #22c55e, transparent);
         }
 
         .section-head {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
+            position: relative;
         }
         
-        .section-head h2 { color: white !important; }
-        .section-head p { color: #cbd5e0 !important; }
+        .section-head h2 { 
+            color: white !important;
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
 
-        /* GRID CONTROL */
+        .section-head h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #22c55e;
+            border-radius: 2px;
+        }
+        
+        .section-head p { 
+            color: #cbd5e0 !important;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 25px auto 0;
+        }
+
+        /* TEAM GRID IMPROVEMENTS */
         .team-grid {
             display: grid;
-            /* Default: 4 columns equal width (Desktop) */
-            grid-template-columns: repeat(4, 1fr); 
-            gap: 20px; 
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            padding: 0 10px;
         }
 
         .team-card {
-            background: linear-gradient(145deg, #0f172a 0%, #020617 100%);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 25px 15px; 
+            background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 30px 20px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #22c55e, #4338ca);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .team-card:hover {
-            border-color: #22c55e; 
-            box-shadow: 0 0 25px rgba(34, 197, 94, 0.2), inset 0 0 10px rgba(34, 197, 94, 0.1);
-            transform: translateY(-8px);
+            transform: translateY(-12px);
+            border-color: rgba(34, 197, 94, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
-        /* Image Size Reduced slightly for 4-col layout */
+        .team-card:hover::before {
+            opacity: 1;
+        }
+
         .team-img-wrapper {
-            width: 120px; 
-            height: 120px;
-            margin: 0 auto 20px;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 25px;
             border-radius: 50%;
             padding: 3px;
-            background: linear-gradient(135deg, #22c55e, #0f172a); 
+            background: linear-gradient(135deg, #22c55e, #4338ca);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .team-card:hover .team-img-wrapper {
+            transform: scale(1.05);
         }
 
         .team-img {
@@ -162,64 +368,199 @@
         .team-info { padding: 0; }
         
         .team-name { 
-            font-size: 1.25rem; 
+            font-size: 1.4rem; 
             font-weight: 700; 
             color: white; 
-            margin-bottom: 5px; 
+            margin-bottom: 8px; 
+            letter-spacing: 0.5px;
         }
         
         .team-role { 
             color: #22c55e; 
             font-weight: 600; 
-            font-size: 0.85rem; 
-            margin-bottom: 12px; 
+            font-size: 0.9rem; 
+            margin-bottom: 15px; 
             display: block; 
             text-transform: uppercase; 
-            letter-spacing: 1px; 
+            letter-spacing: 1.2px; 
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .team-role::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 2px;
+            background: rgba(34, 197, 94, 0.3);
         }
         
         .team-bio { 
-            font-size: 0.85rem; 
+            font-size: 0.95rem; 
             color: #94a3b8; 
-            line-height: 1.5; 
+            line-height: 1.6; 
+            padding: 0 10px;
+        }
+
+        /* --- IMPROVED TRUST BAR --- */
+        .trust-bar-section {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e6f7ed 100%);
+            padding: 60px 0;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
         }
         
-        .team-link { text-decoration: none; display: block; }
-
-        /* --- NEW TRUST BAR STYLE --- */
-        .trust-bar-section {
-            background: #eef2ff; 
-            padding: 40px 0;
-            text-align: center;
-            border-top: 1px solid #c7d2fe;
+        .trust-bar-section .container {
+            max-width: 800px;
         }
+        
         .trust-bar-section h2 {
-            font-size: 1.8rem;
-            color: #4338ca;
-            margin-bottom: 15px;
+            font-size: 2.2rem;
+            color: #1a202c;
+            margin-bottom: 20px;
             font-weight: 800;
-        }
-        .trust-bar-section p {
-            color: #64748b;
-            font-size: 1.05rem;
-            max-width: 700px;
-            margin: 0 auto;
+            position: relative;
+            display: inline-block;
         }
 
-        /* --- MOBILE CENTERING CORRECTION --- */
-        @media (max-width: 992px) {
+        .trust-bar-section h2::after {
+            content: '✓';
+            position: absolute;
+            right: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background: #22c55e;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+        
+        .trust-bar-section p {
+            color: #4a5568;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 25px;
+            background: white;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .trust-badge i {
+            color: #4338ca;
+            font-size: 1.2rem;
+        }
+
+        .trust-badge span {
+            color: #4a5568;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* --- RESPONSIVE IMPROVEMENTS --- */
+        @media (max-width: 1200px) {
             .team-grid {
-                grid-template-columns: repeat(2, 1fr); 
-                gap: 15px;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
             }
-            .team-card { padding: 20px 10px; }
-            .team-name { font-size: 1.1rem; }
             
-            /* Explicitly center the social links block on mobile */
-            .footer-brand .social-links {
-                justify-content: center;
-                width: fit-content;
-                margin: 0 auto;
+            .story-section {
+                flex-direction: column-reverse;
+                gap: 40px;
+                padding: 40px;
+            }
+            
+            .story-content {
+                padding-right: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .about-title {
+                font-size: 2.4rem;
+            }
+            
+            .about-lead {
+                font-size: 1.1rem;
+                padding: 0 20px;
+            }
+            
+            .stats-bar {
+                gap: 20px;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            .mv-grid {
+                grid-template-columns: 1fr;
+                padding: 0 15px;
+            }
+            
+            .mv-card {
+                padding: 35px 25px;
+            }
+            
+            .story-section {
+                padding: 30px 20px;
+                border-radius: 20px;
+            }
+            
+            .story-title {
+                font-size: 2rem;
+            }
+            
+            .team-section {
+                padding: 60px 0 80px;
+            }
+            
+            .section-head h2 {
+                font-size: 2.2rem;
+            }
+            
+            .trust-bar-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .trust-badges {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-bar {
+                flex-direction: column;
+                gap: 30px;
             }
         }
     </style>
@@ -275,6 +616,25 @@
             <div class="container">
                 <h1 class="about-title">Empowering <span>Future Leaders</span></h1>
                 <p class="about-lead">We are bridging the gap between academic learning and industry requirements. Our mission is to make quality education and career opportunities accessible to everyone.</p>
+                
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <span class="stat-number">10,000+</span>
+                        <span class="stat-label">Students Empowered</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Success Stories</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Partner Companies</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">98%</span>
+                        <span class="stat-label">Satisfaction Rate</span>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -283,42 +643,45 @@
                 <div class="mv-card">
                     <div class="mv-icon"><i class="fas fa-rocket"></i></div>
                     <h3 class="mv-title">Our Mission</h3>
-                    <p class="mv-text">To provide free, high-quality courses and paid internship opportunities to students across India, ensuring financial independence and career readiness.</p>
+                    <p class="mv-text">To provide free, high-quality courses and paid internship opportunities to students across India, ensuring financial independence and career readiness through practical learning.</p>
                 </div>
                 <div class="mv-card">
                     <div class="mv-icon"><i class="fas fa-eye"></i></div>
                     <h3 class="mv-title">Our Vision</h3>
-                    <p class="mv-text">To be India's leading platform for student upskilling, creating a world where talent meets opportunity without barriers.</p>
+                    <p class="mv-text">To be India's most trusted platform for student upskilling, creating a world where talent meets opportunity without barriers, and every student can achieve their full potential.</p>
                 </div>
                 <div class="mv-card">
                     <div class="mv-icon"><i class="fas fa-users"></i></div>
                     <h3 class="mv-title">Our Community</h3>
-                    <p class="mv-text">A thriving ecosystem of 10,000+ learners, mentors, and industry experts collaborating to build the future of tech.</p>
+                    <p class="mv-text">A thriving ecosystem of 10,000+ learners, mentors, and industry experts collaborating, learning, and growing together to build the future of technology and innovation.</p>
                 </div>
             </div>
         </section>
 
         <section class="story-section container">
             <div class="story-content">
-                <span style="color: #4338ca; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Our Journey</span>
-                <h2 style="font-size: 2.2rem; font-weight: 800; margin: 15px 0 20px; color: #1a202c;">From a Dorm Room to a Movement</h2>
-                <p style="color: #64748b; line-height: 1.8; margin-bottom: 20px;">
-                    Internadda started with a simple observation: students were graduating with degrees but without the practical skills companies needed. 
+                <span class="story-badge">Our Journey</span>
+                <h2 class="story-title">From a Dorm Room to a Movement</h2>
+                <p class="story-text">
+                    Internadda started with a simple observation: students were graduating with degrees but without the practical skills companies needed. We saw the gap between academia and industry firsthand.
                 </p>
-                <p style="color: #64748b; line-height: 1.8;">
-                    What began as a small WhatsApp group sharing internship updates has now grown into a comprehensive Ed-Tech platform. We believe that education should be free and internships should be paid. That's the core philosophy that drives every decision we make.
+                <p class="story-text">
+                    What began as a small WhatsApp group sharing internship updates has now grown into a comprehensive Ed-Tech platform trusted by thousands. We believe that education should be accessible and internships should be paid—that's the core philosophy driving every decision we make.
+                </p>
+                <p class="story-text">
+                    Today, we're proud to be creating real impact in students' lives, helping them gain financial independence while building valuable career skills.
                 </p>
             </div>
             <div class="story-img">
-                <img src="images/slide3.png" alt="Our Team working" style="width: 100%; height: auto; display: block;">
+                <img src="images/slide3.png" alt="Internadda team collaborating in office">
             </div>
         </section>
 
         <section class="team-section">
             <div class="container">
                 <div class="section-head">
-                    <h2 style="font-size: 2.5rem; font-weight: 800;">Meet The Team</h2>
-                    <p>The passionate minds behind Internadda.</p>
+                    <h2>Meet The Leadership</h2>
+                    <p>The passionate minds behind Internadda's vision and growth.</p>
                 </div>
 
                 <div class="team-grid">
@@ -331,7 +694,7 @@
                             <div class="team-info">
                                 <h3 class="team-name">Lucky Tiwari</h3>
                                 <span class="team-role">Founder & CEO</span>
-                                <p class="team-bio">Visionary leader passionate about democratizing education.</p>
+                                <p class="team-bio">Visionary leader passionate about democratizing education and creating opportunities for students across India.</p>
                             </div>
                         </div>
                     </a>
@@ -344,7 +707,7 @@
                             <div class="team-info">
                                 <h3 class="team-name">Vikash Yadav</h3>
                                 <span class="team-role">Co-Founder</span>
-                            <p class="team-bio">Driving operations and partnerships for students.</p>
+                            <p class="team-bio">Driving operations and building strategic partnerships to maximize opportunities for students.</p>
                             </div>
                         </div>
                     </a>
@@ -357,7 +720,7 @@
                             <div class="team-info">
                                 <h3 class="team-name">Sumit Pandey</h3>
                                 <span class="team-role">CTO</span>
-                                <p class="team-bio">The tech wizard ensuring a seamless experience.</p>
+                                <p class="team-bio">The tech wizard ensuring a seamless, scalable, and innovative learning experience for all users.</p>
                             </div>
                         </div>
                     </a>
@@ -370,7 +733,7 @@
                             <div class="team-info">
                                 <h3 class="team-name">Pranjal Singh</h3>
                                 <span class="team-role">COO</span>
-                                <p class="team-bio">Managing operations and student support.</p>
+                                <p class="team-bio">Managing daily operations and providing exceptional support to our growing student community.</p>
                             </div>
                         </div>
                     </a>
@@ -380,8 +743,23 @@
         
         <section class="trust-bar-section">
             <div class="container">
-                <h2>Our Commitment: Integrity & Opportunity</h2>
-                <p>All certifications earned are rigorously vetted via a proctored process, ensuring our corporate partners trust every successful candidate we recommend.</p>
+                <h2>Our Commitment to Integrity & Excellence</h2>
+                <p>Every certification earned on our platform undergoes rigorous proctored verification. We ensure that our corporate partners can trust every candidate we recommend, maintaining the highest standards of quality and authenticity.</p>
+                
+                <div class="trust-badges">
+                    <div class="trust-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>100% Verified Certifications</span>
+                    </div>
+                    <div class="trust-badge">
+                        <i class="fas fa-handshake"></i>
+                        <span>Industry Partnerships</span>
+                    </div>
+                    <div class="trust-badge">
+                        <i class="fas fa-award"></i>
+                        <span>Quality Assurance</span>
+                    </div>
+                </div>
             </div>
         </section>
         
