@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | Internadda - Empowering Future Leaders</title>
-    <meta name="description" content="Discover Internadda's mission to bridge the gap between academic learning and industry requirements with quality education and paid internships.">
+    <title>About Us | Internadda</title>
+    <meta name="description" content="Learn about Internadda's mission to empower students with skills and internships.">
     
     <meta property="og:title" content="About Internadda | Empowering Future Leaders">
     <meta property="og:description" content="We are bridging the gap between academic learning and paid industry internships. Read about our mission and meet the team.">
@@ -13,790 +13,220 @@
     <meta property="og:image" content="https://internadda.com/images/slide3.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@InternaddaIndia">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <!-- Main Stylesheet -->
     <link rel="stylesheet" href="style.css">
     
-    <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico">
 
     <style>
-        /* ===== BASE STYLES ===== */
-        :root {
-            --primary: #4338ca;
-            --primary-light: #6366f1;
-            --primary-dark: #3730a3;
-            --secondary: #22c55e;
-            --secondary-light: #4ade80;
-            --dark: #0f172a;
-            --dark-light: #1e293b;
-            --light: #f8fafc;
-            --gray: #64748b;
-            --gray-light: #e2e8f0;
-            --white: #ffffff;
-            --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.1);
-            --radius: 16px;
-            --radius-lg: 24px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            color: #334155;
-            background: var(--white);
-            overflow-x: hidden;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* ===== HERO SECTION ===== */
+        /* --- EXISTING STYLES (Hero, Mission, etc.) --- */
         .about-hero {
-            position: relative;
-            padding: 120px 0 80px;
-            background: linear-gradient(135deg, #f0f4ff 0%, #f8fbff 100%);
-            overflow: hidden;
-        }
-
-        .about-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary));
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
+            background: linear-gradient(135deg, #f8faff 0%, #ffffff 100%);
+            padding: 80px 0;
             text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(67, 56, 202, 0.1);
-            color: var(--primary);
-            padding: 10px 24px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 30px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(67, 56, 202, 0.2);
-        }
-
-        .hero-badge i {
-            font-size: 1rem;
+            border-bottom: 1px solid #f1f5f9;
         }
 
         .about-title {
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: var(--dark);
+            font-size: 3rem;
+            font-weight: 800;
+            color: #1a202c;
             margin-bottom: 20px;
-            line-height: 1.1;
         }
-
-        .about-title span {
-            color: var(--primary);
-            position: relative;
-            display: inline-block;
-        }
-
-        .about-title span::after {
-            content: '';
-            position: absolute;
-            bottom: 8px;
-            left: 0;
-            width: 100%;
-            height: 12px;
-            background: rgba(67, 56, 202, 0.1);
-            z-index: -1;
-            border-radius: 6px;
-        }
+        
+        .about-title span { color: #4338ca; }
 
         .about-lead {
-            font-size: 1.25rem;
-            color: #475569;
-            line-height: 1.7;
-            margin-bottom: 40px;
+            font-size: 1.15rem;
+            color: #64748b;
             max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto 40px;
+            line-height: 1.6;
         }
 
-        /* Trust Indicators */
-        .trust-indicators {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 50px;
-            flex-wrap: wrap;
+        .mv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
         }
 
-        .trust-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 0 15px;
-        }
-
-        .trust-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--white);
+        .mv-card {
+            background: white;
+            border: 1px solid #e2e8f0;
             border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-            color: var(--primary);
-            font-size: 1.5rem;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--gray-light);
-        }
-
-        .trust-number {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--dark);
-            margin-bottom: 5px;
-            line-height: 1;
-        }
-
-        .trust-label {
-            font-size: 0.85rem;
-            color: var(--gray);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* ===== VALUES SECTION ===== */
-        .values-section {
-            padding: 100px 0;
-            background: var(--white);
-        }
-
-        .section-header {
+            padding: 40px;
             text-align: center;
-            margin-bottom: 60px;
+            transition: transform 0.3s;
         }
 
-        .section-subtitle {
-            display: inline-block;
-            color: var(--primary);
-            font-size: 0.95rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
+        .mv-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
         }
 
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--dark);
-            margin-bottom: 20px;
-        }
-
-        .section-description {
-            font-size: 1.1rem;
-            color: var(--gray);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .values-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .value-card {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            padding: 40px 30px;
-            text-align: center;
-            border: 1px solid var(--gray-light);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .value-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-        }
-
-        .value-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary-light);
-        }
-
-        .value-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary-light), var(--primary));
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 25px;
-            color: var(--white);
-            font-size: 2rem;
-            transition: var(--transition);
-        }
-
-        .value-card:hover .value-icon {
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        .value-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 15px;
-        }
-
-        .value-description {
-            color: var(--gray);
-            line-height: 1.7;
-        }
-
-        /* ===== STORY SECTION ===== */
-        .story-section {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-        }
-
-        .story-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .story-content {
-            padding-right: 20px;
-        }
-
-        .story-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--white);
-            color: var(--primary);
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 25px;
-            border: 1px solid var(--gray-light);
-            box-shadow: var(--shadow);
-        }
-
-        .story-title {
-            font-size: 2.8rem;
-            font-weight: 900;
-            color: var(--dark);
-            margin-bottom: 25px;
-            line-height: 1.2;
-        }
-
-        .story-text {
-            color: var(--gray);
-            line-height: 1.8;
-            margin-bottom: 20px;
-            font-size: 1.05rem;
-        }
-
-        .story-highlight {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: var(--white);
-            padding: 30px;
-            border-radius: var(--radius);
-            margin-top: 30px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .story-highlight::before {
-            content: '"';
-            position: absolute;
-            top: -20px;
-            left: 20px;
-            font-size: 120px;
-            color: rgba(255, 255, 255, 0.2);
-            font-family: Georgia, serif;
-        }
-
-        .story-highlight p {
-            font-size: 1.2rem;
-            font-weight: 500;
-            line-height: 1.6;
-            position: relative;
-            z-index: 2;
-        }
-
-        .story-media {
-            position: relative;
-        }
-
-        .story-image {
-            width: 100%;
-            height: 500px;
-            object-fit: cover;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .story-image-overlay {
-            position: absolute;
-            bottom: -20px;
-            right: -20px;
-            width: 200px;
-            height: 200px;
-            background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
-            border-radius: var(--radius);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 3rem;
-        }
-
-        /* ===== TEAM SECTION ===== */
-        .team-section {
-            padding: 100px 0;
-            background: var(--dark);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .team-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--secondary), transparent);
-        }
-
-        .team-header {
-            text-align: center;
-            margin-bottom: 60px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .team-header .section-title {
-            color: var(--white);
-            font-size: 2.8rem;
-        }
-
-        .team-header .section-description {
-            color: #cbd5e1;
-        }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 25px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .team-card {
-            background: linear-gradient(145deg, var(--dark-light), var(--dark));
-            border-radius: var(--radius);
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .team-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--secondary);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .team-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--secondary), var(--primary));
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .team-card:hover::before {
-            opacity: 1;
-        }
-
-        .team-image-wrapper {
-            width: 100%;
-            height: 250px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .team-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .team-card:hover .team-image {
-            transform: scale(1.05);
-        }
-
-        .team-info {
-            padding: 25px;
-            text-align: center;
-        }
-
-        .team-name {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--white);
-            margin-bottom: 8px;
-        }
-
-        .team-role {
-            display: inline-block;
-            color: var(--secondary);
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            position: relative;
-        }
-
-        .team-role::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30px;
-            height: 2px;
-            background: var(--secondary);
-        }
-
-        .team-bio {
-            color: #94a3b8;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        /* ===== TRUST SECTION ===== */
-        .trust-section {
-            padding: 100px 0;
-            background: var(--light);
-        }
-
-        .trust-container {
-            max-width: 900px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .trust-card {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            padding: 60px;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--gray-light);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .trust-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 6px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary));
-        }
-
-        .trust-icon-large {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+        .mv-icon {
+            width: 70px;
+            height: 70px;
+            background: #e0e7ff;
+            color: #4338ca;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 30px;
-            color: var(--white);
-            font-size: 2.5rem;
-            box-shadow: var(--shadow);
+            font-size: 1.8rem;
+            margin: 0 auto 25px;
         }
 
-        .trust-title {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--dark);
-            margin-bottom: 20px;
-        }
+        .mv-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 15px; color: #1a202c; }
+        .mv-text { color: #64748b; line-height: 1.7; }
 
-        .trust-description {
-            font-size: 1.1rem;
-            color: var(--gray);
-            line-height: 1.8;
-            margin-bottom: 30px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .trust-features {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        .trust-feature {
+        /* Story Section */
+        .story-section {
+            padding: 80px 0;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            padding: 20px;
-            background: var(--light);
-            border-radius: var(--radius);
-            border: 1px solid var(--gray-light);
+            gap: 60px;
         }
-
-        .trust-feature i {
-            color: var(--secondary);
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-
-        .trust-feature span {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        /* ===== RESPONSIVE DESIGN ===== */
-        @media (max-width: 1200px) {
-            .about-title {
-                font-size: 3rem;
-            }
-            
-            .story-title {
-                font-size: 2.4rem;
-            }
-            
-            .team-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .values-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 992px) {
-            .about-hero {
-                padding: 100px 0 60px;
-            }
-            
-            .story-container {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-            
-            .story-content {
-                padding-right: 0;
-            }
-            
-            .story-image-overlay {
-                display: none;
-            }
-            
-            .trust-features {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
+        .story-content { flex: 1; }
+        .story-img { flex: 1; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
         @media (max-width: 768px) {
-            .about-title {
-                font-size: 2.5rem;
-            }
-            
-            .about-lead {
-                font-size: 1.1rem;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .values-grid {
-                grid-template-columns: 1fr;
-            }
-            
+            .about-title { font-size: 2.2rem; }
+            .story-section { flex-direction: column-reverse; }
+            .story-img { width: 100%; }
+        }
+
+        /* --- EXISTING TEAM STYLES --- */
+        .team-section {
+            background: #1e293b; /* Dark Blue Background */
+            padding: 60px 0 80px;
+            color: white;
+            border-bottom: 1px solid #334155;
+        }
+
+        .section-head {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-head h2 { color: white !important; }
+        .section-head p { color: #cbd5e0 !important; }
+
+        /* GRID CONTROL */
+        .team-grid {
+            display: grid;
+            /* Default: 4 columns equal width (Desktop) */
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 20px; 
+        }
+
+        .team-card {
+            background: linear-gradient(145deg, #0f172a 0%, #020617 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 25px 15px; 
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .team-card:hover {
+            border-color: #22c55e; 
+            box-shadow: 0 0 25px rgba(34, 197, 94, 0.2), inset 0 0 10px rgba(34, 197, 94, 0.1);
+            transform: translateY(-8px);
+        }
+
+        /* Image Size Reduced slightly for 4-col layout */
+        .team-img-wrapper {
+            width: 120px; 
+            height: 120px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(135deg, #22c55e, #0f172a); 
+        }
+
+        .team-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #0f172a;
+        }
+
+        .team-info { padding: 0; }
+        
+        .team-name { 
+            font-size: 1.25rem; 
+            font-weight: 700; 
+            color: white; 
+            margin-bottom: 5px; 
+        }
+        
+        .team-role { 
+            color: #22c55e; 
+            font-weight: 600; 
+            font-size: 0.85rem; 
+            margin-bottom: 12px; 
+            display: block; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+        }
+        
+        .team-bio { 
+            font-size: 0.85rem; 
+            color: #94a3b8; 
+            line-height: 1.5; 
+        }
+        
+        .team-link { text-decoration: none; display: block; }
+
+        /* --- NEW TRUST BAR STYLE --- */
+        .trust-bar-section {
+            background: #eef2ff; 
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid #c7d2fe;
+        }
+        .trust-bar-section h2 {
+            font-size: 1.8rem;
+            color: #4338ca;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+        .trust-bar-section p {
+            color: #64748b;
+            font-size: 1.05rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* --- MOBILE CENTERING CORRECTION --- */
+        @media (max-width: 992px) {
             .team-grid {
-                grid-template-columns: 1fr;
-                max-width: 400px;
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 15px;
+            }
+            .team-card { padding: 20px 10px; }
+            .team-name { font-size: 1.1rem; }
+            
+            /* Explicitly center the social links block on mobile */
+            .footer-brand .social-links {
+                justify-content: center;
+                width: fit-content;
                 margin: 0 auto;
             }
-            
-            .trust-card {
-                padding: 40px 20px;
-            }
-            
-            .trust-title {
-                font-size: 1.8rem;
-            }
-            
-            .trust-indicators {
-                gap: 20px;
-            }
-            
-            .trust-number {
-                font-size: 1.6rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .about-title {
-                font-size: 2rem;
-            }
-            
-            .hero-badge {
-                padding: 8px 16px;
-                font-size: 0.8rem;
-            }
-            
-            .trust-indicators {
-                flex-direction: column;
-                align-items: center;
-                gap: 30px;
-            }
-            
-            .trust-item {
-                width: 100%;
-                max-width: 200px;
-            }
-            
-            .trust-features {
-                grid-template-columns: 1fr;
-            }
-            
-            .story-title {
-                font-size: 2rem;
-            }
-            
-            .story-image {
-                height: 350px;
-            }
-            
-            .value-card {
-                padding: 30px 20px;
-            }
-            
-            .team-section {
-                padding: 60px 0;
-            }
-            
-            .trust-section {
-                padding: 60px 0;
-            }
-        }
-
-        /* ===== ANIMATIONS ===== */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-in {
-            animation: fadeInUp 0.8s ease-out forwards;
-        }
-
-        .delay-1 { animation-delay: 0.2s; }
-        .delay-2 { animation-delay: 0.4s; }
-        .delay-3 { animation-delay: 0.6s; }
-        .delay-4 { animation-delay: 0.8s; }
-
-        /* ===== ACCESSIBILITY ===== */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <!-- Your existing header code remains the same -->
         <div class="container nav-container">
             <a href="index.html" class="logo">
                 <img src="images/logo.jpg" alt="Internadda Logo" style="height: 40px; border-radius: 8px;">
@@ -841,262 +271,123 @@
     </header>
 
     <main>
-        <!-- Hero Section -->
         <section class="about-hero">
             <div class="container">
-                <div class="hero-content animate-in">
-                    <div class="hero-badge">
-                        <i class="fas fa-shield-alt"></i>
-                        <span>Trusted by 10,000+ Students</span>
-                    </div>
-                    <h1 class="about-title">Building India's <span>Future Workforce</span></h1>
-                    <p class="about-lead">
-                        We're revolutionizing how students transition from academics to industry. Through quality education, 
-                        paid internships, and career mentorship, we're creating a generation of financially independent, 
-                        industry-ready professionals.
-                    </p>
-                    
-                    <div class="trust-indicators">
-                        <div class="trust-item delay-1">
-                            <div class="trust-icon">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div class="trust-number">10K+</div>
-                            <div class="trust-label">Students Empowered</div>
-                        </div>
-                        <div class="trust-item delay-2">
-                            <div class="trust-icon">
-                                <i class="fas fa-briefcase"></i>
-                            </div>
-                            <div class="trust-number">500+</div>
-                            <div class="trust-label">Paid Internships</div>
-                        </div>
-                        <div class="trust-item delay-3">
-                            <div class="trust-icon">
-                                <i class="fas fa-handshake"></i>
-                            </div>
-                            <div class="trust-number">50+</div>
-                            <div class="trust-label">Partner Companies</div>
-                        </div>
-                        <div class="trust-item delay-4">
-                            <div class="trust-icon">
-                                <i class="fas fa-trophy"></i>
-                            </div>
-                            <div class="trust-number">98%</div>
-                            <div class="trust-label">Success Rate</div>
-                        </div>
-                    </div>
+                <h1 class="about-title">Empowering <span>Future Leaders</span></h1>
+                <p class="about-lead">We are bridging the gap between academic learning and industry requirements. Our mission is to make quality education and career opportunities accessible to everyone.</p>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="mv-grid">
+                <div class="mv-card">
+                    <div class="mv-icon"><i class="fas fa-rocket"></i></div>
+                    <h3 class="mv-title">Our Mission</h3>
+                    <p class="mv-text">To provide free, high-quality courses and paid internship opportunities to students across India, ensuring financial independence and career readiness.</p>
+                </div>
+                <div class="mv-card">
+                    <div class="mv-icon"><i class="fas fa-eye"></i></div>
+                    <h3 class="mv-title">Our Vision</h3>
+                    <p class="mv-text">To be India's leading platform for student upskilling, creating a world where talent meets opportunity without barriers.</p>
+                </div>
+                <div class="mv-card">
+                    <div class="mv-icon"><i class="fas fa-users"></i></div>
+                    <h3 class="mv-title">Our Community</h3>
+                    <p class="mv-text">A thriving ecosystem of 10,000+ learners, mentors, and industry experts collaborating to build the future of tech.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Values Section -->
-        <section class="values-section">
-            <div class="container">
-                <div class="section-header animate-in">
-                    <div class="section-subtitle">OUR PHILOSOPHY</div>
-                    <h2 class="section-title">Core Values That Drive Us</h2>
-                    <p class="section-description">
-                        These principles guide every decision we make and every student we serve
-                    </p>
-                </div>
-
-                <div class="values-grid">
-                    <div class="value-card animate-in delay-1">
-                        <div class="value-icon">
-                            <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <h3 class="value-title">Education First</h3>
-                        <p class="value-description">
-                            We believe quality education should be accessible to all. Our free courses ensure 
-                            every student gets the knowledge they need without financial barriers.
-                        </p>
-                    </div>
-
-                    <div class="value-card animate-in delay-2">
-                        <div class="value-icon">
-                            <i class="fas fa-rupee-sign"></i>
-                        </div>
-                        <h3 class="value-title">Paid Opportunities</h3>
-                        <p class="value-description">
-                            Talent deserves compensation. We exclusively work with companies that offer 
-                            paid internships, ensuring students earn while they learn.
-                        </p>
-                    </div>
-
-                    <div class="value-card animate-in delay-3">
-                        <div class="value-icon">
-                            <i class="fas fa-hands-helping"></i>
-                        </div>
-                        <h3 class="value-title">Community Support</h3>
-                        <p class="value-description">
-                            From mentorship to peer learning, we foster a supportive ecosystem where 
-                            students grow together and lift each other up.
-                        </p>
-                    </div>
-                </div>
+        <section class="story-section container">
+            <div class="story-content">
+                <span style="color: #4338ca; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Our Journey</span>
+                <h2 style="font-size: 2.2rem; font-weight: 800; margin: 15px 0 20px; color: #1a202c;">From a Dorm Room to a Movement</h2>
+                <p style="color: #64748b; line-height: 1.8; margin-bottom: 20px;">
+                    Internadda started with a simple observation: students were graduating with degrees but without the practical skills companies needed. 
+                </p>
+                <p style="color: #64748b; line-height: 1.8;">
+                    What began as a small WhatsApp group sharing internship updates has now grown into a comprehensive Ed-Tech platform. We believe that education should be free and internships should be paid. That's the core philosophy that drives every decision we make.
+                </p>
+            </div>
+            <div class="story-img">
+                <img src="images/slide3.png" alt="Our Team working" style="width: 100%; height: auto; display: block;">
             </div>
         </section>
 
-        <!-- Story Section -->
-        <section class="story-section">
-            <div class="container">
-                <div class="story-container">
-                    <div class="story-content animate-in">
-                        <div class="story-badge">
-                            <i class="fas fa-history"></i>
-                            Our Journey
-                        </div>
-                        <h2 class="story-title">From WhatsApp Group to Educational Movement</h2>
-                        <p class="story-text">
-                            It all started with a simple realization: students were graduating with degrees but without 
-                            the practical skills that companies actually needed. The gap between academia and industry 
-                            was widening, and traditional education wasn't keeping pace.
-                        </p>
-                        <p class="story-text">
-                            What began as a small WhatsApp group sharing internship opportunities among friends 
-                            has grown into India's fastest-growing student career platform. We started by helping 
-                            just 50 students find meaningful internships.
-                        </p>
-                        
-                        <div class="story-highlight animate-in delay-2">
-                            <p>
-                                "Our mission is clear: quality education should be free, and real-world experience 
-                                should be paid. This isn't just a business model—it's our commitment to India's youth."
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <div class="story-media animate-in delay-1">
-                        <img src="images/slide3.png" alt="Internadda team collaborating" class="story-image">
-                        <div class="story-image-overlay">
-                            <i class="fas fa-rocket"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Team Section -->
         <section class="team-section">
             <div class="container">
-                <div class="team-header animate-in">
-                    <div class="section-subtitle" style="color: var(--secondary);">MEET OUR LEADERS</div>
-                    <h2 class="section-title">The Minds Behind The Mission</h2>
-                    <p class="section-description">
-                        Passionate professionals dedicated to transforming student careers
-                    </p>
+                <div class="section-head">
+                    <h2 style="font-size: 2.5rem; font-weight: 800;">Meet The Team</h2>
+                    <p>The passionate minds behind Internadda.</p>
                 </div>
 
                 <div class="team-grid">
-                    <!-- Founder -->
+                    
                     <a href="https://founder.internadda.com/" class="team-link">
-                        <div class="team-card animate-in delay-1">
-                            <div class="team-image-wrapper">
-                                <img src="images/founder.jpg" alt="Lucky Tiwari - Founder & CEO" class="team-image">
+                        <div class="team-card">
+                            <div class="team-img-wrapper">
+                                <img src="images/founder.jpg" alt="Lucky Tiwari" class="team-img">
                             </div>
                             <div class="team-info">
                                 <h3 class="team-name">Lucky Tiwari</h3>
                                 <span class="team-role">Founder & CEO</span>
-                                <p class="team-bio">
-                                    Visionary leader dedicated to democratizing education and creating equal 
-                                    opportunities for students nationwide.
-                                </p>
+                                <p class="team-bio">Visionary leader passionate about democratizing education.</p>
                             </div>
                         </div>
                     </a>
-
-                    <!-- Co-Founder -->
+                
                     <a href="https://co-founder.internadda.com/" class="team-link">
-                        <div class="team-card animate-in delay-2">
-                            <div class="team-image-wrapper">
-                                <img src="images/Vikash.jpg" alt="Vikash Yadav - Co-Founder" class="team-image">
+                        <div class="team-card">
+                            <div class="team-img-wrapper">
+                                <img src="images/Vikash.jpg" alt="Vikash Singh" class="team-img">
                             </div>
                             <div class="team-info">
                                 <h3 class="team-name">Vikash Yadav</h3>
                                 <span class="team-role">Co-Founder</span>
-                                <p class="team-bio">
-                                    Driving strategic operations and building industry partnerships to create 
-                                    maximum opportunities for students.
-                                </p>
+                            <p class="team-bio">Driving operations and partnerships for students.</p>
                             </div>
                         </div>
                     </a>
-
-                    <!-- CTO -->
+                
                     <a href="https://cto.internadda.com/" class="team-link">
-                        <div class="team-card animate-in delay-3">
-                            <div class="team-image-wrapper">
-                                <img src="images/cto.jpg" alt="Sumit Pandey - CTO" class="team-image">
+                        <div class="team-card">
+                            <div class="team-img-wrapper">
+                                <img src="images/cto.jpg" alt="Sumit Pandey" class="team-img">
                             </div>
                             <div class="team-info">
                                 <h3 class="team-name">Sumit Pandey</h3>
-                                <span class="team-role">Chief Technology Officer</span>
-                                <p class="team-bio">
-                                    Tech innovator ensuring scalable, seamless learning experiences through 
-                                    cutting-edge technology solutions.
-                                </p>
+                                <span class="team-role">CTO</span>
+                                <p class="team-bio">The tech wizard ensuring a seamless experience.</p>
                             </div>
                         </div>
                     </a>
-
-                    <!-- COO -->
+                
                     <a href="https://coo.internadda.com/" class="team-link">
-                        <div class="team-card animate-in delay-4">
-                            <div class="team-image-wrapper">
-                                <img src="images/coo.jpg" alt="Pranjal Singh - COO" class="team-image">
+                        <div class="team-card">
+                            <div class="team-img-wrapper">
+                                <img src="images/coo.jpg" alt="Pranjal Singh" class="team-img">
                             </div>
                             <div class="team-info">
                                 <h3 class="team-name">Pranjal Singh</h3>
-                                <span class="team-role">Chief Operations Officer</span>
-                                <p class="team-bio">
-                                    Managing daily operations and ensuring exceptional support for our 
-                                    growing community of learners.
-                                </p>
+                                <span class="team-role">COO</span>
+                                <p class="team-bio">Managing operations and student support.</p>
                             </div>
                         </div>
                     </a>
                 </div>
             </div>
         </section>
-
-        <!-- Trust Section -->
-        <section class="trust-section">
+        
+        <section class="trust-bar-section">
             <div class="container">
-                <div class="trust-container">
-                    <div class="trust-card animate-in">
-                        <div class="trust-icon-large">
-                            <i class="fas fa-shield-check"></i>
-                        </div>
-                        <h2 class="trust-title">Our Uncompromising Standards</h2>
-                        <p class="trust-description">
-                            At Internadda, trust is earned, not given. Every certification on our platform undergoes 
-                            rigorous proctored verification. We partner only with companies that share our commitment 
-                            to fair compensation and professional growth.
-                        </p>
-                        
-                        <div class="trust-features">
-                            <div class="trust-feature animate-in delay-1">
-                                <i class="fas fa-user-check"></i>
-                                <span>100% Verified Profiles</span>
-                            </div>
-                            <div class="trust-feature animate-in delay-2">
-                                <i class="fas fa-file-certificate"></i>
-                                <span>Proctored Certifications</span>
-                            </div>
-                            <div class="trust-feature animate-in delay-3">
-                                <i class="fas fa-hand-holding-usd"></i>
-                                <span>Guaranteed Paid Roles</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <h2>Our Commitment: Integrity & Opportunity</h2>
+                <p>All certifications earned are rigorously vetted via a proctored process, ensuring our corporate partners trust every successful candidate we recommend.</p>
             </div>
         </section>
-    </main>
+        
+        </main>
 
     <footer>
-        <!-- Your existing footer code remains the same -->
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
@@ -1174,47 +465,5 @@
     </footer>
 
     <script src="script.js"></script>
-    
-    <script>
-        // Simple animation on scroll
-        document.addEventListener('DOMContentLoaded', function() {
-            const animateElements = document.querySelectorAll('.animate-in');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            });
-            
-            animateElements.forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(30px)';
-                el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                observer.observe(el);
-            });
-            
-            // Trust indicators animation
-            const trustNumbers = document.querySelectorAll('.trust-number');
-            trustNumbers.forEach(number => {
-                const target = parseInt(number.textContent);
-                let current = 0;
-                const increment = target / 50;
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= target) {
-                        current = target;
-                        clearInterval(timer);
-                    }
-                    number.textContent = Math.floor(current) + (number.textContent.includes('K') ? 'K+' : '+');
-                }, 30);
-            });
-        });
-    </script>
 </body>
 </html>
